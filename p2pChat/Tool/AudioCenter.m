@@ -19,8 +19,13 @@
 @implementation AudioCenter
 
 + (instancetype)shareInstance {
-    AppDelegate *delegate = [UIApplication sharedApplication].delegate;
-    AudioCenter *center = delegate.audioCenter;
+//    AppDelegate *delegate = [UIApplication sharedApplication].delegate;
+//    AudioCenter *center = delegate.audioCenter;
+    static AudioCenter *center;
+    static dispatch_once_t centerToken;
+    dispatch_once(&centerToken, ^{
+        center = [[AudioCenter alloc]init];
+    });
     return center;
 }
 

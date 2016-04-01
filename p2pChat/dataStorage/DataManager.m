@@ -8,7 +8,6 @@
 
 #import "DataManager.h"
 #import "AppDelegate.h"
-#import "Friend.h"
 #import "Message.h"
 #import "LastMessage.h"
 
@@ -38,9 +37,9 @@
     return resultController;
 }
 
-- (void)saveMessageWithUserID:(NSNumber *)userID time:(NSDate *)time type:(NSNumber *)type body:(NSString *)body more:(NSString *)more error:(NSError **)err isOut:(BOOL)isOut {
+- (void)saveMessageWithUsername:(NSString *)username time:(NSDate *)time type:(NSNumber *)type body:(NSString *)body more:(NSString *)more error:(NSError **)err isOut:(BOOL)isOut {
     Message *message = [NSEntityDescription insertNewObjectForEntityForName:@"Message" inManagedObjectContext:_context];
-    message.userID = userID;
+    message.username = username;
     message.time = time;
     message.type = type;
     message.body = body;
@@ -49,61 +48,9 @@
     [_context save:err];
 }
 
-#pragma mark - friend
-- (NSFetchedResultsController *)getFriends {
-    NSError *err = nil;
-    NSFetchedResultsController *resultsController = [self fetchWithEntityName:@"Friend" predicate:nil sortKey:@"userID" ascending:YES error:&err];
-    if (err) {
-        NSLog(@"DataManager get friends failed: %@", err);
-    }
-    
-    return resultsController;
-}
-
-- (void)saveFriendID:(NSNumber *)userID name:(NSString *)name photoPath:(NSString *)path {
-    Friend *friend = (Friend *)[NSEntityDescription insertNewObjectForEntityForName:@"Friend" inManagedObjectContext:_context];
-    friend.userID = userID;
-    friend.nickName = name;
-    friend.photoPath = path;
-    NSError *err = nil;
-    [_context save:&err];
-    if (err) {
-        NSLog(@"DataManager save friend failed: %@", err);
-    } else {
-        NSLog(@"save friend success");
-    }
-}
-
-- (void)deleteFriendID:(NSNumber *)userID {
-    NSFetchRequest *requset = [NSFetchRequest fetchRequestWithEntityName:@"Friend"];
-    NSPredicate *predicate = [NSPredicate predicateWithFormat:@"userID = %@", userID];
-    requset.predicate = predicate;
-    NSError *err1 = nil,*err2 = nil;
-    NSArray *arr = [_context executeFetchRequest:requset error:&err1];
-    if (err1) {
-        NSLog(@"DataManager select failed: %@", err1);
-    }
-    
-    NSManagedObject *obj = arr[0];
-    [_context deleteObject:obj];
-    [_context save:&err2];
-    if (err2) {
-        NSLog(@"DataManager delete friend failed: %@", err2);
-    }
-}
-
-- (NSArray *)getFriendByUserID:(NSNumber *)userID {
-    NSFetchRequest *request = [NSFetchRequest fetchRequestWithEntityName:@"Friend"];
-    NSPredicate *predicate = [NSPredicate predicateWithFormat:@"userID = %@", userID];
-    request.predicate = predicate;
-    NSError *err = nil;
-    NSArray *result = [_context executeFetchRequest:request error:&err];
-    return result;
-}
-
 #pragma mark - message
-- (NSFetchedResultsController *)getMessageByUserID:(NSNumber *)userID {
-    NSPredicate *predicate = [NSPredicate predicateWithFormat:@"userID = %@", userID];
+- (NSFetchedResultsController *)getMessageByUsername:(NSString *)username {
+    NSPredicate *predicate = [NSPredicate predicateWithFormat:@"username = %@", username];
     NSError *err = nil;
     NSFetchedResultsController *resultController = [self fetchWithEntityName:@"Message" predicate:predicate sortKey:@"time" ascending:YES error:&err];
     if (err) {
@@ -113,33 +60,33 @@
     return resultController;
 }
 
-- (void)saveMessageWithUserID:(NSNumber *)userID time:(NSDate *)time body:(NSString *)body isOut:(BOOL)isOut{
+- (void)saveMessageWithUsername:(NSString *)username time:(NSDate *)time body:(NSString *)body isOut:(BOOL)isOut{
     NSError *err = nil;
-    [self saveMessageWithUserID:userID time:time type:[NSNumber numberWithChar:0] body:body more:nil error:&err isOut:isOut];
+    [self saveMessageWithUsername:username time:time type:[NSNumber numberWithChar:0] body:body more:nil error:&err isOut:isOut];
     if (err) {
         NSLog(@"DataManager save message failed: %@", err);
     }
 }
 
-- (void)saveRecordWithUserID:(NSNumber *)userID time:(NSDate *)time path:(NSString *)path length:(NSString *)length isOut:(BOOL)isOut {
+- (void)saveRecordWithUsername:(NSString *)username time:(NSDate *)time path:(NSString *)path length:(NSString *)length isOut:(BOOL)isOut {
     NSError *err = nil;
-    [self saveMessageWithUserID:userID time:time type:[NSNumber numberWithChar:1] body:path more:length error:&err isOut:isOut];
+    [self saveMessageWithUsername:username time:time type:[NSNumber numberWithChar:1] body:path more:length error:&err isOut:isOut];
     if (err) {
         NSLog(@"DataManager save message failed: %@", err);
     }
 }
 
-- (void)savePhotoWithUserID:(NSNumber *)userID time:(NSDate *)time path:(NSString *)path thumbnail:(NSString *)thumbnailPath isOut:(BOOL)isOut{
+- (void)savePhotoWithUsername:(NSString *)username time:(NSDate *)time path:(NSString *)path thumbnail:(NSString *)thumbnailPath isOut:(BOOL)isOut{
     NSError *err = nil;
-    [self saveMessageWithUserID:userID time:time type:[NSNumber numberWithChar:2] body:path more:thumbnailPath error:&err isOut:isOut];
+    [self saveMessageWithUsername:username time:time type:[NSNumber numberWithChar:2] body:path more:thumbnailPath error:&err isOut:isOut];
     if (err) {
         NSLog(@"DataManager save message failed: %@", err);
     }
 }
 
-- (void)saveFileWithUserID:(NSNumber *)userID time:(NSDate *)time path:(NSString *)path fileName:(NSString *)name isOut:(BOOL)isOut {
+- (void)saveFileWithUsername:(NSString *)username time:(NSDate *)time path:(NSString *)path fileName:(NSString *)name isOut:(BOOL)isOut {
     NSError *err = nil;
-    [self saveMessageWithUserID:userID time:time type:[NSNumber numberWithChar:3] body:path more:name error:&err isOut:isOut];
+    [self saveMessageWithUsername:username time:time type:[NSNumber numberWithChar:3] body:path more:name error:&err isOut:isOut];
     if (err) {
         NSLog(@"DataManager save message failed: %@", err);
     }
@@ -155,22 +102,22 @@
     return resultController;
 }
 
-- (void)addRecentUserID:(NSNumber *)userID time:(NSDate *)time flag:(NSNumber *)flag body:(NSString *)body isOut:(BOOL)isOut {
+- (void)addRecentUsername:(NSString *)username time:(NSDate *)time body:(NSString *)body isOut:(BOOL)isOut {
     LastMessage *lastMessage = nil;
-    NSPredicate *predicate = [NSPredicate predicateWithFormat:@"userID = %@", userID];
+    NSPredicate *predicate = [NSPredicate predicateWithFormat:@"username = %@", username];
     NSError *err = nil;
-    NSFetchedResultsController *resultController = [self fetchWithEntityName:@"LastMessage" predicate:predicate sortKey:nil ascending:YES error:&err];
+    NSFetchedResultsController *resultController = [self fetchWithEntityName:@"LastMessage" predicate:predicate sortKey:@"time" ascending:YES error:&err];
     if (err) {
         NSLog(@"DataManager fetch recent failed: %@", err);
     }
     if ([resultController fetchedObjects].count == 0) {
         lastMessage = [NSEntityDescription insertNewObjectForEntityForName:@"LastMessage" inManagedObjectContext:_context];
-        lastMessage.userID = userID;
+        lastMessage.username = username;
     } else {
         lastMessage = [resultController fetchedObjects].firstObject;
     }
     lastMessage.time = time;
-    lastMessage.unread = [NSNumber numberWithUnsignedShort:1];
+    lastMessage.unread = @(lastMessage.unread.intValue + 1);
     lastMessage.body = body;
     lastMessage.isOut = [NSNumber numberWithBool:isOut];
     NSError *err2 = nil;
@@ -180,8 +127,8 @@
     }
 }
 
-- (void)updateUserID:(NSNumber *)userID {//已读
-    NSPredicate *predicate = [NSPredicate predicateWithFormat:@"userID = %@", userID];
+- (void)updateUsername:(NSString *)username {//已读
+    NSPredicate *predicate = [NSPredicate predicateWithFormat:@"username = %@", username];
     NSError *err = nil;
     NSFetchedResultsController *resultController = [self fetchWithEntityName:@"LastMessage" predicate:predicate sortKey:nil ascending:YES error:&err];
     if (err) {
@@ -196,8 +143,8 @@
     }
 }
 
-- (void)deleteRecentUserID:(NSNumber *)userID {
-    NSPredicate *predicate = [NSPredicate predicateWithFormat:@"userID = %@", userID];
+- (void)deleteRecentUsername:(NSString *)username {
+    NSPredicate *predicate = [NSPredicate predicateWithFormat:@"username = %@", username];
     NSError *err = nil;
     NSFetchedResultsController *resultController = [self fetchWithEntityName:@"LastMessage" predicate:predicate sortKey:nil ascending:YES error:&err];
     if (err) {

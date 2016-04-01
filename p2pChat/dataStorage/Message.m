@@ -2,12 +2,11 @@
 //  Message.m
 //  p2pChat
 //
-//  Created by xiaokun on 16/1/4.
+//  Created by xiaokun on 16/3/30.
 //  Copyright © 2016年 xiaokun. All rights reserved.
 //
 
 #import "Message.h"
-#import "Friend.h"
 
 @implementation Message
 

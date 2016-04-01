@@ -11,6 +11,6 @@
 @interface RecordView : UIView
 
 @property (strong, nonatomic) NSString *ipStr;
-@property (strong, nonatomic) NSNumber *userID;
+@property (strong, nonatomic) NSString *username;
 
 @end

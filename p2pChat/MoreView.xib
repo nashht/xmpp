@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="9059" systemVersion="15D21" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="9531" systemVersion="15D21" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="9049"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="9529"/>
     </dependencies>
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
@@ -13,7 +13,6 @@
             <subviews>
                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="agk-sT-Obe">
                     <rect key="frame" x="61" y="85" width="49" height="30"/>
-                    <animations/>
                     <state key="normal" title="picture"/>
                     <connections>
                         <action selector="pickPicture:" destination="iN0-l3-epB" eventType="touchUpInside" id="c4f-7q-78h"/>
@@ -21,7 +20,6 @@
                 </button>
                 <button opaque="NO" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="C3X-sd-Egy">
                     <rect key="frame" x="186" y="85" width="40" height="30"/>
-                    <animations/>
                     <state key="normal" title="photo"/>
                     <connections>
                         <action selector="pickPhoto:" destination="iN0-l3-epB" eventType="touchUpInside" id="iXl-q6-Aci"/>
@@ -29,16 +27,13 @@
                 </button>
                 <button opaque="NO" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="e2j-Ca-1dj">
                     <rect key="frame" x="449" y="85" width="46" height="30"/>
-                    <animations/>
                     <state key="normal" title="Button"/>
                 </button>
                 <button opaque="NO" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="xiR-mU-rlq">
                     <rect key="frame" x="314" y="85" width="46" height="30"/>
-                    <animations/>
                     <state key="normal" title="Button"/>
                 </button>
             </subviews>
-            <animations/>
             <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
             <constraints>
                 <constraint firstItem="agk-sT-Obe" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" constant="61" id="48Y-lZ-AfJ"/>

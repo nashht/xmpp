@@ -2,7 +2,7 @@
 //  Message+CoreDataProperties.h
 //  p2pChat
 //
-//  Created by xiaokun on 16/1/4.
+//  Created by xiaokun on 16/3/30.
 //  Copyright © 2016年 xiaokun. All rights reserved.
 //
 //  Choose "Create NSManagedObject Subclass…" from the Core Data editor menu
@@ -20,8 +20,7 @@ NS_ASSUME_NONNULL_BEGIN
 @property (nullable, nonatomic, retain) NSString *more;
 @property (nullable, nonatomic, retain) NSDate *time;
 @property (nullable, nonatomic, retain) NSNumber *type;
-@property (nullable, nonatomic, retain) NSNumber *userID;
-@property (nullable, nonatomic, retain) Friend *friend;
+@property (nullable, nonatomic, retain) NSString *username;
 
 @end
 

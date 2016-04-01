@@ -11,7 +11,7 @@
 
 @interface MoreView : UIView <UINavigationControllerDelegate, UIImagePickerControllerDelegate>
 
-@property (strong, nonatomic) NSNumber *userID;
+@property (strong, nonatomic) NSString *username;
 @property (strong, nonatomic) NSString *ipStr;
 
 @end
