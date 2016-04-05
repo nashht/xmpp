@@ -315,9 +315,12 @@
 
     CGFloat height = [notification.userInfo[UIKeyboardFrameEndUserInfoKey] CGRectValue].size.height;
     
-    [UIView animateWithDuration:0.2 animations:^{
-        self.view.frame = CGRectMake(self.view.frame.origin.x, self.view.frame.origin.y - height, self.view.frame.size.width, self.view.frame.size.height);
-    }];
+    if (height) {
+        [UIView animateWithDuration:0.2 animations:^{
+            self.view.frame = CGRectMake(self.view.frame.origin.x, self.view.frame.origin.y - height, self.view.frame.size.width, self.view.frame.size.height);
+        }];
+    }
+    
     
 //    //设置动画的名字
 //    [UIView beginAnimations:@"Animation" context:nil];

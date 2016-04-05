@@ -78,7 +78,6 @@
     }else{
         [_bodyBtn setBackgroundImage:[self resizeImageWithName:@"chat_recive_nor"] forState:UIControlStateNormal];
     }
-    
 }
 
 - (UIImage *)resizeImageWithName:(NSString *)name
