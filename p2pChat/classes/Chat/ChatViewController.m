@@ -294,7 +294,6 @@
 
 #pragma mark -keyboard notification
 - (void)keyboardWillShow:(NSNotification *)notification {
-    
     if (_showMoreView) {
         _baseBottomConstraint.constant = 0;
         [UIView animateWithDuration:0.5 animations:^{
