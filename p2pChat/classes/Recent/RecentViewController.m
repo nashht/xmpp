@@ -32,7 +32,6 @@
     [super viewDidLoad];
     
     _recentTableView.allowsSelection = NO;
-    
     if ([[NSUserDefaults standardUserDefaults]stringForKey:@"name"] == nil) {
         [self performSegueWithIdentifier:@"login" sender:nil];
     } else {

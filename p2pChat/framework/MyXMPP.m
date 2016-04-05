@@ -105,8 +105,8 @@
     }
 }
 
-- (void)fetchFriend:(NSString *)user {
-    [_vCardModule fetchvCardTempForJID:[XMPPJID jidWithString:[NSString stringWithFormat:@"%@@xmpp.test", user]] ignoreStorage:YES];
+- (XMPPvCardTemp *)fetchFriend:(XMPPJID *)userJid {
+    return [_vCardModule vCardTempForJID: userJid shouldFetch:YES];
 }
 
 - (void)updateMyEmail:(NSArray *)email {
@@ -143,9 +143,19 @@
     [query addChild:username];
     [query addChild:password];
     [iq addChild:query];
-    NSLog(@"%@",iq);
+    NSLog(@"%@iq",iq);
     [self.stream sendElement:iq];
 }
+
+/**
+ *  断开连接
+ */
+- (void)disconnected{
+    XMPPPresence *presence = [XMPPPresence presenceWithType:@"unavailable"];
+    [_stream sendElement:presence];
+    [_stream disconnect];
+};
+
 
 - (NSFetchedResultsController *)getFriends {
     NSManagedObjectContext *context = [[XMPPRosterCoreDataStorage sharedInstance] mainThreadManagedObjectContext];
@@ -179,8 +189,12 @@
         NSLog(@"Connect Error: %@", [[err userInfo] description]);
     }
     else{
-        NSLog(@"密码验证正确，正在登录...");
+        NSLog(@"正在验证密码...");
     }
+}
+
+- (void)xmppStreamConnectDidTimeout:(XMPPStream *)sender{
+    NSLog(@"连接超时");
 }
 
 - (void)xmppStreamDidAuthenticate:(XMPPStream *)sender {
@@ -195,8 +209,9 @@
     
     //vcard初始化
     [self initVCard];
-
-//    [self changeMyPassword:@"111"];
+    
+//    [self disconnected];          //  断开连接
+    [self changeMyPassword:@"111"];
 }
 
 /**
@@ -209,8 +224,8 @@
 }
 
 - (void)xmppStream:(XMPPStream *)sender didNotAuthenticate:(NSXMLElement *)error {
-    NSLog(@"Connect Error: %@", error);
-    NSLog(@"密码错误");
+    NSLog(@"Connect Error didNotAuthenticate: %@", error);
+    NSLog(@"用户名或密码错误");
 }
 
 #pragma mark - receivemessage delegate
@@ -242,21 +257,22 @@
 }
 
 #pragma mark - vcard delegate
-- (void)xmppvCardTempModule:(XMPPvCardTempModule *)vCardTempModule
-        didReceivevCardTemp:(XMPPvCardTemp *)vCardTemp
-                     forJID:(XMPPJID *)jid{
-    NSLog(@"获取名片");
-    //    [vCardTemp setNickname:@"ccc"];
-    //    [vCardTemp setNote:@"加油！"];
-    //    [_vCardModule updateMyvCardTemp:vCardTemp];//用于提交更新过的名片数据，只能更新自己的
-    NSString *nickname=vCardTemp.nickname;
-    NSArray *emailaddresse=vCardTemp.emailAddresses;
-    NSString *note=vCardTemp.note;
-    NSLog(@"昵称:%@ 邮箱:%@ 签名:%@ ",nickname,emailaddresse,note);
-}
+//- (void)xmppvCardTempModule:(XMPPvCardTempModule *)vCardTempModule
+//        didReceivevCardTemp:(XMPPvCardTemp *)vCardTemp
+//                     forJID:(XMPPJID *)jid{
+//    NSLog(@"获取名片");
+//    //    [vCardTemp setNickname:@"ccc"];
+//    //    [vCardTemp setNote:@"加油！"];
+//    //    [_vCardModule updateMyvCardTemp:vCardTemp];//用于提交更新过的名片数据，只能更新自己的
+//    NSString *nickname = vCardTemp.nickname;
+//    NSArray *emailaddresse = vCardTemp.emailAddresses;
+//    NSString *note = vCardTemp.note;
+//    NSLog(@"昵称:%@ 邮箱:%@ 签名:%@ ",nickname,emailaddresse,note);
+//}
 
 - (void)xmppvCardTempModuleDidUpdateMyvCard:(XMPPvCardTempModule *)vCardTempModule{
     NSLog(@"did update");
+    
 }
 
 - (void)xmppvCardTempModule:(XMPPvCardTempModule *)vCardTempModule failedToUpdateMyvCard:(NSXMLElement *)error{
@@ -267,5 +283,6 @@
 - (void)xmppRosterDidEndPopulating:(XMPPRoster *)sender {
 
 }
+
 
 @end
