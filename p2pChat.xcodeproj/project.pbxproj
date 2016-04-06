@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		84AD18E21CB4ADEE00357F60 /* EditTelController.m in Sources */ = {isa = PBXBuildFile; fileRef = 84AD18E11CB4ADEE00357F60 /* EditTelController.m */; };
 		900122631CA91EE3005D5BFA /* ChatViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 900122461CA91EE2005D5BFA /* ChatViewController.m */; };
 		900122641CA91EE3005D5BFA /* MessageCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 900122481CA91EE2005D5BFA /* MessageCell.m */; };
 		900122651CA91EE3005D5BFA /* MessageFrameModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 9001224A1CA91EE2005D5BFA /* MessageFrameModel.m */; };
@@ -226,6 +227,8 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		84AD18E01CB4ADEE00357F60 /* EditTelController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EditTelController.h; sourceTree = "<group>"; };
+		84AD18E11CB4ADEE00357F60 /* EditTelController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EditTelController.m; sourceTree = "<group>"; };
 		900122451CA91EE2005D5BFA /* ChatViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ChatViewController.h; sourceTree = "<group>"; };
 		900122461CA91EE2005D5BFA /* ChatViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ChatViewController.m; sourceTree = "<group>"; };
 		900122471CA91EE2005D5BFA /* MessageCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MessageCell.h; sourceTree = "<group>"; };
@@ -653,9 +656,35 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		84AD18D01CB4A91800357F60 /* EditTel */ = {
+			isa = PBXGroup;
+			children = (
+				84AD18E01CB4ADEE00357F60 /* EditTelController.h */,
+				84AD18E11CB4ADEE00357F60 /* EditTelController.m */,
+			);
+			name = EditTel;
+			sourceTree = "<group>";
+		};
+		84AD18D11CB4A92F00357F60 /* ChangePsw */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			name = ChangePsw;
+			sourceTree = "<group>";
+		};
+		84AD18D51CB4ACA000357F60 /* EditEmail */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			name = EditEmail;
+			sourceTree = "<group>";
+		};
 		900122431CA91EE2005D5BFA /* classes */ = {
 			isa = PBXGroup;
 			children = (
+				84AD18D51CB4ACA000357F60 /* EditEmail */,
+				84AD18D11CB4A92F00357F60 /* ChangePsw */,
+				84AD18D01CB4A91800357F60 /* EditTel */,
 				90FA06501CAE06D400851B1C /* Me */,
 				904175401CA9290D005A024B /* Login */,
 				900122711CA9206B005D5BFA /* Main */,
@@ -2069,6 +2098,7 @@
 				DA90B1A51C8989930080E037 /* XMPPReconnect.m in Sources */,
 				DA90B20E1C8989930080E037 /* DDTTYLogger.m in Sources */,
 				DA90B1F81C8989930080E037 /* XEP_0223.m in Sources */,
+				84AD18E21CB4ADEE00357F60 /* EditTelController.m in Sources */,
 				DA90B1D51C8989930080E037 /* TURNSocket.m in Sources */,
 				DA90B1C71C8989930080E037 /* XMPPvCardCoreDataStorageObject.m in Sources */,
 				DA90B1921C8989930080E037 /* NSData+XMPP.m in Sources */,
