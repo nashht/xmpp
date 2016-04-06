@@ -23,7 +23,7 @@
 @implementation AppDelegate
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
-   [[NSUserDefaults standardUserDefaults]removeObjectForKey:@"name"];
+//   [[NSUserDefaults standardUserDefaults]removeObjectForKey:@"name"];
     _dataManager = [[DataManager alloc]init];
     _dataManager.context = _managedObjectContext;
     _myXMPP = [MyXMPP shareInstance];

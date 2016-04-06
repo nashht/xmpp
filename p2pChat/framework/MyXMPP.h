@@ -37,7 +37,7 @@ typedef NS_ENUM (char, MessageType) {
 - (void)updateFriendsList;
 - (XMPPvCardTemp *)fetchFriend:(XMPPJID *)userJid;
 
-- (void)updateMyEmail:(NSArray *)email;
+- (void)updateMyEmail:(NSString *)email;
 - (void)updateMyNote:(NSString *)note;
 - (void)updateMyTel:(NSString *)tel;
 - (void)changeMyPassword:(NSString *)newpassword;
