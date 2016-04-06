@@ -423,6 +423,9 @@
                                                 </label>
                                             </subviews>
                                         </tableViewCellContentView>
+                                        <connections>
+                                            <segue destination="Zxd-O6-HJc" kind="show" id="ntY-xW-tlS"/>
+                                        </connections>
                                     </tableViewCell>
                                 </cells>
                             </tableViewSection>
@@ -529,6 +532,34 @@
                 <placeholder placeholderIdentifier="IBFirstResponder" id="kNu-Kh-C6S" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="-856" y="988"/>
+        </scene>
+        <!--Edit Email Controller-->
+        <scene sceneID="hHT-Aj-KVZ">
+            <objects>
+                <viewController id="Zxd-O6-HJc" customClass="EditEmailController" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="XdD-uX-K2x"/>
+                        <viewControllerLayoutGuide type="bottom" id="MlL-8E-jyZ"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="u0d-zY-K0f">
+                        <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="line" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="zeO-HS-N4s">
+                                <rect key="frame" x="0.0" y="72" width="600" height="30"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                <textInputTraits key="textInputTraits"/>
+                            </textField>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                    </view>
+                    <connections>
+                        <outlet property="emailText" destination="zeO-HS-N4s" id="GvU-2R-3Kc"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="jDj-Ch-lp3" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="-35" y="993"/>
         </scene>
     </scenes>
     <resources>

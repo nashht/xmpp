@@ -10,4 +10,10 @@
 
 @interface EditEmailController : UIViewController
 
+
+@property (strong, nonatomic) IBOutlet UITextField *emailText;
+
+- (void)save;
+
+
 @end

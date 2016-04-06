@@ -83,10 +83,16 @@
     cell.lastmessagelabel.text = lastMessage.body;
     cell.userimage.image = [UIImage imageNamed:@"1"];
     cell.lastmessagetime.text = [Tool stringFromDate:lastMessage.time];
-    
-    NSString *str = [lastMessage.unread stringValue];
-    [cell setUnread:str];
+
+    NSNumber *num = lastMessage.unread;
     cell.nonreadmessagenum.text = [lastMessage.unread stringValue];
+    [cell setUnread:num];
+    
+//    NSString *str = [lastMessage.unread stringValue];
+//    cell.nonreadmessagenum.text = [lastMessage.unread stringValue];
+//    [cell setUnread:str];
+    
+    
     
     return cell;
 }

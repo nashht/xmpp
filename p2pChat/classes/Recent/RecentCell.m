@@ -15,15 +15,24 @@
 
 @implementation RecentCell
 
-- (void)setUnread:(NSString *)num {
+- (void)setUnread:(NSNumber *) num {
     
+    NSNumber * minNumber = [[NSNumber alloc] initWithInt:0];
+    NSNumber * maxNumber = [[NSNumber alloc] initWithInt:99];
     
-    if ([num  isEqual: @"0"]) {
+    if ([num compare:minNumber] == NSOrderedSame) {
         _nonreadmessagenum.hidden=YES;
     }
-    else{
+    else
+    {
+        if ([num compare:maxNumber] == NSOrderedDescending) {
+            _nonreadmessagenum.text = @"99+";
+        }
         _nonreadmessagenum.hidden=NO;
     }
 }
+
+
+
 
 @end
