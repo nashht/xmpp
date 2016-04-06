@@ -15,5 +15,15 @@
 
 @implementation RecentCell
 
+- (void)setUnread:(NSString *)num {
+    
+    
+    if ([num  isEqual: @"0"]) {
+        _nonreadmessagenum.hidden=YES;
+    }
+    else{
+        _nonreadmessagenum.hidden=NO;
+    }
+}
 
 @end

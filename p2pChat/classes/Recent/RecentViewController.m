@@ -33,6 +33,7 @@
     
     if ([[NSUserDefaults standardUserDefaults]stringForKey:@"name"] == nil) {
         [self performSegueWithIdentifier:@"login" sender:nil];
+        [_activityView removeFromSuperview];
     } else {
         [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(myXmppDidLogin) name:MyXmppDidLoginNotification object:nil];
         [_activityView startAnimating];
@@ -83,6 +84,10 @@
     cell.userimage.image = [UIImage imageNamed:@"1"];
     cell.lastmessagetime.text = [Tool stringFromDate:lastMessage.time];
     
+    NSString *str = [lastMessage.unread stringValue];
+    [cell setUnread:str];
+    cell.nonreadmessagenum.text = [lastMessage.unread stringValue];
+    
     return cell;
 }
 
@@ -94,6 +99,7 @@
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     LastMessage *lastMessage = [_recentController objectAtIndexPath:indexPath];
     [self performSegueWithIdentifier:@"chat" sender:lastMessage.username];//跳转到chat界面，并传参数，即当前聊天对象名称
+    [_dataManager updateUsername:lastMessage.username];
 }//当点击一个tableview时会调用以上代理，触发跳转到聊天界面
 
 @end

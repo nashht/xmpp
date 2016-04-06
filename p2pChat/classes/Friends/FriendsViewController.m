@@ -41,6 +41,11 @@
     self.tableView.sectionHeaderHeight = 44;
     
     _friendsController = [[MyXMPP shareInstance]getFriends];
+    
+
+    
+    
+    
 }
 
 - (void)viewWillAppear:(BOOL)animated {

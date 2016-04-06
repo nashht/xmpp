@@ -8,6 +8,8 @@
 
 #import "EditTelController.h"
 
+
+
 @interface EditTelController ()
 
 @end
@@ -17,6 +19,13 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     // Do any additional setup after loading the view.
+    
+    _telText.text = @"12345678901";
+
+    UIBarButtonItem *saveItem = [[UIBarButtonItem alloc]initWithBarButtonSystemItem:UIBarButtonSystemItemSave target:self action:@selector(save:)];
+    self.navigationItem.rightBarButtonItem = saveItem;
+    
+    self.telText.borderStyle = UITextBorderStyleRoundedRect;
     
     
     
@@ -28,14 +37,8 @@
     // Dispose of any resources that can be recreated.
 }
 
-/*
-#pragma mark - Navigation
+- (void)save {
 
-// In a storyboard-based application, you will often want to do a little preparation before navigation
-- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
-    // Get the new view controller using [segue destinationViewController].
-    // Pass the selected object to the new view controller.
 }
-*/
 
 @end

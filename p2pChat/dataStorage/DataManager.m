@@ -130,7 +130,7 @@
 - (void)updateUsername:(NSString *)username {//已读
     NSPredicate *predicate = [NSPredicate predicateWithFormat:@"username = %@", username];
     NSError *err = nil;
-    NSFetchedResultsController *resultController = [self fetchWithEntityName:@"LastMessage" predicate:predicate sortKey:nil ascending:YES error:&err];
+    NSFetchedResultsController *resultController = [self fetchWithEntityName:@"LastMessage" predicate:predicate sortKey:@"time" ascending:YES error:&err];
     if (err) {
         NSLog(@"DataManager fetch recent failed: %@", err);
     }
@@ -146,7 +146,7 @@
 - (void)deleteRecentUsername:(NSString *)username {
     NSPredicate *predicate = [NSPredicate predicateWithFormat:@"username = %@", username];
     NSError *err = nil;
-    NSFetchedResultsController *resultController = [self fetchWithEntityName:@"LastMessage" predicate:predicate sortKey:nil ascending:YES error:&err];
+    NSFetchedResultsController *resultController = [self fetchWithEntityName:@"LastMessage" predicate:predicate sortKey:@"time" ascending:YES error:&err];
     if (err) {
         NSLog(@"DataManager fetch recent failed: %@", err);
     }

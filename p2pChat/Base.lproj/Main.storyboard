@@ -502,13 +502,33 @@
         <scene sceneID="2CD-HC-Tws">
             <objects>
                 <viewController storyboardIdentifier="EditTelCell" id="Rsq-UR-4G0" customClass="EditTelController" sceneMemberID="viewController">
-                    <toolbarItems/>
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="nlI-fa-NAi"/>
+                        <viewControllerLayoutGuide type="bottom" id="nZL-9d-tfG"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="XJt-9b-JCk">
+                        <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
+                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                        <subviews>
+                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="line" textAlignment="natural" minimumFontSize="17" clearButtonMode="always" translatesAutoresizingMaskIntoConstraints="NO" id="Kvi-l5-UKw">
+                                <rect key="frame" x="0.0" y="72" width="600" height="30"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <textInputTraits key="textInputTraits" keyboardAppearance="alert"/>
+                            </textField>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                    </view>
+                    <toolbarItems>
+                        <barButtonItem title="Item" id="shF-7D-bx6"/>
+                    </toolbarItems>
                     <simulatedToolbarMetrics key="simulatedBottomBarMetrics"/>
-                    <simulatedScreenMetrics key="simulatedDestinationMetrics" type="retina55"/>
+                    <connections>
+                        <outlet property="telText" destination="Kvi-l5-UKw" id="lET-ic-uPW"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="kNu-Kh-C6S" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-904" y="982"/>
+            <point key="canvasLocation" x="-856" y="988"/>
         </scene>
     </scenes>
     <resources>

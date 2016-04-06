@@ -8,6 +8,13 @@
 
 #import <UIKit/UIKit.h>
 
+
 @interface EditTelController : UIViewController
+
+@property (weak,nonatomic) IBOutlet UITextField *telText;
+
+- (void)save;
+
+
 
 @end

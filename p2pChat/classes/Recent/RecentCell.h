@@ -15,5 +15,7 @@
 @property (strong, nonatomic)IBOutlet UILabel *usernamelabel;
 @property (strong, nonatomic)IBOutlet UILabel *lastmessagelabel;
 @property (strong, nonatomic)IBOutlet UILabel *lastmessagetime;
+@property (strong, nonatomic)IBOutlet UILabel *nonreadmessagenum;
 
+- (void)setUnread:(NSString *)num;
 @end
