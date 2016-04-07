@@ -22,6 +22,7 @@
     
     NSNumber * minNumber = [[NSNumber alloc] initWithInt:0];
     NSNumber * maxNumber = [[NSNumber alloc] initWithInt:10];
+    [_nonreadmessagenum.layer setCornerRadius:CGRectGetHeight([_nonreadmessagenum bounds])/2];
     
     if ([num compare:minNumber] == NSOrderedSame) {
         _nonreadmessagenum.hidden=YES;

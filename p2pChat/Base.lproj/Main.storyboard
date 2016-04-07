@@ -108,10 +108,10 @@
                                 <textInputTraits key="textInputTraits" secureTextEntry="YES"/>
                             </textField>
                             <button opaque="NO" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="PYe-k1-iQo">
-                                <rect key="frame" x="49" y="266" width="511" height="33"/>
+                                <rect key="frame" x="199" y="268" width="203" height="33"/>
                                 <color key="backgroundColor" red="0.16171896457672119" green="0.74865001440048218" blue="0.99656194448471069" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                <state key="normal" title="登          录">
+                                <state key="normal" title="        登          录        ">
                                     <color key="titleColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                                 </state>
                                 <connections>
@@ -137,6 +137,7 @@
                     </view>
                     <navigationItem key="navigationItem" id="OUL-RC-Cii"/>
                     <connections>
+                        <outlet property="login" destination="PYe-k1-iQo" id="LmG-Kt-quk"/>
                         <outlet property="nameTF" destination="Arr-NU-I2v" id="zhR-0V-shu"/>
                         <outlet property="passwordTF" destination="8GO-or-o5t" id="Qfy-XJ-ZLp"/>
                     </connections>
