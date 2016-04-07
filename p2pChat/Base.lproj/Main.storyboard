@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="9532" systemVersion="15C50" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="XfM-Wq-Nn4">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="10116" systemVersion="15C50" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="XfM-Wq-Nn4">
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="9530"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="10085"/>
         <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
     </dependencies>
     <scenes>
@@ -107,9 +107,13 @@
                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                 <textInputTraits key="textInputTraits" secureTextEntry="YES"/>
                             </textField>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="PYe-k1-iQo">
-                                <rect key="frame" x="285" y="270" width="30" height="30"/>
-                                <state key="normal" title="登录"/>
+                            <button opaque="NO" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="PYe-k1-iQo">
+                                <rect key="frame" x="49" y="266" width="511" height="33"/>
+                                <color key="backgroundColor" red="0.16171896457672119" green="0.74865001440048218" blue="0.99656194448471069" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <state key="normal" title="登          录">
+                                    <color key="titleColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                                </state>
                                 <connections>
                                     <action selector="login:" destination="WgI-dm-LF5" eventType="touchUpInside" id="g8f-kb-fwt"/>
                                 </connections>
@@ -443,6 +447,7 @@
                                                     <state key="normal" title="修改密码"/>
                                                     <connections>
                                                         <action selector="updatePassword:" destination="Fca-zl-Yxj" eventType="touchUpInside" id="B39-sJ-RFc"/>
+                                                        <segue destination="mwA-fd-g7f" kind="show" id="vtU-3B-ekf"/>
                                                     </connections>
                                                 </button>
                                             </subviews>
@@ -536,7 +541,7 @@
         <!--Edit Email Controller-->
         <scene sceneID="hHT-Aj-KVZ">
             <objects>
-                <viewController id="Zxd-O6-HJc" customClass="EditEmailController" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="EditEmailCell" id="Zxd-O6-HJc" customClass="EditEmailController" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="XdD-uX-K2x"/>
                         <viewControllerLayoutGuide type="bottom" id="MlL-8E-jyZ"/>
@@ -560,6 +565,52 @@
                 <placeholder placeholderIdentifier="IBFirstResponder" id="jDj-Ch-lp3" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="-35" y="993"/>
+        </scene>
+        <!--Change Psw Controller-->
+        <scene sceneID="zaO-A9-fDh">
+            <objects>
+                <viewController storyboardIdentifier="ChangePswCell" id="mwA-fd-g7f" customClass="ChangePswController" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="hvM-6b-dE3"/>
+                        <viewControllerLayoutGuide type="bottom" id="qEH-iM-BBH"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="Nw1-67-x8b">
+                        <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="新密码" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="8Kd-k8-1Z0">
+                                <rect key="frame" x="0.0" y="72" width="99" height="29"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="确认密码" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="IDZ-9N-zie">
+                                <rect key="frame" x="0.0" y="121" width="99" height="29"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="line" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="gIq-7j-B3X">
+                                <rect key="frame" x="100" y="71" width="362" height="30"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                <textInputTraits key="textInputTraits"/>
+                            </textField>
+                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="line" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="t3d-rE-NpN">
+                                <rect key="frame" x="100" y="118" width="362" height="30"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                <textInputTraits key="textInputTraits"/>
+                            </textField>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                    </view>
+                    <connections>
+                        <outlet property="Pswidentify" destination="t3d-rE-NpN" id="g7g-UR-Ju7"/>
+                        <outlet property="Pswnew" destination="gIq-7j-B3X" id="jeP-bu-tLl"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="j2h-RQ-8RH" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="681" y="765"/>
         </scene>
     </scenes>
     <resources>
