@@ -10,7 +10,7 @@
 
 @interface MeController ()
 
-@property (weak, nonatomic) IBOutlet UIView *photoView;
+@property (weak, nonatomic) IBOutlet UIImageView *photoView;
 @property (weak, nonatomic) IBOutlet UILabel *nameLabel;
 @property (weak, nonatomic) IBOutlet UILabel *groupLabel;
 @property (weak, nonatomic) IBOutlet UILabel *phoneLabel;
@@ -21,6 +21,9 @@
 @implementation MeController
 
 - (void)viewDidLoad {
+    
+    [_photoView.layer setCornerRadius:CGRectGetHeight([_photoView bounds])/2];
+    _photoView.layer.masksToBounds = true;
     _nameLabel.text = [[NSUserDefaults standardUserDefaults]stringForKey:@"name"];
     _groupLabel.text = @"nmrc1";
     _phoneLabel.text = @"12345678901";

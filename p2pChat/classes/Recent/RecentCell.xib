@@ -33,8 +33,8 @@
                     <nil key="highlightedColor"/>
                 </label>
                 <label opaque="NO" userInteractionEnabled="NO" contentMode="center" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="1" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" highlighted="YES" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="lQr-yf-M9j">
-                    <rect key="frame" x="341" y="51" width="27" height="21"/>
-                    <color key="backgroundColor" red="0.76379668712615967" green="0.49004960060119629" blue="0.91550284624099731" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                    <rect key="frame" x="327" y="51" width="27" height="21"/>
+                    <color key="backgroundColor" red="0.95053964853286743" green="0.77987241744995117" blue="0.93631905317306519" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                     <accessibility key="accessibilityConfiguration">
                         <accessibilityTraits key="traits" image="YES" staticText="YES"/>
                     </accessibility>

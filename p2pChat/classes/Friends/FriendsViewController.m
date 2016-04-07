@@ -86,6 +86,8 @@
     XMPPUserCoreDataStorageObject *obj = ( XMPPUserCoreDataStorageObject *) [_friendsController objectAtIndexPath:indexPath];
     
     cell.nameLable.text = obj.nickname;
+    
+    [cell awakeFromNib];
     cell.iconView.image = [UIImage imageNamed:@"0"];
 
     return cell;

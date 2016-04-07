@@ -81,6 +81,7 @@
     LastMessage *lastMessage = [_recentController objectAtIndexPath:indexPath];
     cell.usernamelabel.text = lastMessage.username;
     cell.lastmessagelabel.text = lastMessage.body;
+    [cell awakeFromNib];
     cell.userimage.image = [UIImage imageNamed:@"1"];
     cell.lastmessagetime.text = [Tool stringFromDate:lastMessage.time];
 

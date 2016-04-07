@@ -14,6 +14,9 @@
 @property (weak, nonatomic) IBOutlet UITextField *nameTF;
 @property (weak, nonatomic) IBOutlet UITextField *passwordTF;
 
+
+
+
 @end
 
 @implementation LoginViewController
@@ -25,6 +28,10 @@
     [_login.layer setCornerRadius:CGRectGetHeight([_login bounds])/4];
     _login.layer.masksToBounds = true;
     _login.frame = CGRectMake(199, 269, 400, 32);
+    
+    
+   
+    
 
 }
 
@@ -42,5 +49,16 @@
     [[NSUserDefaults standardUserDefaults]setObject:_passwordTF.text forKey:@"password"];
     [self dismissViewControllerAnimated:YES completion:nil];
 }
+
+- (void)myXmppDidNotAuthenticate{
+    //添加弹窗
+    
+    
+    UIAlertController *alertController = [UIAlertController alertControllerWithTitle:@"登录失败" message:@"帐号或密码错误，请重新输入。" preferredStyle:UIAlertControllerStyleAlert];
+    UIAlertAction *okAction = [UIAlertAction actionWithTitle:@"确定" style:UIAlertActionStyleDefault handler:nil];
+    [alertController addAction:okAction];
+    [self presentViewController:alertController animated:YES completion:nil];
+}
+
 
 @end
