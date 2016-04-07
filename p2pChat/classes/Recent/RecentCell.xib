@@ -34,7 +34,7 @@
                 </label>
                 <label opaque="NO" userInteractionEnabled="NO" contentMode="center" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="1" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" highlighted="YES" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="lQr-yf-M9j">
                     <rect key="frame" x="327" y="51" width="27" height="21"/>
-                    <color key="backgroundColor" red="0.95053964853286743" green="0.77987241744995117" blue="0.93631905317306519" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                    <color key="backgroundColor" red="0.25661149621009827" green="0.99050086736679077" blue="0.94451731443405151" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                     <accessibility key="accessibilityConfiguration">
                         <accessibilityTraits key="traits" image="YES" staticText="YES"/>
                     </accessibility>
