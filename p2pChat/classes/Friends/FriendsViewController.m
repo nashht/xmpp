@@ -28,6 +28,8 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
  
+    self.navigationItem.title = @"通讯录";
+    
     // 假数据
     FriendsGroup *group1 = [[FriendsGroup alloc] init];
     group1.name = @"group1";

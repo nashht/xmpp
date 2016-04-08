@@ -22,19 +22,11 @@
                                 <rect key="frame" x="0.0" y="0.0" width="600" height="551"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                             </tableView>
-                            <activityIndicatorView opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" style="gray" translatesAutoresizingMaskIntoConstraints="NO" id="0n6-Yd-sYx">
-                                <rect key="frame" x="290" y="290" width="20" height="20"/>
-                            </activityIndicatorView>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
-                        <constraints>
-                            <constraint firstItem="0n6-Yd-sYx" firstAttribute="centerY" secondItem="8bC-Xf-vdC" secondAttribute="centerY" id="BFc-hw-R1R"/>
-                            <constraint firstItem="0n6-Yd-sYx" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="y9I-WD-Mp1"/>
-                        </constraints>
                     </view>
                     <navigationItem key="navigationItem" id="yN6-gA-HVK"/>
                     <connections>
-                        <outlet property="activityView" destination="0n6-Yd-sYx" id="H9Z-Rn-RPp"/>
                         <outlet property="recentTableView" destination="tnx-Fz-qhY" id="j2q-do-WNf"/>
                         <segue destination="uyE-je-epL" kind="show" identifier="chat" id="FZk-rq-Hm8"/>
                         <segue destination="WgI-dm-LF5" kind="presentation" identifier="login" id="q2g-zp-6cV"/>
@@ -285,11 +277,11 @@
             </objects>
             <point key="canvasLocation" x="-2057" y="-495"/>
         </scene>
-        <!--最近-->
+        <!--最近联系人-->
         <scene sceneID="o1E-Hv-UbA">
             <objects>
-                <navigationController automaticallyAdjustsScrollViewInsets="NO" id="6cH-r1-QTD" sceneMemberID="viewController">
-                    <tabBarItem key="tabBarItem" title="最近" id="XeX-sP-tmQ"/>
+                <navigationController title="最近联系人" automaticallyAdjustsScrollViewInsets="NO" id="6cH-r1-QTD" sceneMemberID="viewController">
+                    <tabBarItem key="tabBarItem" title="最近" image="tabbar_chat_n" selectedImage="tabbar_chat_f" id="XeX-sP-tmQ"/>
                     <toolbarItems/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" id="mgU-jL-9Qs">
                         <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
@@ -304,11 +296,11 @@
             </objects>
             <point key="canvasLocation" x="-1265" y="-1211"/>
         </scene>
-        <!--联系人-->
+        <!--通讯录-->
         <scene sceneID="wxq-AU-cef">
             <objects>
-                <navigationController automaticallyAdjustsScrollViewInsets="NO" id="0N1-yJ-0FF" sceneMemberID="viewController">
-                    <tabBarItem key="tabBarItem" title="联系人" id="u1H-8W-Fna"/>
+                <navigationController title="通讯录" automaticallyAdjustsScrollViewInsets="NO" id="0N1-yJ-0FF" sceneMemberID="viewController">
+                    <tabBarItem key="tabBarItem" title="联系人" image="tabbar_contact_n" selectedImage="tabbar_contact_f" id="u1H-8W-Fna"/>
                     <toolbarItems/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" id="Fox-4e-ioK">
                         <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
@@ -327,7 +319,7 @@
         <scene sceneID="4kR-dT-yKn">
             <objects>
                 <navigationController automaticallyAdjustsScrollViewInsets="NO" id="Bu1-dI-heI" sceneMemberID="viewController">
-                    <tabBarItem key="tabBarItem" title="我" id="XqY-0z-ItB"/>
+                    <tabBarItem key="tabBarItem" title="我" image="tabbar_mine_n" selectedImage="tabbar_mine_f" id="XqY-0z-ItB"/>
                     <toolbarItems/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" id="Zxl-Eu-A7K">
                         <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
@@ -404,7 +396,7 @@
                                             </subviews>
                                         </tableViewCellContentView>
                                         <connections>
-                                            <segue destination="Rsq-UR-4G0" kind="show" id="xB3-rr-TWo"/>
+                                            <segue destination="Rsq-UR-4G0" kind="push" id="xB3-rr-TWo"/>
                                         </connections>
                                     </tableViewCell>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" accessoryType="disclosureIndicator" indentationWidth="10" id="IcJ-1N-bjk">
@@ -429,7 +421,7 @@
                                             </subviews>
                                         </tableViewCellContentView>
                                         <connections>
-                                            <segue destination="Zxd-O6-HJc" kind="show" id="ntY-xW-tlS"/>
+                                            <segue destination="Zxd-O6-HJc" kind="push" id="ntY-xW-tlS"/>
                                         </connections>
                                     </tableViewCell>
                                 </cells>
@@ -448,7 +440,7 @@
                                                     <state key="normal" title="修改密码"/>
                                                     <connections>
                                                         <action selector="updatePassword:" destination="Fca-zl-Yxj" eventType="touchUpInside" id="B39-sJ-RFc"/>
-                                                        <segue destination="mwA-fd-g7f" kind="show" id="vtU-3B-ekf"/>
+                                                        <segue destination="mwA-fd-g7f" kind="push" id="vtU-3B-ekf"/>
                                                     </connections>
                                                 </button>
                                             </subviews>
@@ -529,6 +521,7 @@
                     <toolbarItems>
                         <barButtonItem title="Item" id="shF-7D-bx6"/>
                     </toolbarItems>
+                    <navigationItem key="navigationItem" id="1Ys-KD-ZyZ"/>
                     <simulatedToolbarMetrics key="simulatedBottomBarMetrics"/>
                     <connections>
                         <outlet property="telText" destination="Kvi-l5-UKw" id="lET-ic-uPW"/>
@@ -552,12 +545,13 @@
                         <subviews>
                             <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="line" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="zeO-HS-N4s">
                                 <rect key="frame" x="0.0" y="72" width="600" height="30"/>
-                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                 <textInputTraits key="textInputTraits"/>
                             </textField>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                     </view>
+                    <navigationItem key="navigationItem" id="5G1-zt-gtu"/>
                     <connections>
                         <outlet property="emailText" destination="zeO-HS-N4s" id="GvU-2R-3Kc"/>
                     </connections>
@@ -578,20 +572,15 @@
                         <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="新密码" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="8Kd-k8-1Z0">
-                                <rect key="frame" x="0.0" y="72" width="99" height="29"/>
-                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
-                                <nil key="highlightedColor"/>
-                            </label>
                             <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="line" placeholder="请输入新密码" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="gIq-7j-B3X">
-                                <rect key="frame" x="100" y="72" width="500" height="30"/>
-                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                <rect key="frame" x="0.0" y="72" width="600" height="30"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                 <textInputTraits key="textInputTraits"/>
                             </textField>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                     </view>
+                    <navigationItem key="navigationItem" id="Q8L-o0-6gJ"/>
                     <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
                     <size key="freeformSize" width="600" height="600"/>
                     <connections>
@@ -608,5 +597,11 @@
         <image name="chat_bottom_textfield" width="166" height="31"/>
         <image name="chat_bottom_up_nor" width="34" height="34"/>
         <image name="chat_bottom_voice_nor" width="34" height="34"/>
+        <image name="tabbar_chat_f" width="30" height="30"/>
+        <image name="tabbar_chat_n" width="30" height="30"/>
+        <image name="tabbar_contact_f" width="30" height="30"/>
+        <image name="tabbar_contact_n" width="30" height="30"/>
+        <image name="tabbar_mine_f" width="30" height="30"/>
+        <image name="tabbar_mine_n" width="30" height="30"/>
     </resources>
 </document>

@@ -18,7 +18,6 @@
 @interface RecentViewController ()<UITableViewDataSource, UITableViewDelegate>
 
 @property (weak, nonatomic) IBOutlet UITableView *recentTableView;
-@property (weak, nonatomic) IBOutlet UIActivityIndicatorView *activityView;
 
 @property (strong, nonatomic) DataManager *dataManager;
 @property (strong, nonatomic) NSFetchedResultsController *recentController;
@@ -31,12 +30,14 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     
+    self.navigationItem.title = @"最近联系人";
+    
     if ([[NSUserDefaults standardUserDefaults]stringForKey:@"name"] == nil) {
         [self performSegueWithIdentifier:@"login" sender:nil];
-        [_activityView removeFromSuperview];
     } else {
         [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(myXmppDidLogin) name:MyXmppDidLoginNotification object:nil];
-        [_activityView startAnimating];
+        [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(myXmppConnectFailed) name:MyXmppConnectFailedNotification object:nil];
+        [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(myXmppAuthenticateFailed) name:MyXmppAuthenticateFailedNotification object:nil];
     }
     _recentTableView.dataSource = self;
     _recentTableView.delegate = self;
@@ -64,9 +65,22 @@
 }
 
 - (void)myXmppDidLogin {
-    [_activityView stopAnimating];
-    [_activityView removeFromSuperview];
-    [[NSNotificationCenter defaultCenter]removeObserver:self];
+    [[NSNotificationCenter defaultCenter]removeObserver:self name:MyXmppDidLoginNotification object:nil];
+    self.navigationItem.title = @"最近联系人";
+}
+
+- (void)myXmppConnectFailed {
+    [[NSNotificationCenter defaultCenter]removeObserver:self name:MyXmppConnectFailedNotification object:nil];
+    self.navigationItem.title = @"最近联系人（未连接）";
+}
+
+- (void)myXmppAuthenticateFailed {
+//    UIAlertController
+    UIAlertController *alertController = [UIAlertController alertControllerWithTitle:@"登录失败" message:@"密码已修改，请重新登录。" preferredStyle:UIAlertControllerStyleAlert];
+    UIAlertAction *okAction = [UIAlertAction actionWithTitle:@"确定" style:UIAlertActionStyleDefault handler:nil];
+    [alertController addAction:okAction];
+    [self presentViewController:alertController animated:YES completion:nil];
+
 }
 
 #pragma mark - table view data source
@@ -89,13 +103,7 @@
     NSNumber *num = lastMessage.unread;
     cell.nonreadmessagenum.text = [lastMessage.unread stringValue];
     [cell setUnread:num];
-    
-//    NSString *str = [lastMessage.unread stringValue];
-//    cell.nonreadmessagenum.text = [lastMessage.unread stringValue];
-//    [cell setUnread:str];
-    
-    
-    
+       
     return cell;
 }
 

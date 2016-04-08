@@ -30,6 +30,7 @@
         _timeLable = timeLable;
         
         //        2.头像
+
         UIImageView *photoImage = [[UIImageView alloc] init];
         [self.contentView addSubview:photoImage];
         _photoImage = photoImage;

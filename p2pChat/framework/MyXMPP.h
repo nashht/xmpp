@@ -12,7 +12,6 @@
 @class XMPPvCardTemp;
 
 #define MyXmppDidLoginNotification @"MyXmppDidLoginNotification"
-#define MyXmppLoginFailedNotification @"MyXmppLoginFailedNotification"
 #define MyXmppConnectFailedNotification @"MyXmppConnectFailedNotification"
 #define MyXmppAuthenticateFailedNotification @"MyXmppAuthenticateFailedNotification"
 

@@ -7,7 +7,7 @@
 //
 
 #import "EditTelController.h"
-
+#import "MyXMPP.h"
 
 
 @interface EditTelController ()
@@ -24,10 +24,8 @@
 
     UIBarButtonItem *saveItem = [[UIBarButtonItem alloc]initWithBarButtonSystemItem:UIBarButtonSystemItemSave target:self action:@selector(save:)];
     self.navigationItem.rightBarButtonItem = saveItem;
-    
+    self.navigationItem.title = @"请输入电话";
     self.telText.borderStyle = UITextBorderStyleRoundedRect;
-    
-    
     
     
 }
@@ -39,6 +37,8 @@
 
 - (void)save {
 
+    [[MyXMPP shareInstance] updateMyTel:_telText.text];
+    
 }
 
 @end

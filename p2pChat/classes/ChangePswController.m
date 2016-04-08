@@ -7,6 +7,7 @@
 //
 
 #import "ChangePswController.h"
+#import "MyXMPP.h"
 
 @interface ChangePswController ()
 
@@ -20,7 +21,8 @@
     
     UIBarButtonItem *saveItem = [[UIBarButtonItem alloc]initWithBarButtonSystemItem:UIBarButtonSystemItemSave target:self action:@selector(save:)];
     self.navigationItem.rightBarButtonItem = saveItem;
-    
+    self.navigationItem.title = @"请输入新密码";
+    self.Pswnew.borderStyle = UITextBorderStyleRoundedRect;
     
 }
 
@@ -30,6 +32,9 @@
 }
 
 - (void) save{
+    
+    [[MyXMPP shareInstance] changeMyPassword:_Pswnew.text];
+    
     
 }
 

@@ -8,6 +8,7 @@
 
 #import "EditEmailController.h"
 #import "LastMessage.h"
+#import "MyXMPP.h"
 
 @interface EditEmailController ()
 
@@ -24,6 +25,7 @@
     
     UIBarButtonItem *saveItem = [[UIBarButtonItem alloc]initWithBarButtonSystemItem:UIBarButtonSystemItemSave target:self action:@selector(save:)];
     self.navigationItem.rightBarButtonItem = saveItem;
+    self.navigationItem.title = @"请输入邮箱";
     self.emailText.borderStyle = UITextBorderStyleRoundedRect;
     
     
@@ -37,7 +39,7 @@
 
 - (void)save {
     
-
+    [[MyXMPP shareInstance] updateMyEmail:@[_emailText.text]];
     
 }
 
