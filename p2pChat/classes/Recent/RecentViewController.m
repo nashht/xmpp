@@ -45,6 +45,7 @@
     _resultsControllerDelegate = [[MyFetchedResultsControllerDelegate alloc]initWithTableView:_recentTableView];
     _recentController.delegate = _resultsControllerDelegate;
     [_recentTableView registerNib:[UINib nibWithNibName:@"RecentCell" bundle:[NSBundle mainBundle]] forCellReuseIdentifier:@"recentCell"];//注册nib
+    
 }
 
 - (void)viewWillAppear:(BOOL)animated {

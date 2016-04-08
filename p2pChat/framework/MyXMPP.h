@@ -13,6 +13,8 @@
 
 #define MyXmppDidLoginNotification @"MyXmppDidLoginNotification"
 #define MyXmppLoginFailedNotification @"MyXmppLoginFailedNotification"
+#define MyXmppConnectFailedNotification @"MyXmppConnectFailedNotification"
+#define MyXmppAuthenticateFailedNotification @"MyXmppAuthenticateFailedNotification"
 
 typedef NS_ENUM (char, MessageType) {
     MessageTypeMessage = 0,
