@@ -8,6 +8,7 @@
 
 #import "MyXMPP.h"
 #import "XMPPFramework.h"
+
 #import "XMPPRosterCoreDataStorage.h"
 #import "XMPPvCardTempModule.h"
 #import "XMPPvCardCoreDataStorage.h"
@@ -20,10 +21,10 @@
 @property (strong, nonatomic) XMPPRoster *roster;
 @property (strong, nonatomic) XMPPJID *myjid;
 @property (strong, nonatomic) NSString *password;
+@property (strong, nonatomic) XMPPReconnect *reconnect;
 
-//@property (strong,nonatomic) XMPPvCardCoreDataStorage *vCardStorage;
+@property (strong,nonatomic) XMPPvCardCoreDataStorage *vCardStorage;
 @property (strong, nonatomic) XMPPvCardAvatarModule *vCardAvatar;
-@property (strong, nonatomic) XMPPvCardTemp *myVCardTemp;
 @property (strong, nonatomic) XMPPvCardTempModule *vCardModule;
 
 @property (strong, nonatomic) DataManager *dataManager;
@@ -55,9 +56,16 @@
 - (void)initVCard {
     _vCardModule = [[XMPPvCardTempModule alloc] initWithvCardStorage:[XMPPvCardCoreDataStorage sharedInstance]];
     [_vCardModule addDelegate:self delegateQueue:dispatch_get_main_queue()];
+    [_vCardModule activate:_stream];
+    
     _vCardAvatar = [[XMPPvCardAvatarModule alloc] initWithvCardTempModule:_vCardModule];
-    [_vCardModule activate:self.stream];
+    [_vCardAvatar activate:_stream];
 
+}
+
+- (void)initReconnect{
+    _reconnect = [[XMPPReconnect alloc] init];
+    [_reconnect activate:_stream];
 }
 
 + (instancetype)shareInstance {
@@ -72,12 +80,12 @@
 
 - (void)loginWithName:(NSString *)user Password:(NSString *)password {
     self.password = password;
-    if (![self.stream isConnected]) {
+    if (![_stream isConnected]) {
         self.myjid = [XMPPJID jidWithUser:user domain:@"10.108.136.59" resource:@"iphone"];
-        [self.stream setMyJID:self.myjid];
+        [_stream setMyJID:self.myjid];
         
         NSError *error = nil;
-        if (![self.stream connectWithTimeout:XMPPStreamTimeoutNone error:&error ]) {
+        if (![_stream connectWithTimeout:XMPPStreamTimeoutNone error:&error ]) {
             NSLog(@"Connect Error: %@", [[error userInfo] description]);
         }
     }
@@ -113,33 +121,22 @@
 }
 
 - (void)updateMyEmail:(NSString *)email {
-    [self.myVCardTemp setEmailAddresses:@[email]];
-    [self.vCardModule updateMyvCardTemp:self.myVCardTemp];
+    XMPPvCardTemp *myVCardTemp = [_vCardModule myvCardTemp];
+    myVCardTemp.mailer = email;
+    [_vCardModule updateMyvCardTemp:myVCardTemp];
 }
 
 - (void)updateMyNote:(NSString *)note {
     
-    [self.vCardModule vCardTempForJID:self.myjid shouldFetch:YES];
-    [self.myVCardTemp setNote:note];
-    [self.vCardModule updateMyvCardTemp:self.myVCardTemp];
 }
 
 - (void)updateMyTel:(NSString *)tel {
-        //Set Values as normal
 
-    _myVCardTemp = [_vCardModule myvCardTemp];
-//    if (!_myVCardTemp){
-//        NSXMLElement *vCardXML = [NSXMLElement elementWithName:@"vCard" xmlns:@"vcard-temp"];
-//        XMPPvCardTemp *newvCardTemp = [XMPPvCardTemp vCardTempFromElement:vCardXML];
-//        [newvCardTemp setNickname:@"aa"];
-//        [_vCardModule updateMyvCardTemp:newvCardTemp];
-//    }else{
-//        _myVCardTemp.note = tel;
-//    }
-    _myVCardTemp.note = tel;
+     XMPPvCardTemp *myVCardTemp = [_vCardModule myvCardTemp];
+    myVCardTemp.note = tel;
     
-    [self.vCardModule updateMyvCardTemp:self.myVCardTemp];
-    NSLog(@"mynote%@",_myVCardTemp);
+    [self.vCardModule updateMyvCardTemp:myVCardTemp];
+    NSLog(@"mynote%@",myVCardTemp);
 }
 
 - (void)changeMyPassword:(NSString *)newpassword {
@@ -166,6 +163,16 @@
     [self.stream addDelegate:self delegateQueue:dispatch_get_main_queue()];
 }
 
+- (void)logout{
+    [self disconnected];
+    
+    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(2 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+        //  回到登陆界面
+        UIStoryboard *storyboard = [UIStoryboard storyboardWithName:@"Main" bundle:nil];
+        [UIApplication sharedApplication].keyWindow.rootViewController = [storyboard instantiateViewControllerWithIdentifier:@"login"];
+    });
+}
+
 /**
  *  断开连接
  */
@@ -188,29 +195,10 @@
         NSLog(@"fetching friends error: %@", error);
     }
     
-    //XMPPUserCoreDataStorageObject  *obj类型的
-    //名称为 obj.displayName
     return fetchFriends;
-//    XMPPUserCoreDataStorageObject
 }
 
-/**
- *  添加好友
- *
- *  @param name 好友名称
- */
-- (void)XMPPAddFriendSubscribe:(NSString *)name{
-    XMPPJID *jid = [XMPPJID jidWithString:[NSString stringWithFormat:@"%@@xmpp.test",name]];
-    [_roster subscribePresenceToUser:jid];
-}
 
-#pragma mark - xmpp roster delegate
-- (void)xmppRoster:(XMPPRoster *)sender didReceivePresenceSubscriptionRequest:(XMPPPresence *)presence{
-//    NSString *presenceType = [presence type];
-//    NSString *presenceFromUser = [[presence from] user];
-    XMPPJID *jid = [presence from];
-    [_roster acceptPresenceSubscriptionRequestFrom:jid andAddToRoster:YES];
-}
 
 #pragma mark - xmpp delegate
 
@@ -246,8 +234,8 @@
     //vcard初始化
     [self initVCard];
     
-//    [self changeMyPassword:@"11"];
-    [self updateMyTel:@"13253545377"];
+    [self initReconnect];
+    
 }
 
 - (BOOL)xmppStream:(XMPPStream *)sender didReceiveIQ:(XMPPIQ *)iq{
@@ -264,6 +252,19 @@
 //        NSLog(@"OpenFire密码修改不成功!");
     }
     return YES;
+}
+
+- (void)xmppStream:(XMPPStream *)sender didReceivePresence:(XMPPPresence *)presence{
+    NSString *presenceType = [presence type];
+    NSString *presenceFromUser = [[presence from] user];
+    NSString *myID = [[sender myJID] user];
+    if (presenceFromUser != myID) {
+        if ([presenceType isEqualToString:@"available"]) {
+            NSLog(@"%@上线了",presenceFromUser);
+        }else if([presenceType isEqualToString:@"unavailable"]){
+            NSLog(@"%@下线了",presenceFromUser);
+        }
+    }
 }
 
 /**
@@ -286,30 +287,26 @@
 
 #pragma mark - receivemessage delegate
 - (void)xmppStream:(XMPPStream *)sender didReceiveMessage:(XMPPMessage *)message {
-    if ([message.type isEqualToString:@"chat"] && message.body != nil) {
+    if ([message.type isEqualToString:@"chat"] && message.body) {
         NSString *messageBody = [[message elementForName:@"body"] stringValue];
-        NSLog(@"my xmpp did receive message: %@", messageBody);
-        NSString *bareJidStr = message.fromStr;
-        NSRange range = [bareJidStr rangeOfString:@"@"];
-        bareJidStr = [bareJidStr substringToIndex:range.location];
         
-        NSLog(@"%@", bareJidStr);
-        
-        [_dataManager saveMessageWithUsername:bareJidStr time:[NSDate date] body:messageBody isOut:NO];
-        [_dataManager addRecentUsername:bareJidStr time:[NSDate date] body:messageBody isOut:NO];
+        NSLog(@"my xmpp did receive message:%@ from:  %@", messageBody,message.from.user);
+//        NSLog(@"user = %@",message.from.user);
+        [_dataManager saveMessageWithUsername:message.from.user time:[NSDate date] body:messageBody isOut:NO];
+        [_dataManager addRecentUsername:message.from.user time:[NSDate date] body:messageBody isOut:NO];
     } else {
-        NSLog(@"%@", message);
+//        NSLog(@"receive message%@", message);
     }
     
 }
 
 #pragma mark - sendmessage delegate
 - (void)xmppStream:(XMPPStream *)sender didFailToSendMessage:(XMPPMessage *)message error:(NSError *)error {
-    NSLog(@"send error : %@", error);
+    NSLog(@"send message error : %@", error);
 }
 
 - (void)xmppStream:(XMPPStream *)sender didSendMessage:(XMPPMessage *)message {
-    NSLog(@"did send");
+    NSLog(@"did send message");
 }
 
 #pragma mark - vcard delegate
@@ -317,15 +314,14 @@
         didReceivevCardTemp:(XMPPvCardTemp *)vCardTemp
                      forJID:(XMPPJID *)jid{
     
-    NSLog(@"tel...%@",_myVCardTemp.note);
 }
 
 - (void)xmppvCardTempModuleDidUpdateMyvCard:(XMPPvCardTempModule *)vCardTempModule{
-    NSLog(@"did update");
+    NSLog(@"did update my vCard");
 }
 
 - (void)xmppvCardTempModule:(XMPPvCardTempModule *)vCardTempModule failedToUpdateMyvCard:(NSXMLElement *)error{
-    NSLog(@"did not update");
+    NSLog(@"did not update my vCard");
 }
 
 #pragma mark - roster delegate

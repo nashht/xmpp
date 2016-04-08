@@ -70,7 +70,7 @@
     _historyControllerDelegate = [[MyFetchedResultsControllerDelegate alloc]initWithTableView:_historyTableView];
     _historyController.delegate = _historyControllerDelegate;
 
-    // init text field
+    //  init text field
     _messageTF.delegate = self;
     
 //    禁止选中tableView
@@ -117,7 +117,8 @@
 }
 
 - (void)viewWillDisappear:(BOOL)animated {
-    [[NSNotificationCenter defaultCenter]removeObserver:self name:nil object:nil];
+    [[NSNotificationCenter defaultCenter]removeObserver:self name:UIKeyboardWillShowNotification object:nil];
+    [[NSNotificationCenter defaultCenter]removeObserver:self name:UIKeyboardWillHideNotification object:nil];
 }
 
 #pragma mark - IB actions
@@ -294,6 +295,7 @@
 
 #pragma mark -keyboard notification
 - (void)keyboardWillShow:(NSNotification *)notification {
+    _baseBottomConstraint.constant = 0;
     
     if (_showMoreView) {
         _baseBottomConstraint.constant = 0;
