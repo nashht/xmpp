@@ -14,9 +14,6 @@
 @property (weak, nonatomic) IBOutlet UITextField *nameTF;
 @property (weak, nonatomic) IBOutlet UITextField *passwordTF;
 
-
-
-
 @end
 
 @implementation LoginViewController
@@ -44,6 +41,7 @@
     [[NSUserDefaults standardUserDefaults]setValue:name forKey:@"name"];
     [[NSUserDefaults standardUserDefaults]setValue:password forKey:@"password"];
     [[MyXMPP shareInstance]loginWithName:name Password:password];
+    
 }
 
 - (void)myXmppDidLogin {

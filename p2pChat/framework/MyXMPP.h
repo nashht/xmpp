@@ -43,6 +43,8 @@ typedef NS_ENUM (char, MessageType) {
 - (void)updateMyTel:(NSString *)tel;
 - (void)changeMyPassword:(NSString *)newpassword;
 
+- (void)logout;
+
 - (NSFetchedResultsController *)getFriends;
 
 @end

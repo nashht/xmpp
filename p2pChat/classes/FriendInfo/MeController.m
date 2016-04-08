@@ -7,6 +7,7 @@
 //
 
 #import "MeController.h"
+#import "MyXMPP.h"
 
 @interface MeController ()
 
@@ -15,6 +16,7 @@
 @property (weak, nonatomic) IBOutlet UILabel *groupLabel;
 @property (weak, nonatomic) IBOutlet UILabel *phoneLabel;
 @property (weak, nonatomic) IBOutlet UILabel *emailLabel;
+
 
 @end
 
@@ -35,6 +37,9 @@
 }
 
 - (IBAction)loginOut:(id)sender {
+    
+//    [MyXMPP shareInstance]
+    [[MyXMPP shareInstance] logout];
     
 }
 

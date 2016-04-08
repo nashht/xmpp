@@ -12,7 +12,7 @@
 
 
 @property (strong,nonatomic) IBOutlet UITextField *Pswnew;
-@property (strong,nonatomic) IBOutlet UITextField *Pswidentify;
+
 
 
 - (void) save;

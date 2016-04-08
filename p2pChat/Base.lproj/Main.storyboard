@@ -9,7 +9,7 @@
         <!--Recent View Controller-->
         <scene sceneID="tne-QT-ifu">
             <objects>
-                <viewController id="BYZ-38-t0r" customClass="RecentViewController" sceneMemberID="viewController">
+                <viewController restorationIdentifier="recent" storyboardIdentifier="recent" id="BYZ-38-t0r" customClass="RecentViewController" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="y3c-jy-aDJ"/>
                         <viewControllerLayoutGuide type="bottom" id="wfy-db-euE"/>
@@ -42,7 +42,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-453" y="-845"/>
+            <point key="canvasLocation" x="-453" y="-817"/>
         </scene>
         <!--Friends View Controller-->
         <scene sceneID="t7f-em-AaM">
@@ -76,7 +76,7 @@
         <!--Login View Controller-->
         <scene sceneID="skR-Ex-3t8">
             <objects>
-                <viewController id="WgI-dm-LF5" customClass="LoginViewController" sceneMemberID="viewController">
+                <viewController restorationIdentifier="login" storyboardIdentifier="login" id="WgI-dm-LF5" customClass="LoginViewController" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="Iwi-0s-gBe"/>
                         <viewControllerLayoutGuide type="bottom" id="08R-5N-7YJ"/>
@@ -269,7 +269,7 @@
         <!--Tab Bar Controller-->
         <scene sceneID="K9G-Hb-tc6">
             <objects>
-                <tabBarController automaticallyAdjustsScrollViewInsets="NO" id="XfM-Wq-Nn4" sceneMemberID="viewController">
+                <tabBarController restorationIdentifier="tablebar" storyboardIdentifier="tablebar" automaticallyAdjustsScrollViewInsets="NO" id="XfM-Wq-Nn4" sceneMemberID="viewController">
                     <toolbarItems/>
                     <tabBar key="tabBar" contentMode="scaleToFill" id="TdB-Lc-7ml">
                         <autoresizingMask key="autoresizingMask"/>
@@ -475,7 +475,6 @@
                                                     <state key="normal" title="注销登录"/>
                                                     <connections>
                                                         <action selector="loginOut:" destination="Fca-zl-Yxj" eventType="touchUpInside" id="3iG-SN-f1a"/>
-                                                        <segue destination="WgI-dm-LF5" kind="presentation" id="gkK-pe-iQ6"/>
                                                     </connections>
                                                 </button>
                                             </subviews>
@@ -585,17 +584,6 @@
                                 <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="确认密码" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="IDZ-9N-zie">
-                                <rect key="frame" x="0.0" y="121" width="99" height="29"/>
-                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
-                                <nil key="highlightedColor"/>
-                            </label>
-                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="line" placeholder="请确认新密码" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="t3d-rE-NpN">
-                                <rect key="frame" x="100" y="118" width="500" height="30"/>
-                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                                <textInputTraits key="textInputTraits"/>
-                            </textField>
                             <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="line" placeholder="请输入新密码" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="gIq-7j-B3X">
                                 <rect key="frame" x="100" y="72" width="500" height="30"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
@@ -607,7 +595,6 @@
                     <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
                     <size key="freeformSize" width="600" height="600"/>
                     <connections>
-                        <outlet property="Pswidentify" destination="t3d-rE-NpN" id="g7g-UR-Ju7"/>
                         <outlet property="Pswnew" destination="gIq-7j-B3X" id="jeP-bu-tLl"/>
                     </connections>
                 </viewController>
@@ -622,7 +609,4 @@
         <image name="chat_bottom_up_nor" width="34" height="34"/>
         <image name="chat_bottom_voice_nor" width="34" height="34"/>
     </resources>
-    <inferredMetricsTieBreakers>
-        <segue reference="gkK-pe-iQ6"/>
-    </inferredMetricsTieBreakers>
 </document>
