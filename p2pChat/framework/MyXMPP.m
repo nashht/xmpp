@@ -167,7 +167,7 @@
     [self.stream addDelegate:self delegateQueue:dispatch_get_main_queue()];
 }
 
-- (void)logout{
+- (void)loginout{
     [self disconnected];
     
     dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(2 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
@@ -175,8 +175,6 @@
         UIStoryboard *storyboard = [UIStoryboard storyboardWithName:@"Main" bundle:nil];
         [UIApplication sharedApplication].keyWindow.rootViewController = [storyboard instantiateViewControllerWithIdentifier:@"login"];
     });
-    
-    
 }
 
 /**

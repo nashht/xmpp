@@ -30,7 +30,7 @@ typedef NS_ENUM (char, MessageType) {
 + (instancetype)shareInstance;
 
 - (void)loginWithName:(NSString *)user Password:(NSString *)password;
-- (void)logout;
+- (void)loginout;
 
 - (void)sendMessage:(NSString *)text ToUser:(NSString *) user;
 - (void)sendAudio:(NSString *)path ToUser:(NSString *)user;
@@ -43,8 +43,6 @@ typedef NS_ENUM (char, MessageType) {
 - (void)updateMyNote:(NSString *)note;
 - (void)updateMyTel:(NSString *)tel;
 - (void)changeMyPassword:(NSString *)newpassword;
-
-- (void)logout;
 
 - (NSFetchedResultsController *)getFriends;
 

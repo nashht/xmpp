@@ -42,7 +42,7 @@
 - (IBAction)loginOut:(id)sender {
     
 //    [MyXMPP shareInstance]
-    [[MyXMPP shareInstance] logout];
+    [[MyXMPP shareInstance] loginout];
     
 }
 
