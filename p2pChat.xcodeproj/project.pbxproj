@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		842B4C491CB74D0A008665D9 /* MyXMPP.m in Sources */ = {isa = PBXBuildFile; fileRef = 842B4C481CB74D0A008665D9 /* MyXMPP.m */; };
+		842B4C4B1CB7BC8D008665D9 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 842B4C4A1CB7BC8D008665D9 /* Images.xcassets */; };
 		84AD18E21CB4ADEE00357F60 /* EditTelController.m in Sources */ = {isa = PBXBuildFile; fileRef = 84AD18E11CB4ADEE00357F60 /* EditTelController.m */; };
 		84AD18E51CB5238C00357F60 /* EditEmailController.m in Sources */ = {isa = PBXBuildFile; fileRef = 84AD18E41CB5238C00357F60 /* EditEmailController.m */; };
 		84AD18E81CB52AF200357F60 /* ChangePswController.m in Sources */ = {isa = PBXBuildFile; fileRef = 84AD18E71CB52AF200357F60 /* ChangePswController.m */; };
@@ -230,6 +231,7 @@
 
 /* Begin PBXFileReference section */
 		842B4C481CB74D0A008665D9 /* MyXMPP.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MyXMPP.m; path = ../../../Downloads/MyXMPP.m; sourceTree = "<group>"; };
+		842B4C4A1CB7BC8D008665D9 /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
 		84AD18E01CB4ADEE00357F60 /* EditTelController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EditTelController.h; sourceTree = "<group>"; };
 		84AD18E11CB4ADEE00357F60 /* EditTelController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EditTelController.m; sourceTree = "<group>"; };
 		84AD18E31CB5238C00357F60 /* EditEmailController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EditEmailController.h; sourceTree = "<group>"; };
@@ -1756,6 +1758,7 @@
 				DA95D59E1C3A16E6001ED1A6 /* Main.storyboard */,
 				DA9046B91C3A51A8009E75B7 /* Tools */,
 				DA95D5CE1C3A1F11001ED1A6 /* DataStorage */,
+				842B4C4A1CB7BC8D008665D9 /* Images.xcassets */,
 				DA95D5951C3A16E6001ED1A6 /* Supporting Files */,
 			);
 			path = p2pChat;
@@ -1992,6 +1995,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				90E3E89D1C99540E0076F28C /* happy.mp3 in Resources */,
+				842B4C4B1CB7BC8D008665D9 /* Images.xcassets in Resources */,
 				DA9046BF1C3A5601009E75B7 /* 0.png in Resources */,
 				90FA064C1CAD02D300851B1C /* InfoHeader.xib in Resources */,
 				DAD2350B1C425355003A93F9 /* RecordView.xib in Resources */,
@@ -2349,6 +2353,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = "Brand Assets";
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				ENABLE_BITCODE = NO;
@@ -2374,6 +2379,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = "Brand Assets";
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				ENABLE_BITCODE = NO;
