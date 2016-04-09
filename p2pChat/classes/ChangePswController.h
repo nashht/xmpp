@@ -10,4 +10,11 @@
 
 @interface ChangePswController : UIViewController
 
+
+@property (strong,nonatomic) IBOutlet UITextField *Pswnew;
+
+
+
+- (void) save;
+
 @end

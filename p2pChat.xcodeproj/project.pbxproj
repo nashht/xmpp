@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		842B4C491CB74D0A008665D9 /* MyXMPP.m in Sources */ = {isa = PBXBuildFile; fileRef = 842B4C481CB74D0A008665D9 /* MyXMPP.m */; };
+		842B4C4B1CB7BC8D008665D9 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 842B4C4A1CB7BC8D008665D9 /* Images.xcassets */; };
 		84AD18E21CB4ADEE00357F60 /* EditTelController.m in Sources */ = {isa = PBXBuildFile; fileRef = 84AD18E11CB4ADEE00357F60 /* EditTelController.m */; };
 		84AD18E51CB5238C00357F60 /* EditEmailController.m in Sources */ = {isa = PBXBuildFile; fileRef = 84AD18E41CB5238C00357F60 /* EditEmailController.m */; };
 		84AD18E81CB52AF200357F60 /* ChangePswController.m in Sources */ = {isa = PBXBuildFile; fileRef = 84AD18E71CB52AF200357F60 /* ChangePswController.m */; };
@@ -199,7 +201,6 @@
 		DA968A5E1C89279B00FD866C /* libxml2.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = DA968A5D1C89279B00FD866C /* libxml2.tbd */; };
 		DA968A601C8927AE00FD866C /* Security.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DA968A5F1C8927AE00FD866C /* Security.framework */; };
 		DA968A621C8927B400FD866C /* CFNetwork.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DA968A611C8927B400FD866C /* CFNetwork.framework */; };
-		DA968A651C8928E100FD866C /* MyXMPP.m in Sources */ = {isa = PBXBuildFile; fileRef = DA968A641C8928E100FD866C /* MyXMPP.m */; };
 		DAAA186B1CABCF6500691170 /* LastMessage+CoreDataProperties.m in Sources */ = {isa = PBXBuildFile; fileRef = DAAA18641CABCF6500691170 /* LastMessage+CoreDataProperties.m */; };
 		DAAA186C1CABCF6500691170 /* LastMessage.m in Sources */ = {isa = PBXBuildFile; fileRef = DAAA18661CABCF6500691170 /* LastMessage.m */; };
 		DAAA186D1CABCF6500691170 /* Message+CoreDataProperties.m in Sources */ = {isa = PBXBuildFile; fileRef = DAAA18681CABCF6500691170 /* Message+CoreDataProperties.m */; };
@@ -229,6 +230,8 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		842B4C481CB74D0A008665D9 /* MyXMPP.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MyXMPP.m; path = ../../../Downloads/MyXMPP.m; sourceTree = "<group>"; };
+		842B4C4A1CB7BC8D008665D9 /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
 		84AD18E01CB4ADEE00357F60 /* EditTelController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EditTelController.h; sourceTree = "<group>"; };
 		84AD18E11CB4ADEE00357F60 /* EditTelController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EditTelController.m; sourceTree = "<group>"; };
 		84AD18E31CB5238C00357F60 /* EditEmailController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EditEmailController.h; sourceTree = "<group>"; };
@@ -612,7 +615,6 @@
 		DA968A5F1C8927AE00FD866C /* Security.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Security.framework; path = System/Library/Frameworks/Security.framework; sourceTree = SDKROOT; };
 		DA968A611C8927B400FD866C /* CFNetwork.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CFNetwork.framework; path = System/Library/Frameworks/CFNetwork.framework; sourceTree = SDKROOT; };
 		DA968A631C8928E100FD866C /* MyXMPP.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MyXMPP.h; path = framework/MyXMPP.h; sourceTree = "<group>"; };
-		DA968A641C8928E100FD866C /* MyXMPP.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MyXMPP.m; path = framework/MyXMPP.m; sourceTree = "<group>"; };
 		DAAA18631CABCF6500691170 /* LastMessage+CoreDataProperties.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "LastMessage+CoreDataProperties.h"; path = "dataStorage/LastMessage+CoreDataProperties.h"; sourceTree = "<group>"; };
 		DAAA18641CABCF6500691170 /* LastMessage+CoreDataProperties.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "LastMessage+CoreDataProperties.m"; path = "dataStorage/LastMessage+CoreDataProperties.m"; sourceTree = "<group>"; };
 		DAAA18651CABCF6500691170 /* LastMessage.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = LastMessage.h; path = dataStorage/LastMessage.h; sourceTree = "<group>"; };
@@ -1756,6 +1758,7 @@
 				DA95D59E1C3A16E6001ED1A6 /* Main.storyboard */,
 				DA9046B91C3A51A8009E75B7 /* Tools */,
 				DA95D5CE1C3A1F11001ED1A6 /* DataStorage */,
+				842B4C4A1CB7BC8D008665D9 /* Images.xcassets */,
 				DA95D5951C3A16E6001ED1A6 /* Supporting Files */,
 			);
 			path = p2pChat;
@@ -1849,7 +1852,7 @@
 			isa = PBXGroup;
 			children = (
 				DA968A631C8928E100FD866C /* MyXMPP.h */,
-				DA968A641C8928E100FD866C /* MyXMPP.m */,
+				842B4C481CB74D0A008665D9 /* MyXMPP.m */,
 			);
 			name = Network;
 			sourceTree = "<group>";
@@ -1992,6 +1995,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				90E3E89D1C99540E0076F28C /* happy.mp3 in Resources */,
+				842B4C4B1CB7BC8D008665D9 /* Images.xcassets in Resources */,
 				DA9046BF1C3A5601009E75B7 /* 0.png in Resources */,
 				90FA064C1CAD02D300851B1C /* InfoHeader.xib in Resources */,
 				DAD2350B1C425355003A93F9 /* RecordView.xib in Resources */,
@@ -2139,7 +2143,6 @@
 				DA90B20C1C8989930080E037 /* DDFileLogger.m in Sources */,
 				904175431CA9299C005A024B /* LoginViewController.m in Sources */,
 				DAD235091C425347003A93F9 /* RecordView.m in Sources */,
-				DA968A651C8928E100FD866C /* MyXMPP.m in Sources */,
 				DA95D5A31C3A16E6001ED1A6 /* p2pChat.xcdatamodeld in Sources */,
 				DA90B1D31C8989930080E037 /* XMPPIQ+XEP_0060.m in Sources */,
 				DA90B1F11C8989930080E037 /* XMPPStreamManagementStanzas.m in Sources */,
@@ -2176,6 +2179,7 @@
 				DA90B2161C8989930080E037 /* DDXMLNode.m in Sources */,
 				DA90B2141C8989930080E037 /* DDXMLDocument.m in Sources */,
 				DA9046BC1C3A525F009E75B7 /* AsyncUdpSocket.m in Sources */,
+				842B4C491CB74D0A008665D9 /* MyXMPP.m in Sources */,
 				DA90B2111C8989930080E037 /* DDMultiFormatter.m in Sources */,
 				DA90B1901C8989930080E037 /* XMPPXFacebookPlatformAuthentication.m in Sources */,
 				DA90B2061C8989930080E037 /* XMPPSRVResolver.m in Sources */,
@@ -2349,21 +2353,23 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = "Brand Assets";
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				ENABLE_BITCODE = NO;
 				HEADER_SEARCH_PATHS = (
-					"$(PROJECT_DIR)/p2pChat/framework/module",
 					"$(SDKROOT)/usr/include/libxml2",
+					"$(PROJECT_DIR)/p2pChat/framework/module",
 				);
 				INFOPLIST_FILE = p2pChat/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 9.2;
+				IPHONEOS_DEPLOYMENT_TARGET = 9.3;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)/p2pChat/framework/Vendor/libidn",
 				);
 				OTHER_LDFLAGS = "";
-				PRODUCT_BUNDLE_IDENTIFIER = zxkleetcode.p2pChat;
+				PRODUCT_BUNDLE_IDENTIFIER = nmrc.xmppChat;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";
 			};
@@ -2373,21 +2379,23 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = "Brand Assets";
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				ENABLE_BITCODE = NO;
 				HEADER_SEARCH_PATHS = (
-					"$(PROJECT_DIR)/p2pChat/framework/module",
 					"$(SDKROOT)/usr/include/libxml2",
+					"$(PROJECT_DIR)/p2pChat/framework/module",
 				);
 				INFOPLIST_FILE = p2pChat/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 9.2;
+				IPHONEOS_DEPLOYMENT_TARGET = 9.3;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)/p2pChat/framework/Vendor/libidn",
 				);
 				OTHER_LDFLAGS = "";
-				PRODUCT_BUNDLE_IDENTIFIER = zxkleetcode.p2pChat;
+				PRODUCT_BUNDLE_IDENTIFIER = nmrc.xmppChat;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";
 			};

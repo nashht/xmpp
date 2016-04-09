@@ -12,7 +12,8 @@
 @class XMPPvCardTemp;
 
 #define MyXmppDidLoginNotification @"MyXmppDidLoginNotification"
-#define MyXmppLoginFailedNotification @"MyXmppLoginFailedNotification"
+#define MyXmppConnectFailedNotification @"MyXmppConnectFailedNotification"
+#define MyXmppAuthenticateFailedNotification @"MyXmppAuthenticateFailedNotification"
 
 typedef NS_ENUM (char, MessageType) {
     MessageTypeMessage = 0,
@@ -40,6 +41,8 @@ typedef NS_ENUM (char, MessageType) {
 - (void)updateMyNote:(NSString *)note;
 - (void)updateMyTel:(NSString *)tel;
 - (void)changeMyPassword:(NSString *)newpassword;
+
+- (void)logout;
 
 - (NSFetchedResultsController *)getFriends;
 

@@ -7,24 +7,32 @@
 //
 
 #import "MeController.h"
+#import "MyXMPP.h"
 
 @interface MeController ()
 
-@property (weak, nonatomic) IBOutlet UIView *photoView;
+@property (weak, nonatomic) IBOutlet UIImageView *photoView;
 @property (weak, nonatomic) IBOutlet UILabel *nameLabel;
 @property (weak, nonatomic) IBOutlet UILabel *groupLabel;
 @property (weak, nonatomic) IBOutlet UILabel *phoneLabel;
 @property (weak, nonatomic) IBOutlet UILabel *emailLabel;
+
 
 @end
 
 @implementation MeController
 
 - (void)viewDidLoad {
+    
+    self.navigationItem.title = @"我";
+    
+    [_photoView.layer setCornerRadius:CGRectGetHeight([_photoView bounds])/2];
+    _photoView.layer.masksToBounds = true;
     _nameLabel.text = [[NSUserDefaults standardUserDefaults]stringForKey:@"name"];
     _groupLabel.text = @"nmrc1";
     _phoneLabel.text = @"12345678901";
     _emailLabel.text = @"ios@nmrc.com";
+
 }
 
 - (IBAction)updatePassword:(id)sender {
@@ -32,6 +40,9 @@
 }
 
 - (IBAction)loginOut:(id)sender {
+    
+//    [MyXMPP shareInstance]
+    [[MyXMPP shareInstance] logout];
     
 }
 

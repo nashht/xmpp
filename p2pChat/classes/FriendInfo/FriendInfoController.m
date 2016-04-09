@@ -20,7 +20,7 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     self.tableView.tableHeaderView = [InfoHeader headerViewWithName:_userObj.nickname];
-    
+    [self.tableView.tableHeaderView awakeFromNib];
     UIView *footer = [[UIView alloc] init];
     self.tableView.tableFooterView = footer;
     footer.userInteractionEnabled = YES;
@@ -30,7 +30,6 @@
     imageView.frame = CGRectMake(0, 0, 320, 50);
     imageView.center = footer.center;
     imageView.image = [UIImage imageNamed:@"bg_show_count.png"];
-    
     
     UILabel *sendMsg = [[UILabel alloc] init];
     sendMsg.frame = CGRectMake(0, 0, 320, 50);

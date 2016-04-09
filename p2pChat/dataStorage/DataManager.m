@@ -117,7 +117,9 @@
         lastMessage = [resultController fetchedObjects].firstObject;
     }
     lastMessage.time = time;
-    lastMessage.unread = @(lastMessage.unread.intValue + 1);
+    if (!isOut) {
+        lastMessage.unread = @(lastMessage.unread.intValue + 1);
+    }
     lastMessage.body = body;
     lastMessage.isOut = [NSNumber numberWithBool:isOut];
     NSError *err2 = nil;

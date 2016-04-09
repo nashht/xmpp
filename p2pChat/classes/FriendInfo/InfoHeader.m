@@ -25,4 +25,12 @@
     return header;
 }
 
+- (void)awakeFromNib {
+    // Initialization code
+    [_iconView.layer setCornerRadius:CGRectGetHeight([_iconView bounds])/2];
+    _iconView.layer.masksToBounds = true;
+    
+}
+
+
 @end
