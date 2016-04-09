@@ -7,7 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		842B4C491CB74D0A008665D9 /* MyXMPP.m in Sources */ = {isa = PBXBuildFile; fileRef = 842B4C481CB74D0A008665D9 /* MyXMPP.m */; };
+		840104BD1CB90512005C2EBE /* MyXMPP.m in Sources */ = {isa = PBXBuildFile; fileRef = 840104BC1CB90512005C2EBE /* MyXMPP.m */; };
 		842B4C4B1CB7BC8D008665D9 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 842B4C4A1CB7BC8D008665D9 /* Images.xcassets */; };
 		84AD18E21CB4ADEE00357F60 /* EditTelController.m in Sources */ = {isa = PBXBuildFile; fileRef = 84AD18E11CB4ADEE00357F60 /* EditTelController.m */; };
 		84AD18E51CB5238C00357F60 /* EditEmailController.m in Sources */ = {isa = PBXBuildFile; fileRef = 84AD18E41CB5238C00357F60 /* EditEmailController.m */; };
@@ -230,7 +230,7 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
-		842B4C481CB74D0A008665D9 /* MyXMPP.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MyXMPP.m; path = ../../../Downloads/MyXMPP.m; sourceTree = "<group>"; };
+		840104BC1CB90512005C2EBE /* MyXMPP.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MyXMPP.m; path = framework/MyXMPP.m; sourceTree = "<group>"; };
 		842B4C4A1CB7BC8D008665D9 /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
 		84AD18E01CB4ADEE00357F60 /* EditTelController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EditTelController.h; sourceTree = "<group>"; };
 		84AD18E11CB4ADEE00357F60 /* EditTelController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EditTelController.m; sourceTree = "<group>"; };
@@ -1852,7 +1852,7 @@
 			isa = PBXGroup;
 			children = (
 				DA968A631C8928E100FD866C /* MyXMPP.h */,
-				842B4C481CB74D0A008665D9 /* MyXMPP.m */,
+				840104BC1CB90512005C2EBE /* MyXMPP.m */,
 			);
 			name = Network;
 			sourceTree = "<group>";
@@ -2078,6 +2078,7 @@
 				DA90B1E91C8989930080E037 /* XMPPURI.m in Sources */,
 				DA90B1E81C8989930080E037 /* XMPPMessageArchiving.m in Sources */,
 				DA9046AA1C3A49EB009E75B7 /* DataManager.m in Sources */,
+				840104BD1CB90512005C2EBE /* MyXMPP.m in Sources */,
 				DA90B1D21C8989930080E037 /* XMPPResultSet.m in Sources */,
 				DA90B1DF1C8989930080E037 /* XMPPCapabilities.xcdatamodel in Sources */,
 				DA90B1AF1C8989930080E037 /* XMPPSystemInputActivityMonitor.m in Sources */,
@@ -2179,7 +2180,6 @@
 				DA90B2161C8989930080E037 /* DDXMLNode.m in Sources */,
 				DA90B2141C8989930080E037 /* DDXMLDocument.m in Sources */,
 				DA9046BC1C3A525F009E75B7 /* AsyncUdpSocket.m in Sources */,
-				842B4C491CB74D0A008665D9 /* MyXMPP.m in Sources */,
 				DA90B2111C8989930080E037 /* DDMultiFormatter.m in Sources */,
 				DA90B1901C8989930080E037 /* XMPPXFacebookPlatformAuthentication.m in Sources */,
 				DA90B2061C8989930080E037 /* XMPPSRVResolver.m in Sources */,
