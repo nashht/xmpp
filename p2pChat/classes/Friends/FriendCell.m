@@ -10,13 +10,21 @@
 
 @interface FriendCell ()
 
+@property (weak, nonatomic) IBOutlet UILabel *nameLable;
+@property (weak, nonatomic) IBOutlet UIImageView *iconView;
+@property (weak, nonatomic) IBOutlet UILabel *statusLable;
+
 @end
 
 @implementation FriendCell
 
+- (void)setIcon:(NSString *)icon{
+    self.iconView.image = [UIImage imageNamed:icon];
+}
 
-
-
+-(void)setLable:(NSString *)name{
+    self.nameLable.text = name;
+}
 
 - (void)awakeFromNib {
     // Initialization code

@@ -71,6 +71,8 @@
     }
     
     _photoImage.frame = picFrame.photoFrame;
+    [_photoImage.layer setCornerRadius:CGRectGetHeight([_photoImage bounds]) / 2];
+    _photoImage.layer.masksToBounds = true;
     
     UIImage *image = [UIImage imageWithContentsOfFile:picFrame.message.body];
     [_bodyBtn setImage:image forState:UIControlStateNormal];

@@ -65,6 +65,8 @@
     }
     
     _photoImage.frame = _recordFrame.photoFrame;
+    [_photoImage.layer setCornerRadius:CGRectGetHeight([_photoImage bounds]) / 2];
+    _photoImage.layer.masksToBounds = true;
     
 //    [_bodyBtn setTitle:msg.body forState:UIControlStateNormal];
     _bodyBtn.frame = _recordFrame.bodyFrame;

@@ -101,7 +101,7 @@
     cell.lastmessagetime.text = [Tool stringFromDate:lastMessage.time];
 
     NSNumber *num = lastMessage.unread;
-    cell.nonreadmessagenum.text = [lastMessage.unread stringValue];
+    cell.nonreadmessagenum.text = [num stringValue];
     [cell setUnread:num];
        
     return cell;

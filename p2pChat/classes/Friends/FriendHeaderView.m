@@ -75,7 +75,6 @@
 
 - (void)nameViewClick{
     self.group.opened = !self.group.isOpened;
-    NSLog(@"nameVIewCClick,opened = %i",self.group.opened);
     
     if ([self.delegate respondsToSelector:@selector(headerViewDidClickedNameView:)]) {
         [self.delegate headerViewDidClickedNameView:self];
@@ -84,10 +83,10 @@
 
 //    视图移动之前调用
 - (void)didMoveToSuperview{
-    if (self.group.opened) {
-        self.nameView.imageView.transform = CGAffineTransformMakeRotation(M_2_PI);
-    }else{
+    if (!self.group.opened) {
         self.nameView.imageView.transform = CGAffineTransformMakeRotation(0);
+    }else{
+        self.nameView.imageView.transform = CGAffineTransformMakeRotation(M_PI_2);
     }
 }
 @end

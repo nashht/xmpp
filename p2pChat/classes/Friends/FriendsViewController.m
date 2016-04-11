@@ -17,7 +17,7 @@
 
 @interface FriendsViewController ()<FriendHeaderViewDelegate,UITableViewDelegate>
 
-@property (nonatomic, strong) NSArray *groups;
+@property (nonatomic, strong) NSMutableArray *groups;
 @property (nonatomic,strong) FriendsGroup *group;
 @property (strong, nonatomic) NSFetchedResultsController *friendsController;
 
@@ -35,19 +35,16 @@
     group1.name = @"group1";
     group1.opened = NO;
     group1.friends = [NSArray array];
-    _groups = [NSArray arrayWithObjects:group1,nil];
-    
+    _groups = [NSMutableArray arrayWithObjects:self.group,nil];
+    [_groups addObject:self.group];
     [self.tableView registerNib:[UINib nibWithNibName:@"FriendCell" bundle:nil] forCellReuseIdentifier:@"friendCell"];
     
     self.tableView.rowHeight = 50;
     self.tableView.sectionHeaderHeight = 44;
     
-    _friendsController = [[MyXMPP shareInstance]getFriends];
+    _friendsController = [[MyXMPP shareInstance] getFriends];
     
-
-    
-    
-    
+    NSLog(@"组数%ld",[_friendsController sections].count);
 }
 
 - (void)viewWillAppear:(BOOL)animated {
@@ -59,9 +56,12 @@
 }
 
 - (FriendsGroup *)group{
-    FriendsGroup *group = [[FriendsGroup alloc]init];
-    group.opened = NO;
-    _group = group;
+    if (_group == nil) {
+        FriendsGroup *group = [[FriendsGroup alloc]init];
+        group.opened = NO;
+        group.name = @"group1";
+        self.group = group;
+    }
     return _group;
 }
 
@@ -73,7 +73,9 @@
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
     id<NSFetchedResultsSectionInfo> sectionObj = [[_friendsController sections]objectAtIndex:section];
-    return [sectionObj numberOfObjects];
+    NSLog(@"sectionObj%@",sectionObj.name);
+    
+    return (_group.isOpened ? [sectionObj numberOfObjects] : 0);
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
@@ -86,11 +88,12 @@
     }
     
     XMPPUserCoreDataStorageObject *obj = ( XMPPUserCoreDataStorageObject *) [_friendsController objectAtIndexPath:indexPath];
+    NSLog(@"sectionName%@",obj.sectionName);    //首字母
+    [cell setLable:obj.nickname];
+    [cell setIcon:@"0"];
     
-    cell.nameLable.text = obj.nickname;
-    
-    [cell awakeFromNib];
-    cell.iconView.image = [UIImage imageNamed:@"0"];
+//    [cell awakeFromNib];
+   
 
     return cell;
 }
@@ -100,7 +103,6 @@
 {
     FriendHeaderView *header = [FriendHeaderView friendHeaderViewWithTableView:tableView];
     header.delegate = self;
-    
     header.group = self.groups[section];
     
     return header;
@@ -115,11 +117,14 @@
 
     FriendInfoController *vc = (FriendInfoController *)[storyBoard instantiateViewControllerWithIdentifier:@"friendsInfo"];
     vc.title = @"个人资料";
-    vc.userObj =  ( XMPPUserCoreDataStorageObject *) [_friendsController objectAtIndexPath:indexPath];
+    vc.userObj =  ( XMPPUserCoreDataStorageObject *)[_friendsController objectAtIndexPath:indexPath];
     [self.navigationController pushViewController:vc animated:YES];
 }
 
+#pragma mark - headerView的代理方法
 - (void)headerViewDidClickedNameView:(FriendHeaderView *)headerView{
+//    NSLog(@"headerViewDidClickedNameView");
+
     [self.tableView reloadData];
 }
 
