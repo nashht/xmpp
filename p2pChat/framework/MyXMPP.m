@@ -190,8 +190,9 @@
     NSManagedObjectContext *context = [[XMPPRosterCoreDataStorage sharedInstance] mainThreadManagedObjectContext];
     NSFetchRequest *request = [[NSFetchRequest alloc] initWithEntityName:@"XMPPUserCoreDataStorageObject"];
     //排序
-    NSSortDescriptor * sort = [NSSortDescriptor sortDescriptorWithKey:@"jidStr" ascending:YES];//jidStr
-    request.sortDescriptors = @[sort];
+//    NSSortDescriptor * sort1 = [NSSortDescriptor sortDescriptorWithKey:@"section" ascending:YES];
+    NSSortDescriptor * sort2 = [NSSortDescriptor sortDescriptorWithKey:@"jidStr" ascending:YES];//jidStr
+    request.sortDescriptors = @[sort2];
     
     NSFetchedResultsController *fetchFriends = [[NSFetchedResultsController alloc] initWithFetchRequest:request managedObjectContext:context sectionNameKeyPath:nil cacheName:nil];
     NSError *error = nil;
