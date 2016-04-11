@@ -10,7 +10,7 @@
 #import "LastMessage.h"
 #import "MyXMPP.h"
 
-@interface EditEmailController ()
+@interface EditEmailController ()<UITextFieldDelegate>
 
 @end
 
@@ -21,28 +21,31 @@
     // Do any additional setup after loading the view.
     
     _emailText.text = @"ios@nmrc.com";
+    _emailText.delegate = self;
     
-    
-    UIBarButtonItem *saveItem = [[UIBarButtonItem alloc]initWithBarButtonSystemItem:UIBarButtonSystemItemSave target:self action:@selector(save:)];
+    UIBarButtonItem *saveItem = [[UIBarButtonItem alloc]initWithBarButtonSystemItem:UIBarButtonSystemItemSave target:self action:@selector(save)];
     self.navigationItem.rightBarButtonItem = saveItem;
     self.navigationItem.title = @"请输入邮箱";
     self.emailText.borderStyle = UITextBorderStyleRoundedRect;
-    
-    
 }
 
-- (void)didReceiveMemoryWarning {
-    [super didReceiveMemoryWarning];
-    // Dispose of any resources that can be recreated.
+- (void)viewDidAppear:(BOOL)animated {
+    [_emailText becomeFirstResponder];
 }
 
+- (void)viewWillAppear:(BOOL)animated {
+    self.tabBarController.tabBar.hidden = YES;
+}
 
 - (void)save {
-    
-    [[MyXMPP shareInstance] updateMyEmail:@[_emailText.text]];
-    
+#warning 检查合法性
+    [[MyXMPP shareInstance] updateMyEmail:_emailText.text];
 }
 
-
+#pragma mark - text field delegate
+- (BOOL)textFieldShouldReturn:(UITextField *)textField {
+    [self save];
+    return YES;
+}
 
 @end
