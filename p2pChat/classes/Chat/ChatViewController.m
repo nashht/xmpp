@@ -86,7 +86,7 @@
     _showRecordView = NO;
     _recordView = [[NSBundle mainBundle]loadNibNamed:@"RecordView" owner:self options:nil].lastObject;
     _recordView.frame = CGRectMake(0, _screenSize.height, _screenSize.width, VIEWHEIGHT);
-//    _recordView.username = _username;
+    _recordView.username = _userJid.user;
     [self.view addSubview:_recordView];
     
     // init more view

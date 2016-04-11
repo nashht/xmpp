@@ -43,13 +43,14 @@
 - (float)stopRecord {
     NSTimeInterval during = _recorder.currentTime;
     [_recorder stop];
-//    [self startPlay];
+    [self startPlay];
     return (float)during;
 }
 
 - (void)startPlay {
     NSError *err = nil;
     _player = [[AVAudioPlayer alloc]initWithContentsOfURL:[NSURL fileURLWithPath:_path] error:&err];
+    NSLog(@"record path: %@", _path);
     if (err) {
         NSLog(@"AudioCenter play error: %@", err);
     }

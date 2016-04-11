@@ -10,7 +10,6 @@
 
 @interface RecordView : UIView
 
-@property (strong, nonatomic) NSString *ipStr;
 @property (strong, nonatomic) NSString *username;
 
 @end

@@ -32,8 +32,6 @@
 		90FA063D1CACD0D800851B1C /* FriendCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 90FA063B1CACD0D800851B1C /* FriendCell.m */; };
 		90FA063E1CACD0D800851B1C /* FriendCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 90FA063C1CACD0D800851B1C /* FriendCell.xib */; };
 		90FA06441CACDAA600851B1C /* FriendInfoController.m in Sources */ = {isa = PBXBuildFile; fileRef = 90FA06431CACDAA600851B1C /* FriendInfoController.m */; };
-		90FA064A1CAD02B600851B1C /* InfoHeader.m in Sources */ = {isa = PBXBuildFile; fileRef = 90FA06491CAD02B600851B1C /* InfoHeader.m */; };
-		90FA064C1CAD02D300851B1C /* InfoHeader.xib in Resources */ = {isa = PBXBuildFile; fileRef = 90FA064B1CAD02D300851B1C /* InfoHeader.xib */; };
 		90FA064E1CAD11AC00851B1C /* bg_show_count.png in Resources */ = {isa = PBXBuildFile; fileRef = 90FA064D1CAD11AC00851B1C /* bg_show_count.png */; };
 		90FA06531CAE094600851B1C /* MeController.m in Sources */ = {isa = PBXBuildFile; fileRef = 90FA06521CAE094600851B1C /* MeController.m */; };
 		90FA065E1CAE4BDE00851B1C /* RecentCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 90FA065A1CAE4BDE00851B1C /* RecentCell.m */; };
@@ -273,9 +271,6 @@
 		90FA063C1CACD0D800851B1C /* FriendCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = FriendCell.xib; sourceTree = "<group>"; };
 		90FA06421CACDAA600851B1C /* FriendInfoController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FriendInfoController.h; sourceTree = "<group>"; };
 		90FA06431CACDAA600851B1C /* FriendInfoController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FriendInfoController.m; sourceTree = "<group>"; };
-		90FA06481CAD02B600851B1C /* InfoHeader.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = InfoHeader.h; sourceTree = "<group>"; };
-		90FA06491CAD02B600851B1C /* InfoHeader.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = InfoHeader.m; sourceTree = "<group>"; };
-		90FA064B1CAD02D300851B1C /* InfoHeader.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = InfoHeader.xib; sourceTree = "<group>"; };
 		90FA064D1CAD11AC00851B1C /* bg_show_count.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = bg_show_count.png; sourceTree = "<group>"; };
 		90FA06511CAE094600851B1C /* MeController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MeController.h; sourceTree = "<group>"; };
 		90FA06521CAE094600851B1C /* MeController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MeController.m; sourceTree = "<group>"; };
@@ -736,9 +731,6 @@
 			children = (
 				90FA06421CACDAA600851B1C /* FriendInfoController.h */,
 				90FA06431CACDAA600851B1C /* FriendInfoController.m */,
-				90FA06481CAD02B600851B1C /* InfoHeader.h */,
-				90FA06491CAD02B600851B1C /* InfoHeader.m */,
-				90FA064B1CAD02D300851B1C /* InfoHeader.xib */,
 			);
 			path = FriendInfo;
 			sourceTree = "<group>";
@@ -1997,7 +1989,6 @@
 				90E3E89D1C99540E0076F28C /* happy.mp3 in Resources */,
 				842B4C4B1CB7BC8D008665D9 /* Images.xcassets in Resources */,
 				DA9046BF1C3A5601009E75B7 /* 0.png in Resources */,
-				90FA064C1CAD02D300851B1C /* InfoHeader.xib in Resources */,
 				DAD2350B1C425355003A93F9 /* RecordView.xib in Resources */,
 				90FA06621CAE656500851B1C /* Assets.xcassets in Resources */,
 				DAD235021C424CEE003A93F9 /* MoreView.xib in Resources */,
@@ -2058,7 +2049,6 @@
 				DAAA186E1CABCF6500691170 /* Message.m in Sources */,
 				DA90B2091C8989930080E037 /* GCDAsyncSocket.m in Sources */,
 				DA90B1D41C8989930080E037 /* XMPPPubSub.m in Sources */,
-				90FA064A1CAD02B600851B1C /* InfoHeader.m in Sources */,
 				DA90B1BF1C8989930080E037 /* XMPPRoomMessageMemoryStorageObject.m in Sources */,
 				DA90B1BB1C8989930080E037 /* XMPPRoomHybridStorage.m in Sources */,
 				DA90B1D71C8989930080E037 /* XMPPMessage+XEP_0066.m in Sources */,

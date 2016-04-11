@@ -33,7 +33,7 @@ typedef NS_ENUM (char, MessageType) {
 - (void)loginout;
 
 - (void)sendMessage:(NSString *)text ToUser:(NSString *) user;
-- (void)sendAudio:(NSString *)path ToUser:(NSString *)user;
+- (void)sendAudio:(NSString *)path ToUser:(NSString *)user length:(NSString *)length;
 - (void)sendPicture:(NSString *)path ToUser:(NSString *)user;
 
 - (void)updateFriendsList;

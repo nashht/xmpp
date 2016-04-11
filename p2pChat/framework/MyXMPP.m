@@ -14,6 +14,8 @@
 #import "XMPPvCardTemp.h"
 #import "DataManager.h"
 
+static NSString *myDomain = @"xmpp.test";
+
 @interface MyXMPP () <XMPPStreamDelegate,XMPPRosterStorage,XMPPRosterDelegate>
 
 @property (strong, nonatomic) XMPPStream *stream;
@@ -91,7 +93,7 @@
     NSXMLElement *message = [NSXMLElement elementWithName:@"message"];
     [message addAttributeWithName:@"type" stringValue:@"chat"];
     
-    NSString *to = [NSString stringWithFormat:@"%@@xmpp.test", user];
+    NSString *to = [NSString stringWithFormat:@"%@@%@", user, myDomain];
     [message addAttributeWithName:@"to" stringValue:to];
     
     [message addChild:body];
@@ -99,6 +101,28 @@
     
     [_dataManager saveMessageWithUsername:user time:[NSDate date] body:text isOut:YES];
     [_dataManager addRecentUsername:user time:[NSDate date] body:text isOut:YES];
+}
+
+- (void)sendAudio:(NSString *)path ToUser:(NSString *)user length:(NSString *)length{
+    NSLog(@"audio");
+    
+    NSFileManager *fm=[NSFileManager defaultManager];
+    NSData *con = [fm contentsAtPath:path];
+    NSString *p = [[NSString alloc]initWithData:con  encoding:NSUTF8StringEncoding];
+    NSXMLElement *body = [NSXMLElement elementWithName:@"body"];
+    [body setStringValue:p];
+    
+    NSXMLElement *message = [NSXMLElement elementWithName:@"message"];
+    [message addAttributeWithName:@"type" stringValue:@"audio"];
+    
+    NSString *to = [NSString stringWithFormat:@"%@@%@", user, myDomain];
+    [message addAttributeWithName:@"to" stringValue:to];
+    
+    [message addChild:body];
+    [self.stream sendElement:message];
+    
+    [_dataManager saveRecordWithUsername:user time:[NSDate date] path:path length:length isOut:YES];
+    [_dataManager addRecentUsername:user time:[NSDate date] body:@"【语音】" isOut:YES];
 }
 
 - (void)updateFriendsList {
@@ -310,7 +334,11 @@
         
         [_dataManager saveMessageWithUsername:bareJidStr time:[NSDate date] body:messageBody isOut:NO];
         [_dataManager addRecentUsername:bareJidStr time:[NSDate date] body:messageBody isOut:NO];
-    } else {
+    } if([message.type  isEqualToString:@"audio"] && message.body !=nil){
+//        message.body;
+
+    }
+        else {
         NSLog(@"%@", message);
     }
     
