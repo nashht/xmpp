@@ -57,7 +57,7 @@
     [_vCardModule addDelegate:self delegateQueue:dispatch_get_main_queue()];
     _vCardAvatar = [[XMPPvCardAvatarModule alloc] initWithvCardTempModule:_vCardModule];
     [_vCardModule activate:self.stream];
-
+    [_vCardAvatar activate:_stream];
 }
 
 + (instancetype)shareInstance {
