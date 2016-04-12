@@ -355,8 +355,6 @@ static NSString *myDomain = @"xmpp.test";
         NSString *audiomsg = [audiomessageBody substringWithRange:range2];
         
         NSData *data = [[NSData alloc] initWithBase64EncodedString:audiomsg options:0];
-         
-//        NSData* data = [audiomsg dataUsingEncoding:NSUTF8StringEncoding];
         
         NSLog(@"did recieve audio message :%@, length: %ld",audiomessageBody, data.length);
         
