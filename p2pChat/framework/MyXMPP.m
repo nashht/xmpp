@@ -367,8 +367,11 @@ static NSString *myDomain = @"xmpp.test";
         jidStr = [jidStr substringToIndex:range3.location];
         NSLog(@"%@", jidStr);
 
-
-        [_dataManager saveRecordWithUsername:jidStr time:[NSDate date] path:[Tool getFileName:@"recieve" extension:@"caf"] length:audiolength isOut:NO];
+        
+        NSString *path = [Tool getFileName:@"recieve" extension:@"caf"];
+        [data writeToFile:path atomically:YES];
+        
+        [_dataManager saveRecordWithUsername:jidStr time:[NSDate date] path:path length:audiolength isOut:NO];
         [_dataManager addRecentUsername:jidStr time:[NSDate date] body:audiomessageBody isOut:NO];
  
     }

@@ -44,7 +44,7 @@
     self.tableView.rowHeight = 50;
     self.tableView.sectionHeaderHeight = 44;
     
-    _friendsController = [[MyXMPP shareInstance] getFriends];
+//    _friendsController = [[MyXMPP shareInstance] getFriends];
     
     NSLog(@"组数%ld",[_friendsController sections].count);
 }
