@@ -116,10 +116,10 @@ static NSString *myDomain = @"xmpp.test";
 //    NSString *audiomsg = [[NSString alloc] initWithBytes:content.bytes length:content.length encoding:NSUTF8StringEncoding];
     
     NSString *audiomsg = [[NSString alloc]initWithData:content encoding:NSUTF8StringEncoding];//audiomsg 是空，待解决
-    NSString *audiomsgwithlength = [NSString stringWithFormat:@"%@,%@", audiomsg, length];
+    NSString *audiomsgwithlength = [NSString stringWithFormat:@"%@,%@",length,audiomsg];
     
     NSXMLElement *body = [NSXMLElement elementWithName:@"body"];
-    [body setStringValue:audiomsg];
+    [body setStringValue:audiomsgwithlength];
     
     NSXMLElement *audiomessage = [NSXMLElement elementWithName:@"message"];
     [audiomessage addAttributeWithName:@"type" stringValue:@"audio"];
@@ -222,22 +222,22 @@ static NSString *myDomain = @"xmpp.test";
     [_stream disconnect];
 };
 
-- (NSFetchedResultsController *)getFriends {
+- (NSArray<XMPPGroupCoreDataStorageObject *> *)getFriends {
     NSManagedObjectContext *context = [[XMPPRosterCoreDataStorage sharedInstance] mainThreadManagedObjectContext];
-    NSFetchRequest *request = [[NSFetchRequest alloc] initWithEntityName:@"XMPPUserCoreDataStorageObject"];
+    NSFetchRequest *request = [[NSFetchRequest alloc] initWithEntityName:@"XMPPGroupCoreDataStorageObject"];
     //排序
-    NSSortDescriptor * sort = [NSSortDescriptor sortDescriptorWithKey:@"jidStr" ascending:YES];//jidStr
+    NSSortDescriptor * sort = [NSSortDescriptor sortDescriptorWithKey:@"name" ascending:YES];//jidStr
     request.sortDescriptors = @[sort];
     
-    NSFetchedResultsController *fetchFriends = [[NSFetchedResultsController alloc] initWithFetchRequest:request managedObjectContext:context sectionNameKeyPath:nil cacheName:nil];
-    NSError *error = nil;
-    if (![fetchFriends performFetch:&error]) {
-        NSLog(@"fetching friends error: %@", error);
+    NSError *err = nil;
+    NSArray<XMPPGroupCoreDataStorageObject *> *friendGroups = [context executeFetchRequest:request error:&err];
+    if (err != nil) {
+        NSLog(@"myxmpp fetch friend failed: %@", err);
     }
     
     //XMPPUserCoreDataStorageObject  *obj类型的
     //名称为 obj.displayName
-    return fetchFriends;
+    return friendGroups;
 //    XMPPUserCoreDataStorageObject
 }
 
@@ -350,24 +350,25 @@ static NSString *myDomain = @"xmpp.test";
     } if([message.type isEqualToString:@"audio"] && message.body !=nil){
 
         NSString *audiomessageBody = [[message elementForName:@"body"] stringValue];
-        NSData* data = [audiomessageBody dataUsingEncoding:NSUTF8StringEncoding];
         
-
-//        NSData *data = [[NSData alloc]initWithBase64EncodedString:audiomessageBody options:0];
+        NSRange range1 = NSMakeRange(0, 9);
+        NSString *audiolength = [audiomessageBody substringWithRange:range1];//获取语音消息长度
+        NSRange range2 = NSMakeRange(9, [audiomessageBody length]-9);
+        NSString *audiomsg = [audiomessageBody substringWithRange:range2];
         
-//        NSData* data = [audiomessageBody dataUsingEncoding:NSASCIIStringEncoding];
+        NSData *data = [[NSData alloc] initWithBase64EncodedString:audiomsg options:0];
+         
+//        NSData* data = [audiomsg dataUsingEncoding:NSUTF8StringEncoding];
         
         NSLog(@"did recieve audio message :%@, length: %ld",audiomessageBody, data.length);
         
         NSString *jidStr = message.fromStr;
-        NSRange range = [jidStr rangeOfString:@"@"];
-        jidStr = [jidStr substringToIndex:range.location];
-        
+        NSRange range3 = [jidStr rangeOfString:@"@"];
+        jidStr = [jidStr substringToIndex:range3.location];
         NSLog(@"%@", jidStr);
 
-        NSString *str = [[message elementForName:@"audiolength"] stringValue];
 
-        [_dataManager saveRecordWithUsername:jidStr time:[NSDate date] path:[Tool getFileName:@"recieve" extension:@"caf"] length:str isOut:NO];
+        [_dataManager saveRecordWithUsername:jidStr time:[NSDate date] path:[Tool getFileName:@"recieve" extension:@"caf"] length:audiolength isOut:NO];
         [_dataManager addRecentUsername:jidStr time:[NSDate date] body:audiomessageBody isOut:NO];
  
     }
