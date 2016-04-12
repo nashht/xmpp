@@ -30,7 +30,6 @@
         _timeLable = timeLable;
         
         //        2.头像
-
         UIImageView *photoImage = [[UIImageView alloc] init];
         [self.contentView addSubview:photoImage];
         _photoImage = photoImage;
@@ -69,6 +68,8 @@
     }
     
     _photoImage.frame = messageFrame.photoFrame;
+    [_photoImage.layer setCornerRadius:CGRectGetHeight([_photoImage bounds]) / 2];
+    _photoImage.layer.masksToBounds = true;
     
     [_bodyBtn setTitle:msg.body forState:UIControlStateNormal];
     _bodyBtn.frame = messageFrame.bodyFrame;

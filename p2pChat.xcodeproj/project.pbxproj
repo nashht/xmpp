@@ -29,6 +29,7 @@
 		90E3E8891C97AA840076F28C /* Snip20151210_2.png in Resources */ = {isa = PBXBuildFile; fileRef = 90E3E8881C97AA840076F28C /* Snip20151210_2.png */; };
 		90E3E89D1C99540E0076F28C /* happy.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 90E3E89C1C99540E0076F28C /* happy.mp3 */; };
 		90E3E89F1C9955930076F28C /* AVFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 90E3E89E1C9955930076F28C /* AVFoundation.framework */; };
+		90F711161CBC89FC00042A99 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 90F711151CBC89FC00042A99 /* Main.storyboard */; };
 		90FA063D1CACD0D800851B1C /* FriendCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 90FA063B1CACD0D800851B1C /* FriendCell.m */; };
 		90FA063E1CACD0D800851B1C /* FriendCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 90FA063C1CACD0D800851B1C /* FriendCell.xib */; };
 		90FA06441CACDAA600851B1C /* FriendInfoController.m in Sources */ = {isa = PBXBuildFile; fileRef = 90FA06431CACDAA600851B1C /* FriendInfoController.m */; };
@@ -189,7 +190,6 @@
 		DA90B2161C8989930080E037 /* DDXMLNode.m in Sources */ = {isa = PBXBuildFile; fileRef = DA90B1811C8989930080E037 /* DDXMLNode.m */; };
 		DA90B2171C8989930080E037 /* build-libidn.sh in Resources */ = {isa = PBXBuildFile; fileRef = DA90B1851C8989930080E037 /* build-libidn.sh */; };
 		DA90B2181C8989930080E037 /* libidn.a in Frameworks */ = {isa = PBXBuildFile; fileRef = DA90B1871C8989930080E037 /* libidn.a */; };
-		DA95D5A01C3A16E6001ED1A6 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = DA95D59E1C3A16E6001ED1A6 /* Main.storyboard */; };
 		DA95D5A31C3A16E6001ED1A6 /* p2pChat.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = DA95D5A11C3A16E6001ED1A6 /* p2pChat.xcdatamodeld */; };
 		DA95D5A81C3A16E6001ED1A6 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = DA95D5A61C3A16E6001ED1A6 /* LaunchScreen.storyboard */; };
 		DA95D5B31C3A16E6001ED1A6 /* p2pChatTests.m in Sources */ = {isa = PBXBuildFile; fileRef = DA95D5B21C3A16E6001ED1A6 /* p2pChatTests.m */; };
@@ -266,6 +266,7 @@
 		90E3E8881C97AA840076F28C /* Snip20151210_2.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Snip20151210_2.png; sourceTree = "<group>"; };
 		90E3E89C1C99540E0076F28C /* happy.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = happy.mp3; sourceTree = "<group>"; };
 		90E3E89E1C9955930076F28C /* AVFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AVFoundation.framework; path = System/Library/Frameworks/AVFoundation.framework; sourceTree = SDKROOT; };
+		90F711151CBC89FC00042A99 /* Main.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; name = Main.storyboard; path = Recent/Main.storyboard; sourceTree = "<group>"; };
 		90FA063A1CACD0D800851B1C /* FriendCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FriendCell.h; sourceTree = "<group>"; };
 		90FA063B1CACD0D800851B1C /* FriendCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FriendCell.m; sourceTree = "<group>"; };
 		90FA063C1CACD0D800851B1C /* FriendCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = FriendCell.xib; sourceTree = "<group>"; };
@@ -593,7 +594,6 @@
 		DA90B1881C8989930080E037 /* stringprep.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = stringprep.h; sourceTree = "<group>"; };
 		DA90B1891C8989930080E037 /* XMPPFramework.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = XMPPFramework.h; path = framework/XMPPFramework.h; sourceTree = "<group>"; };
 		DA95D5921C3A16E6001ED1A6 /* p2pChat.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = p2pChat.app; sourceTree = BUILT_PRODUCTS_DIR; };
-		DA95D59F1C3A16E6001ED1A6 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		DA95D5A21C3A16E6001ED1A6 /* p2pChat.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = p2pChat.xcdatamodel; sourceTree = "<group>"; };
 		DA95D5A71C3A16E6001ED1A6 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		DA95D5A91C3A16E6001ED1A6 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -689,6 +689,7 @@
 		900122431CA91EE2005D5BFA /* classes */ = {
 			isa = PBXGroup;
 			children = (
+				90F711151CBC89FC00042A99 /* Main.storyboard */,
 				84AD18D51CB4ACA000357F60 /* EditEmail */,
 				84AD18D11CB4A92F00357F60 /* ChangePsw */,
 				84AD18D01CB4A91800357F60 /* EditTel */,
@@ -1747,7 +1748,6 @@
 				900122431CA91EE2005D5BFA /* classes */,
 				90E7D6F71C9192D600919862 /* Controller */,
 				DA9046C11C3A645A009E75B7 /* Views */,
-				DA95D59E1C3A16E6001ED1A6 /* Main.storyboard */,
 				DA9046B91C3A51A8009E75B7 /* Tools */,
 				DA95D5CE1C3A1F11001ED1A6 /* DataStorage */,
 				842B4C4A1CB7BC8D008665D9 /* Images.xcassets */,
@@ -1992,9 +1992,9 @@
 				DAD2350B1C425355003A93F9 /* RecordView.xib in Resources */,
 				90FA06621CAE656500851B1C /* Assets.xcassets in Resources */,
 				DAD235021C424CEE003A93F9 /* MoreView.xib in Resources */,
+				90F711161CBC89FC00042A99 /* Main.storyboard in Resources */,
 				DA95D5A81C3A16E6001ED1A6 /* LaunchScreen.storyboard in Resources */,
 				DA90B2171C8989930080E037 /* build-libidn.sh in Resources */,
-				DA95D5A01C3A16E6001ED1A6 /* Main.storyboard in Resources */,
 				90E3E8891C97AA840076F28C /* Snip20151210_2.png in Resources */,
 				DA9046C01C3A5601009E75B7 /* 1.png in Resources */,
 				90FA064E1CAD11AC00851B1C /* bg_show_count.png in Resources */,
@@ -2238,14 +2238,6 @@
 /* End PBXTargetDependency section */
 
 /* Begin PBXVariantGroup section */
-		DA95D59E1C3A16E6001ED1A6 /* Main.storyboard */ = {
-			isa = PBXVariantGroup;
-			children = (
-				DA95D59F1C3A16E6001ED1A6 /* Base */,
-			);
-			name = Main.storyboard;
-			sourceTree = "<group>";
-		};
 		DA95D5A61C3A16E6001ED1A6 /* LaunchScreen.storyboard */ = {
 			isa = PBXVariantGroup;
 			children = (

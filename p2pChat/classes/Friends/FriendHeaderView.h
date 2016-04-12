@@ -11,11 +11,9 @@
 @protocol FriendHeaderViewDelegate<NSObject>
 @optional
 
-- (void) headerViewDidClickedNameView:(FriendHeaderView *)headerView;
+- (void)headerViewDidClickedNameView:(FriendHeaderView *)headerView;
 
 @end
-
-
 
 @interface FriendHeaderView : UITableViewHeaderFooterView
 @property (nonatomic, strong) FriendsGroup *group;

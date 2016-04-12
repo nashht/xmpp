@@ -9,12 +9,10 @@
 #import <UIKit/UIKit.h>
 
 @interface FriendCell : UITableViewCell
-//@property (strong,nonatomic) Friend *friend;
-@property (weak, nonatomic) IBOutlet UILabel *nameLabel;
-@property (weak, nonatomic) IBOutlet UIImageView *iconView;
-@property (weak, nonatomic) IBOutlet UILabel *departmentLabel;
-@property (weak, nonatomic) IBOutlet UILabel *friendStatusLabel;
 
-- (void)setLable:(NSString *) name;
+- (void)setLabel:(NSString *) name;
+- (void)setIcon:(NSString *)icon;
+- (void)setDepartment:(NSString *)department;
+- (void)setStatus:(NSString *)status;
 
 @end
