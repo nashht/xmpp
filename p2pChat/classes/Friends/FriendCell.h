@@ -11,7 +11,7 @@
 @interface FriendCell : UITableViewCell
 
 - (void)setLabel:(NSString *) name;
-- (void)setIcon:(NSString *)icon;
+- (void)setIcon:(UIImage *)icon;
 - (void)setDepartment:(NSString *)department;
 - (void)setStatus:(NSString *)status;
 
