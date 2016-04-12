@@ -15,7 +15,7 @@
 #import "MyXMPP.h"
 #import "FriendInfoController.h"
 
-@interface FriendsViewController ()<FriendHeaderViewDelegate,UITableViewDelegate>
+@interface FriendsViewController ()<FriendHeaderViewDelegate,UITableViewDelegate,NSFetchedResultsControllerDelegate>
 
 @property (nonatomic, strong) NSMutableArray *groups;
 @property (nonatomic,strong) FriendsGroup *group;
@@ -28,6 +28,8 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
  
+    [self.tableView setSeparatorStyle:UITableViewCellSeparatorStyleNone];
+
     self.navigationItem.title = @"通讯录";
     
     // 假数据
@@ -86,15 +88,36 @@
     if (cell == nil) {
         cell = [[[NSBundle mainBundle] loadNibNamed:@"FriendCell" owner:nil options:nil] firstObject];
     }
+//    cell.selectionStyle =UITableViewCellSelectionStyleNone;
     
     XMPPUserCoreDataStorageObject *obj = ( XMPPUserCoreDataStorageObject *) [_friendsController objectAtIndexPath:indexPath];
-    NSLog(@"sectionName%@",obj.sectionName);    //首字母
-    [cell setLable:obj.nickname];
+    NSArray <XMPPGroupCoreDataStorageObject *> *groups = obj.groups.allObjects;
+    if (groups.count != 0) {
+        XMPPGroupCoreDataStorageObject *groupInfo = groups[0];
+        [cell setDepartment:groupInfo.name];
+    } else {
+        [cell setDepartment:@"null"];
+    }
+    
+//    NSLog(@"sectionName%@",obj.sectionNum);    //首字母
+//        NSLog(@"sectionName%ld",obj.section);    //首字母
+    [cell setLabel:obj.nickname];
     [cell setIcon:@"0"];
     
-//    [cell awakeFromNib];
-   
-
+    switch (obj.section) {
+        case 0:
+            [cell setStatus:@"online"];
+            break;
+        case 1:
+            [cell setStatus:@"away"];
+            break;
+        case 2:
+            [cell setStatus:@"offline"];
+            break;
+        default:
+            break;
+    }
+    
     return cell;
 }
 
@@ -114,11 +137,13 @@
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
     UIStoryboard *storyBoard = [UIStoryboard storyboardWithName:@"Main" bundle:nil];
-
     FriendInfoController *vc = (FriendInfoController *)[storyBoard instantiateViewControllerWithIdentifier:@"friendsInfo"];
+    
     vc.title = @"个人资料";
     vc.userObj =  ( XMPPUserCoreDataStorageObject *)[_friendsController objectAtIndexPath:indexPath];
     [self.navigationController pushViewController:vc animated:YES];
+    
+    [tableView deselectRowAtIndexPath:indexPath animated:YES];
 }
 
 #pragma mark - headerView的代理方法
@@ -128,4 +153,10 @@
     [self.tableView reloadData];
 }
 
+#pragma mark 当数据的内容发生改变后，会调用 这个方法
+-(void)controllerDidChangeContent:(NSFetchedResultsController *)controller{
+    NSLog(@"数据发生改变");
+    //刷新表格
+    [self.tableView reloadData];
+}
 @end

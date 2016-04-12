@@ -22,7 +22,7 @@
     
     NSNumber * minNumber = [[NSNumber alloc] initWithInt:0];
     NSNumber * maxNumber = [[NSNumber alloc] initWithInt:10];
-    [_nonreadmessagenum.layer setCornerRadius:CGRectGetHeight([_nonreadmessagenum bounds]) / 2];
+    [_nonreadmessagenum.layer setCornerRadius:CGRectGetHeight(_nonreadmessagenum.bounds) / 2];
     _nonreadmessagenum.layer.masksToBounds = true;
     
     if ([num compare:minNumber] == NSOrderedSame) {
@@ -39,7 +39,7 @@
 
 - (void)awakeFromNib {
     // Initialization code
-    [_userimage.layer setCornerRadius:CGRectGetHeight([_userimage bounds]) / 2];
+    [_userimage.layer setCornerRadius:CGRectGetHeight(_userimage.bounds) / 2];
     _userimage.layer.masksToBounds = true;
     
 }

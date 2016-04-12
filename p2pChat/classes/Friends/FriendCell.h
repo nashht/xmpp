@@ -10,7 +10,9 @@
 
 @interface FriendCell : UITableViewCell
 
-
-- (void)setLable:(NSString *) name;
+- (void)setLabel:(NSString *) name;
 - (void)setIcon:(NSString *)icon;
+- (void)setDepartment:(NSString *)department;
+- (void)setStatus:(NSString *)status;
+
 @end
