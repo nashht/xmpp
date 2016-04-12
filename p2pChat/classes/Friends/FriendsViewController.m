@@ -43,11 +43,6 @@
     self.tableView.sectionHeaderHeight = 44;
     
     _friendsController = [[MyXMPP shareInstance]getFriends];
-    
-
-    
-    
-    
 }
 
 - (void)viewWillAppear:(BOOL)animated {
@@ -85,12 +80,14 @@
         cell = [[[NSBundle mainBundle] loadNibNamed:@"FriendCell" owner:nil options:nil] firstObject];
     }
     
-    XMPPUserCoreDataStorageObject *obj = ( XMPPUserCoreDataStorageObject *) [_friendsController objectAtIndexPath:indexPath];
+    XMPPUserCoreDataStorageObject *obj = (XMPPUserCoreDataStorageObject *) [_friendsController objectAtIndexPath:indexPath];
+    XMPPGroupCoreDataStorageObject *groupInfo = obj.groups.allObjects[0];
     
-    cell.nameLable.text = obj.nickname;
+    cell.nameLabel.text = obj.jid.user;
     
-    [cell awakeFromNib];
+//    [cell awakeFromNib];
     cell.iconView.image = [UIImage imageNamed:@"0"];
+    cell.departmentLabel.text = groupInfo.name;
 
     return cell;
 }

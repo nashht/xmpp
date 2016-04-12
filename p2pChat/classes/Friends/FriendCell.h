@@ -10,9 +10,10 @@
 
 @interface FriendCell : UITableViewCell
 //@property (strong,nonatomic) Friend *friend;
-@property (weak, nonatomic) IBOutlet UILabel *nameLable;
+@property (weak, nonatomic) IBOutlet UILabel *nameLabel;
 @property (weak, nonatomic) IBOutlet UIImageView *iconView;
-@property (weak, nonatomic) IBOutlet UILabel *statusLable;
+@property (weak, nonatomic) IBOutlet UILabel *departmentLabel;
+@property (weak, nonatomic) IBOutlet UILabel *friendStatusLabel;
 
 - (void)setLable:(NSString *) name;
 

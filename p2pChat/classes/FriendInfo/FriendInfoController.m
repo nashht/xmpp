@@ -8,6 +8,7 @@
 
 #import "FriendInfoController.h"
 #import "XMPPUserCoreDataStorageObject.h"
+#import "XMPPGroupCoreDataStorageObject.h"
 #import "ChatViewController.h"
 #import "MyXMPP.h"
 #import "XMPPvCardTemp.h"
@@ -32,10 +33,19 @@
     } else {
         [_photoImageView setImage:[UIImage imageWithData:friendVCard.photo]];
     }
-    _nameLabel.text = friendVCard.name;
-    _departmentLabel.text = _userObj.sectionName;
-    _phoneLabel.text = friendVCard.note;
-    _emailLabel.text = friendVCard.emailAddresses[0];
+    _nameLabel.text = _userObj.jid.user;
+    XMPPGroupCoreDataStorageObject *groupInfo = (XMPPGroupCoreDataStorageObject *)_userObj.groups.allObjects[0];
+    _departmentLabel.text = groupInfo.name;
+    if (friendVCard.note == nil) {
+        _phoneLabel.text = @"空";
+    }else {
+        _phoneLabel.text = friendVCard.note;
+    }
+    if (friendVCard.emailAddresses == nil) {
+        _emailLabel.text = @"空";
+    }else {
+        _emailLabel.text = friendVCard.emailAddresses[0];
+    }
 }
 
 - (void)viewWillAppear:(BOOL)animated {
@@ -44,6 +54,7 @@
 
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
     ChatViewController *chatVc = (ChatViewController *)segue.destinationViewController;
+    chatVc.title = _userObj.jid.user;
     chatVc.userJid = _userObj.jid;
 }
 

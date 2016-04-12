@@ -17,15 +17,13 @@
 @property (weak, nonatomic) IBOutlet UILabel *phoneLabel;
 @property (weak, nonatomic) IBOutlet UILabel *emailLabel;
 
-
 @end
 
-@implementation MeController
+@implementation MeController 
 
 - (void)viewDidLoad {
     
     self.navigationItem.title = @"我";
-    
     [_photoView.layer setCornerRadius:CGRectGetHeight([_photoView bounds])/2];
     _photoView.layer.masksToBounds = true;
     _nameLabel.text = [[NSUserDefaults standardUserDefaults]stringForKey:@"name"];
@@ -35,15 +33,16 @@
 
 }
 
+- (void)viewWillAppear:(BOOL)animated {
+    self.tabBarController.tabBar.hidden = NO;
+}
+
 - (IBAction)updatePassword:(id)sender {
     
 }
 
 - (IBAction)loginOut:(id)sender {
-    
-//    [MyXMPP shareInstance]
     [[MyXMPP shareInstance] loginout];
-    
 }
 
 @end
