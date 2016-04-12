@@ -18,8 +18,7 @@
 
 @interface FriendsViewController ()<FriendHeaderViewDelegate,UITableViewDelegate>
 
-@property (nonatomic, strong) NSArray *groups;
-@property (nonatomic,strong) FriendsGroup *group;
+@property (nonatomic, strong) NSMutableArray<FriendsGroup *> *groups;
 @property (strong, nonatomic) NSArray<XMPPGroupCoreDataStorageObject *> *groupCoreDataStorageObjects;
 
 @end
@@ -31,19 +30,13 @@
     
     self.navigationItem.title = @"通讯录";
     
-    // 假数据
-    FriendsGroup *group1 = [[FriendsGroup alloc] init];
-    group1.name = @"group1";
-    group1.opened = NO;
-    group1.friends = [NSArray array];
-    _groups = [NSArray arrayWithObjects:group1,nil];
-    
     [self.tableView registerNib:[UINib nibWithNibName:@"FriendCell" bundle:nil] forCellReuseIdentifier:@"friendCell"];
     
     self.tableView.rowHeight = 50;
     self.tableView.sectionHeaderHeight = 44;
     
-    _groupCoreDataStorageObjects = [[MyXMPP shareInstance]getFriends];
+    _groupCoreDataStorageObjects = [[MyXMPP shareInstance]getFriendsGroup];
+    [self initGroup];
 }
 
 - (void)viewWillAppear:(BOOL)animated {
@@ -54,11 +47,17 @@
     return YES;
 }
 
-- (FriendsGroup *)group{
-    FriendsGroup *group = [[FriendsGroup alloc]init];
-    group.opened = NO;
-    _group = group;
-    return _group;
+- (void)initGroup{
+    _groups = [[NSMutableArray alloc]init];
+    for (XMPPGroupCoreDataStorageObject *groupObj in _groupCoreDataStorageObjects) {
+        @autoreleasepool {
+            FriendsGroup *group = [[FriendsGroup alloc]init];
+            group.opened = NO;
+            group.name = groupObj.name;
+            group.friends = groupObj.users.allObjects;
+            [_groups addObject:group];
+        }
+    }
 }
 
 #pragma mark - Table view data source
@@ -69,7 +68,8 @@
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
     XMPPGroupCoreDataStorageObject *group = _groupCoreDataStorageObjects[section];
-    return group.users.count;
+    return _groups[section].opened ? group.users.count : 0;
+//    return group.users.count;
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
@@ -93,6 +93,20 @@
     }
     [cell setDepartment:@"职位"];
     
+    switch (obj.section) {
+        case 0:
+            [cell setStatus:@"online"];
+            break;
+        case 1:
+            [cell setStatus:@"away"];
+            break;
+        case 2:
+            [cell setStatus:@"offline"];
+            break;
+        default:
+            break;
+    }
+    
     return cell;
 }
 
@@ -101,15 +115,7 @@
 {
     FriendHeaderView *header = [FriendHeaderView friendHeaderViewWithTableView:tableView];
     header.delegate = self;
-    
-    XMPPGroupCoreDataStorageObject *groupObj = _groupCoreDataStorageObjects[section];
-    
-    FriendsGroup *group = [[FriendsGroup alloc]init];
-    group.opened = NO;
-    group.name = groupObj.name;
-    group.friends = groupObj.users.allObjects;
-    
-    header.group = group;
+    header.group = _groups[section];
     
     return header;
 }
