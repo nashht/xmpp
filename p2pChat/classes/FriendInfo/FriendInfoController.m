@@ -7,11 +7,19 @@
 //
 
 #import "FriendInfoController.h"
-#import "InfoHeader.h"
 #import "XMPPUserCoreDataStorageObject.h"
+#import "XMPPGroupCoreDataStorageObject.h"
 #import "ChatViewController.h"
+#import "MyXMPP.h"
+#import "XMPPvCardTemp.h"
 
-@interface FriendInfoController ()<UITableViewDelegate,UITableViewDataSource>
+@interface FriendInfoController ()
+
+@property (weak, nonatomic) IBOutlet UIImageView *photoImageView;
+@property (weak, nonatomic) IBOutlet UILabel *nameLabel;
+@property (weak, nonatomic) IBOutlet UILabel *departmentLabel;
+@property (weak, nonatomic) IBOutlet UILabel *phoneLabel;
+@property (weak, nonatomic) IBOutlet UILabel *emailLabel;
 
 @end
 
@@ -19,63 +27,35 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    self.tableView.tableHeaderView = [InfoHeader headerViewWithName:_userObj.nickname];
-    [self.tableView.tableHeaderView awakeFromNib];
-    UIView *footer = [[UIView alloc] init];
-    self.tableView.tableFooterView = footer;
-    footer.userInteractionEnabled = YES;
-
-    footer.frame = CGRectMake(0, 0, [UIScreen mainScreen].bounds.size.width, 44);
-    UIImageView *imageView = [[UIImageView alloc] init];
-    imageView.frame = CGRectMake(0, 0, 320, 50);
-    imageView.center = footer.center;
-    imageView.image = [UIImage imageNamed:@"bg_show_count.png"];
-    
-    UILabel *sendMsg = [[UILabel alloc] init];
-    sendMsg.frame = CGRectMake(0, 0, 320, 50);
-    sendMsg.center = footer.center;
-    sendMsg.textAlignment = NSTextAlignmentCenter;
-    sendMsg.text = @"发送消息";
-
-    sendMsg.textColor = [UIColor whiteColor];
-    UITapGestureRecognizer *singleTap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(sendMsgClick)];
-    [footer addGestureRecognizer:singleTap];
-    
-    [footer addSubview:imageView];
-    [footer addSubview:sendMsg];
+    XMPPvCardTemp *friendVCard = [[MyXMPP shareInstance]fetchFriend:_userObj.jid];
+    if (friendVCard.photo == nil) {
+        [_photoImageView setImage:[UIImage imageNamed:@"0"]];
+    } else {
+        [_photoImageView setImage:[UIImage imageWithData:friendVCard.photo]];
+    }
+    _nameLabel.text = _userObj.jid.user;
+    XMPPGroupCoreDataStorageObject *groupInfo = (XMPPGroupCoreDataStorageObject *)_userObj.groups.allObjects[0];
+    _departmentLabel.text = groupInfo.name;
+    if (friendVCard.note == nil) {
+        _phoneLabel.text = @"空";
+    }else {
+        _phoneLabel.text = friendVCard.note;
+    }
+    if (friendVCard.emailAddresses == nil) {
+        _emailLabel.text = @"空";
+    }else {
+        _emailLabel.text = friendVCard.emailAddresses[0];
+    }
 }
 
 - (void)viewWillAppear:(BOOL)animated {
     self.tabBarController.tabBar.hidden = YES;
 }
 
-- (void)sendMsgClick{
-//    NSLog(@"发送消息");
-    UIStoryboard *storyBoard = [UIStoryboard storyboardWithName:@"Main" bundle:nil];
-    
-    ChatViewController *chatVc = (ChatViewController *)[storyBoard instantiateViewControllerWithIdentifier:@"chat"];
-    chatVc.title = _userObj.nickname;
+- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
+    ChatViewController *chatVc = (ChatViewController *)segue.destinationViewController;
+    chatVc.title = _userObj.jid.user;
     chatVc.userJid = _userObj.jid;
-    [self.navigationController pushViewController:chatVc animated:YES];
-}
-
-#pragma mark - Table view data source
-
-- (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
-    return 5;
-}
-
-
-- (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
-    static NSString *friendInfoCellIdentifier = @"cell";
-    [tableView registerClass:[UITableViewCell class] forCellReuseIdentifier:friendInfoCellIdentifier];
-    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:friendInfoCellIdentifier];
-    if (cell == nil) {
-        cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleSubtitle reuseIdentifier:friendInfoCellIdentifier];
-    }
-    cell.textLabel.text = @"aa";
-    
-    return cell;
 }
 
 @end

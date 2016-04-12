@@ -10,22 +10,25 @@
 #import "AudioCenter.h"
 #import "Tool.h"
 #import "DataManager.h"
+#import "MyXMPP.h"
 
 @interface RecordView () {
     AudioCenter *_audioCenter;
+    NSString *path_;
 }
 @end
 
 @implementation RecordView
 
 - (IBAction)startRecord:(id)sender {
-    NSString *path = [Tool getFileName:@"send" extension:@"caf"];
+    path_ = [Tool getFileName:@"send" extension:@"caf"];
     _audioCenter = [AudioCenter shareInstance];
-    _audioCenter.path = path;
+    _audioCenter.path = path_;
     [_audioCenter startRecord];
 }
 
 - (IBAction)stopRecord:(id)sender {
-    [[AudioCenter shareInstance] stopRecord];
+    float length = [_audioCenter stopRecord];
+    [[MyXMPP shareInstance]sendAudio:path_ ToUser:_username length:[NSString stringWithFormat:@"%f", length]];
 }
 @end

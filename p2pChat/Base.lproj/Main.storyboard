@@ -45,7 +45,7 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <prototypes>
-                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" id="HKl-UV-ONe">
+                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" accessoryType="disclosureIndicator" indentationWidth="10" id="HKl-UV-ONe">
                                 <rect key="frame" x="0.0" y="92" width="600" height="44"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="HKl-UV-ONe" id="Le5-7n-Pp7">
@@ -252,7 +252,7 @@
         <scene sceneID="tio-SA-mD8">
             <objects>
                 <tableViewController restorationIdentifier="friendsInfo" storyboardIdentifier="friendsInfo" id="6mh-6h-z3u" customClass="FriendInfoController" sceneMemberID="viewController">
-                    <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="28" sectionFooterHeight="28" id="X70-bx-RiF">
+                    <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="static" style="grouped" separatorStyle="default" rowHeight="44" sectionHeaderHeight="18" sectionFooterHeight="18" id="X70-bx-RiF">
                         <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
@@ -271,6 +271,14 @@
                             <outlet property="delegate" destination="6mh-6h-z3u" id="U7M-yu-7yj"/>
                         </connections>
                     </tableView>
+                    <navigationItem key="navigationItem" id="4kQ-RY-Czh"/>
+                    <connections>
+                        <outlet property="departmentLabel" destination="nBV-G3-e2V" id="egY-uk-Rko"/>
+                        <outlet property="emailLabel" destination="h6d-OB-apL" id="Fxr-gZ-NwR"/>
+                        <outlet property="nameLabel" destination="9G5-JR-dEb" id="em6-lw-eAO"/>
+                        <outlet property="phoneLabel" destination="Fle-RM-iSi" id="lf4-eV-LrM"/>
+                        <outlet property="photoImageView" destination="As1-uf-ib4" id="If7-IF-rFK"/>
+                    </connections>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="hgY-Sa-UoS" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
@@ -482,7 +490,9 @@
                                             <subviews>
                                                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="aMN-ls-Erc">
                                                     <rect key="frame" x="8" y="8" width="584" height="30"/>
-                                                    <state key="normal" title="注销登录"/>
+                                                    <state key="normal" title="注销登录">
+                                                        <color key="titleColor" red="1" green="0.13327468240000001" blue="0.18949462659999999" alpha="1" colorSpace="calibratedRGB"/>
+                                                    </state>
                                                     <connections>
                                                         <action selector="loginOut:" destination="Fca-zl-Yxj" eventType="touchUpInside" id="3iG-SN-f1a"/>
                                                     </connections>
@@ -531,7 +541,7 @@
                             <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="line" textAlignment="natural" minimumFontSize="17" clearButtonMode="always" translatesAutoresizingMaskIntoConstraints="NO" id="Kvi-l5-UKw">
                                 <rect key="frame" x="0.0" y="72" width="600" height="30"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                <textInputTraits key="textInputTraits" keyboardAppearance="alert"/>
+                                <textInputTraits key="textInputTraits" keyboardAppearance="alert" returnKeyType="done"/>
                             </textField>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
@@ -564,7 +574,7 @@
                             <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="line" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="zeO-HS-N4s">
                                 <rect key="frame" x="0.0" y="72" width="600" height="30"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                <textInputTraits key="textInputTraits"/>
+                                <textInputTraits key="textInputTraits" keyboardType="emailAddress" returnKeyType="done"/>
                             </textField>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
@@ -622,4 +632,7 @@
         <image name="tabbar_mine_f" width="30" height="30"/>
         <image name="tabbar_mine_n" width="30" height="30"/>
     </resources>
+    <inferredMetricsTieBreakers>
+        <segue reference="jmf-yg-v0b"/>
+    </inferredMetricsTieBreakers>
 </document>
