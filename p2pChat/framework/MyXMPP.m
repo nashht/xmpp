@@ -113,9 +113,7 @@ static NSString *myDomain = @"xmpp.test";
     
     NSLog(@"send size: %ld", content.length);
     
-//    NSString *audiomsg = [[NSString alloc] initWithBytes:content.bytes length:content.length encoding:NSUTF8StringEncoding];
-    
-    NSString *audiomsg = [[NSString alloc]initWithData:content encoding:NSUTF8StringEncoding];//audiomsg 是空，待解决
+    NSString *audiomsg = [[NSString alloc]initWithData:content encoding:NSUTF8StringEncoding];
     NSString *audiomsgwithlength = [NSString stringWithFormat:@"%@,%@",length,audiomsg];
     
     NSXMLElement *body = [NSXMLElement elementWithName:@"body"];
@@ -222,7 +220,7 @@ static NSString *myDomain = @"xmpp.test";
     [_stream disconnect];
 };
 
-- (NSArray<XMPPGroupCoreDataStorageObject *> *)getFriends {
+- (NSArray<XMPPGroupCoreDataStorageObject *> *)getFriendsGroup {
     NSManagedObjectContext *context = [[XMPPRosterCoreDataStorage sharedInstance] mainThreadManagedObjectContext];
     NSFetchRequest *request = [[NSFetchRequest alloc] initWithEntityName:@"XMPPGroupCoreDataStorageObject"];
     //排序
@@ -338,7 +336,7 @@ static NSString *myDomain = @"xmpp.test";
 - (void)xmppStream:(XMPPStream *)sender didReceiveMessage:(XMPPMessage *)message {
     if ([message.type isEqualToString:@"chat"] && message.body != nil) {
         NSString *messageBody = [[message elementForName:@"body"] stringValue];
-        NSLog(@"my xmpp did receive message: %@", messageBody);
+        NSLog(@"my xmpp did receive message: %@ length: %ld", messageBody,messageBody.length);
         NSString *bareJidStr = message.fromStr;
         NSRange range = [bareJidStr rangeOfString:@"@"];
         bareJidStr = [bareJidStr substringToIndex:range.location];
