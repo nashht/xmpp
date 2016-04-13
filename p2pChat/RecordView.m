@@ -31,4 +31,7 @@
     float length = [_audioCenter stopRecord];
     [[MyXMPP shareInstance]sendAudio:path_ ToUser:_username length:[NSString stringWithFormat:@"%f", length]];
 }
+
+
+
 @end

@@ -12,8 +12,8 @@
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
                 <button opaque="NO" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="s4R-2z-iQ7">
-                    <rect key="frame" x="-225" y="-185" width="600" height="520"/>
-                    <state key="normal" title="按住说话">
+                    <rect key="frame" x="0.0" y="8" width="150" height="134"/>
+                    <state key="normal" image="speak">
                         <color key="titleColor" red="0.1987434186" green="0.24398397229999999" blue="0.28645833329999998" alpha="1" colorSpace="calibratedRGB"/>
                     </state>
                     <connections>
@@ -27,7 +27,10 @@
                 <constraint firstItem="s4R-2z-iQ7" firstAttribute="centerY" secondItem="iN0-l3-epB" secondAttribute="centerY" id="VKk-WT-HwQ"/>
             </constraints>
             <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
-            <point key="canvasLocation" x="43.5" y="520.5"/>
+            <point key="canvasLocation" x="43" y="520"/>
         </view>
     </objects>
+    <resources>
+        <image name="speak" width="85" height="85"/>
+    </resources>
 </document>

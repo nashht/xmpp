@@ -15,6 +15,8 @@
 #import "DataManager.h"
 #import "Tool.h"
 
+#define Voice @"[语音]"
+
 static NSString *myDomain = @"xmpp.test";
 
 @interface MyXMPP () <XMPPStreamDelegate,XMPPRosterStorage,XMPPRosterDelegate>
@@ -34,34 +36,6 @@ static NSString *myDomain = @"xmpp.test";
 @end
 
 @implementation MyXMPP
-
-- (id)init {
-    self = [super init];
-    
-    if (self.stream == nil) {
-        self.stream = [[XMPPStream alloc] init];
-        [self.stream addDelegate:self delegateQueue:dispatch_get_main_queue()];
-        _dataManager = [DataManager shareManager];
-    }
-
-    return self;
-}
-
-- (void)initRoster {
-    _roster = [[XMPPRoster alloc]initWithRosterStorage:[XMPPRosterCoreDataStorage sharedInstance]];
-    _roster.autoFetchRoster = YES;
-    [_roster addDelegate:self delegateQueue:dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_BACKGROUND, 0)];
-    [_roster activate:_stream];
-    [_roster fetchRoster];
-}
-
-- (void)initVCard {
-    _vCardModule = [[XMPPvCardTempModule alloc] initWithvCardStorage:[XMPPvCardCoreDataStorage sharedInstance]];
-    [_vCardModule addDelegate:self delegateQueue:dispatch_get_main_queue()];
-    _vCardAvatar = [[XMPPvCardAvatarModule alloc] initWithvCardTempModule:_vCardModule];
-    [_vCardModule activate:self.stream];
-    [_vCardAvatar activate:_stream];
-}
 
 + (instancetype)shareInstance {
     static MyXMPP *myXmpp;
@@ -90,39 +64,39 @@ static NSString *myDomain = @"xmpp.test";
 - (void)sendMessage:(NSString *)text ToUser:(NSString *) user {
     NSXMLElement *body = [NSXMLElement elementWithName:@"body"];
     [body setStringValue:text];
+    [body addAttributeWithName:@"subtype" stringValue:@"text"];
     
     NSXMLElement *message = [NSXMLElement elementWithName:@"message"];
     [message addAttributeWithName:@"type" stringValue:@"chat"];
+    
     
     NSString *to = [NSString stringWithFormat:@"%@@%@", user, myDomain];
     [message addAttributeWithName:@"to" stringValue:to];
     
     [message addChild:body];
     [self.stream sendElement:message];
+    NSLog(@"message : %@", message);
     
     [_dataManager saveMessageWithUsername:user time:[NSDate date] body:text isOut:YES];
     [_dataManager addRecentUsername:user time:[NSDate date] body:text isOut:YES];
 }
 
 - (void)sendAudio:(NSString *)path ToUser:(NSString *)user length:(NSString *)length{
-    NSLog(@"audio");
-    
     NSFileManager *filemnanager=[NSFileManager defaultManager];
     NSData *p = [filemnanager contentsAtPath:path];
     NSData *content = [p base64EncodedDataWithOptions:0];
     
     NSLog(@"send size: %ld", content.length);
     
-//    NSString *audiomsg = [[NSString alloc] initWithBytes:content.bytes length:content.length encoding:NSUTF8StringEncoding];
-    
-    NSString *audiomsg = [[NSString alloc]initWithData:content encoding:NSUTF8StringEncoding];//audiomsg 是空，待解决
+    NSString *audiomsg = [[NSString alloc]initWithData:content encoding:NSUTF8StringEncoding];
     NSString *audiomsgwithlength = [NSString stringWithFormat:@"%@,%@",length,audiomsg];
     
     NSXMLElement *body = [NSXMLElement elementWithName:@"body"];
     [body setStringValue:audiomsgwithlength];
+    [body addAttributeWithName:@"subtype" stringValue:@"audio"];
     
     NSXMLElement *audiomessage = [NSXMLElement elementWithName:@"message"];
-    [audiomessage addAttributeWithName:@"type" stringValue:@"audio"];
+    [audiomessage addAttributeWithName:@"type" stringValue:@"chat"];
     
     NSString *to = [NSString stringWithFormat:@"%@@%@", user, myDomain];
     [audiomessage addAttributeWithName:@"to" stringValue:to];
@@ -134,7 +108,7 @@ static NSString *myDomain = @"xmpp.test";
     [self.stream sendElement:audiomessage];
     
     [_dataManager saveRecordWithUsername:user time:[NSDate date] path:path length:length isOut:YES];
-    [_dataManager addRecentUsername:user time:[NSDate date] body:voice isOut:YES];
+    [_dataManager addRecentUsername:user time:[NSDate date] body:Voice isOut:YES];
 }
 
 - (void)updateFriendsList {
@@ -222,7 +196,7 @@ static NSString *myDomain = @"xmpp.test";
     [_stream disconnect];
 };
 
-- (NSArray<XMPPGroupCoreDataStorageObject *> *)getFriends {
+- (NSArray<XMPPGroupCoreDataStorageObject *> *)getFriendsGroup {
     NSManagedObjectContext *context = [[XMPPRosterCoreDataStorage sharedInstance] mainThreadManagedObjectContext];
     NSFetchRequest *request = [[NSFetchRequest alloc] initWithEntityName:@"XMPPGroupCoreDataStorageObject"];
     //排序
@@ -241,7 +215,40 @@ static NSString *myDomain = @"xmpp.test";
 //    XMPPUserCoreDataStorageObject
 }
 
+#pragma mark - private method
+- (id)init {
+    self = [super init];
+    
+    if (self.stream == nil) {
+        self.stream = [[XMPPStream alloc] init];
+        [self.stream addDelegate:self delegateQueue:dispatch_get_main_queue()];
+        _dataManager = [DataManager shareManager];
+    }
+    
+    return self;
+}
 
+- (void)initRoster {
+    _roster = [[XMPPRoster alloc]initWithRosterStorage:[XMPPRosterCoreDataStorage sharedInstance]];
+    _roster.autoFetchRoster = YES;
+    [_roster addDelegate:self delegateQueue:dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_BACKGROUND, 0)];
+    [_roster activate:_stream];
+    [_roster fetchRoster];
+}
+
+- (void)initVCard {
+    _vCardModule = [[XMPPvCardTempModule alloc] initWithvCardStorage:[XMPPvCardCoreDataStorage sharedInstance]];
+    [_vCardModule addDelegate:self delegateQueue:dispatch_get_main_queue()];
+    _vCardAvatar = [[XMPPvCardAvatarModule alloc] initWithvCardTempModule:_vCardModule];
+    [_vCardModule activate:self.stream];
+    [_vCardAvatar activate:_stream];
+}
+
+- (NSString *)getSubtypeFrom:(XMPPMessage *)message {
+    NSArray *bodyArr = [message elementsForName:@"body"];
+    DDXMLElement *body = bodyArr[0];
+    return [[body attributeForName:@"subtype"]stringValue];
+}
 
 #pragma mark - xmpp delegate
 
@@ -336,49 +343,65 @@ static NSString *myDomain = @"xmpp.test";
 
 #pragma mark - receivemessage delegate
 - (void)xmppStream:(XMPPStream *)sender didReceiveMessage:(XMPPMessage *)message {
+    
     if ([message.type isEqualToString:@"chat"] && message.body != nil) {
-        NSString *messageBody = [[message elementForName:@"body"] stringValue];
-        NSLog(@"my xmpp did receive message: %@", messageBody);
-        NSString *bareJidStr = message.fromStr;
-        NSRange range = [bareJidStr rangeOfString:@"@"];
-        bareJidStr = [bareJidStr substringToIndex:range.location];
         
-        NSLog(@"%@", bareJidStr);
+        NSArray *subtypes = [NSArray arrayWithObjects:@"text",@"audio",@"picture",nil];
+        NSString *subtypeofbody = [self getSubtypeFrom:message];
+        NSUInteger index = [subtypes indexOfObject:subtypeofbody];
+        switch (index) {
+            case 0:{
+                NSString *messageBody = [[message elementForName:@"body"] stringValue];
+                NSLog(@"my xmpp did receive message: %@ length: %ld", messageBody,messageBody.length);
+                NSString *bareJidStr = message.fromStr;
+                NSRange range = [bareJidStr rangeOfString:@"@"];
+                bareJidStr = [bareJidStr substringToIndex:range.location];
+                
+                NSLog(@"%@", bareJidStr);
+                
+                [_dataManager saveMessageWithUsername:bareJidStr time:[NSDate date] body:messageBody isOut:NO];
+                [_dataManager addRecentUsername:bareJidStr time:[NSDate date] body:messageBody isOut:NO];
+                break;
+            }
+            case 1:{
+                NSString *audiomessageBody = [[message elementForName:@"body"] stringValue];
+                
+                NSRange range1 = NSMakeRange(0, 9);
+                NSString *audiolength = [audiomessageBody substringWithRange:range1];//获取语音消息长度
+                NSRange range2 = NSMakeRange(9, [audiomessageBody length]-9);
+                NSString *audiomsg = [audiomessageBody substringWithRange:range2];
+                
+                NSData *data = [[NSData alloc] initWithBase64EncodedString:audiomsg options:0];
+                
+                NSLog(@"did recieve audio message :%@, length: %ld",audiomessageBody, data.length);
+                
+                NSString *jidStr = message.fromStr;
+                NSRange range3 = [jidStr rangeOfString:@"@"];
+                jidStr = [jidStr substringToIndex:range3.location];
+                NSLog(@"%@", jidStr);
+                
+                
+                NSString *path = [Tool getFileName:@"recieve" extension:@"caf"];
+                [data writeToFile:path atomically:YES];
+                
+                [_dataManager saveRecordWithUsername:jidStr time:[NSDate date] path:path length:audiolength isOut:NO];
+                [_dataManager addRecentUsername:jidStr time:[NSDate date] body:Voice isOut:NO];
+                break;
+            }
+            case 2:{
+                
+                break;
+            }
+                
+            default:
+                break;
+        }
         
-        [_dataManager saveMessageWithUsername:bareJidStr time:[NSDate date] body:messageBody isOut:NO];
-        [_dataManager addRecentUsername:bareJidStr time:[NSDate date] body:messageBody isOut:NO];
-    } if([message.type isEqualToString:@"audio"] && message.body !=nil){
-
-        NSString *audiomessageBody = [[message elementForName:@"body"] stringValue];
         
-        NSRange range1 = NSMakeRange(0, 9);
-        NSString *audiolength = [audiomessageBody substringWithRange:range1];//获取语音消息长度
-        NSRange range2 = NSMakeRange(9, [audiomessageBody length]-9);
-        NSString *audiomsg = [audiomessageBody substringWithRange:range2];
         
-        NSData *data = [[NSData alloc] initWithBase64EncodedString:audiomsg options:0];
-         
-//        NSData* data = [audiomsg dataUsingEncoding:NSUTF8StringEncoding];
-        
-        NSLog(@"did recieve audio message :%@, length: %ld",audiomessageBody, data.length);
-        
-        NSString *jidStr = message.fromStr;
-        NSRange range3 = [jidStr rangeOfString:@"@"];
-        jidStr = [jidStr substringToIndex:range3.location];
-        NSLog(@"%@", jidStr);
-
-        
-        NSString *path = [Tool getFileName:@"recieve" extension:@"caf"];
-        [data writeToFile:path atomically:YES];
-        
-        [_dataManager saveRecordWithUsername:jidStr time:[NSDate date] path:path length:audiolength isOut:NO];
-        [_dataManager addRecentUsername:jidStr time:[NSDate date] body:audiomessageBody isOut:NO];
- 
-    }
-        else {
+    } else {
         NSLog(@"%@", message);
     }
-    
 }
 
 #pragma mark - sendmessage delegate
