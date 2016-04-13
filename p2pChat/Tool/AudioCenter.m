@@ -9,7 +9,7 @@
 #import "AudioCenter.h"
 #import "AppDelegate.h"
 
-@interface AudioCenter ()
+@interface AudioCenter () <AVAudioRecorderDelegate>
 
 @property (strong, nonatomic) AVAudioRecorder *recorder;
 @property (strong, nonatomic) AVAudioPlayer *player;
@@ -19,8 +19,6 @@
 @implementation AudioCenter
 
 + (instancetype)shareInstance {
-//    AppDelegate *delegate = [UIApplication sharedApplication].delegate;
-//    AudioCenter *center = delegate.audioCenter;
     static AudioCenter *center;
     static dispatch_once_t centerToken;
     dispatch_once(&centerToken, ^{
@@ -31,31 +29,54 @@
 
 - (void)startRecord {
     NSLog(@"AudioCenter: record start");
-    NSDictionary *settings = @{AVFormatIDKey : @(kAudioFormatiLBC), AVSampleRateKey : @(8000), AVChannelLayoutKey : @(1), AVLinearPCMBitDepthKey : @(8), AVLinearPCMIsFloatKey : @(YES)};
+    NSDictionary *settings = @{AVFormatIDKey : @(kAudioFormatLinearPCM), AVSampleRateKey : @(8000.f), AVChannelLayoutKey : @(1), AVLinearPCMBitDepthKey : @(8), AVLinearPCMIsFloatKey : @(YES)};
     NSError *err = nil;
+    _recorder = nil;
+    [[AVAudioSession sharedInstance]setCategory:AVAudioSessionCategoryRecord error:nil];
     _recorder = [[AVAudioRecorder alloc]initWithURL:[NSURL fileURLWithPath:_path] settings:settings error:&err];
     if (err) {
         NSLog(@"AudioCenter record error: %@", err);
     }
-    [_recorder record];
+    if([_recorder prepareToRecord]) {
+        if (![_recorder record]) {
+            NSLog(@"AudioCenter record failed");
+        }
+    } else {
+        NSLog(@"AudioCenter prepare to record failed");
+    }
 }
 
 - (float)stopRecord {
     NSTimeInterval during = _recorder.currentTime;
     [_recorder stop];
-//    [self startPlay];
+//    [self startPlay:_path];
     return (float)during;
 }
 
-- (void)startPlay {
+- (BOOL)isPlaying {
+    return _player.isPlaying;
+}
+
+- (void)startPlay:(NSString *)path {
     NSError *err = nil;
-    _player = [[AVAudioPlayer alloc]initWithContentsOfURL:[NSURL fileURLWithPath:_path] error:&err];
-    NSLog(@"record path: %@", _path);
+    _player = nil;
+    _player = [[AVAudioPlayer alloc]initWithContentsOfURL:[NSURL fileURLWithPath:path] error:&err];
+    NSLog(@"record path: %@", path);
     if (err) {
         NSLog(@"AudioCenter play error: %@", err);
     }
-    AVAudioSession *audioSession = [AVAudioSession sharedInstance];
-    [audioSession setCategory:AVAudioSessionCategoryPlayback error:nil];//以上两句话用来让声音外放
-    [_player play];
+    [[AVAudioSession sharedInstance]setCategory:AVAudioSessionCategoryPlayback error:nil];//外放
+    if (![_player play]) {
+        NSLog(@"AudioCenter play failed");
+    }
+}
+
+- (void)stopPlay {
+    [_player stop];
+}
+
+#pragma mark - recorder delegate
+- (void)audioRecorderEncodeErrorDidOccur:(AVAudioRecorder *)recorder error:(NSError * __nullable)error {
+    NSLog(@"audio recorder error did occur:%@", error);
 }
 @end

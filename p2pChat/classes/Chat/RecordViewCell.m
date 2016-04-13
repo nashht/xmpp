@@ -7,15 +7,15 @@
 //
 
 #import "RecordViewCell.h"
-#import "AVFoundation/AVFoundation.h"
 #import "Tool.h"
 #import "RecordFrameModel.h"
+#import "AudioCenter.h"
 
 @interface RecordViewCell()
+
 @property(nonatomic,weak)UILabel *timeLable;
 @property(nonatomic,weak)UIImageView *photoImage;
 @property(nonatomic,weak)UIButton *bodyBtn;
-@property(nonatomic,strong)AVAudioPlayer *player;
 
 @end
 
@@ -90,19 +90,12 @@
     return [normal resizableImageWithCapInsets:UIEdgeInsetsMake(h, w, h, w)];
 }
 
-- (AVAudioPlayer *)player{
-    if (_player == nil) {
-        _player = [[AVAudioPlayer alloc] initWithContentsOfURL:[NSURL fileURLWithPath:_recordFrame.message.body] error:nil];
-    }
-        return _player;
-}
-
 - (void)btnClick{
-    if ([self.player isPlaying]) {
-        [_player stop];
+    AudioCenter *audioCenter = [AudioCenter shareInstance];
+    if ([audioCenter isPlaying]) {
+        [audioCenter stopPlay];
     }else{
-        _player.currentTime = 0;
-        [_player play];
+        [audioCenter startPlay:_recordFrame.message.body];
     }
 //    NSLog(@"%@",_recordFrame.message.more);
 }

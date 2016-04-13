@@ -21,7 +21,7 @@
 @implementation RecordView
 
 - (IBAction)startRecord:(id)sender {
-    path_ = [Tool getFileName:@"send" extension:@"caf"];
+    path_ = [Tool getFileName:@"send" extension:@"wav"];
     _audioCenter = [AudioCenter shareInstance];
     _audioCenter.path = path_;
     [_audioCenter startRecord];
