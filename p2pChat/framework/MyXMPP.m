@@ -15,6 +15,8 @@
 #import "DataManager.h"
 #import "Tool.h"
 
+#define Voice @"[语音]"
+
 static NSString *myDomain = @"xmpp.test";
 
 @interface MyXMPP () <XMPPStreamDelegate,XMPPRosterStorage,XMPPRosterDelegate>
@@ -105,7 +107,7 @@ static NSString *myDomain = @"xmpp.test";
     [self.stream sendElement:audiomessage];
     
     [_dataManager saveRecordWithUsername:user time:[NSDate date] path:path length:length isOut:YES];
-    [_dataManager addRecentUsername:user time:[NSDate date] body:voice isOut:YES];
+    [_dataManager addRecentUsername:user time:[NSDate date] body:Voice isOut:YES];
 }
 
 - (void)updateFriendsList {
@@ -374,7 +376,7 @@ static NSString *myDomain = @"xmpp.test";
             [data writeToFile:path atomically:YES];
             
             [_dataManager saveRecordWithUsername:jidStr time:[NSDate date] path:path length:audiolength isOut:NO];
-            [_dataManager addRecentUsername:jidStr time:[NSDate date] body:audiomessageBody isOut:NO];
+            [_dataManager addRecentUsername:jidStr time:[NSDate date] body:Voice isOut:NO];
 
         }
     } else {

@@ -12,7 +12,7 @@
 @class XMPPvCardTemp;
 @class XMPPGroupCoreDataStorageObject;
 
-#define voice @"[语音]"
+
 
 #define MyXmppDidLoginNotification @"MyXmppDidLoginNotification"
 #define MyXmppConnectFailedNotification @"MyXmppConnectFailedNotification"

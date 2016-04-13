@@ -54,6 +54,8 @@
     if (err) {
         NSLog(@"AudioCenter play error: %@", err);
     }
+    AVAudioSession *audioSession = [AVAudioSession sharedInstance];
+    [audioSession setCategory:AVAudioSessionCategoryPlayback error:nil];//以上两句话用来让声音外放
     [_player play];
 }
 @end
