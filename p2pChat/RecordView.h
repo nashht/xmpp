@@ -11,6 +11,5 @@
 @interface RecordView : UIView
 
 @property (strong, nonatomic) NSString *username;
-@property (strong, nonatomic) IBOutlet UIButton *speakbtn;
 
 @end

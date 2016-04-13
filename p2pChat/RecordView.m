@@ -32,10 +32,6 @@
     [[MyXMPP shareInstance]sendAudio:path_ ToUser:_username length:[NSString stringWithFormat:@"%f", length]];
 }
 
-- (void)awakeFromNib{
-    [_speakbtn.layer setCornerRadius:CGRectGetHeight([_speakbtn bounds])/2];
-    _speakbtn.layer.masksToBounds = true;
 
-}
 
 @end
