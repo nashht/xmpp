@@ -10,6 +10,9 @@
 #import <CoreData/CoreData.h>
 #import "XMPPJID.h"
 @class XMPPvCardTemp;
+@class XMPPGroupCoreDataStorageObject;
+
+#define voice @"[语音]"
 
 #define MyXmppDidLoginNotification @"MyXmppDidLoginNotification"
 #define MyXmppConnectFailedNotification @"MyXmppConnectFailedNotification"
@@ -44,6 +47,6 @@ typedef NS_ENUM (char, MessageType) {
 - (void)updateMyTel:(NSString *)tel;
 - (void)changeMyPassword:(NSString *)newpassword;
 
-- (NSFetchedResultsController *)getFriends;
+- (NSArray<XMPPGroupCoreDataStorageObject *> *)getFriendsGroup;
 
 @end

@@ -19,8 +19,8 @@
 
 @implementation FriendCell
 
-- (void)setIcon:(NSString *)icon{
-    self.iconView.image = [UIImage imageNamed:icon];
+- (void)setIcon:(UIImage *)icon{
+    self.iconView.image = icon;
 }
 
 -(void)setLabel:(NSString *)name{

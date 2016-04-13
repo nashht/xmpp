@@ -13,6 +13,7 @@
 #import "XMPPvCardCoreDataStorage.h"
 #import "XMPPvCardTemp.h"
 #import "DataManager.h"
+#import "Tool.h"
 
 static NSString *myDomain = @"xmpp.test";
 
@@ -106,23 +107,34 @@ static NSString *myDomain = @"xmpp.test";
 - (void)sendAudio:(NSString *)path ToUser:(NSString *)user length:(NSString *)length{
     NSLog(@"audio");
     
-    NSFileManager *fm=[NSFileManager defaultManager];
-    NSData *con = [fm contentsAtPath:path];
-    NSString *p = [[NSString alloc]initWithData:con  encoding:NSUTF8StringEncoding];
-    NSXMLElement *body = [NSXMLElement elementWithName:@"body"];
-    [body setStringValue:p];
+    NSFileManager *filemnanager=[NSFileManager defaultManager];
+    NSData *p = [filemnanager contentsAtPath:path];
+    NSData *content = [p base64EncodedDataWithOptions:0];
     
-    NSXMLElement *message = [NSXMLElement elementWithName:@"message"];
-    [message addAttributeWithName:@"type" stringValue:@"audio"];
+    NSLog(@"send size: %ld", content.length);
+    
+//    NSString *audiomsg = [[NSString alloc] initWithBytes:content.bytes length:content.length encoding:NSUTF8StringEncoding];
+    
+    NSString *audiomsg = [[NSString alloc]initWithData:content encoding:NSUTF8StringEncoding];//audiomsg 是空，待解决
+    NSString *audiomsgwithlength = [NSString stringWithFormat:@"%@,%@",length,audiomsg];
+    
+    NSXMLElement *body = [NSXMLElement elementWithName:@"body"];
+    [body setStringValue:audiomsgwithlength];
+    
+    NSXMLElement *audiomessage = [NSXMLElement elementWithName:@"message"];
+    [audiomessage addAttributeWithName:@"type" stringValue:@"audio"];
     
     NSString *to = [NSString stringWithFormat:@"%@@%@", user, myDomain];
-    [message addAttributeWithName:@"to" stringValue:to];
+    [audiomessage addAttributeWithName:@"to" stringValue:to];
     
-    [message addChild:body];
-    [self.stream sendElement:message];
+//    NSString *audiolength = length;
+//    [audiomessage addAttributeWithName:@"audiolength" stringValue:audiolength];
+    
+    [audiomessage addChild:body];
+    [self.stream sendElement:audiomessage];
     
     [_dataManager saveRecordWithUsername:user time:[NSDate date] path:path length:length isOut:YES];
-    [_dataManager addRecentUsername:user time:[NSDate date] body:@"【语音】" isOut:YES];
+    [_dataManager addRecentUsername:user time:[NSDate date] body:voice isOut:YES];
 }
 
 - (void)updateFriendsList {
@@ -210,23 +222,22 @@ static NSString *myDomain = @"xmpp.test";
     [_stream disconnect];
 };
 
-- (NSFetchedResultsController *)getFriends {
+- (NSArray<XMPPGroupCoreDataStorageObject *> *)getFriends {
     NSManagedObjectContext *context = [[XMPPRosterCoreDataStorage sharedInstance] mainThreadManagedObjectContext];
-    NSFetchRequest *request = [[NSFetchRequest alloc] initWithEntityName:@"XMPPUserCoreDataStorageObject"];
+    NSFetchRequest *request = [[NSFetchRequest alloc] initWithEntityName:@"XMPPGroupCoreDataStorageObject"];
     //排序
-//    NSSortDescriptor * sort1 = [NSSortDescriptor sortDescriptorWithKey:@"section" ascending:YES];
-    NSSortDescriptor * sort2 = [NSSortDescriptor sortDescriptorWithKey:@"jidStr" ascending:YES];//jidStr
-    request.sortDescriptors = @[sort2];
+    NSSortDescriptor * sort = [NSSortDescriptor sortDescriptorWithKey:@"name" ascending:YES];//jidStr
+    request.sortDescriptors = @[sort];
     
-    NSFetchedResultsController *fetchFriends = [[NSFetchedResultsController alloc] initWithFetchRequest:request managedObjectContext:context sectionNameKeyPath:nil cacheName:nil];
-    NSError *error = nil;
-    if (![fetchFriends performFetch:&error]) {
-        NSLog(@"fetching friends error: %@", error);
+    NSError *err = nil;
+    NSArray<XMPPGroupCoreDataStorageObject *> *friendGroups = [context executeFetchRequest:request error:&err];
+    if (err != nil) {
+        NSLog(@"myxmpp fetch friend failed: %@", err);
     }
     
     //XMPPUserCoreDataStorageObject  *obj类型的
     //名称为 obj.displayName
-    return fetchFriends;
+    return friendGroups;
 //    XMPPUserCoreDataStorageObject
 }
 
@@ -310,6 +321,7 @@ static NSString *myDomain = @"xmpp.test";
 #pragma mark - connect delegate
 - (void)xmppStreamDidDisconnect:(XMPPStream *)sender withError:(NSError *)error {
     NSLog(@"DidDisconnect");
+    NSLog(@"disconnet error:%@",error);
     [[NSNotificationCenter defaultCenter]postNotificationName:MyXmppConnectFailedNotification object:nil];
 }
 
@@ -335,9 +347,33 @@ static NSString *myDomain = @"xmpp.test";
         
         [_dataManager saveMessageWithUsername:bareJidStr time:[NSDate date] body:messageBody isOut:NO];
         [_dataManager addRecentUsername:bareJidStr time:[NSDate date] body:messageBody isOut:NO];
-    } if([message.type  isEqualToString:@"audio"] && message.body !=nil){
-//        message.body;
+    } if([message.type isEqualToString:@"audio"] && message.body !=nil){
 
+        NSString *audiomessageBody = [[message elementForName:@"body"] stringValue];
+        
+        NSRange range1 = NSMakeRange(0, 9);
+        NSString *audiolength = [audiomessageBody substringWithRange:range1];//获取语音消息长度
+        NSRange range2 = NSMakeRange(9, [audiomessageBody length]-9);
+        NSString *audiomsg = [audiomessageBody substringWithRange:range2];
+        
+        NSData *data = [[NSData alloc] initWithBase64EncodedString:audiomsg options:0];
+         
+//        NSData* data = [audiomsg dataUsingEncoding:NSUTF8StringEncoding];
+        
+        NSLog(@"did recieve audio message :%@, length: %ld",audiomessageBody, data.length);
+        
+        NSString *jidStr = message.fromStr;
+        NSRange range3 = [jidStr rangeOfString:@"@"];
+        jidStr = [jidStr substringToIndex:range3.location];
+        NSLog(@"%@", jidStr);
+
+        
+        NSString *path = [Tool getFileName:@"recieve" extension:@"caf"];
+        [data writeToFile:path atomically:YES];
+        
+        [_dataManager saveRecordWithUsername:jidStr time:[NSDate date] path:path length:audiolength isOut:NO];
+        [_dataManager addRecentUsername:jidStr time:[NSDate date] body:audiomessageBody isOut:NO];
+ 
     }
         else {
         NSLog(@"%@", message);
