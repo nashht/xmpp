@@ -71,9 +71,17 @@
     _group = group;
     [self.nameView setTitle:group.name forState:UIControlStateNormal];
     self.countView.text = [NSString stringWithFormat:@"%d/%ld",group.online,group.friends.count];
+    
+//    NSLog(@"set");
+    if (!self.group.opened) {
+        self.nameView.imageView.transform = CGAffineTransformIdentity;
+    }else{
+        self.nameView.imageView.transform = CGAffineTransformMakeRotation(M_PI_2);
+    }
 }
 
 - (void)nameViewClick{
+    NSLog(@"nameViewClick");
     self.group.opened = !self.group.isOpened;
     
     if ([self.delegate respondsToSelector:@selector(headerViewDidClickedNameView:)]) {
@@ -81,12 +89,4 @@
     }
 }
 
-//    视图移动之前调用
-- (void)didMoveToSuperview{
-    if (!self.group.opened) {
-        self.nameView.imageView.transform = CGAffineTransformMakeRotation(0);
-    }else{
-        self.nameView.imageView.transform = CGAffineTransformMakeRotation(M_PI_2);
-    }
-}
 @end

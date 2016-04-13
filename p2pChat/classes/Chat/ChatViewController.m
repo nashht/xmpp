@@ -37,8 +37,10 @@
     BOOL _showRecordView;
     BOOL _showMoreView;
     CGSize _screenSize;
+    CGFloat _totalCellHeight;
 //    NSString *_username;
 }
+@property (weak, nonatomic) IBOutlet UIView *bottomView;
 
 @property (weak, nonatomic) IBOutlet UIView *baseView;
 @property (weak, nonatomic) IBOutlet NSLayoutConstraint *baseBottomConstraint;
@@ -104,6 +106,9 @@
     tableViewGesture.numberOfTapsRequired = 1;
     tableViewGesture.cancelsTouchesInView = NO;
     [_historyTableView addGestureRecognizer:tableViewGesture];
+    
+    _totalCellHeight = 0;
+    NSLog(@"_totalCellHeight%f",_totalCellHeight);
 }
 
 - (void)commentTableViewTouchInSide{
@@ -223,6 +228,9 @@
             MessageFrameModel *messageFrameModel = [[MessageFrameModel alloc] init];
             messageFrameModel.message = message;
             cell.messageFrame = messageFrameModel;
+//            cell.frame = CGRectMake(0, 0, [UIScreen mainScreen].bounds.size.width, cell.messageFrame.cellHeight);
+            _totalCellHeight += messageFrameModel.cellHeight + 1;
+            NSLog(@"_totalheiga%f",_totalCellHeight);
             return cell;
         }
         case MessageTypePicture:{
@@ -263,6 +271,7 @@
         case MessageTypeMessage:{
             MessageFrameModel *messageFrameModel = [[MessageFrameModel alloc] init];
             messageFrameModel.message = message;
+//            NSLog(@"heightForRowAtIndexPath：   %f",messageFrameModel.cellHeight);
             return messageFrameModel.cellHeight + 1;
         }
             break;
@@ -294,6 +303,11 @@
 
 #pragma mark -keyboard notification
 - (void)keyboardWillShow:(NSNotification *)notification {
+    
+    CGFloat height = [notification.userInfo[UIKeyboardFrameEndUserInfoKey] CGRectValue].size.height;
+//    _baseBottomConstraint.constant = height;
+//    _baseBottomConstraint.constant = 0;
+    
     if (_showMoreView) {
         _baseBottomConstraint.constant = 0;
         [UIView animateWithDuration:0.5 animations:^{
@@ -312,33 +326,23 @@
         _showRecordView = NO;
     }
 
-    CGFloat height = [notification.userInfo[UIKeyboardFrameEndUserInfoKey] CGRectValue].size.height;
-    
-    [UIView animateWithDuration:0.2 animations:^{
-        self.view.frame = CGRectMake(self.view.frame.origin.x, self.view.frame.origin.y - height, self.view.frame.size.width, self.view.frame.size.height);
-    }];
-    
-//    //设置动画的名字
-//    [UIView beginAnimations:@"Animation" context:nil];
-//    //设置动画的间隔时间
-//    [UIView setAnimationDuration:0.20];
-//    //使用当前正在运行的状态开始下一段动画
-//    [UIView setAnimationBeginsFromCurrentState: YES];
-//    //设置视图移动的位移
-//    self.view.frame = CGRectMake(self.view.frame.origin.x, self.view.frame.origin.y - height, self.view.frame.size.width, self.view.frame.size.height);
-//    //设置动画结束
-//    [UIView commitAnimations];
-    
+//    if (_totalCellHeight + height + 88 > [UIScreen mainScreen].bounds.size.height) {
+
+        [UIView animateWithDuration:0.2 animations:^{
+            CGRect frame = self.view.frame;
+            frame.origin.y -= height;
+            self.view.frame = frame;
+        }];
 }
 
 - (void)keyboardWillHidden:(NSNotification *)notification {
-    _baseBottomConstraint.constant = 0;
     
     CGFloat height = [notification.userInfo[UIKeyboardFrameEndUserInfoKey] CGRectValue].size.height;
-    
-    [UIView animateWithDuration:0.2 animations:^{
-        self.view.frame = CGRectMake(self.view.frame.origin.x, self.view.frame.origin.y + height, self.view.frame.size.width, self.view.frame.size.height);
-    }];
+//     if (_totalCellHeight + height + 88 > [UIScreen mainScreen].bounds.size.height) {
+        [UIView animateWithDuration:0.2 animations:^{
+            self.view.frame = CGRectMake(self.view.frame.origin.x, self.view.frame.origin.y + height, self.view.frame.size.width, self.view.frame.size.height);
+        }];
+//     }
 }
 
 #pragma mark -text field delegate
@@ -347,6 +351,13 @@
 //    点击send发送消息
     [self send:nil];
     
+    return YES;
+}
+
+- (BOOL)textFieldShouldBeginEditing:(UITextField *)textField{
+    [UIView animateWithDuration:0.2 animations:^{
+     
+    }];
     return YES;
 }
 

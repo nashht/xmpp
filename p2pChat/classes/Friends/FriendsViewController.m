@@ -37,6 +37,7 @@
     
     _groupCoreDataStorageObjects = [[MyXMPP shareInstance]getFriendsGroup];
     [self initGroup];
+    
 }
 
 - (void)viewWillAppear:(BOOL)animated {
@@ -69,7 +70,6 @@
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
     XMPPGroupCoreDataStorageObject *group = _groupCoreDataStorageObjects[section];
     return _groups[section].opened ? group.users.count : 0;
-//    return group.users.count;
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
