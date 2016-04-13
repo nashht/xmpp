@@ -18,6 +18,9 @@
 - (void)startRecord;
 - (float)stopRecord;
 
-- (void)startPlay;
+- (BOOL)isPlaying;
+
+- (void)startPlay:(NSString *)path;
+- (void)stopPlay;
 
 @end

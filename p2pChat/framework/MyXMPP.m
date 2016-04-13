@@ -101,9 +101,6 @@ static NSString *myDomain = @"xmpp.test";
     NSString *to = [NSString stringWithFormat:@"%@@%@", user, myDomain];
     [audiomessage addAttributeWithName:@"to" stringValue:to];
     
-//    NSString *audiolength = length;
-//    [audiomessage addAttributeWithName:@"audiolength" stringValue:audiolength];
-    
     [audiomessage addChild:body];
     [self.stream sendElement:audiomessage];
     
@@ -352,7 +349,7 @@ static NSString *myDomain = @"xmpp.test";
         switch (index) {
             case 0:{
                 NSString *messageBody = [[message elementForName:@"body"] stringValue];
-                NSLog(@"my xmpp did receive message: %@ length: %ld", messageBody,messageBody.length);
+//                NSLog(@"my xmpp did receive message: %@ length: %ld", messageBody,messageBody.length);
                 NSString *bareJidStr = message.fromStr;
                 NSRange range = [bareJidStr rangeOfString:@"@"];
                 bareJidStr = [bareJidStr substringToIndex:range.location];
@@ -381,7 +378,7 @@ static NSString *myDomain = @"xmpp.test";
                 NSLog(@"%@", jidStr);
                 
                 
-                NSString *path = [Tool getFileName:@"recieve" extension:@"caf"];
+                NSString *path = [Tool getFileName:@"recieve" extension:@"wav"];
                 [data writeToFile:path atomically:YES];
                 
                 [_dataManager saveRecordWithUsername:jidStr time:[NSDate date] path:path length:audiolength isOut:NO];
