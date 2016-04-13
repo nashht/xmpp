@@ -346,10 +346,9 @@ static NSString *myDomain = @"xmpp.test";
     
     if ([message.type isEqualToString:@"chat"] && message.body != nil) {
         
-        NSString *subtypeofbody = [self getSubtypeFrom:message];
         NSArray *subtypes = [NSArray arrayWithObjects:@"text",@"audio",@"picture",nil];
+        NSString *subtypeofbody = [self getSubtypeFrom:message];
         NSUInteger index = [subtypes indexOfObject:subtypeofbody];
-        
         switch (index) {
             case 0:{
                 NSString *messageBody = [[message elementForName:@"body"] stringValue];
@@ -390,6 +389,7 @@ static NSString *myDomain = @"xmpp.test";
                 break;
             }
             case 2:{
+                
                 break;
             }
                 
@@ -398,43 +398,7 @@ static NSString *myDomain = @"xmpp.test";
         }
         
         
-//        
-//        if ([[self getSubtypeFrom:message] isEqualToString:@"text"]) {
-//            NSString *messageBody = [[message elementForName:@"body"] stringValue];
-//            NSLog(@"my xmpp did receive message: %@ length: %ld", messageBody,messageBody.length);
-//            NSString *bareJidStr = message.fromStr;
-//            NSRange range = [bareJidStr rangeOfString:@"@"];
-//            bareJidStr = [bareJidStr substringToIndex:range.location];
-//            
-//            NSLog(@"%@", bareJidStr);
-//            
-//            [_dataManager saveMessageWithUsername:bareJidStr time:[NSDate date] body:messageBody isOut:NO];
-//            [_dataManager addRecentUsername:bareJidStr time:[NSDate date] body:messageBody isOut:NO];
-//        }else if ([[self getSubtypeFrom:message] isEqualToString:@"audio"]) {
-//            NSString *audiomessageBody = [[message elementForName:@"body"] stringValue];
-//            
-//            NSRange range1 = NSMakeRange(0, 9);
-//            NSString *audiolength = [audiomessageBody substringWithRange:range1];//获取语音消息长度
-//            NSRange range2 = NSMakeRange(9, [audiomessageBody length]-9);
-//            NSString *audiomsg = [audiomessageBody substringWithRange:range2];
-//            
-//            NSData *data = [[NSData alloc] initWithBase64EncodedString:audiomsg options:0];
-//            
-//            NSLog(@"did recieve audio message :%@, length: %ld",audiomessageBody, data.length);
-//            
-//            NSString *jidStr = message.fromStr;
-//            NSRange range3 = [jidStr rangeOfString:@"@"];
-//            jidStr = [jidStr substringToIndex:range3.location];
-//            NSLog(@"%@", jidStr);
-//            
-//            
-//            NSString *path = [Tool getFileName:@"recieve" extension:@"caf"];
-//            [data writeToFile:path atomically:YES];
-//            
-//            [_dataManager saveRecordWithUsername:jidStr time:[NSDate date] path:path length:audiolength isOut:NO];
-//            [_dataManager addRecentUsername:jidStr time:[NSDate date] body:Voice isOut:NO];
-//
-//        }
+        
     } else {
         NSLog(@"%@", message);
     }
