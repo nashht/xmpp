@@ -8,11 +8,14 @@
 
 #import "AudioCenter.h"
 #import "AppDelegate.h"
+#import "VoiceConverter.h"
+#import "Tool.h"
 
-@interface AudioCenter () <AVAudioRecorderDelegate>
+@interface AudioCenter ()
 
 @property (strong, nonatomic) AVAudioRecorder *recorder;
 @property (strong, nonatomic) AVAudioPlayer *player;
+@property (copy, nonatomic) NSString *wavPath;
 
 @end
 
@@ -30,10 +33,11 @@
 - (void)startRecord {
     NSLog(@"AudioCenter: record start");
     NSDictionary *settings = @{AVFormatIDKey : @(kAudioFormatLinearPCM), AVSampleRateKey : @(8000.f), AVChannelLayoutKey : @(1), AVLinearPCMBitDepthKey : @(8), AVLinearPCMIsFloatKey : @(YES)};
+    _wavPath = [Tool getFileName:@"tmp" extension:@"wav"];
     NSError *err = nil;
     _recorder = nil;
     [[AVAudioSession sharedInstance]setCategory:AVAudioSessionCategoryRecord error:nil];
-    _recorder = [[AVAudioRecorder alloc]initWithURL:[NSURL fileURLWithPath:_path] settings:settings error:&err];
+    _recorder = [[AVAudioRecorder alloc]initWithURL:[NSURL fileURLWithPath:_wavPath] settings:settings error:&err];
     if (err) {
         NSLog(@"AudioCenter record error: %@", err);
     }
@@ -50,6 +54,11 @@
     NSTimeInterval during = _recorder.currentTime;
     [_recorder stop];
 //    [self startPlay:_path];
+    [VoiceConverter wavToAmr:_wavPath amrSavePath:_path];
+    NSError *err = nil;
+    if (![[NSFileManager defaultManager]removeItemAtPath:_wavPath error:&err]) {
+        NSLog(@"AudioCenter delete tmp wav file failed: %@", err);
+    }
     return (float)during;
 }
 
@@ -75,8 +84,4 @@
     [_player stop];
 }
 
-#pragma mark - recorder delegate
-- (void)audioRecorderEncodeErrorDidOccur:(AVAudioRecorder *)recorder error:(NSError * __nullable)error {
-    NSLog(@"audio recorder error did occur:%@", error);
-}
 @end
