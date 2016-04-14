@@ -208,8 +208,6 @@
 		DAAC6D781C4CD2A2009C0859 /* PhotoLibraryCenter.m in Sources */ = {isa = PBXBuildFile; fileRef = DAAC6D771C4CD2A2009C0859 /* PhotoLibraryCenter.m */; };
 		DAD235021C424CEE003A93F9 /* MoreView.xib in Resources */ = {isa = PBXBuildFile; fileRef = DAD235011C424CEE003A93F9 /* MoreView.xib */; };
 		DAD235051C424D05003A93F9 /* MoreView.m in Sources */ = {isa = PBXBuildFile; fileRef = DAD235041C424D05003A93F9 /* MoreView.m */; };
-		DAD235091C425347003A93F9 /* RecordView.m in Sources */ = {isa = PBXBuildFile; fileRef = DAD235081C425347003A93F9 /* RecordView.m */; };
-		DAD2350B1C425355003A93F9 /* RecordView.xib in Resources */ = {isa = PBXBuildFile; fileRef = DAD2350A1C425355003A93F9 /* RecordView.xib */; };
 		DAD278811CBF3A78001508D0 /* amrFileCodec.mm in Sources */ = {isa = PBXBuildFile; fileRef = DAD278631CBF3A78001508D0 /* amrFileCodec.mm */; };
 		DAD278821CBF3A78001508D0 /* wav.mm in Sources */ = {isa = PBXBuildFile; fileRef = DAD278651CBF3A78001508D0 /* wav.mm */; };
 		DAD278831CBF3A78001508D0 /* libopencore-amrnb.a in Frameworks */ = {isa = PBXBuildFile; fileRef = DAD2786E1CBF3A78001508D0 /* libopencore-amrnb.a */; };
@@ -647,9 +645,6 @@
 		DAD235011C424CEE003A93F9 /* MoreView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = MoreView.xib; sourceTree = "<group>"; };
 		DAD235031C424D05003A93F9 /* MoreView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MoreView.h; sourceTree = "<group>"; };
 		DAD235041C424D05003A93F9 /* MoreView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MoreView.m; sourceTree = "<group>"; };
-		DAD235071C425347003A93F9 /* RecordView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RecordView.h; sourceTree = "<group>"; };
-		DAD235081C425347003A93F9 /* RecordView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RecordView.m; sourceTree = "<group>"; };
-		DAD2350A1C425355003A93F9 /* RecordView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = RecordView.xib; sourceTree = "<group>"; };
 		DAD278621CBF3A78001508D0 /* amrFileCodec.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = amrFileCodec.h; sourceTree = "<group>"; };
 		DAD278631CBF3A78001508D0 /* amrFileCodec.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = amrFileCodec.mm; sourceTree = "<group>"; };
 		DAD278641CBF3A78001508D0 /* wav.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = wav.h; sourceTree = "<group>"; };
@@ -748,6 +743,16 @@
 			name = EditEmail;
 			sourceTree = "<group>";
 		};
+		84F32C441CBF766C00BB9BD1 /* BottomView */ = {
+			isa = PBXGroup;
+			children = (
+				DA57261A1CBF40830045CEF2 /* BottomView.h */,
+				DA57261B1CBF40830045CEF2 /* BottomView.m */,
+				DA57261D1CBF409D0045CEF2 /* BottomView.xib */,
+			);
+			name = BottomView;
+			sourceTree = "<group>";
+		};
 		900122431CA91EE2005D5BFA /* classes */ = {
 			isa = PBXGroup;
 			children = (
@@ -785,9 +790,8 @@
 				900122541CA91EE2005D5BFA /* RecordFrameModel.m */,
 				900122551CA91EE2005D5BFA /* RecordViewCell.h */,
 				900122561CA91EE2005D5BFA /* RecordViewCell.m */,
-				DA57261D1CBF409D0045CEF2 /* BottomView.xib */,
-				DA57261A1CBF40830045CEF2 /* BottomView.h */,
-				DA57261B1CBF40830045CEF2 /* BottomView.m */,
+				84F32C441CBF766C00BB9BD1 /* BottomView */,
+				DAD235061C424D0E003A93F9 /* MoreView */,
 			);
 			path = Chat;
 			sourceTree = "<group>";
@@ -879,15 +883,6 @@
 				DA9046B41C3A51A1009E75B7 /* Tool.m */,
 			);
 			name = Tools;
-			sourceTree = "<group>";
-		};
-		DA9046C11C3A645A009E75B7 /* Views */ = {
-			isa = PBXGroup;
-			children = (
-				DAD2350C1C42535A003A93F9 /* RecordView */,
-				DAD235061C424D0E003A93F9 /* MoreView */,
-			);
-			name = Views;
 			sourceTree = "<group>";
 		};
 		DA90B0111C8989930080E037 /* Authentication */ = {
@@ -1812,7 +1807,6 @@
 			children = (
 				900122431CA91EE2005D5BFA /* classes */,
 				90E7D6F71C9192D600919862 /* Controller */,
-				DA9046C11C3A645A009E75B7 /* Views */,
 				DA9046B91C3A51A8009E75B7 /* Tools */,
 				DA95D5CE1C3A1F11001ED1A6 /* DataStorage */,
 				842B4C4A1CB7BC8D008665D9 /* Images.xcassets */,
@@ -1934,16 +1928,7 @@
 				DAD235041C424D05003A93F9 /* MoreView.m */,
 			);
 			name = MoreView;
-			sourceTree = "<group>";
-		};
-		DAD2350C1C42535A003A93F9 /* RecordView */ = {
-			isa = PBXGroup;
-			children = (
-				DAD235071C425347003A93F9 /* RecordView.h */,
-				DAD235081C425347003A93F9 /* RecordView.m */,
-				DAD2350A1C425355003A93F9 /* RecordView.xib */,
-			);
-			name = RecordView;
+			path = ../..;
 			sourceTree = "<group>";
 		};
 		DAD278601CBF3A78001508D0 /* VoiceConvert */ = {
@@ -2137,7 +2122,6 @@
 				90E3E89D1C99540E0076F28C /* happy.mp3 in Resources */,
 				842B4C4B1CB7BC8D008665D9 /* Images.xcassets in Resources */,
 				DA9046BF1C3A5601009E75B7 /* 0.png in Resources */,
-				DAD2350B1C425355003A93F9 /* RecordView.xib in Resources */,
 				DAD278911CBF3A78001508D0 /* opencore-amrnb.pc in Resources */,
 				90FA06621CAE656500851B1C /* Assets.xcassets in Resources */,
 				DAD235021C424CEE003A93F9 /* MoreView.xib in Resources */,
@@ -2287,7 +2271,6 @@
 				DA90B1AE1C8989930080E037 /* XMPPRoster.m in Sources */,
 				DA90B20C1C8989930080E037 /* DDFileLogger.m in Sources */,
 				904175431CA9299C005A024B /* LoginViewController.m in Sources */,
-				DAD235091C425347003A93F9 /* RecordView.m in Sources */,
 				DA95D5A31C3A16E6001ED1A6 /* p2pChat.xcdatamodeld in Sources */,
 				DA90B1D31C8989930080E037 /* XMPPIQ+XEP_0060.m in Sources */,
 				DA90B1F11C8989930080E037 /* XMPPStreamManagementStanzas.m in Sources */,

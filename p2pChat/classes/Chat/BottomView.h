@@ -12,12 +12,13 @@
 
 @required
 - (void)showMoreView;
+- (void)hideMoreView;
 
 @end
 
 @interface BottomView : UIView
 
-@property (strong, nonatomic) NSString *user;
+@property (strong, nonatomic) NSString *username;
 @property (weak, nonatomic) id<BottomViewDelegate> delegate;
 
 - (void)resignTextfield;

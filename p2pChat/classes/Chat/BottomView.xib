@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="9531" systemVersion="15D21" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="10116" systemVersion="15C50" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="9529"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="10085"/>
     </dependencies>
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
@@ -11,20 +11,30 @@
             <rect key="frame" x="0.0" y="0.0" width="600" height="40"/>
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
-                <button opaque="NO" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="EzJ-R6-YZ2">
-                    <rect key="frame" x="563" y="3" width="34" height="34"/>
+                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="EzJ-R6-YZ2">
+                    <rect key="frame" x="560" y="3" width="34" height="34"/>
                     <state key="normal" image="chat_bottom_up_nor"/>
                     <connections>
                         <action selector="showMore:" destination="iN0-l3-epB" eventType="touchUpInside" id="kQV-fv-8mY"/>
                     </connections>
                 </button>
-                <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" ambiguous="YES" misplaced="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="cbY-aP-mwc">
-                    <rect key="frame" x="64" y="5" width="436" height="30"/>
+                <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="cbY-aP-mwc">
+                    <rect key="frame" x="39" y="5" width="481" height="30"/>
                     <fontDescription key="fontDescription" type="system" pointSize="14"/>
                     <textInputTraits key="textInputTraits"/>
                 </textField>
-                <button opaque="NO" contentMode="scaleToFill" ambiguous="YES" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="rZF-m1-6Sv">
-                    <rect key="frame" x="1" y="3" width="46" height="34"/>
+                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="3ER-Rc-F4I">
+                    <rect key="frame" x="523" y="3" width="35" height="34"/>
+                    <constraints>
+                        <constraint firstAttribute="width" constant="35" id="NdD-QI-tvz"/>
+                    </constraints>
+                    <state key="normal" title="Button" image="chat_bottom_smile_nor"/>
+                </button>
+                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="rZF-m1-6Sv">
+                    <rect key="frame" x="1" y="3" width="36" height="34"/>
+                    <constraints>
+                        <constraint firstAttribute="width" constant="36" id="NUU-GP-xX0"/>
+                    </constraints>
                     <state key="normal" title="Button" image="chat_bottom_voice_nor"/>
                     <connections>
                         <action selector="showRecord:" destination="iN0-l3-epB" eventType="touchUpInside" id="3YE-Kz-Yl6"/>
@@ -33,22 +43,25 @@
             </subviews>
             <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
             <constraints>
-                <constraint firstAttribute="trailing" secondItem="EzJ-R6-YZ2" secondAttribute="trailing" constant="5" id="Jmm-GR-EV6"/>
-                <constraint firstItem="cbY-aP-mwc" firstAttribute="leading" secondItem="rZF-m1-6Sv" secondAttribute="trailing" constant="13" id="Rph-Tb-JD9"/>
-                <constraint firstItem="EzJ-R6-YZ2" firstAttribute="centerY" secondItem="iN0-l3-epB" secondAttribute="centerY" id="TBf-gr-DDt"/>
-                <constraint firstAttribute="trailing" secondItem="cbY-aP-mwc" secondAttribute="trailing" constant="100" id="TY8-Kc-yS9"/>
-                <constraint firstItem="cbY-aP-mwc" firstAttribute="centerY" secondItem="iN0-l3-epB" secondAttribute="centerY" id="VpM-O2-a36"/>
-                <constraint firstItem="rZF-m1-6Sv" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" constant="5" id="iXR-Ul-nfw"/>
-                <constraint firstItem="rZF-m1-6Sv" firstAttribute="centerY" secondItem="iN0-l3-epB" secondAttribute="centerY" id="jCM-xm-A2q"/>
+                <constraint firstItem="rZF-m1-6Sv" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" constant="1" id="8mt-q4-HTC"/>
+                <constraint firstItem="EzJ-R6-YZ2" firstAttribute="leading" secondItem="3ER-Rc-F4I" secondAttribute="trailing" constant="2" id="8yd-7P-UR8"/>
+                <constraint firstItem="cbY-aP-mwc" firstAttribute="centerY" secondItem="iN0-l3-epB" secondAttribute="centerY" id="K8f-zq-vNA"/>
+                <constraint firstItem="cbY-aP-mwc" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" constant="39" id="XOq-pV-Hs7"/>
+                <constraint firstItem="rZF-m1-6Sv" firstAttribute="centerY" secondItem="iN0-l3-epB" secondAttribute="centerY" id="cgS-8z-C5g"/>
+                <constraint firstAttribute="trailing" secondItem="cbY-aP-mwc" secondAttribute="trailing" constant="80" id="jmZ-ib-CDq"/>
+                <constraint firstAttribute="trailing" secondItem="EzJ-R6-YZ2" secondAttribute="trailing" constant="6" id="kXm-hg-24h"/>
+                <constraint firstItem="EzJ-R6-YZ2" firstAttribute="centerY" secondItem="iN0-l3-epB" secondAttribute="centerY" id="rvB-bH-NNR"/>
+                <constraint firstItem="3ER-Rc-F4I" firstAttribute="centerY" secondItem="iN0-l3-epB" secondAttribute="centerY" id="vfh-i9-0Rj"/>
             </constraints>
             <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
             <connections>
                 <outlet property="messageTF" destination="cbY-aP-mwc" id="5vj-M1-v85"/>
             </connections>
-            <point key="canvasLocation" x="247" y="276"/>
+            <point key="canvasLocation" x="300" y="320"/>
         </view>
     </objects>
     <resources>
+        <image name="chat_bottom_smile_nor" width="34" height="34"/>
         <image name="chat_bottom_up_nor" width="34" height="34"/>
         <image name="chat_bottom_voice_nor" width="34" height="34"/>
     </resources>
