@@ -14,6 +14,7 @@
 #import "XMPPvCardTemp.h"
 #import "DataManager.h"
 #import "Tool.h"
+#import "VoiceConverter.h"
 
 #define Voice @"[语音]"
 
@@ -84,11 +85,8 @@ static NSString *myDomain = @"xmpp.test";
 - (void)sendAudio:(NSString *)path ToUser:(NSString *)user length:(NSString *)length{
     NSFileManager *filemnanager=[NSFileManager defaultManager];
     NSData *p = [filemnanager contentsAtPath:path];
-    NSData *content = [p base64EncodedDataWithOptions:0];
     
-    NSLog(@"send size: %ld", content.length);
-    
-    NSString *audiomsg = [[NSString alloc]initWithData:content encoding:NSUTF8StringEncoding];
+    NSString *audiomsg = [p base64EncodedStringWithOptions:0];
     NSString *audiomsgwithlength = [NSString stringWithFormat:@"%@,%@",length,audiomsg];
     
     NSXMLElement *body = [NSXMLElement elementWithName:@"body"];
@@ -109,7 +107,6 @@ static NSString *myDomain = @"xmpp.test";
 }
 
 - (void)updateFriendsList {
-    
     //获取 roster 列表，获取好友列表
     if ([self.roster autoFetchRoster]){
         [_roster fetchRoster];//获取好友列表，之后自动调用xmppRosterDidEndPopulating和xmppRosterDidPopulate
@@ -133,17 +130,7 @@ static NSString *myDomain = @"xmpp.test";
 }
 
 - (void)updateMyTel:(NSString *)tel {
-        //Set Values as normal
-
     _myVCardTemp = [_vCardModule myvCardTemp];
-//    if (!_myVCardTemp){
-//        NSXMLElement *vCardXML = [NSXMLElement elementWithName:@"vCard" xmlns:@"vcard-temp"];
-//        XMPPvCardTemp *newvCardTemp = [XMPPvCardTemp vCardTempFromElement:vCardXML];
-//        [newvCardTemp setNickname:@"aa"];
-//        [_vCardModule updateMyvCardTemp:newvCardTemp];
-//    }else{
-//        _myVCardTemp.note = tel;
-//    }
     _myVCardTemp.note = tel;
     
     [self.vCardModule updateMyvCardTemp:self.myVCardTemp];
@@ -177,11 +164,11 @@ static NSString *myDomain = @"xmpp.test";
 - (void)loginout{
     [self disconnected];
     
-    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(2 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
-        //  回到登陆界面
-        UIStoryboard *storyboard = [UIStoryboard storyboardWithName:@"Main" bundle:nil];
-        [UIApplication sharedApplication].keyWindow.rootViewController = [storyboard instantiateViewControllerWithIdentifier:@"login"];
-    });
+//    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(2 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+//        //  回到登陆界面
+//        UIStoryboard *storyboard = [UIStoryboard storyboardWithName:@"Main" bundle:nil];
+//        [UIApplication sharedApplication].keyWindow.rootViewController = [storyboard instantiateViewControllerWithIdentifier:@"login"];
+//    });
 }
 
 /**
@@ -249,10 +236,6 @@ static NSString *myDomain = @"xmpp.test";
 
 #pragma mark - xmpp delegate
 
-- (void)xmppStream:(XMPPStream *)sender socketDidConnect:(GCDAsyncSocket *)socket{
-    NSLog(@"成功连接到服务器");
-}
-
 - (void)xmppStreamDidConnect:(XMPPStream *)sender {
     //    NSLog(@"连接成功");
     NSError *err = nil;
@@ -269,7 +252,6 @@ static NSString *myDomain = @"xmpp.test";
 }
 
 - (void)xmppStreamDidAuthenticate:(XMPPStream *)sender {
-    
     XMPPPresence *presence = [XMPPPresence presenceWithType:@"available"];
     [self.stream sendElement:presence];
     NSLog(@"登录成功");
@@ -284,15 +266,10 @@ static NSString *myDomain = @"xmpp.test";
     
     UIStoryboard *storyboard = [UIStoryboard storyboardWithName:@"Main" bundle:nil];
     [UIApplication sharedApplication].keyWindow.rootViewController = [storyboard instantiateViewControllerWithIdentifier:@"tablebar"];
-    
-//    [self changeMyPassword:@"11"];
-//    [self updateMyTel:@"13253545377"];
 }
 
 - (BOOL)xmppStream:(XMPPStream *)sender didReceiveIQ:(XMPPIQ *)iq{
-    
     NSString *iqTypePWD = [[iq attributeForName:@"type"]stringValue];
-    
     NSString *iqIDPWD = [[iq attributeForName:@"id"]stringValue];
     
 //    NSLog(@"iqTypePWD:%@___iqTypePWD:%@",iqTypePWD,iqIDPWD);
@@ -330,7 +307,6 @@ static NSString *myDomain = @"xmpp.test";
 }
 
 - (void)xmppStream:(XMPPStream *)sender didNotAuthenticate:(NSXMLElement *)error {
-    NSLog(@"Connect Error didNotAuthenticate: %@", error);
     NSLog(@"用户名或密码错误");
     [[NSUserDefaults standardUserDefaults]removeObjectForKey:@"name"];
     [[NSUserDefaults standardUserDefaults]removeObjectForKey:@"password"];
@@ -340,52 +316,38 @@ static NSString *myDomain = @"xmpp.test";
 
 #pragma mark - receivemessage delegate
 - (void)xmppStream:(XMPPStream *)sender didReceiveMessage:(XMPPMessage *)message {
-    
-    if ([message.type isEqualToString:@"chat"] && message.body != nil) {
-        
-        NSArray *subtypes = [NSArray arrayWithObjects:@"text",@"audio",@"picture",nil];
-        NSString *subtypeofbody = [self getSubtypeFrom:message];
-        NSUInteger index = [subtypes indexOfObject:subtypeofbody];
-        switch (index) {
-            case 0:{
-                NSString *messageBody = [[message elementForName:@"body"] stringValue];
-//                NSLog(@"my xmpp did receive message: %@ length: %ld", messageBody,messageBody.length);
-                NSString *bareJidStr = message.fromStr;
-                NSRange range = [bareJidStr rangeOfString:@"@"];
-                bareJidStr = [bareJidStr substringToIndex:range.location];
-                
-                NSLog(@"%@", bareJidStr);
-                
+    if ([message isChatMessageWithBody]) {
+        NSString *subtype = [self getSubtypeFrom:message];
+        NSString *messageBody = [[message elementForName:@"body"] stringValue];
+        XMPPJID *fromJid = message.from;
+        NSString *bareJidStr = fromJid.user;
+        char firstLetter = [subtype characterAtIndex:0];
+        switch (firstLetter) {
+            case 't':{//text
                 [_dataManager saveMessageWithUsername:bareJidStr time:[NSDate date] body:messageBody isOut:NO];
                 [_dataManager addRecentUsername:bareJidStr time:[NSDate date] body:messageBody isOut:NO];
                 break;
             }
-            case 1:{
-                NSString *audiomessageBody = [[message elementForName:@"body"] stringValue];
-                
+            case 'a':{//audio
                 NSRange range1 = NSMakeRange(0, 9);
-                NSString *audiolength = [audiomessageBody substringWithRange:range1];//获取语音消息长度
-                NSRange range2 = NSMakeRange(9, [audiomessageBody length]-9);
-                NSString *audiomsg = [audiomessageBody substringWithRange:range2];
+                NSString *audiolength = [messageBody substringWithRange:range1];//获取语音消息长度
+                NSRange range2 = NSMakeRange(9, [messageBody length]-9);
+                NSString *audiomsg = [messageBody substringWithRange:range2];
                 
                 NSData *data = [[NSData alloc] initWithBase64EncodedString:audiomsg options:0];
                 
-                NSLog(@"did recieve audio message :%@, length: %ld",audiomessageBody, data.length);
+                NSLog(@"did recieve audio message :%@, length: %lu",messageBody, (unsigned long)data.length);
+
+                NSString *tmpPath = [Tool getFileName:@"tmp" extension:@"amr"];
+                NSString *path = [Tool getFileName:@"receive" extension:@"wav"];
+                [data writeToFile:tmpPath atomically:YES];
+                [VoiceConverter amrToWav:tmpPath wavSavePath:path];
                 
-                NSString *jidStr = message.fromStr;
-                NSRange range3 = [jidStr rangeOfString:@"@"];
-                jidStr = [jidStr substringToIndex:range3.location];
-                NSLog(@"%@", jidStr);
-                
-                
-                NSString *path = [Tool getFileName:@"recieve" extension:@"wav"];
-                [data writeToFile:path atomically:YES];
-                
-                [_dataManager saveRecordWithUsername:jidStr time:[NSDate date] path:path length:audiolength isOut:NO];
-                [_dataManager addRecentUsername:jidStr time:[NSDate date] body:Voice isOut:NO];
+                [_dataManager saveRecordWithUsername:bareJidStr time:[NSDate date] path:path length:audiolength isOut:NO];
+                [_dataManager addRecentUsername:bareJidStr time:[NSDate date] body:Voice isOut:NO];
                 break;
             }
-            case 2:{
+            case 'p':{
                 
                 break;
             }
@@ -393,8 +355,6 @@ static NSString *myDomain = @"xmpp.test";
             default:
                 break;
         }
-        
-        
         
     } else {
         NSLog(@"%@", message);
@@ -415,7 +375,7 @@ static NSString *myDomain = @"xmpp.test";
         didReceivevCardTemp:(XMPPvCardTemp *)vCardTemp
                      forJID:(XMPPJID *)jid{
     
-    NSLog(@"tel...%@",_myVCardTemp.note);
+//    NSLog(@"tel...%@",_myVCardTemp.note);
 }
 
 - (void)xmppvCardTempModuleDidUpdateMyvCard:(XMPPvCardTempModule *)vCardTempModule{
@@ -425,11 +385,5 @@ static NSString *myDomain = @"xmpp.test";
 - (void)xmppvCardTempModule:(XMPPvCardTempModule *)vCardTempModule failedToUpdateMyvCard:(NSXMLElement *)error{
     NSLog(@"did not update");
 }
-
-#pragma mark - roster delegate
-- (void)xmppRosterDidEndPopulating:(XMPPRoster *)sender {
-
-}
-
 
 @end
