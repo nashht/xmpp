@@ -40,6 +40,8 @@
 		90FA06601CAE4BDE00851B1C /* RecentViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 90FA065D1CAE4BDE00851B1C /* RecentViewController.m */; };
 		90FA06621CAE656500851B1C /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 90FA06611CAE656500851B1C /* Assets.xcassets */; };
 		DA01456E1C3E4C5700C85680 /* AsyncSocket.m in Sources */ = {isa = PBXBuildFile; fileRef = DA01456D1C3E4C5700C85680 /* AsyncSocket.m */; };
+		DA57261C1CBF40830045CEF2 /* BottomView.m in Sources */ = {isa = PBXBuildFile; fileRef = DA57261B1CBF40830045CEF2 /* BottomView.m */; };
+		DA57261E1CBF409D0045CEF2 /* BottomView.xib in Resources */ = {isa = PBXBuildFile; fileRef = DA57261D1CBF409D0045CEF2 /* BottomView.xib */; };
 		DA9046AA1C3A49EB009E75B7 /* DataManager.m in Sources */ = {isa = PBXBuildFile; fileRef = DA9046A91C3A49EB009E75B7 /* DataManager.m */; };
 		DA9046B51C3A51A1009E75B7 /* AudioCenter.m in Sources */ = {isa = PBXBuildFile; fileRef = DA9046AE1C3A51A1009E75B7 /* AudioCenter.m */; };
 		DA9046B71C3A51A1009E75B7 /* MyFetchedResultsControllerDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = DA9046B21C3A51A1009E75B7 /* MyFetchedResultsControllerDelegate.m */; };
@@ -302,6 +304,9 @@
 		90FA06611CAE656500851B1C /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		DA01456C1C3E4C5700C85680 /* AsyncSocket.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = AsyncSocket.h; path = framework/AsyncSocket.h; sourceTree = "<group>"; };
 		DA01456D1C3E4C5700C85680 /* AsyncSocket.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = AsyncSocket.m; path = framework/AsyncSocket.m; sourceTree = "<group>"; };
+		DA57261A1CBF40830045CEF2 /* BottomView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BottomView.h; sourceTree = "<group>"; };
+		DA57261B1CBF40830045CEF2 /* BottomView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BottomView.m; sourceTree = "<group>"; };
+		DA57261D1CBF409D0045CEF2 /* BottomView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = BottomView.xib; sourceTree = "<group>"; };
 		DA9046A81C3A49EB009E75B7 /* DataManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = DataManager.h; path = dataStorage/DataManager.h; sourceTree = "<group>"; };
 		DA9046A91C3A49EB009E75B7 /* DataManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = DataManager.m; path = dataStorage/DataManager.m; sourceTree = "<group>"; };
 		DA9046AD1C3A51A1009E75B7 /* AudioCenter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = AudioCenter.h; path = Tool/AudioCenter.h; sourceTree = "<group>"; };
@@ -780,6 +785,9 @@
 				900122541CA91EE2005D5BFA /* RecordFrameModel.m */,
 				900122551CA91EE2005D5BFA /* RecordViewCell.h */,
 				900122561CA91EE2005D5BFA /* RecordViewCell.m */,
+				DA57261D1CBF409D0045CEF2 /* BottomView.xib */,
+				DA57261A1CBF40830045CEF2 /* BottomView.h */,
+				DA57261B1CBF40830045CEF2 /* BottomView.m */,
 			);
 			path = Chat;
 			sourceTree = "<group>";
@@ -2133,6 +2141,7 @@
 				DAD278911CBF3A78001508D0 /* opencore-amrnb.pc in Resources */,
 				90FA06621CAE656500851B1C /* Assets.xcassets in Resources */,
 				DAD235021C424CEE003A93F9 /* MoreView.xib in Resources */,
+				DA57261E1CBF409D0045CEF2 /* BottomView.xib in Resources */,
 				90F711161CBC89FC00042A99 /* Main.storyboard in Resources */,
 				DA95D5A81C3A16E6001ED1A6 /* LaunchScreen.storyboard in Resources */,
 				DAD278921CBF3A78001508D0 /* opencore-amrwb.pc in Resources */,
@@ -2348,6 +2357,7 @@
 				DA90B1FB1C8989930080E037 /* XMPPMessage+XEP_0280.m in Sources */,
 				DA9046B51C3A51A1009E75B7 /* AudioCenter.m in Sources */,
 				DA90B1FE1C8989930080E037 /* XMPPMessage+XEP_0308.m in Sources */,
+				DA57261C1CBF40830045CEF2 /* BottomView.m in Sources */,
 				DA90B20F1C8989930080E037 /* DDContextFilterLogFormatter.m in Sources */,
 				DA9046B81C3A51A1009E75B7 /* Tool.m in Sources */,
 			);

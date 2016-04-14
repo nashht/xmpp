@@ -19,11 +19,13 @@
 #import "MessageCell.h"
 #import "AudioCenter.h"
 #import "Tool.h"
+#import "BottomView.h"
 #import "RecordView.h"
 #import "MoreView.h"
-#import "MyXmpp.h"
+#import "MyXMPP.h"
 
 #define VIEWHEIGHT 100
+#define BOTTOMHEIGHT 40
 
 #define MyMessageCell @"my message"
 #define FriendMessageCell @"friend message"
@@ -32,7 +34,7 @@
 #define MyPhotoCell @"my photo"
 #define FriendPhotoCell @"friend photo"
 
-@interface ChatViewController () <UITableViewDataSource, UITableViewDelegate, UITextFieldDelegate> {
+@interface ChatViewController () <UITableViewDataSource, UITableViewDelegate, UITextFieldDelegate, BottomViewDelegate> {
     NSString *_photoPath;
     BOOL _showRecordView;
     BOOL _showMoreView;
@@ -40,11 +42,8 @@
     CGFloat _totalCellHeight;
 //    NSString *_username;
 }
-@property (weak, nonatomic) IBOutlet UIView *bottomView;
+@property (strong, nonatomic) BottomView *bottomView;
 
-@property (weak, nonatomic) IBOutlet UIView *baseView;
-@property (weak, nonatomic) IBOutlet NSLayoutConstraint *baseBottomConstraint;
-@property (weak, nonatomic) IBOutlet UITextField *messageTF;
 @property (weak, nonatomic) IBOutlet UITableView *historyTableView;
 
 @property (strong, nonatomic) RecordView *recordView;
@@ -54,7 +53,6 @@
 @property (strong, nonatomic) MyFetchedResultsControllerDelegate *historyControllerDelegate;
 
 @property (strong, nonatomic) NSString *myPhotoPath;
-@property (strong, nonatomic) MyXMPP *myXmpp;
 
 @end
 
@@ -62,8 +60,7 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    
-    _myXmpp = [MyXMPP shareInstance];
+
     // init table view
     _historyTableView.dataSource = self;
     _historyTableView.delegate = self;
@@ -71,9 +68,6 @@
     _historyController = [[DataManager shareManager]getMessageByUsername:_userJid.user];
     _historyControllerDelegate = [[MyFetchedResultsControllerDelegate alloc]initWithTableView:_historyTableView];
     _historyController.delegate = _historyControllerDelegate;
-
-    // init text field
-    _messageTF.delegate = self;
     
 //    禁止选中tableView
     _historyTableView.allowsSelection = NO;
@@ -82,7 +76,7 @@
     _historyTableView.backgroundColor = [UIColor colorWithRed:225/255.0 green:225/255.0 blue:225/255.0 alpha:1.0];
     
     _myPhotoPath = [[NSUserDefaults standardUserDefaults]stringForKey:@"photoPath"];
-
+    
     // init record view
     _screenSize = [UIScreen mainScreen].bounds.size;
     _showRecordView = NO;
@@ -90,6 +84,12 @@
     _recordView.frame = CGRectMake(0, _screenSize.height, _screenSize.width, VIEWHEIGHT);
     _recordView.username = _userJid.user;
     [self.view addSubview:_recordView];
+    
+    _bottomView = [[NSBundle mainBundle]loadNibNamed:@"BottomView" owner:self options:nil].lastObject;
+    _bottomView.frame = CGRectMake(0, _screenSize.height - BOTTOMHEIGHT, _screenSize.width, BOTTOMHEIGHT);
+    _bottomView.user = _userJid.user;
+    _bottomView.delegate = self;
+    [self.view addSubview:_bottomView];
     
     // init more view
     _showMoreView = NO;
@@ -112,7 +112,8 @@
 }
 
 - (void)commentTableViewTouchInSide{
-    [_messageTF resignFirstResponder];
+    [_bottomView resignTextfield];
+    
 }
 
 - (void)viewWillAppear:(BOOL)animated {
@@ -127,66 +128,59 @@
 
 #pragma mark - IB actions
 - (IBAction)record:(id)sender {
-    [_messageTF resignFirstResponder];
-    if (_showMoreView) {
-        _baseBottomConstraint.constant = 0;
-        [UIView animateWithDuration:0.5 animations:^{
-            _moreView.frame = CGRectMake(0, _screenSize.height, _screenSize.width, VIEWHEIGHT);
-            [self.view layoutIfNeeded];
-        }];
-        _showMoreView = NO;
-    }
-    if (_showRecordView) {
-        _baseBottomConstraint.constant = 0;
-        [UIView animateWithDuration:0.5 animations:^{
-            _recordView.frame = CGRectMake(0, _screenSize.height, _screenSize.width, VIEWHEIGHT);
-            [self.view layoutIfNeeded];
-        }];
-        _showRecordView = NO;
-    } else {
-        _baseBottomConstraint.constant = VIEWHEIGHT * -1;
-        [UIView animateWithDuration:0.5 animations:^{
-            _recordView.frame = CGRectMake(0, _screenSize.height - VIEWHEIGHT, _screenSize.width, VIEWHEIGHT);
-            [self.view layoutIfNeeded];
-        }];
-        _showRecordView = YES;
-    }
+//    [_messageTF resignFirstResponder];
+//    if (_showMoreView) {
+//        _baseBottomConstraint.constant = 0;
+//        [UIView animateWithDuration:0.5 animations:^{
+//            _moreView.frame = CGRectMake(0, _screenSize.height, _screenSize.width, VIEWHEIGHT);
+//            [self.view layoutIfNeeded];
+//        }];
+//        _showMoreView = NO;
+//    }
+//    if (_showRecordView) {
+//        _baseBottomConstraint.constant = 0;
+//        [UIView animateWithDuration:0.5 animations:^{
+//            _recordView.frame = CGRectMake(0, _screenSize.height, _screenSize.width, VIEWHEIGHT);
+//            [self.view layoutIfNeeded];
+//        }];
+//        _showRecordView = NO;
+//    } else {
+//        _baseBottomConstraint.constant = VIEWHEIGHT * -1;
+//        [UIView animateWithDuration:0.5 animations:^{
+//            _recordView.frame = CGRectMake(0, _screenSize.height - VIEWHEIGHT, _screenSize.width, VIEWHEIGHT);
+//            [self.view layoutIfNeeded];
+//        }];
+//        _showRecordView = YES;
+//    }
 }
 
-- (IBAction)send:(id)sender {
-    NSString *message = _messageTF.text;
-    if (![message isEqualToString:@""]) {
-        _messageTF.text = @"";
-        [_myXmpp sendMessage:message ToUser:_userJid.user];
-    }
-}
-
-- (IBAction)more:(id)sender {
-    [_messageTF resignFirstResponder];
-    if (_showRecordView) {
-        _baseBottomConstraint.constant = 0;
-        [UIView animateWithDuration:0.5 animations:^{
-            _recordView.frame = CGRectMake(0, _screenSize.height, _screenSize.width, VIEWHEIGHT);
-            [self.view layoutIfNeeded];
-        }];
-        _showRecordView = NO;
-    }
-    if (_showMoreView) {
-        _baseBottomConstraint.constant = 0;
-        [UIView animateWithDuration:0.5 animations:^{
-            _moreView.frame = CGRectMake(0, _screenSize.height, _screenSize.width, VIEWHEIGHT);
-            [self.view layoutIfNeeded];
-        }];
-        _showMoreView = NO;
-    } else {
-        _baseBottomConstraint.constant = VIEWHEIGHT * -1;
-        [UIView animateWithDuration:0.5 animations:^{
-            _moreView.frame = CGRectMake(0, _screenSize.height - VIEWHEIGHT, _screenSize.width, VIEWHEIGHT);
-            [self.view layoutIfNeeded];
-        }];
-        _showMoreView = YES;
-    }
-}
+//
+//- (IBAction)more:(id)sender {
+//    [_messageTF resignFirstResponder];
+//    if (_showRecordView) {
+//        _baseBottomConstraint.constant = 0;
+//        [UIView animateWithDuration:0.5 animations:^{
+//            _recordView.frame = CGRectMake(0, _screenSize.height, _screenSize.width, VIEWHEIGHT);
+//            [self.view layoutIfNeeded];
+//        }];
+//        _showRecordView = NO;
+//    }
+//    if (_showMoreView) {
+//        _baseBottomConstraint.constant = 0;
+//        [UIView animateWithDuration:0.5 animations:^{
+//            _moreView.frame = CGRectMake(0, _screenSize.height, _screenSize.width, VIEWHEIGHT);
+//            [self.view layoutIfNeeded];
+//        }];
+//        _showMoreView = NO;
+//    } else {
+//        _baseBottomConstraint.constant = VIEWHEIGHT * -1;
+//        [UIView animateWithDuration:0.5 animations:^{
+//            _moreView.frame = CGRectMake(0, _screenSize.height - VIEWHEIGHT, _screenSize.width, VIEWHEIGHT);
+//            [self.view layoutIfNeeded];
+//        }];
+//        _showMoreView = YES;
+//    }
+//}
 
 /**
  *  tableView自动显示最后一行
@@ -308,31 +302,34 @@
 //    _baseBottomConstraint.constant = height;
 //    _baseBottomConstraint.constant = 0;
     
-    if (_showMoreView) {
-        _baseBottomConstraint.constant = 0;
-        [UIView animateWithDuration:0.5 animations:^{
-            _moreView.frame = CGRectMake(0, _screenSize.height, _screenSize.width, VIEWHEIGHT);
-            [self.view layoutIfNeeded];
-        }];
-        _showMoreView = NO;
-    }
-
-    if (_showRecordView) {
-        _baseBottomConstraint.constant = 0;
-        [UIView animateWithDuration:0.5 animations:^{
-            _recordView.frame = CGRectMake(0, _screenSize.height, _screenSize.width, VIEWHEIGHT);
-            [self.view layoutIfNeeded];
-        }];
-        _showRecordView = NO;
-    }
-
-//    if (_totalCellHeight + height + 88 > [UIScreen mainScreen].bounds.size.height) {
-
-        [UIView animateWithDuration:0.2 animations:^{
-            CGRect frame = self.view.frame;
-            frame.origin.y -= height;
-            self.view.frame = frame;
-        }];
+//    if (_showMoreView) {
+//        _baseBottomConstraint.constant = 0;
+//        [UIView animateWithDuration:0.5 animations:^{
+//            _moreView.frame = CGRectMake(0, _screenSize.height, _screenSize.width, VIEWHEIGHT);
+//            [self.view layoutIfNeeded];
+//        }];
+//        _showMoreView = NO;
+//    }
+//
+//    if (_showRecordView) {
+//        _baseBottomConstraint.constant = 0;
+//        [UIView animateWithDuration:0.5 animations:^{
+//            _recordView.frame = CGRectMake(0, _screenSize.height, _screenSize.width, VIEWHEIGHT);
+//            [self.view layoutIfNeeded];
+//        }];
+//        _showRecordView = NO;
+//    }
+//
+////    if (_totalCellHeight + height + 88 > [UIScreen mainScreen].bounds.size.height) {
+//
+//        [UIView animateWithDuration:0.2 animations:^{
+//            CGRect frame = self.view.frame;
+//            frame.origin.y -= height;
+//            self.view.frame = frame;
+//        }];
+    [UIView animateWithDuration:0.5 animations:^{
+        _bottomView.frame = CGRectMake(0, _screenSize.height - height - BOTTOMHEIGHT, _screenSize.width, BOTTOMHEIGHT);
+    }];
 }
 
 - (void)keyboardWillHidden:(NSNotification *)notification {
@@ -340,25 +337,18 @@
     CGFloat height = [notification.userInfo[UIKeyboardFrameEndUserInfoKey] CGRectValue].size.height;
 //     if (_totalCellHeight + height + 88 > [UIScreen mainScreen].bounds.size.height) {
         [UIView animateWithDuration:0.2 animations:^{
-            self.view.frame = CGRectMake(self.view.frame.origin.x, self.view.frame.origin.y + height, self.view.frame.size.width, self.view.frame.size.height);
+//            self.view.frame = CGRectMake(self.view.frame.origin.x, self.view.frame.origin.y + height, self.view.frame.size.width, self.view.frame.size.height);
+            _bottomView.frame = CGRectMake(0, _screenSize.height - BOTTOMHEIGHT, _screenSize.width, BOTTOMHEIGHT);
         }];
 //     }
 }
 
-#pragma mark -text field delegate
-- (BOOL)textFieldShouldReturn:(UITextField *)textField {
-    
-//    点击send发送消息
-    [self send:nil];
-    
-    return YES;
-}
-
-- (BOOL)textFieldShouldBeginEditing:(UITextField *)textField{
-    [UIView animateWithDuration:0.2 animations:^{
-     
+#pragma mark - bottom delegate
+- (void)showMoreView {
+    [UIView animateWithDuration:0.5 animations:^{
+        _bottomView.frame = CGRectMake(0, _screenSize.height - VIEWHEIGHT - BOTTOMHEIGHT, _screenSize.width, BOTTOMHEIGHT);
+        _moreView.frame = CGRectMake(0, _screenSize.height - VIEWHEIGHT, _screenSize.width, VIEWHEIGHT);
     }];
-    return YES;
 }
 
 @end

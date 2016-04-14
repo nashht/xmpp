@@ -13,4 +13,6 @@
 
 @property (strong, nonatomic) XMPPJID *userJid;
 
+- (void)showMoreView;
+
 @end
