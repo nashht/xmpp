@@ -50,16 +50,18 @@ static NSString *myDomain = @"xmpp.test";
 
 - (void)loginWithName:(NSString *)user Password:(NSString *)password {
     self.password = password;
-    if (![self.stream isConnected]) {
-        self.myjid = [XMPPJID jidWithUser:user domain:@"10.108.136.59" resource:@"iphone"];
-        [self.stream setMyJID:self.myjid];
-        
-        NSError *error = nil;
-        if (![self.stream connectWithTimeout:XMPPStreamTimeoutNone error:&error ]) {
-            NSLog(@"Connect Error: %@", [[error userInfo] description]);
-        }
+    if ([self.stream isConnected]) {
+        [self disconnected];
     }
+    self.myjid = [XMPPJID jidWithUser:user domain:myDomain resource:@"iphone"];
+    [self.stream setHostName:@"10.108.136.59"];
+    [self.stream setMyJID:self.myjid];
     
+    NSError *error = nil;
+    if (![self.stream connectWithTimeout:XMPPStreamTimeoutNone error:&error ]) {
+        NSLog(@"Connect Error: %@", [[error userInfo] description]);
+    }
+
 }
 
 - (void)sendMessage:(NSString *)text ToUser:(NSString *) user {

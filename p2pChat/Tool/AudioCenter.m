@@ -55,10 +55,10 @@
     [_recorder stop];
 //    [self startPlay:_path];
     [VoiceConverter wavToAmr:_wavPath amrSavePath:_path];
-    NSError *err = nil;
-    if (![[NSFileManager defaultManager]removeItemAtPath:_wavPath error:&err]) {
-        NSLog(@"AudioCenter delete tmp wav file failed: %@", err);
-    }
+//    NSError *err = nil;
+//    if (![[NSFileManager defaultManager]removeItemAtPath:_wavPath error:&err]) {
+//        NSLog(@"AudioCenter delete tmp wav file failed: %@", err);
+//    }
     return (float)during;
 }
 
