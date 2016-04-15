@@ -49,4 +49,6 @@ typedef NS_ENUM (char, MessageType) {
 
 - (NSArray<XMPPGroupCoreDataStorageObject *> *)getFriendsGroup;
 
+- (void)creatGroupChat:(NSString *)groupName;
+
 @end

@@ -15,12 +15,15 @@
 #import "DataManager.h"
 #import "Tool.h"
 #import "VoiceConverter.h"
+#import "XMPPRoomCoreDataStorage.h"
+#import "XMPPRoomMemoryStorage.h"
 
 #define Voice @"[语音]"
 
 static NSString *myDomain = @"xmpp.test";
+static NSString *myRoomDomain = @"conference.xmpp.test";
 
-@interface MyXMPP () <XMPPStreamDelegate,XMPPRosterStorage,XMPPRosterDelegate>
+@interface MyXMPP () <XMPPStreamDelegate,XMPPRosterStorage,XMPPRosterDelegate,XMPPRoomStorage,XMPPRoomDelegate>
 
 @property (strong, nonatomic) XMPPStream *stream;
 @property (strong, nonatomic) XMPPRoster *roster;
@@ -31,6 +34,10 @@ static NSString *myDomain = @"xmpp.test";
 @property (strong, nonatomic) XMPPvCardAvatarModule *vCardAvatar;
 @property (strong, nonatomic) XMPPvCardTemp *myVCardTemp;
 @property (strong, nonatomic) XMPPvCardTempModule *vCardModule;
+
+@property (strong, nonatomic) XMPPJID *groupjid;
+@property (strong, nonatomic) XMPPRoom *chatroom;
+@property (strong, nonatomic) XMPPRoomMemoryStorage *storage;
 
 @property (strong, nonatomic) DataManager *dataManager;
 
@@ -61,7 +68,7 @@ static NSString *myDomain = @"xmpp.test";
     if (![self.stream connectWithTimeout:XMPPStreamTimeoutNone error:&error ]) {
         NSLog(@"Connect Error: %@", [[error userInfo] description]);
     }
-
+    
 }
 
 - (void)sendMessage:(NSString *)text ToUser:(NSString *) user {
@@ -201,6 +208,19 @@ static NSString *myDomain = @"xmpp.test";
 //    XMPPUserCoreDataStorageObject
 }
 
+- (void)creatGroupChat:(NSString *)groupname withpassword:(NSString *)roompwd{//创建聊天室
+    
+    _storage = [[XMPPRoomMemoryStorage alloc]init];
+    NSString* roomID = [NSString stringWithFormat:@"%@@%@",groupname,myRoomDomain];
+    XMPPJID * roomJID = [XMPPJID jidWithString:roomID];
+    XMPPRoom* chatRoom = [[XMPPRoom alloc] initWithRoomStorage:_storage jid:roomJID dispatchQueue:dispatch_get_main_queue()];
+    [chatRoom activate:self.stream];
+    [chatRoom addDelegate:self delegateQueue:dispatch_get_main_queue()];
+    [chatRoom joinRoomUsingNickname:self.stream.myJID.user history:nil password:roompwd];//创建聊天室必须将自己加入聊天室，否则不会创建成功！
+}
+
+
+
 #pragma mark - private method
 - (id)init {
     self = [super init];
@@ -268,6 +288,8 @@ static NSString *myDomain = @"xmpp.test";
     
     UIStoryboard *storyboard = [UIStoryboard storyboardWithName:@"Main" bundle:nil];
     [UIApplication sharedApplication].keyWindow.rootViewController = [storyboard instantiateViewControllerWithIdentifier:@"tablebar"];
+    
+    [self creatGroupChat:@"test" withpassword:nil];
 }
 
 - (BOOL)xmppStream:(XMPPStream *)sender didReceiveIQ:(XMPPIQ *)iq{
@@ -386,6 +408,47 @@ static NSString *myDomain = @"xmpp.test";
 
 - (void)xmppvCardTempModule:(XMPPvCardTempModule *)vCardTempModule failedToUpdateMyvCard:(NSXMLElement *)error{
     NSLog(@"did not update");
+}
+
+#pragma mark - group chat delegate
+- (void)xmppRoomDidCreate:(XMPPRoom *)sender
+{
+    NSLog(@"did creat");
+}
+
+- (void)xmppRoomDidJoin:(XMPPRoom *)sender{
+    NSLog(@"did join");
+    [sender fetchConfigurationForm];
+    
+    [sender inviteUser:[XMPPJID jidWithString:@"cxh@xmpp.test"] withMessage:@"hello!"];
+    [sender inviteUser:[XMPPJID jidWithString:@"zxk@xmpp.test"] withMessage:@"hello!"];
+    
+    [sender fetchMembersList];
+    
+}
+
+- (void)xmppRoom:(XMPPRoom *)sender didFetchConfigurationForm:(NSXMLElement *)configForm
+{
+    NSXMLElement *newConfig = [configForm copy];
+    NSArray *fields = [newConfig elementsForName:@"field"];
+    
+    for (NSXMLElement *field in fields)
+    {
+        NSString *var = [field attributeStringValueForName:@"var"];
+        // Make Room Persistent
+        if ([var isEqualToString:@"muc#roomconfig_persistentroom"]) {
+            [field removeChildAtIndex:0];
+            [field addChild:[NSXMLElement elementWithName:@"value" stringValue:@"1"]];
+        }
+    }
+    
+    [sender configureRoomUsingOptions:newConfig];
+    NSLog(@"did fetch");
+}
+
+- (void)xmppRoom:(XMPPRoom *)sender didFetchMembersList:(NSArray *)items{
+    NSLog(@"did fetch members list");
+    NSLog(@"%@",items);
 }
 
 @end
