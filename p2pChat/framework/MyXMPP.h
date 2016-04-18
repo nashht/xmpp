@@ -53,8 +53,8 @@ typedef NS_ENUM (char, MessageType) {
 - (void)inviteFriends:(NSString *)friendname withMessage:(NSString *)text;
 - (void)fetchMembersFromGroup;
 - (void)sendGroupMessage:(NSString *)text;
-- (void)sendGroupPicture:(NSString *)path ToGroupChat:(NSString *)roomname;
-- (void)sendGroupAudio:(NSString *)path ToGroupChat:(NSString *)roomname length:(NSString *)length;
+- (void)sendGroupPicture:(NSString *)path;
+- (void)sendGroupAudio:(NSString *)path length:(NSString *)length;
 - (void)destroyChatRoom;
 
 
