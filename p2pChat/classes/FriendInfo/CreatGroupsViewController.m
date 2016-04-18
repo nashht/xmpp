@@ -58,14 +58,14 @@
 }
 
 - (IBAction)selectBtnClick:(UIButton *)sender {
-//    [[MyXMPP shareInstance] creatGroupName:@"123" withpassword:nil andsubject:nil];
-//    [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(invitenewfriends) name:MyXmppRoomDidConfigurationNotification object:nil];
+    [[MyXMPP shareInstance] creatGroupName:@"456" withpassword:nil andsubject:nil];
+    [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(invitenewfriends) name:MyXmppRoomDidConfigurationNotification object:nil];
 }
 
-//- (void)invitenewfriends{
-//    [[MyXMPP shareInstance] inviteFriends:@"cxh" withMessage:@"wewe"];
-//    [[MyXMPP shareInstance] inviteFriends:@"ht_test" withMessage:@"wewe"];
-//}
+- (void)invitenewfriends{
+    [[MyXMPP shareInstance] inviteFriends:@"cxh" withMessage:@"wewe"];
+    [[MyXMPP shareInstance] inviteFriends:@"ht_test" withMessage:@"wewe"];
+}
 
 - (void)initGroup{
     _groups = [[NSMutableArray alloc]init];
