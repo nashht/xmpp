@@ -24,11 +24,16 @@
 		9001226E1CA91EE3005D5BFA /* FriendsGroup.m in Sources */ = {isa = PBXBuildFile; fileRef = 9001225D1CA91EE3005D5BFA /* FriendsGroup.m */; };
 		9001226F1CA91EE3005D5BFA /* FriendsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 9001225F1CA91EE3005D5BFA /* FriendsViewController.m */; };
 		9001227F1CA92202005D5BFA /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 9001227D1CA92202005D5BFA /* AppDelegate.m */; };
+		900BFA0F1CC0EC76004F7B2C /* PopoverViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 900BFA0D1CC0EC76004F7B2C /* PopoverViewController.m */; };
+		900BFA101CC0EC76004F7B2C /* PopoverViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 900BFA0E1CC0EC76004F7B2C /* PopoverViewController.xib */; };
+		900BFA191CC484EC004F7B2C /* HeaderView.m in Sources */ = {isa = PBXBuildFile; fileRef = 900BFA171CC484EC004F7B2C /* HeaderView.m */; };
+		900BFA1A1CC484EC004F7B2C /* HeaderView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 900BFA181CC484EC004F7B2C /* HeaderView.xib */; };
 		904175431CA9299C005A024B /* LoginViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 904175421CA9299C005A024B /* LoginViewController.m */; };
 		904175471CA92B63005A024B /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 904175461CA92B63005A024B /* main.m */; };
 		90E3E8891C97AA840076F28C /* Snip20151210_2.png in Resources */ = {isa = PBXBuildFile; fileRef = 90E3E8881C97AA840076F28C /* Snip20151210_2.png */; };
 		90E3E89D1C99540E0076F28C /* happy.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 90E3E89C1C99540E0076F28C /* happy.mp3 */; };
 		90E3E89F1C9955930076F28C /* AVFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 90E3E89E1C9955930076F28C /* AVFoundation.framework */; };
+		90F0DFAB1CC0CC37002E107E /* CreatGroupsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 90F0DFAA1CC0CC37002E107E /* CreatGroupsViewController.m */; };
 		90F711161CBC89FC00042A99 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 90F711151CBC89FC00042A99 /* Main.storyboard */; };
 		90FA063D1CACD0D800851B1C /* FriendCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 90FA063B1CACD0D800851B1C /* FriendCell.m */; };
 		90FA063E1CACD0D800851B1C /* FriendCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 90FA063C1CACD0D800851B1C /* FriendCell.xib */; };
@@ -279,12 +284,20 @@
 		9001225F1CA91EE3005D5BFA /* FriendsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FriendsViewController.m; sourceTree = "<group>"; };
 		9001227C1CA92202005D5BFA /* AppDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = AppDelegate.h; path = p2pChat/classes/Main/AppDelegate.h; sourceTree = SOURCE_ROOT; };
 		9001227D1CA92202005D5BFA /* AppDelegate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = AppDelegate.m; path = p2pChat/classes/Main/AppDelegate.m; sourceTree = SOURCE_ROOT; };
+		900BFA0C1CC0EC76004F7B2C /* PopoverViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PopoverViewController.h; sourceTree = "<group>"; };
+		900BFA0D1CC0EC76004F7B2C /* PopoverViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PopoverViewController.m; sourceTree = "<group>"; };
+		900BFA0E1CC0EC76004F7B2C /* PopoverViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = PopoverViewController.xib; sourceTree = "<group>"; };
+		900BFA161CC484EC004F7B2C /* HeaderView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HeaderView.h; sourceTree = "<group>"; };
+		900BFA171CC484EC004F7B2C /* HeaderView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HeaderView.m; sourceTree = "<group>"; };
+		900BFA181CC484EC004F7B2C /* HeaderView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = HeaderView.xib; sourceTree = "<group>"; };
 		904175411CA9299C005A024B /* LoginViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LoginViewController.h; sourceTree = "<group>"; };
 		904175421CA9299C005A024B /* LoginViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LoginViewController.m; sourceTree = "<group>"; };
 		904175461CA92B63005A024B /* main.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = main.m; path = p2pChat/classes/Main/main.m; sourceTree = SOURCE_ROOT; };
 		90E3E8881C97AA840076F28C /* Snip20151210_2.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Snip20151210_2.png; sourceTree = "<group>"; };
 		90E3E89C1C99540E0076F28C /* happy.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = happy.mp3; sourceTree = "<group>"; };
 		90E3E89E1C9955930076F28C /* AVFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AVFoundation.framework; path = System/Library/Frameworks/AVFoundation.framework; sourceTree = SDKROOT; };
+		90F0DFA91CC0CC37002E107E /* CreatGroupsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CreatGroupsViewController.h; sourceTree = "<group>"; };
+		90F0DFAA1CC0CC37002E107E /* CreatGroupsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CreatGroupsViewController.m; sourceTree = "<group>"; };
 		90F711151CBC89FC00042A99 /* Main.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; name = Main.storyboard; path = Recent/Main.storyboard; sourceTree = "<group>"; };
 		90FA063A1CACD0D800851B1C /* FriendCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FriendCell.h; sourceTree = "<group>"; };
 		90FA063B1CACD0D800851B1C /* FriendCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FriendCell.m; sourceTree = "<group>"; };
@@ -829,6 +842,9 @@
 				90FA065B1CAE4BDE00851B1C /* RecentCell.xib */,
 				90FA065C1CAE4BDE00851B1C /* RecentViewController.h */,
 				90FA065D1CAE4BDE00851B1C /* RecentViewController.m */,
+				900BFA0C1CC0EC76004F7B2C /* PopoverViewController.h */,
+				900BFA0D1CC0EC76004F7B2C /* PopoverViewController.m */,
+				900BFA0E1CC0EC76004F7B2C /* PopoverViewController.xib */,
 			);
 			path = Recent;
 			sourceTree = "<group>";
@@ -860,6 +876,19 @@
 				DA968A471C891F6A00FD866C /* MyViewController.m */,
 			);
 			name = Controller;
+			sourceTree = "<group>";
+		};
+		90F0DFA81CC0CBC2002E107E /* CreatAGroup */ = {
+			isa = PBXGroup;
+			children = (
+				90F0DFA91CC0CC37002E107E /* CreatGroupsViewController.h */,
+				90F0DFAA1CC0CC37002E107E /* CreatGroupsViewController.m */,
+				900BFA161CC484EC004F7B2C /* HeaderView.h */,
+				900BFA171CC484EC004F7B2C /* HeaderView.m */,
+				900BFA181CC484EC004F7B2C /* HeaderView.xib */,
+			);
+			name = CreatAGroup;
+			path = classes/FriendInfo;
 			sourceTree = "<group>";
 		};
 		90FA06501CAE06D400851B1C /* Me */ = {
@@ -1806,10 +1835,10 @@
 			isa = PBXGroup;
 			children = (
 				900122431CA91EE2005D5BFA /* classes */,
+				90F0DFA81CC0CBC2002E107E /* CreatAGroup */,
 				90E7D6F71C9192D600919862 /* Controller */,
 				DA9046B91C3A51A8009E75B7 /* Tools */,
 				DA95D5CE1C3A1F11001ED1A6 /* DataStorage */,
-				842B4C4A1CB7BC8D008665D9 /* Images.xcassets */,
 				DA95D5951C3A16E6001ED1A6 /* Supporting Files */,
 			);
 			path = p2pChat;
@@ -1818,8 +1847,9 @@
 		DA95D5951C3A16E6001ED1A6 /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
-				DAD278601CBF3A78001508D0 /* VoiceConvert */,
+				842B4C4A1CB7BC8D008665D9 /* Images.xcassets */,
 				90FA06611CAE656500851B1C /* Assets.xcassets */,
+				DAD278601CBF3A78001508D0 /* VoiceConvert */,
 				DA968C7D1C892F7300FD866C /* XMPPFramework */,
 				DA968A491C89255500FD866C /* AsyncSocket */,
 				DA95D5A61C3A16E6001ED1A6 /* LaunchScreen.storyboard */,
@@ -2123,7 +2153,9 @@
 				842B4C4B1CB7BC8D008665D9 /* Images.xcassets in Resources */,
 				DA9046BF1C3A5601009E75B7 /* 0.png in Resources */,
 				DAD278911CBF3A78001508D0 /* opencore-amrnb.pc in Resources */,
+				900BFA101CC0EC76004F7B2C /* PopoverViewController.xib in Resources */,
 				90FA06621CAE656500851B1C /* Assets.xcassets in Resources */,
+				900BFA1A1CC484EC004F7B2C /* HeaderView.xib in Resources */,
 				DAD235021C424CEE003A93F9 /* MoreView.xib in Resources */,
 				DA57261E1CBF409D0045CEF2 /* BottomView.xib in Resources */,
 				90F711161CBC89FC00042A99 /* Main.storyboard in Resources */,
@@ -2268,10 +2300,12 @@
 				DA90B1B71C8989930080E037 /* XMPPRoomCoreDataStorage.m in Sources */,
 				90FA06531CAE094600851B1C /* MeController.m in Sources */,
 				DAD278931CBF3A78001508D0 /* VoiceConverter.mm in Sources */,
+				90F0DFAB1CC0CC37002E107E /* CreatGroupsViewController.m in Sources */,
 				DA90B1AE1C8989930080E037 /* XMPPRoster.m in Sources */,
 				DA90B20C1C8989930080E037 /* DDFileLogger.m in Sources */,
 				904175431CA9299C005A024B /* LoginViewController.m in Sources */,
 				DA95D5A31C3A16E6001ED1A6 /* p2pChat.xcdatamodeld in Sources */,
+				900BFA0F1CC0EC76004F7B2C /* PopoverViewController.m in Sources */,
 				DA90B1D31C8989930080E037 /* XMPPIQ+XEP_0060.m in Sources */,
 				DA90B1F11C8989930080E037 /* XMPPStreamManagementStanzas.m in Sources */,
 				9001227F1CA92202005D5BFA /* AppDelegate.m in Sources */,
@@ -2331,6 +2365,7 @@
 				DA90B1951C8989930080E037 /* XMPPConstants.m in Sources */,
 				DA90B1E61C8989930080E037 /* XMPPMessageArchiving_Message_CoreDataObject.m in Sources */,
 				DA90B18D1C8989930080E037 /* XMPPDigestMD5Authentication.m in Sources */,
+				900BFA191CC484EC004F7B2C /* HeaderView.m in Sources */,
 				DA90B1C51C8989930080E037 /* XMPPvCardAvatarCoreDataStorageObject.m in Sources */,
 				DA90B1CA1C8989930080E037 /* XMPPvCardTempAdr.m in Sources */,
 				DA90B1FF1C8989930080E037 /* XMPPMessage+XEP_0333.m in Sources */,
