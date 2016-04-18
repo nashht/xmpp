@@ -208,7 +208,7 @@ static NSString *myRoomDomain = @"conference.xmpp.test";
 //    XMPPUserCoreDataStorageObject
 }
 
-- (void)creatGroupChat:(NSString *)groupname withpassword:(NSString *)roompwd andsubject:(NSString *)subject{//创建聊天室
+- (void)creatGroupName:(NSString *)groupname withpassword:(NSString *)roompwd andsubject:(NSString *)subject{//创建聊天室
     _storage = [[XMPPRoomMemoryStorage alloc]init];
     NSString* roomID = [NSString stringWithFormat:@"%@@%@",groupname,myRoomDomain];
     XMPPJID * roomJID = [XMPPJID jidWithString:roomID];
@@ -220,19 +220,19 @@ static NSString *myRoomDomain = @"conference.xmpp.test";
 }
 
 - (void)inviteFriends:(NSString *)friendname withMessage:(NSString *)text{
-    [_chatroom inviteUser:[XMPPJID jidWithString:[NSString stringWithFormat:@"%@@xmpp.test",friendname ]]withMessage:text];
+    [self.chatroom inviteUser:[XMPPJID jidWithString:[NSString stringWithFormat:@"%@@xmpp.test",friendname ]]withMessage:text];
 }
 
 - (void)fetchMembersFromGroup{
-    [_chatroom fetchMembersList];
+    [self.chatroom fetchMembersList];
 }
 
 - (void)sendGroupMessage:(NSString *)text{
-    [_chatroom sendMessageWithBody:text];
+    [self.chatroom sendMessageWithBody:text];
 }
 
 - (void)destroyChatRoom{
-    [_chatroom destroyRoom];
+    [self.chatroom destroyRoom];
 }
 
 
@@ -304,7 +304,7 @@ static NSString *myRoomDomain = @"conference.xmpp.test";
     UIStoryboard *storyboard = [UIStoryboard storyboardWithName:@"Main" bundle:nil];
     [UIApplication sharedApplication].keyWindow.rootViewController = [storyboard instantiateViewControllerWithIdentifier:@"tablebar"];
     
-    [self creatGroupChat:@"chat" withpassword:nil andsubject:@"ios开发"];
+//    [self creatGroupName:@"chattest" withpassword:nil andsubject:@"ios开发"];
 //    [self inviteFriends:@"cxh" withMessage:@"hello"];
 //    [self destroyChatRoom];
 }
@@ -447,10 +447,11 @@ static NSString *myRoomDomain = @"conference.xmpp.test";
 - (void)xmppRoom:(XMPPRoom *)sender didFetchConfigurationForm:(NSXMLElement *)configForm
 {
     NSLog(@"did configure");
-    [self inviteFriends:@"ht" withMessage:@"hellossss"];
-    [self inviteFriends:@"cxh" withMessage:@"hello！"];
+    [[NSNotificationCenter defaultCenter]postNotificationName:MyXmppRoomDidConfigurationNotification object:nil];//发送认证房间的通知，只有聊天室认证了才能邀请好友进入
+//    [self inviteFriends:@"zxk" withMessage:@"hellossss"];
+//    [self inviteFriends:@"cxh" withMessage:@"hello！"];
     
-    [self sendGroupMessage:@"哈哈哈哈哈哈哈"];
+//    [self sendGroupMessage:@"哈哈哈哈哈哈哈"];
 //    [sender sendMessageWithBody:@"hehehehehehhe"];
 }
 
