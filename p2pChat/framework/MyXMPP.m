@@ -208,22 +208,27 @@ static NSString *myRoomDomain = @"conference.xmpp.test";
 //    XMPPUserCoreDataStorageObject
 }
 
-- (void)creatGroupChat:(NSString *)groupname withpassword:(NSString *)roompwd{//创建聊天室
+- (void)creatGroupChat:(NSString *)groupname withpassword:(NSString *)roompwd andsubject:(NSString *)subject{//创建聊天室
     _storage = [[XMPPRoomMemoryStorage alloc]init];
     NSString* roomID = [NSString stringWithFormat:@"%@@%@",groupname,myRoomDomain];
     XMPPJID * roomJID = [XMPPJID jidWithString:roomID];
     _chatroom = [[XMPPRoom alloc] initWithRoomStorage:_storage jid:roomJID dispatchQueue:dispatch_get_main_queue()];
+    [_chatroom changeRoomSubject:subject];
     [_chatroom activate:self.stream];
     [_chatroom addDelegate:self delegateQueue:dispatch_get_main_queue()];
     [_chatroom joinRoomUsingNickname:self.stream.myJID.user history:nil password:roompwd];//创建聊天室必须将自己加入聊天室，否则不会创建成功！
 }
 
-- (void)configureRoom{
-    [_chatroom fetchConfigurationForm];//聊天室需要认证，否则无法添加好友
-}
-
 - (void)inviteFriends:(NSString *)friendname withMessage:(NSString *)text{
     [_chatroom inviteUser:[XMPPJID jidWithString:[NSString stringWithFormat:@"%@@xmpp.test",friendname ]]withMessage:text];
+}
+
+- (void)fetchMembersFromGroup{
+    [_chatroom fetchMembersList];
+}
+
+- (void)sendGroupMessage:(NSString *)text{
+    [_chatroom sendMessageWithBody:text];
 }
 
 - (void)destroyChatRoom{
@@ -299,8 +304,7 @@ static NSString *myRoomDomain = @"conference.xmpp.test";
     UIStoryboard *storyboard = [UIStoryboard storyboardWithName:@"Main" bundle:nil];
     [UIApplication sharedApplication].keyWindow.rootViewController = [storyboard instantiateViewControllerWithIdentifier:@"tablebar"];
     
-    [self creatGroupChat:@"chat" withpassword:nil];
-    [self configureRoom];
+    [self creatGroupChat:@"chat" withpassword:nil andsubject:@"ios开发"];
 //    [self inviteFriends:@"cxh" withMessage:@"hello"];
 //    [self destroyChatRoom];
 }
@@ -431,9 +435,8 @@ static NSString *myRoomDomain = @"conference.xmpp.test";
 
 - (void)xmppRoomDidJoin:(XMPPRoom *)sender{
     NSLog(@"did join chat room");
-//    [sender fetchConfigurationForm];
+    [sender fetchConfigurationForm];
     
-    [self inviteFriends:@"cxh" withMessage:@"hellossss"];
 //    [sender inviteUser:[XMPPJID jidWithString:[NSString stringWithFormat:@"%@@xmpp.test",@"cxh" ]]withMessage:@"hello!"];
 //    [sender inviteUser:[XMPPJID jidWithString:@"zxk@xmpp.test"] withMessage:@"hello!"];
 //    
@@ -444,6 +447,11 @@ static NSString *myRoomDomain = @"conference.xmpp.test";
 - (void)xmppRoom:(XMPPRoom *)sender didFetchConfigurationForm:(NSXMLElement *)configForm
 {
     NSLog(@"did configure");
+    [self inviteFriends:@"ht" withMessage:@"hellossss"];
+    [self inviteFriends:@"cxh" withMessage:@"hello！"];
+    
+    [self sendGroupMessage:@"哈哈哈哈哈哈哈"];
+//    [sender sendMessageWithBody:@"hehehehehehhe"];
 }
 
 - (void)xmppRoom:(XMPPRoom *)sender didFetchMembersList:(NSArray *)items{
@@ -453,6 +461,7 @@ static NSString *myRoomDomain = @"conference.xmpp.test";
 
 - (void)xmppRoom:(XMPPRoom *)sender didReceiveMessage:(XMPPMessage *)message fromOccupant:(XMPPJID *)occupantJID{
     NSLog(@"did recieve groupchat message");
+//    [sender fetchMembersList];
 }
 
 @end
