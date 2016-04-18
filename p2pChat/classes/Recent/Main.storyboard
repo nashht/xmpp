@@ -34,7 +34,7 @@
                     <navigationItem key="navigationItem" id="yN6-gA-HVK">
                         <barButtonItem key="leftBarButtonItem" image="tabbar_chat_f" id="wOm-Om-a2r">
                             <connections>
-                                <segue destination="iNX-e8-fE5" kind="presentation" id="PiO-cu-EQn"/>
+                                <segue destination="471-6x-b3m" kind="presentation" id="VlN-GJ-6kU"/>
                             </connections>
                         </barButtonItem>
                         <barButtonItem key="rightBarButtonItem" style="plain" id="4lV-c4-S5y">
@@ -160,6 +160,22 @@
             </objects>
             <point key="canvasLocation" x="-453" y="-1566"/>
         </scene>
+        <!--Navigation Controller-->
+        <scene sceneID="eCL-Lk-AP1">
+            <objects>
+                <navigationController id="471-6x-b3m" sceneMemberID="viewController">
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" id="dW0-oF-4zf">
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                    </navigationBar>
+                    <connections>
+                        <segue destination="iNX-e8-fE5" kind="relationship" relationship="rootViewController" id="FWY-Sv-oJp"/>
+                    </connections>
+                </navigationController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="gIG-bp-a20" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="359" y="-1537"/>
+        </scene>
         <!--Creat Groups View Controller-->
         <scene sceneID="m66-U6-jZ5">
             <objects>
@@ -172,86 +188,38 @@
                         <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="suI-BT-u2g">
-                                <rect key="frame" x="0.0" y="62" width="600" height="538"/>
-                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                                <constraints>
-                                    <constraint firstAttribute="height" constant="538" id="TMo-3P-N9J"/>
-                                </constraints>
+                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="grouped" separatorStyle="default" rowHeight="44" sectionHeaderHeight="18" sectionFooterHeight="18" translatesAutoresizingMaskIntoConstraints="NO" id="suI-BT-u2g">
+                                <rect key="frame" x="0.0" y="64" width="600" height="505"/>
+                                <color key="backgroundColor" red="0.93725490199999995" green="0.93725490199999995" blue="0.95686274510000002" alpha="1" colorSpace="calibratedRGB"/>
                             </tableView>
-                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="kfF-A3-CHh">
-                                <rect key="frame" x="0.0" y="18" width="600" height="44"/>
-                                <subviews>
-                                    <toolbar opaque="NO" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Ghp-vQ-uwr">
-                                        <rect key="frame" x="0.0" y="8" width="600" height="36"/>
-                                        <items>
-                                            <barButtonItem style="plain" id="K4S-ig-n1a">
-                                                <button key="customView" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" id="NHA-AE-roz">
-                                                    <rect key="frame" x="20" y="-4" width="30" height="44"/>
-                                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                                    <state key="normal" title="取消"/>
-                                                    <connections>
-                                                        <action selector="cancelBtnClick:" destination="iNX-e8-fE5" eventType="touchUpInside" id="iKb-z4-EZe"/>
-                                                    </connections>
-                                                </button>
-                                            </barButtonItem>
-                                            <barButtonItem style="plain" systemItem="flexibleSpace" id="W4x-M4-qnT"/>
-                                            <barButtonItem style="plain" id="2LD-Tn-E49">
-                                                <button key="customView" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" id="qGa-EK-iYU">
-                                                    <rect key="frame" x="534" y="-4" width="46" height="44"/>
-                                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                                    <constraints>
-                                                        <constraint firstAttribute="width" constant="46" id="Y5t-LV-1YM"/>
-                                                    </constraints>
-                                                    <state key="normal" title="选择"/>
-                                                    <connections>
-                                                        <action selector="selectBtnClick:" destination="iNX-e8-fE5" eventType="touchUpInside" id="qya-x7-DEA"/>
-                                                    </connections>
-                                                </button>
-                                            </barButtonItem>
-                                        </items>
-                                    </toolbar>
-                                </subviews>
-                                <color key="backgroundColor" red="0.79223856606721887" green="1" blue="0.61751690970100936" alpha="1" colorSpace="calibratedRGB"/>
-                                <constraints>
-                                    <constraint firstAttribute="trailing" secondItem="Ghp-vQ-uwr" secondAttribute="trailing" id="1ns-OX-S4u"/>
-                                    <constraint firstAttribute="trailing" secondItem="Ghp-vQ-uwr" secondAttribute="trailing" id="7QW-to-FTH"/>
-                                    <constraint firstItem="Ghp-vQ-uwr" firstAttribute="top" secondItem="kfF-A3-CHh" secondAttribute="top" id="Hdo-MA-ufN"/>
-                                    <constraint firstItem="Ghp-vQ-uwr" firstAttribute="top" secondItem="kfF-A3-CHh" secondAttribute="topMargin" id="P8a-4S-KTo"/>
-                                    <constraint firstAttribute="bottom" secondItem="Ghp-vQ-uwr" secondAttribute="bottom" id="mSg-9u-UPy"/>
-                                    <constraint firstItem="Ghp-vQ-uwr" firstAttribute="leading" secondItem="kfF-A3-CHh" secondAttribute="leading" id="t97-di-sRZ"/>
-                                    <constraint firstItem="Ghp-vQ-uwr" firstAttribute="leading" secondItem="kfF-A3-CHh" secondAttribute="leading" id="zBL-6a-Ges"/>
-                                </constraints>
-                                <variation key="default">
-                                    <mask key="constraints">
-                                        <exclude reference="1ns-OX-S4u"/>
-                                        <exclude reference="Hdo-MA-ufN"/>
-                                        <exclude reference="t97-di-sRZ"/>
-                                    </mask>
-                                </variation>
-                            </view>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
-                            <constraint firstAttribute="trailing" secondItem="suI-BT-u2g" secondAttribute="trailing" id="2tx-6d-0PC"/>
-                            <constraint firstItem="kfF-A3-CHh" firstAttribute="trailing" secondItem="suI-BT-u2g" secondAttribute="trailing" id="Ggk-kB-U8j"/>
-                            <constraint firstItem="suI-BT-u2g" firstAttribute="top" secondItem="IRf-L6-vyK" secondAttribute="bottom" constant="42" id="L33-M2-B9h"/>
-                            <constraint firstItem="suI-BT-u2g" firstAttribute="top" secondItem="kfF-A3-CHh" secondAttribute="bottom" id="LIH-IG-Zt6"/>
-                            <constraint firstItem="suI-BT-u2g" firstAttribute="bottom" secondItem="fXp-1f-FMN" secondAttribute="top" id="Yl9-0z-i76"/>
-                            <constraint firstItem="suI-BT-u2g" firstAttribute="leading" secondItem="BNs-hK-jNO" secondAttribute="leading" id="cH2-GG-agl"/>
-                            <constraint firstItem="kfF-A3-CHh" firstAttribute="leading" secondItem="BNs-hK-jNO" secondAttribute="leading" id="e7M-Mc-bck"/>
-                            <constraint firstItem="fXp-1f-FMN" firstAttribute="top" secondItem="suI-BT-u2g" secondAttribute="bottom" id="jeZ-bL-1qa"/>
-                            <constraint firstAttribute="trailing" secondItem="suI-BT-u2g" secondAttribute="trailing" id="pnb-he-TZN"/>
-                            <constraint firstItem="kfF-A3-CHh" firstAttribute="top" secondItem="BNs-hK-jNO" secondAttribute="topMargin" constant="18" id="q5H-Yg-bMb"/>
+                            <constraint firstItem="fXp-1f-FMN" firstAttribute="top" secondItem="suI-BT-u2g" secondAttribute="bottom" constant="31" id="1NX-4X-dh8"/>
+                            <constraint firstAttribute="trailing" secondItem="suI-BT-u2g" secondAttribute="trailing" id="HeC-jb-Bhk"/>
+                            <constraint firstItem="suI-BT-u2g" firstAttribute="top" secondItem="IRf-L6-vyK" secondAttribute="bottom" id="IyG-iE-bwG"/>
+                            <constraint firstItem="suI-BT-u2g" firstAttribute="leading" secondItem="BNs-hK-jNO" secondAttribute="leading" id="ZDP-wf-r2z"/>
                         </constraints>
                     </view>
+                    <navigationItem key="navigationItem" id="4wC-AS-1DK">
+                        <barButtonItem key="leftBarButtonItem" title="取消" id="AfR-2g-Xbd">
+                            <connections>
+                                <action selector="cancelBtnClick:" destination="iNX-e8-fE5" id="3gH-gF-JF1"/>
+                            </connections>
+                        </barButtonItem>
+                        <barButtonItem key="rightBarButtonItem" title="选择" id="waT-LO-ap4">
+                            <connections>
+                                <action selector="selectBtnClick:" destination="iNX-e8-fE5" id="efu-qT-wxw"/>
+                            </connections>
+                        </barButtonItem>
+                    </navigationItem>
                     <connections>
                         <outlet property="tableView" destination="suI-BT-u2g" id="EIk-aR-sNo"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="cXC-u5-Eol" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="333" y="-1610"/>
+            <point key="canvasLocation" x="1261" y="-1521"/>
         </scene>
         <!--Chat View Controller-->
         <scene sceneID="R9W-yo-fUV">

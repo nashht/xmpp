@@ -16,6 +16,7 @@
 
 @interface HeaderView : UIView
 @property (nonatomic, weak) id<HeaderViewDelegate> delegate;
+@property (nonatomic, assign) NSUInteger section;
 
 + (instancetype)headerView;
 - (void)Name:(NSString *)name;

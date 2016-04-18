@@ -28,14 +28,15 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     
-    CGRect frame = CGRectMake(30, 120, screenSize.width, screenSize.height - 120);
-    
-    UITableView *tableView = [[UITableView alloc] initWithFrame:frame style:UITableViewStyleGrouped];
-    tableView.frame = self.view.bounds;
+    UITableView *tableView = [[UITableView alloc] init];
+    CGRect frame = self.view.bounds;
+    frame.origin.y = 65;
+    tableView.frame = frame;
+    _tableView = tableView;
     [self.view addSubview:tableView];
     tableView.backgroundColor = [UIColor orangeColor];
     
-    _tableView = tableView;
+
     _tableView.dataSource = self;
     _tableView.delegate = self;
     
@@ -44,12 +45,15 @@
     _groupCoreDataStorageObjects = [[MyXMPP shareInstance]getFriendsGroup];
     [self initGroup];
     
+  
+
 }
 - (UIStatusBarStyle)preferredStatusBarStyle{
     return YES;
 }
 
-- (IBAction)cancelBtnClick:(UIButton *)sender {
+
+- (IBAction)cancelBtnClick:(id)sender {
     [self dismissViewControllerAnimated:YES completion:nil];
 }
 
@@ -106,6 +110,7 @@
     } else {
         cell.imageView.image = [UIImage imageNamed:@"0"];
     }
+    cell.selectedBackgroundView = [[UIView alloc]initWithFrame:CGRectZero]; 
     cell.textLabel.text = obj.jid.user;
     cell.selected = YES;
     return cell;
@@ -117,10 +122,15 @@
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
 //    记录选中的行
+    //获取选中的UITableViewCell
+ 
+    NSLog(@"section,%ld,row%ld",indexPath.section,indexPath.row);
 }
 
 - (void)tableView:(UITableView *)tableView didDeselectRowAtIndexPath:(NSIndexPath *)indexPath{
 //      记录选中的行
+    
+    
 }
 
 
@@ -146,6 +156,8 @@
 
     HeaderView *view =  [HeaderView headerView];
     view.delegate = self;
+    view.section = section;
+    
     NSString *name = _groupCoreDataStorageObjects[section].name;
     [view Name:name];
     return view;

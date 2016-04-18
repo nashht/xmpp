@@ -447,8 +447,8 @@ static NSString *myRoomDomain = @"conference.xmpp.test";
 - (void)xmppRoom:(XMPPRoom *)sender didFetchConfigurationForm:(NSXMLElement *)configForm
 {
     NSLog(@"did configure");
-    [[NSNotificationCenter defaultCenter]postNotificationName:MyXmppRoomDidConfigurationNotification object:nil];//发送认证房间的通知，只有聊天室认证了才能邀请好友进入
-//    [self inviteFriends:@"zxk" withMessage:@"hellossss"];
+    [[NSNotificationCenter defaultCenter] postNotificationName:MyXmppRoomDidConfigurationNotification object:nil];
+//    [self inviteFriends:@"ht" withMessage:@"hellossss"];
 //    [self inviteFriends:@"cxh" withMessage:@"hello！"];
     
 //    [self sendGroupMessage:@"哈哈哈哈哈哈哈"];
