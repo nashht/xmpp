@@ -57,14 +57,13 @@
 }
 
 - (IBAction)selectBtnClick:(UIButton *)sender {
-    NSLog(@"创建聊天室");
-    [[MyXMPP shareInstance] creatGroupName:@"name- group" withpassword:nil andsubject:@"lafadfa daff"];
-    [[MyXMPP shareInstance] inviteFriends:@"cctest" withMessage:@"message"];
-    [[MyXMPP shareInstance] inviteFriends:@"cxh" withMessage:@"meaaaga"];
-    [[MyXMPP shareInstance] inviteFriends:@"ht" withMessage:@"hellossss"];
-    [[MyXMPP shareInstance] inviteFriends:@"cxh" withMessage:@"hello！"];
-    
-    [[MyXMPP shareInstance] sendGroupMessage:@"哈哈哈哈哈哈哈"];
+    [[MyXMPP shareInstance] creatGroupName:@"456" withpassword:nil andsubject:nil];
+    [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(invitenewfriends) name:MyXmppRoomDidConfigurationNotification object:nil];
+}
+
+- (void)invitenewfriends{
+    [[MyXMPP shareInstance] inviteFriends:@"cxh" withMessage:@"wewe"];
+    [[MyXMPP shareInstance] inviteFriends:@"ht_test" withMessage:@"wewe"];
 }
 
 - (void)initGroup{
