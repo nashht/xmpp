@@ -15,12 +15,15 @@
 #import "DataManager.h"
 #import "Tool.h"
 #import "VoiceConverter.h"
+#import "XMPPRoomCoreDataStorage.h"
+#import "XMPPRoomMemoryStorage.h"
 
 #define Voice @"[语音]"
 
 static NSString *myDomain = @"xmpp.test";
+static NSString *myRoomDomain = @"conference.xmpp.test";
 
-@interface MyXMPP () <XMPPStreamDelegate,XMPPRosterStorage,XMPPRosterDelegate>
+@interface MyXMPP () <XMPPStreamDelegate,XMPPRosterStorage,XMPPRosterDelegate,XMPPRoomStorage,XMPPRoomDelegate>
 
 @property (strong, nonatomic) XMPPStream *stream;
 @property (strong, nonatomic) XMPPRoster *roster;
@@ -31,6 +34,10 @@ static NSString *myDomain = @"xmpp.test";
 @property (strong, nonatomic) XMPPvCardAvatarModule *vCardAvatar;
 @property (strong, nonatomic) XMPPvCardTemp *myVCardTemp;
 @property (strong, nonatomic) XMPPvCardTempModule *vCardModule;
+
+@property (strong, nonatomic) XMPPJID *groupjid;
+@property (strong, nonatomic) XMPPRoom *chatroom;
+@property (strong, nonatomic) XMPPRoomMemoryStorage *storage;
 
 @property (strong, nonatomic) DataManager *dataManager;
 
@@ -50,14 +57,16 @@ static NSString *myDomain = @"xmpp.test";
 
 - (void)loginWithName:(NSString *)user Password:(NSString *)password {
     self.password = password;
-    if (![self.stream isConnected]) {
-        self.myjid = [XMPPJID jidWithUser:user domain:@"10.108.136.59" resource:@"iphone"];
-        [self.stream setMyJID:self.myjid];
-        
-        NSError *error = nil;
-        if (![self.stream connectWithTimeout:XMPPStreamTimeoutNone error:&error ]) {
-            NSLog(@"Connect Error: %@", [[error userInfo] description]);
-        }
+    if ([self.stream isConnected]) {
+        [self disconnected];
+    }
+    self.myjid = [XMPPJID jidWithUser:user domain:myDomain resource:@"iphone"];
+    [self.stream setHostName:@"10.108.136.59"];
+    [self.stream setMyJID:self.myjid];
+    
+    NSError *error = nil;
+    if (![self.stream connectWithTimeout:XMPPStreamTimeoutNone error:&error ]) {
+        NSLog(@"Connect Error: %@", [[error userInfo] description]);
     }
     
 }
@@ -199,6 +208,34 @@ static NSString *myDomain = @"xmpp.test";
 //    XMPPUserCoreDataStorageObject
 }
 
+- (void)creatGroupChat:(NSString *)groupname withpassword:(NSString *)roompwd andsubject:(NSString *)subject{//创建聊天室
+    _storage = [[XMPPRoomMemoryStorage alloc]init];
+    NSString* roomID = [NSString stringWithFormat:@"%@@%@",groupname,myRoomDomain];
+    XMPPJID * roomJID = [XMPPJID jidWithString:roomID];
+    _chatroom = [[XMPPRoom alloc] initWithRoomStorage:_storage jid:roomJID dispatchQueue:dispatch_get_main_queue()];
+    [_chatroom changeRoomSubject:subject];
+    [_chatroom activate:self.stream];
+    [_chatroom addDelegate:self delegateQueue:dispatch_get_main_queue()];
+    [_chatroom joinRoomUsingNickname:self.stream.myJID.user history:nil password:roompwd];//创建聊天室必须将自己加入聊天室，否则不会创建成功！
+}
+
+- (void)inviteFriends:(NSString *)friendname withMessage:(NSString *)text{
+    [_chatroom inviteUser:[XMPPJID jidWithString:[NSString stringWithFormat:@"%@@xmpp.test",friendname ]]withMessage:text];
+}
+
+- (void)fetchMembersFromGroup{
+    [_chatroom fetchMembersList];
+}
+
+- (void)sendGroupMessage:(NSString *)text{
+    [_chatroom sendMessageWithBody:text];
+}
+
+- (void)destroyChatRoom{
+    [_chatroom destroyRoom];
+}
+
+
 #pragma mark - private method
 - (id)init {
     self = [super init];
@@ -266,6 +303,10 @@ static NSString *myDomain = @"xmpp.test";
     
     UIStoryboard *storyboard = [UIStoryboard storyboardWithName:@"Main" bundle:nil];
     [UIApplication sharedApplication].keyWindow.rootViewController = [storyboard instantiateViewControllerWithIdentifier:@"tablebar"];
+    
+    [self creatGroupChat:@"chat" withpassword:nil andsubject:@"ios开发"];
+//    [self inviteFriends:@"cxh" withMessage:@"hello"];
+//    [self destroyChatRoom];
 }
 
 - (BOOL)xmppStream:(XMPPStream *)sender didReceiveIQ:(XMPPIQ *)iq{
@@ -384,6 +425,43 @@ static NSString *myDomain = @"xmpp.test";
 
 - (void)xmppvCardTempModule:(XMPPvCardTempModule *)vCardTempModule failedToUpdateMyvCard:(NSXMLElement *)error{
     NSLog(@"did not update");
+}
+
+#pragma mark - group chat delegate
+- (void)xmppRoomDidCreate:(XMPPRoom *)sender
+{
+    NSLog(@"did creat chat room");
+}
+
+- (void)xmppRoomDidJoin:(XMPPRoom *)sender{
+    NSLog(@"did join chat room");
+    [sender fetchConfigurationForm];
+    
+//    [sender inviteUser:[XMPPJID jidWithString:[NSString stringWithFormat:@"%@@xmpp.test",@"cxh" ]]withMessage:@"hello!"];
+//    [sender inviteUser:[XMPPJID jidWithString:@"zxk@xmpp.test"] withMessage:@"hello!"];
+//    
+//   [sender editRoomPrivileges:@[[XMPPRoom itemWithAffiliation:@"member" jid:self.myjid]]];
+//    [sender fetchMembersList];
+}
+
+- (void)xmppRoom:(XMPPRoom *)sender didFetchConfigurationForm:(NSXMLElement *)configForm
+{
+    NSLog(@"did configure");
+    [self inviteFriends:@"ht" withMessage:@"hellossss"];
+    [self inviteFriends:@"cxh" withMessage:@"hello！"];
+    
+    [self sendGroupMessage:@"哈哈哈哈哈哈哈"];
+//    [sender sendMessageWithBody:@"hehehehehehhe"];
+}
+
+- (void)xmppRoom:(XMPPRoom *)sender didFetchMembersList:(NSArray *)items{
+    NSLog(@"did fetch members list");
+    NSLog(@"%@",items);
+}
+
+- (void)xmppRoom:(XMPPRoom *)sender didReceiveMessage:(XMPPMessage *)message fromOccupant:(XMPPJID *)occupantJID{
+    NSLog(@"did recieve groupchat message");
+//    [sender fetchMembersList];
 }
 
 @end
