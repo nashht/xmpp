@@ -14,13 +14,16 @@
 #import "RecentCell.h"
 #import "ChatViewController.h"
 #import "Tool.h"
+#import "PopoverViewController.h"
 
-@interface RecentViewController ()<UITableViewDataSource, UITableViewDelegate>
+@interface RecentViewController ()<UITableViewDataSource, UITableViewDelegate,UIPopoverPresentationControllerDelegate>
 
+@property (weak, nonatomic) IBOutlet UIButton *addBtn;
 @property (weak, nonatomic) IBOutlet UITableView *recentTableView;
 
 @property (strong, nonatomic) DataManager *dataManager;
 @property (strong, nonatomic) NSFetchedResultsController *recentController;
+@property (strong, nonatomic) PopoverViewController *popoverVc;
 @property (strong, nonatomic) MyFetchedResultsControllerDelegate *resultsControllerDelegate;
 
 @end
@@ -117,5 +120,25 @@
     [self performSegueWithIdentifier:@"chat" sender:lastMessage.username];//跳转到chat界面，并传参数，即当前聊天对象名称
     [_dataManager updateUsername:lastMessage.username];
 }//当点击一个tableview时会调用以上代理，触发跳转到聊天界面
+
+
+- (IBAction)PopoverBtnClick:(UIButton *)sender {
+    PopoverViewController *popoverVc = [[PopoverViewController alloc] init];
+  
+    popoverVc.preferredContentSize = CGSizeMake(100, 150);
+    popoverVc.modalPresentationStyle = UIModalPresentationPopover;
+    
+    UIPopoverPresentationController *pop = popoverVc.popoverPresentationController;
+    pop.sourceView = _addBtn;
+    pop.sourceRect = _addBtn.bounds;
+    pop.permittedArrowDirections = UIPopoverArrowDirectionUnknown; //箭头方向,如果是baritem不设置方向，会默认up，up的效果也是最理想的
+    pop.delegate = self;
+
+    [self presentViewController:popoverVc animated:YES completion:nil];
+}
+
+- (UIModalPresentationStyle)adaptivePresentationStyleForPresentationController:(UIPresentationController *)controller{
+    return UIModalPresentationNone;
+}
 
 @end
