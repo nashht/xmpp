@@ -42,7 +42,7 @@
 
 - (void)invitenewfriends{
    [[MyXMPP shareInstance] inviteFriends:@"ht_test" withMessage:@"wewe"];
-
+    
 }
 
 - (IBAction)updatePassword:(id)sender {
