@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="9531" systemVersion="15E65" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="9529"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="PopoverViewController">
+            <connections>
+                <outlet property="checkGroupButton" destination="Yg7-1N-jZu" id="EuW-Ak-1Cf"/>
+                <outlet property="creatGroupButton" destination="Rja-nz-qiY" id="bYL-4e-7Rj"/>
+                <outlet property="view" destination="i5M-Pr-FkT" id="sfx-zR-JGt"/>
+            </connections>
+        </placeholder>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <view clearsContextBeforeDrawing="NO" contentMode="scaleToFill" id="i5M-Pr-FkT">
+            <rect key="frame" x="0.0" y="0.0" width="209" height="157"/>
+            <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+            <subviews>
+                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Rja-nz-qiY">
+                    <rect key="frame" x="0.0" y="0.0" width="209" height="78.5"/>
+                    <color key="backgroundColor" red="0.8716842024" green="0.89881942650000002" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                    <state key="normal" title="发起群聊"/>
+                </button>
+                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Yg7-1N-jZu">
+                    <rect key="frame" x="0.0" y="78.5" width="209" height="78.5"/>
+                    <color key="backgroundColor" red="1" green="0.9158963128564348" blue="0.80865903048859122" alpha="1" colorSpace="calibratedRGB"/>
+                    <state key="normal" title="查看群聊"/>
+                </button>
+            </subviews>
+            <color key="backgroundColor" red="0.92246468176866392" green="1" blue="0.92947342644608577" alpha="1" colorSpace="calibratedRGB"/>
+            <constraints>
+                <constraint firstItem="Rja-nz-qiY" firstAttribute="height" secondItem="Yg7-1N-jZu" secondAttribute="height" id="02Q-2p-dQf"/>
+                <constraint firstItem="Rja-nz-qiY" firstAttribute="top" secondItem="i5M-Pr-FkT" secondAttribute="top" id="0qt-gz-uBh"/>
+                <constraint firstItem="Rja-nz-qiY" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" id="AXU-dT-XyW"/>
+                <constraint firstAttribute="trailing" secondItem="Rja-nz-qiY" secondAttribute="trailing" id="G4J-KB-I3m"/>
+                <constraint firstItem="Yg7-1N-jZu" firstAttribute="top" secondItem="Rja-nz-qiY" secondAttribute="bottom" id="X8L-BG-Zy0"/>
+                <constraint firstItem="Yg7-1N-jZu" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" id="k1t-Bg-Kqr"/>
+                <constraint firstItem="Yg7-1N-jZu" firstAttribute="top" secondItem="i5M-Pr-FkT" secondAttribute="top" constant="75" id="mpr-hn-5D9"/>
+                <constraint firstAttribute="trailing" secondItem="Yg7-1N-jZu" secondAttribute="trailing" id="n9j-KD-1oY"/>
+                <constraint firstAttribute="bottom" secondItem="Yg7-1N-jZu" secondAttribute="bottom" id="vYy-uQ-qkF"/>
+            </constraints>
+            <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
+            <variation key="default">
+                <mask key="constraints">
+                    <exclude reference="mpr-hn-5D9"/>
+                </mask>
+            </variation>
+            <point key="canvasLocation" x="291.5" y="30.5"/>
+        </view>
+    </objects>
+</document>

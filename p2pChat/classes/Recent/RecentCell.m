@@ -9,9 +9,6 @@
 #import "RecentCell.h"
 #import "LastMessage+CoreDataProperties.h"
 
-
-
-
 @interface RecentCell ()
 
 @end
