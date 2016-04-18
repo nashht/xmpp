@@ -58,6 +58,4 @@ typedef NS_ENUM (char, MessageType) {
 - (void)destroyChatRoom;
 
 
-
-
 @end
