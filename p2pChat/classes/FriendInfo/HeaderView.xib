@@ -8,20 +8,20 @@
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1"/>
         <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
         <view contentMode="scaleToFill" restorationIdentifier="HeaderView" id="ww7-ks-GjN" customClass="HeaderView">
-            <rect key="frame" x="0.0" y="0.0" width="400" height="57"/>
+            <rect key="frame" x="0.0" y="0.0" width="400" height="32"/>
             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
             <subviews>
                 <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="chat_bottom_up_nor" highlightedImage="buddy_header_arrow" translatesAutoresizingMaskIntoConstraints="NO" id="ATG-ip-eyt">
-                    <rect key="frame" x="44" y="14" width="26" height="27"/>
+                    <rect key="frame" x="44" y="0.0" width="26" height="27"/>
                 </imageView>
                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="fXD-tn-tpO">
-                    <rect key="frame" x="89" y="11" width="289" height="35"/>
+                    <rect key="frame" x="89" y="-3" width="289" height="35"/>
                     <fontDescription key="fontDescription" type="system" pointSize="17"/>
                     <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                     <nil key="highlightedColor"/>
                 </label>
                 <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="dbT-Ou-BvS">
-                    <rect key="frame" x="0.0" y="0.0" width="400" height="57"/>
+                    <rect key="frame" x="0.0" y="-14" width="400" height="57"/>
                     <connections>
                         <action selector="headerClick:" destination="ww7-ks-GjN" eventType="touchUpInside" id="WbQ-qS-eQj"/>
                     </connections>
@@ -33,7 +33,7 @@
                 <outlet property="nameLabel" destination="fXD-tn-tpO" id="Nrr-t4-aPE"/>
                 <outlet property="selectImg" destination="ATG-ip-eyt" id="nr2-3i-eZm"/>
             </connections>
-            <point key="canvasLocation" x="724" y="-541.5"/>
+            <point key="canvasLocation" x="724" y="-540"/>
         </view>
     </objects>
     <resources>

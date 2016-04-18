@@ -447,10 +447,10 @@ static NSString *myRoomDomain = @"conference.xmpp.test";
 - (void)xmppRoom:(XMPPRoom *)sender didFetchConfigurationForm:(NSXMLElement *)configForm
 {
     NSLog(@"did configure");
-    [self inviteFriends:@"ht" withMessage:@"hellossss"];
-    [self inviteFriends:@"cxh" withMessage:@"hello！"];
+//    [self inviteFriends:@"ht" withMessage:@"hellossss"];
+//    [self inviteFriends:@"cxh" withMessage:@"hello！"];
     
-    [self sendGroupMessage:@"哈哈哈哈哈哈哈"];
+//    [self sendGroupMessage:@"哈哈哈哈哈哈哈"];
 //    [sender sendMessageWithBody:@"hehehehehehhe"];
 }
 

@@ -28,14 +28,15 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     
-    CGRect frame = CGRectMake(30, 120, screenSize.width, screenSize.height - 120);
-    
-    UITableView *tableView = [[UITableView alloc] initWithFrame:frame style:UITableViewStyleGrouped];
-    tableView.frame = self.view.bounds;
+    UITableView *tableView = [[UITableView alloc] init];
+    CGRect frame = self.view.bounds;
+    frame.origin.y = 65;
+    tableView.frame = frame;
+    _tableView = tableView;
     [self.view addSubview:tableView];
     tableView.backgroundColor = [UIColor orangeColor];
     
-    _tableView = tableView;
+
     _tableView.dataSource = self;
     _tableView.delegate = self;
     
@@ -44,17 +45,30 @@
     _groupCoreDataStorageObjects = [[MyXMPP shareInstance]getFriendsGroup];
     [self initGroup];
     
+  
+
 }
 - (UIStatusBarStyle)preferredStatusBarStyle{
     return YES;
 }
 
-- (IBAction)cancelBtnClick:(UIButton *)sender {
+
+- (IBAction)cancelBtnClick:(id)sender {
     [self dismissViewControllerAnimated:YES completion:nil];
 }
 
 - (IBAction)selectBtnClick:(UIButton *)sender {
+    NSLog(@"创建聊天室");
+    [[MyXMPP shareInstance] creatGroupChat:@"name- group" withpassword:nil andsubject:@"lafadfa daff"];
+    [[MyXMPP shareInstance] inviteFriends:@"cctest" withMessage:@"message"];
+    [[MyXMPP shareInstance] inviteFriends:@"cxh" withMessage:@"meaaaga"];
+    if(![MyXMPP shareInstance]){
+        NSLog(@"_______kkonkkgoangoango");
+    }
+    [[MyXMPP shareInstance] inviteFriends:@"ht" withMessage:@"hellossss"];
+    [[MyXMPP shareInstance] inviteFriends:@"cxh" withMessage:@"hello！"];
     
+    [[MyXMPP shareInstance] sendGroupMessage:@"哈哈哈哈哈哈哈"];
 }
 
 - (void)initGroup{
@@ -140,6 +154,8 @@
 
     HeaderView *view =  [HeaderView headerView];
     view.delegate = self;
+    view.section = section;
+    
     NSString *name = _groupCoreDataStorageObjects[section].name;
     [view Name:name];
     return view;
