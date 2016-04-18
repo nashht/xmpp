@@ -447,6 +447,7 @@ static NSString *myRoomDomain = @"conference.xmpp.test";
 - (void)xmppRoom:(XMPPRoom *)sender didFetchConfigurationForm:(NSXMLElement *)configForm
 {
     NSLog(@"did configure");
+    [[NSNotificationCenter defaultCenter] postNotificationName:MyXmppRoomDidConfigurationNotification object:nil];
 //    [self inviteFriends:@"ht" withMessage:@"hellossss"];
 //    [self inviteFriends:@"cxh" withMessage:@"hello！"];
     

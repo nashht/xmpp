@@ -59,12 +59,9 @@
 
 - (IBAction)selectBtnClick:(UIButton *)sender {
     NSLog(@"创建聊天室");
-    [[MyXMPP shareInstance] creatGroupChat:@"name- group" withpassword:nil andsubject:@"lafadfa daff"];
+    [[MyXMPP shareInstance] creatGroupName:@"name- group" withpassword:nil andsubject:@"lafadfa daff"];
     [[MyXMPP shareInstance] inviteFriends:@"cctest" withMessage:@"message"];
     [[MyXMPP shareInstance] inviteFriends:@"cxh" withMessage:@"meaaaga"];
-    if(![MyXMPP shareInstance]){
-        NSLog(@"_______kkonkkgoangoango");
-    }
     [[MyXMPP shareInstance] inviteFriends:@"ht" withMessage:@"hellossss"];
     [[MyXMPP shareInstance] inviteFriends:@"cxh" withMessage:@"hello！"];
     
@@ -114,6 +111,7 @@
     } else {
         cell.imageView.image = [UIImage imageNamed:@"0"];
     }
+    cell.selectedBackgroundView = [[UIView alloc]initWithFrame:CGRectZero]; 
     cell.textLabel.text = obj.jid.user;
     cell.selected = YES;
     return cell;
@@ -125,10 +123,15 @@
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
 //    记录选中的行
+    //获取选中的UITableViewCell
+ 
+    NSLog(@"section,%ld,row%ld",indexPath.section,indexPath.row);
 }
 
 - (void)tableView:(UITableView *)tableView didDeselectRowAtIndexPath:(NSIndexPath *)indexPath{
 //      记录选中的行
+    
+    
 }
 
 
