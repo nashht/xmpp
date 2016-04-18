@@ -31,7 +31,7 @@
     _phoneLabel.text = @"12345678901";
     _emailLabel.text = @"ios@nmrc.com";
     
-    [[MyXMPP shareInstance] creatGroupName:@"123" withpassword:nil andsubject:nil];
+    [[MyXMPP shareInstance] creatGroupName:@"113" withpassword:nil andsubject:nil];
     [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(invitenewfriends) name:MyXmppRoomDidConfigurationNotification object:nil];
     
 }
@@ -41,7 +41,7 @@
 }
 
 - (void)invitenewfriends{
-   [[MyXMPP shareInstance] inviteFriends:@"ht_test" withMessage:@"wewe"];
+   [[MyXMPP shareInstance] inviteFriends:@"cctest" withMessage:@"aaa"];
     
 }
 

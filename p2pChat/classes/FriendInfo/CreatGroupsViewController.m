@@ -44,8 +44,7 @@
     [_tableView setEditing:YES animated:YES];
     _groupCoreDataStorageObjects = [[MyXMPP shareInstance]getFriendsGroup];
     [self initGroup];
-    
-  
+
 
 }
 - (UIStatusBarStyle)preferredStatusBarStyle{
@@ -125,6 +124,7 @@
 //    记录选中的行
     //获取选中的UITableViewCell
  
+//    NSLog(@"name______%@",_groups[indexPath.section].friends[indexPath.row].jid.user);
     NSLog(@"section,%ld,row%ld",indexPath.section,indexPath.row);
 }
 
