@@ -49,6 +49,17 @@ typedef NS_ENUM (char, MessageType) {
 
 - (NSArray<XMPPGroupCoreDataStorageObject *> *)getFriendsGroup;
 
-- (void)creatGroupChat:(NSString *)groupName;
+- (void)creatGroupChat:(NSString *)groupName withpassword:(NSString *)rommpwd;//只有创建者调用
+- (void)inviteFriends:(NSString *)friendname withMessage:(NSString *)text;
+- (void)deleteFriends:(NSString *)friendname FromChatRoom:(NSString *)roomname;//只有群主可以调用
+- (void)fetchMembersFromGroup;
+- (void)sendMessage:(NSString *)text ToGroupChat:(NSString *)roomname;
+- (void)sendPicture:(NSString *)path ToGroupChat:(NSString *)roomname;
+- (void)sendAudio:(NSString *)path ToGroupChat:(NSString *)roomname length:(NSString *)length;
+- (void)configureRoom;//认证房间
+- (void)destroyChatRoom;
+
+
+
 
 @end

@@ -209,16 +209,26 @@ static NSString *myRoomDomain = @"conference.xmpp.test";
 }
 
 - (void)creatGroupChat:(NSString *)groupname withpassword:(NSString *)roompwd{//创建聊天室
-    
     _storage = [[XMPPRoomMemoryStorage alloc]init];
     NSString* roomID = [NSString stringWithFormat:@"%@@%@",groupname,myRoomDomain];
     XMPPJID * roomJID = [XMPPJID jidWithString:roomID];
-    XMPPRoom* chatRoom = [[XMPPRoom alloc] initWithRoomStorage:_storage jid:roomJID dispatchQueue:dispatch_get_main_queue()];
-    [chatRoom activate:self.stream];
-    [chatRoom addDelegate:self delegateQueue:dispatch_get_main_queue()];
-    [chatRoom joinRoomUsingNickname:self.stream.myJID.user history:nil password:roompwd];//创建聊天室必须将自己加入聊天室，否则不会创建成功！
+    _chatroom = [[XMPPRoom alloc] initWithRoomStorage:_storage jid:roomJID dispatchQueue:dispatch_get_main_queue()];
+    [_chatroom activate:self.stream];
+    [_chatroom addDelegate:self delegateQueue:dispatch_get_main_queue()];
+    [_chatroom joinRoomUsingNickname:self.stream.myJID.user history:nil password:roompwd];//创建聊天室必须将自己加入聊天室，否则不会创建成功！
 }
 
+- (void)configureRoom{
+    [_chatroom fetchConfigurationForm];//聊天室需要认证，否则无法添加好友
+}
+
+- (void)inviteFriends:(NSString *)friendname withMessage:(NSString *)text{
+    [_chatroom inviteUser:[XMPPJID jidWithString:[NSString stringWithFormat:@"%@@xmpp.test",friendname ]]withMessage:text];
+}
+
+- (void)destroyChatRoom{
+    [_chatroom destroyRoom];
+}
 
 
 #pragma mark - private method
@@ -289,7 +299,10 @@ static NSString *myRoomDomain = @"conference.xmpp.test";
     UIStoryboard *storyboard = [UIStoryboard storyboardWithName:@"Main" bundle:nil];
     [UIApplication sharedApplication].keyWindow.rootViewController = [storyboard instantiateViewControllerWithIdentifier:@"tablebar"];
     
-    [self creatGroupChat:@"test" withpassword:nil];
+    [self creatGroupChat:@"chat" withpassword:nil];
+    [self configureRoom];
+//    [self inviteFriends:@"cxh" withMessage:@"hello"];
+//    [self destroyChatRoom];
 }
 
 - (BOOL)xmppStream:(XMPPStream *)sender didReceiveIQ:(XMPPIQ *)iq{
@@ -413,42 +426,33 @@ static NSString *myRoomDomain = @"conference.xmpp.test";
 #pragma mark - group chat delegate
 - (void)xmppRoomDidCreate:(XMPPRoom *)sender
 {
-    NSLog(@"did creat");
+    NSLog(@"did creat chat room");
 }
 
 - (void)xmppRoomDidJoin:(XMPPRoom *)sender{
-    NSLog(@"did join");
-    [sender fetchConfigurationForm];
+    NSLog(@"did join chat room");
+//    [sender fetchConfigurationForm];
     
-    [sender inviteUser:[XMPPJID jidWithString:@"cxh@xmpp.test"] withMessage:@"hello!"];
-    [sender inviteUser:[XMPPJID jidWithString:@"zxk@xmpp.test"] withMessage:@"hello!"];
-    
-    [sender fetchMembersList];
-    
+    [self inviteFriends:@"cxh" withMessage:@"hellossss"];
+//    [sender inviteUser:[XMPPJID jidWithString:[NSString stringWithFormat:@"%@@xmpp.test",@"cxh" ]]withMessage:@"hello!"];
+//    [sender inviteUser:[XMPPJID jidWithString:@"zxk@xmpp.test"] withMessage:@"hello!"];
+//    
+//   [sender editRoomPrivileges:@[[XMPPRoom itemWithAffiliation:@"member" jid:self.myjid]]];
+//    [sender fetchMembersList];
 }
 
 - (void)xmppRoom:(XMPPRoom *)sender didFetchConfigurationForm:(NSXMLElement *)configForm
 {
-    NSXMLElement *newConfig = [configForm copy];
-    NSArray *fields = [newConfig elementsForName:@"field"];
-    
-    for (NSXMLElement *field in fields)
-    {
-        NSString *var = [field attributeStringValueForName:@"var"];
-        // Make Room Persistent
-        if ([var isEqualToString:@"muc#roomconfig_persistentroom"]) {
-            [field removeChildAtIndex:0];
-            [field addChild:[NSXMLElement elementWithName:@"value" stringValue:@"1"]];
-        }
-    }
-    
-    [sender configureRoomUsingOptions:newConfig];
-    NSLog(@"did fetch");
+    NSLog(@"did configure");
 }
 
 - (void)xmppRoom:(XMPPRoom *)sender didFetchMembersList:(NSArray *)items{
     NSLog(@"did fetch members list");
     NSLog(@"%@",items);
+}
+
+- (void)xmppRoom:(XMPPRoom *)sender didReceiveMessage:(XMPPMessage *)message fromOccupant:(XMPPJID *)occupantJID{
+    NSLog(@"did recieve groupchat message");
 }
 
 @end
