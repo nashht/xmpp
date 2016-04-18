@@ -36,6 +36,7 @@
 @interface ChatViewController () <UITableViewDataSource, UITableViewDelegate, UITextFieldDelegate, BottomViewDelegate> {
     NSString *_photoPath;
     BOOL _showMoreView;
+    BOOL _bottomPostion;
     CGSize _screenSize;
 }
 
@@ -73,6 +74,7 @@
     _bottomView.frame = CGRectMake(0, _screenSize.height - BOTTOMHEIGHT, _screenSize.width, BOTTOMHEIGHT);
     _bottomView.username = _userJid.user;
     _bottomView.delegate = self;
+    _bottomPostion = YES;
     [self.view addSubview:_bottomView];
     
     // init more view
@@ -220,16 +222,18 @@
     [self.view endEditing:YES];
 }
 
-- (void)moveUpView:(CGFloat)offset {
-    if (_historyTableView.contentSize.height >= _historyTableView.frame.size.height - offset) {
+- (BOOL)moveUpView:(CGFloat)offset {//view是否需要往上弹
+//    BOOL flag = _historyTableView.contentSize.height + offset +BOTTOMHEIGHT >= _historyTableView.frame.size.height;
+//    if (flag) {
         [UIView animateWithDuration:0.5 animations:^{
             self.view.frame = CGRectMake(0, -offset, _screenSize.width, _screenSize.height);
         }];
-    }
+//    }
+    return YES;
 }
 
-- (void)moveDownView:(CGFloat)offset {
-    if (_historyTableView.contentSize.height >= _historyTableView.frame.size.height - offset) {
+- (void)moveDownView:(CGFloat)height {
+    if (_historyTableView.contentSize.height + height + BOTTOMHEIGHT >=  _historyTableView.frame.size.height) {
         [UIView animateWithDuration:0.5 animations:^{
             self.view.frame = CGRectMake(0, 0, _screenSize.width, _screenSize.height);
         }];
@@ -240,11 +244,24 @@
 - (void)keyboardWillShow:(NSNotification *)notification {
     CGFloat height = [notification.userInfo[UIKeyboardFrameEndUserInfoKey] CGRectValue].size.height;
     [self moveUpView:height];
+    [self tableViewScrollToBottom];
+    if (_historyTableView.contentSize.height + height +BOTTOMHEIGHT <= _historyTableView.frame.size.height) {
+        _bottomPostion = NO;
+        [UIView animateWithDuration:0.5 animations:^{
+//            _bottomView.frame = CGRectMake(0, _screenSize.height - height - BOTTOMHEIGHT, _screenSize.width, BOTTOMHEIGHT);
+        }];
+    }
 }
 
 - (void)keyboardWillHidden:(NSNotification *)notification {
     CGFloat height = [notification.userInfo[UIKeyboardFrameEndUserInfoKey] CGRectValue].size.height;
-    [self moveDownView:height];
+    if (!_bottomPostion) {
+        [UIView animateWithDuration:0.5 animations:^{
+            _bottomView.frame = CGRectMake(0, _screenSize.height - BOTTOMHEIGHT, _screenSize.width, BOTTOMHEIGHT);
+        }];
+    } else {
+        [self moveDownView:height];
+    }
 }
 
 #pragma mark - bottom delegate
