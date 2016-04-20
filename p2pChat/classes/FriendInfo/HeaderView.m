@@ -18,9 +18,12 @@
 
 @implementation HeaderView
 
-//- (instancetype)initWithCoder:(NSCoder *)aDecoder{
-//    
-//}
+- (instancetype)initWithCoder:(NSCoder *)aDecoder{
+    if (self = [super initWithCoder:aDecoder]) {
+         self.allSelected = NO;
+    }
+    return self;
+}
 
 + (instancetype)headerView{
     return [[[NSBundle mainBundle]loadNibNamed:@"HeaderView" owner:self options:nil] lastObject];
@@ -28,6 +31,10 @@
 
 - (void)Name:(NSString *)name{
     self.nameLabel.text = name;
+}
+
+- (void)Image:(UIImage *)image{
+    self.selectImg.image = image;
 }
 
 - (void)selectedStatus{

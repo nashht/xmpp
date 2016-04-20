@@ -11,6 +11,7 @@
 #import "MessageFrameModel.h"
 #import "Tool.h"
 
+
 @interface MessageViewCell()
 @property(nonatomic,weak)UILabel *timeLable;
 @property(nonatomic,weak)UIImageView *photoImage;
@@ -60,6 +61,7 @@
     
     _timeLable.text = [Tool stringFromDate:msg.time];
     _timeLable.frame = messageFrame.timeFrame;
+    _vCard = messageFrame.vCard;
     
     if ([msg.isOut boolValue]) {
         _photoImage.image = [UIImage imageNamed:@"0"];

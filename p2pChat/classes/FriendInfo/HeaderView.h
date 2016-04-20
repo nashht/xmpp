@@ -17,7 +17,9 @@
 @interface HeaderView : UIView
 @property (nonatomic, weak) id<HeaderViewDelegate> delegate;
 @property (nonatomic, assign) NSUInteger section;
+@property (nonatomic, assign) BOOL allSelected;
 
 + (instancetype)headerView;
 - (void)Name:(NSString *)name;
+- (void)Image:(UIImage *)image;
 @end

@@ -20,6 +20,7 @@
 @property (nonatomic, strong) NSMutableArray<FriendsGroup *> *groups;
 @property (strong, nonatomic) NSArray<XMPPGroupCoreDataStorageObject *> *groupCoreDataStorageObjects;
 @property (weak, nonatomic) IBOutlet UITableView *tableView;
+@property (nonatomic,strong) NSMutableArray *selectedFriends;
 
 @end
 
@@ -28,15 +29,17 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     
+    self.title = @"发起群聊";
     UITableView *tableView = [[UITableView alloc] init];
     CGRect frame = self.view.bounds;
     frame.origin.y = 65;
+    frame.size.height = self.view.bounds.size.height - 65;
     tableView.frame = frame;
     _tableView = tableView;
     [self.view addSubview:tableView];
     tableView.backgroundColor = [UIColor orangeColor];
     
-
+    
     _tableView.dataSource = self;
     _tableView.delegate = self;
     
@@ -45,8 +48,8 @@
     _groupCoreDataStorageObjects = [[MyXMPP shareInstance]getFriendsGroup];
     [self initGroup];
     
-  
-
+    _selectedFriends = [NSMutableArray array];
+    
 }
 - (UIStatusBarStyle)preferredStatusBarStyle{
     return YES;
@@ -58,13 +61,19 @@
 }
 
 - (IBAction)selectBtnClick:(UIButton *)sender {
-    [[MyXMPP shareInstance] creatGroupName:@"456" withpassword:nil andsubject:nil];
+    [[MyXMPP shareInstance] creatGroupName:@"chat_room" withpassword:nil andsubject:nil];
     [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(invitenewfriends) name:MyXmppRoomDidConfigurationNotification object:nil];
+    
+    NSLog(@"selected__-----------%@",_selectedFriends);
 }
 
 - (void)invitenewfriends{
-    [[MyXMPP shareInstance] inviteFriends:@"cxh" withMessage:@"wewe"];
-    [[MyXMPP shareInstance] inviteFriends:@"ht_test" withMessage:@"wewe"];
+//    [[MyXMPP shareInstance] inviteFriends:@"cxh" withMessage:@"wewe"];
+//    [[MyXMPP shareInstance] inviteFriends:@"ht_test" withMessage:@"wewe"];
+    
+    for (NSString *users in _selectedFriends) {
+        [[MyXMPP shareInstance] inviteFriends:users withMessage:@"welcome"];
+    }
 }
 
 - (void)initGroup{
@@ -79,6 +88,7 @@
         }
     }
 }
+
 
 #pragma mark - Table view data source
 
@@ -100,6 +110,7 @@
         cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleSubtitle reuseIdentifier:ID];
     }
 //    cell.selectionStyle = UITableViewCellSelectionStyleNone;
+    cell.selected = NO;
     
     XMPPGroupCoreDataStorageObject *groupInfo = _groupCoreDataStorageObjects[indexPath.section];
     XMPPUserCoreDataStorageObject *obj = groupInfo.users.allObjects[indexPath.row];
@@ -110,7 +121,8 @@
     } else {
         cell.imageView.image = [UIImage imageNamed:@"0"];
     }
-    cell.selectedBackgroundView = [[UIView alloc]initWithFrame:CGRectZero]; 
+//    cell.selectedBackgroundView = [[UIView alloc]initWithFrame:CGRectZero];
+    cell.backgroundColor = [UIColor yellowColor];
     cell.textLabel.text = obj.jid.user;
     cell.selected = YES;
     return cell;
@@ -124,28 +136,30 @@
 //    记录选中的行
     //获取选中的UITableViewCell
  
+    XMPPGroupCoreDataStorageObject *groupInfo = _groupCoreDataStorageObjects[indexPath.section];
+    XMPPUserCoreDataStorageObject *obj = groupInfo.users.allObjects[indexPath.row];
+    
+    NSLog(@"name______%@",obj.jidStr);
     NSLog(@"section,%ld,row%ld",indexPath.section,indexPath.row);
+    
+    if (![_selectedFriends containsObject:obj.jid.user]) {
+        [_selectedFriends addObject:obj.jid.user];
+    }
 }
 
 - (void)tableView:(UITableView *)tableView didDeselectRowAtIndexPath:(NSIndexPath *)indexPath{
 //      记录选中的行
+    XMPPGroupCoreDataStorageObject *groupInfo = _groupCoreDataStorageObjects[indexPath.section];
+    XMPPUserCoreDataStorageObject *obj = groupInfo.users.allObjects[indexPath.row];
     
+    [_selectedFriends removeObject:obj.jid.user];
     
+//    HeaderView *view = (HeaderView *)[_tableView headerViewForSection:indexPath.section];
+//    view.allSelected = NO;
+//    [view Image:[UIImage imageNamed:@"1"]];
+
 }
 
-
--(void)setSelected:(BOOL)selected animated:(BOOL)animated
-{
-    if (self.editing)//仅仅在编辑状态的时候需要自己处理选中效果
-    {
-        if (selected){
-            //选中时的效果
-        }
-        else {
-            //非选中时的效果
-        }
-    }
-}
 
 - (NSString *)tableView:(UITableView *)tableView titleForHeaderInSection:(NSInteger)section{
     return _groupCoreDataStorageObjects[section].name;
@@ -163,10 +177,33 @@
     return view;
 }
 
+
 #pragma mark - HeaderViewDelegate
 - (void)headerViewDidClicked:(HeaderView *)headerView{
     NSLog(@"headerViewDidClicked___");
-    [headerView Name:@"seleted__delegate"];
+    
+    NSUInteger section = headerView.section;
+    NSUInteger row = [_tableView numberOfRowsInSection:section];
+    
+    if (!headerView.allSelected) {
+        
+      for (NSUInteger i = 0; i < row; i++) {
+        [_tableView selectRowAtIndexPath:[NSIndexPath indexPathForRow:i inSection:section] animated:NO scrollPosition:UITableViewScrollPositionNone];
+      }
+        
+        headerView.allSelected = YES;
+        [headerView Image:[UIImage imageNamed:@"tabbar_mine_f"]];
+        [headerView Name:@"seleted__"];
+        
+    }else{
+        for (NSUInteger i = 0; i < row; i++) {
+            [_tableView deselectRowAtIndexPath:[NSIndexPath indexPathForRow:i inSection:section] animated:NO];
+        }
+        
+        headerView.allSelected = NO;
+        [headerView Name:_groups[section].name];
+        [headerView Image:[UIImage imageNamed:@"chat_bottom_up_nor"]];
+    }
     
 }
 
