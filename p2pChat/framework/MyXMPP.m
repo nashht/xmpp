@@ -16,7 +16,6 @@
 #import "Tool.h"
 #import "VoiceConverter.h"
 #import "XMPPRoomCoreDataStorage.h"
-#import "XMPPRoomMemoryStorage.h"
 
 #define Voice @"[语音]"
 
@@ -338,7 +337,7 @@ static NSString *myRoomDomain = @"conference.xmpp.test";
     UIStoryboard *storyboard = [UIStoryboard storyboardWithName:@"Main" bundle:nil];
     [UIApplication sharedApplication].keyWindow.rootViewController = [storyboard instantiateViewControllerWithIdentifier:@"tablebar"];
     
-    [self creatGroupName:@"222" withpassword:nil andsubject:@"ios开发"];
+//    [self creatGroupName:@"222" withpassword:nil andsubject:@"ios开发"];
 //    [self inviteFriends:@"cxh" withMessage:@"hello"];
 //    [self destroyChatRoom];
 }
@@ -496,11 +495,10 @@ static NSString *myRoomDomain = @"conference.xmpp.test";
     }
     NSLog(@"AFTER Config for the room %@",newConfig);
     [sender configureRoomUsingOptions:newConfig];
-    
-    
+
     [[NSNotificationCenter defaultCenter] postNotificationName:MyXmppRoomDidConfigurationNotification object:nil];
 //    [self inviteFriends:@"ht" withMessage:@"hellossss"];
-    [self inviteFriends:@"cxh" withMessage:@"hello！"];
+//    [self inviteFriends:@"cxh" withMessage:@"hello！"];
     
 //    [self sendGroupMessage:@"哈哈哈哈哈哈哈"];
 //    [sender sendMessageWithBody:@"hehehehehehhe"];
@@ -512,8 +510,13 @@ static NSString *myRoomDomain = @"conference.xmpp.test";
 }
 
 - (void)xmppRoom:(XMPPRoom *)sender didReceiveMessage:(XMPPMessage *)message fromOccupant:(XMPPJID *)occupantJID{
-    NSLog(@"did recieve groupchat message");
-//    [sender fetchMembersList];
+    NSLog(@"群组『%@』有新消息：%@",occupantJID.user,[message body]);
+
+}
+
+- (void)xmppRoom:(XMPPRoom *)sender occupantDidLeave:(XMPPJID *)occupantJID
+{
+    NSLog(@"%@离开了房间",occupantJID.user);
 }
 
 @end
