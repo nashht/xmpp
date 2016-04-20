@@ -125,7 +125,7 @@ static NSString *myRoomDomain = @"conference.xmpp.test";
 }
 
 - (void)updateMyEmail:(NSString *)email {
-    [self.myVCardTemp setEmailAddresses:@[email]];
+    [self.myVCardTemp setEmailAddresses:email];
     [self.vCardModule updateMyvCardTemp:self.myVCardTemp];
 }
 
