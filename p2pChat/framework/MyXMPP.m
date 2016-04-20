@@ -32,12 +32,11 @@ static NSString *myRoomDomain = @"conference.xmpp.test";
 
 //@property (strong,nonatomic) XMPPvCardCoreDataStorage *vCardStorage;
 @property (strong, nonatomic) XMPPvCardAvatarModule *vCardAvatar;
-@property (strong, nonatomic) XMPPvCardTemp *myVCardTemp;
 @property (strong, nonatomic) XMPPvCardTempModule *vCardModule;
 
 @property (strong, nonatomic) XMPPJID *groupjid;
 @property (strong, nonatomic) XMPPRoom *chatroom;
-@property (strong, nonatomic) XMPPRoomMemoryStorage *storage;
+@property (strong, nonatomic) XMPPRoomCoreDataStorage *storage;
 
 @property (strong, nonatomic) DataManager *dataManager;
 
@@ -209,7 +208,10 @@ static NSString *myRoomDomain = @"conference.xmpp.test";
 }
 
 - (void)creatGroupName:(NSString *)groupname withpassword:(NSString *)roompwd andsubject:(NSString *)subject{//创建聊天室
-    _storage = [[XMPPRoomMemoryStorage alloc]init];
+    if (_storage==nil) {
+        NSLog(@"nil");
+        _storage = [[XMPPRoomCoreDataStorage alloc]init];
+    }
     NSString* roomID = [NSString stringWithFormat:@"%@@%@",groupname,myRoomDomain];
     XMPPJID * roomJID = [XMPPJID jidWithString:roomID];
     _chatroom = [[XMPPRoom alloc] initWithRoomStorage:_storage jid:roomJID dispatchQueue:dispatch_get_main_queue()];
@@ -263,6 +265,7 @@ static NSString *myRoomDomain = @"conference.xmpp.test";
     _vCardAvatar = [[XMPPvCardAvatarModule alloc] initWithvCardTempModule:_vCardModule];
     [_vCardModule activate:self.stream];
     [_vCardAvatar activate:_stream];
+    _myVCardTemp = [_vCardModule myvCardTemp];
 }
 
 - (NSString *)getSubtypeFrom:(XMPPMessage *)message {
@@ -270,6 +273,37 @@ static NSString *myRoomDomain = @"conference.xmpp.test";
     DDXMLElement *body = bodyArr[0];
     return [[body attributeForName:@"subtype"]stringValue];
 }
+
+//-(void)sendDefaultRoomConfig
+//{
+//    
+//    NSXMLElement *x = [NSXMLElement elementWithName:@"x" xmlns:@"jabber:x:data"];
+//    
+//    NSXMLElement *field = [NSXMLElement elementWithName:@"field"];
+//    NSXMLElement *value = [NSXMLElement elementWithName:@"value"];
+//    
+//    NSXMLElement *fieldowners = [NSXMLElement elementWithName:@"field"];
+//    NSXMLElement *valueowners = [NSXMLElement elementWithName:@"value"];
+//    
+//    
+//    [field addAttributeWithName:@"var" stringValue:@"muc#roomconfig_persistentroom"];  // 永久属性
+//    [fieldowners addAttributeWithName:@"var" stringValue:@"muc#roomconfig_roomowners"];  // 谁创建的房间
+//    
+//    
+//    [field addAttributeWithName:@"type" stringValue:@"boolean"];
+//    [fieldowners addAttributeWithName:@"type" stringValue:@"jid-multi"];
+//    
+//    [value setStringValue:@"1"];
+//    [valueowners setStringValue:self.myjid]; //创建者的Jid
+//    
+//    [x addChild:field];
+//    [x addChild:fieldowners];
+//    [field addChild:value];
+//    [fieldowners addChild:valueowners];
+//    
+//    [_chatroom configureRoomUsingOptions:x];
+//    
+//}
 
 #pragma mark - xmpp delegate
 
@@ -304,7 +338,7 @@ static NSString *myRoomDomain = @"conference.xmpp.test";
     UIStoryboard *storyboard = [UIStoryboard storyboardWithName:@"Main" bundle:nil];
     [UIApplication sharedApplication].keyWindow.rootViewController = [storyboard instantiateViewControllerWithIdentifier:@"tablebar"];
     
-//    [self creatGroupName:@"chattest" withpassword:nil andsubject:@"ios开发"];
+    [self creatGroupName:@"222" withpassword:nil andsubject:@"ios开发"];
 //    [self inviteFriends:@"cxh" withMessage:@"hello"];
 //    [self destroyChatRoom];
 }
@@ -431,6 +465,7 @@ static NSString *myRoomDomain = @"conference.xmpp.test";
 - (void)xmppRoomDidCreate:(XMPPRoom *)sender
 {
     NSLog(@"did creat chat room");
+//    [self sendDefaultRoomConfig];
 }
 
 - (void)xmppRoomDidJoin:(XMPPRoom *)sender{
@@ -446,10 +481,26 @@ static NSString *myRoomDomain = @"conference.xmpp.test";
 
 - (void)xmppRoom:(XMPPRoom *)sender didFetchConfigurationForm:(NSXMLElement *)configForm
 {
-    NSLog(@"did configure");
+    NSLog(@"didFetchConfigurationForm");
+    NSXMLElement *newConfig = [configForm copy];
+    NSLog(@"BEFORE Config for the room %@",newConfig);
+    NSArray *fields = [newConfig elementsForName:@"field"];
+    for (NSXMLElement *field in fields)
+    {
+        NSString *var = [field attributeStringValueForName:@"var"];
+        // 使房间变成永久的
+        if ([var isEqualToString:@"muc#roomconfig_persistentroom"]) {
+            [field removeChildAtIndex:0];
+            [field addChild:[NSXMLElement elementWithName:@"value" stringValue:@"1"]];
+        }
+    }
+    NSLog(@"AFTER Config for the room %@",newConfig);
+    [sender configureRoomUsingOptions:newConfig];
+    
+    
     [[NSNotificationCenter defaultCenter] postNotificationName:MyXmppRoomDidConfigurationNotification object:nil];
 //    [self inviteFriends:@"ht" withMessage:@"hellossss"];
-//    [self inviteFriends:@"cxh" withMessage:@"hello！"];
+    [self inviteFriends:@"cxh" withMessage:@"hello！"];
     
 //    [self sendGroupMessage:@"哈哈哈哈哈哈哈"];
 //    [sender sendMessageWithBody:@"hehehehehehhe"];
