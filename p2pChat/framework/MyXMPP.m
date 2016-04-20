@@ -376,7 +376,7 @@ static NSString *myRoomDomain = @"conference.xmpp.test";
     UIStoryboard *storyboard = [UIStoryboard storyboardWithName:@"Main" bundle:nil];
     [UIApplication sharedApplication].keyWindow.rootViewController = [storyboard instantiateViewControllerWithIdentifier:@"tablebar"];
     
-    [self creatGroupName:@"222" withpassword:nil andsubject:@"ios开发"];
+//    [self creatGroupName:@"222" withpassword:nil andsubject:@"ios开发"];
 //    [self inviteFriends:@"cxh" withMessage:@"hello"];
 //    [self destroyChatRoom];
 }
