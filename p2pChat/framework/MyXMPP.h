@@ -34,6 +34,8 @@ typedef NS_ENUM (char, MessageType) {
 
 + (instancetype)shareInstance;
 
+@property (strong, nonatomic, readonly) XMPPvCardTemp *myVCardTemp;
+
 - (void)loginWithName:(NSString *)user Password:(NSString *)password;
 - (void)loginout;
 
