@@ -11,7 +11,7 @@
 #import "PhotoLibraryCenter.h"
 #import "XMPPvCardTemp.h"
 
-@interface MeController ()
+@interface MeController ()<UIImagePickerControllerDelegate,UINavigationControllerDelegate>
 
 @property (weak, nonatomic) IBOutlet UIImageView *photoView;
 @property (weak, nonatomic) IBOutlet UILabel *nameLabel;
@@ -48,6 +48,10 @@
 
 - (void)changeImage{
     NSLog(@"changeiamge");
+    
+    UIImagePickerController *imagePicker = [[UIImagePickerController alloc] init];
+    imagePicker.delegate = self;
+    imagePicker.allowsEditing = YES;
 }
 
 - (void)viewWillAppear:(BOOL)animated {
