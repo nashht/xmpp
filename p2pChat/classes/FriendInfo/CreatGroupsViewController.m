@@ -89,6 +89,7 @@
     }
 }
 
+
 #pragma mark - Table view data source
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
@@ -197,10 +198,10 @@
     }else{
         for (NSUInteger i = 0; i < row; i++) {
             [_tableView deselectRowAtIndexPath:[NSIndexPath indexPathForRow:i inSection:section] animated:NO];
-            
         }
         
         headerView.allSelected = NO;
+        [headerView Name:_groups[section].name];
         [headerView Image:[UIImage imageNamed:@"chat_bottom_up_nor"]];
     }
     
