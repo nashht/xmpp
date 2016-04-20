@@ -41,7 +41,7 @@ typedef NS_ENUM (char, MessageType) {
 
 - (void)sendMessage:(NSString *)text ToUser:(NSString *) user;
 - (void)sendAudio:(NSString *)path ToUser:(NSString *)user length:(NSString *)length;
-- (void)sendPicture:(NSString *)path ToUser:(NSString *)user;
+//- (void)sendPicture:(NSString *)path ToUser:(NSString *)user;
 
 - (void)updateFriendsList;
 - (XMPPvCardTemp *)fetchFriend:(XMPPJID *)userJid;
@@ -56,9 +56,9 @@ typedef NS_ENUM (char, MessageType) {
 - (void)creatGroupName:(NSString *)groupName withpassword:(NSString *)rommpwd andsubject:(NSString *)subject;//只有创建者调用
 - (void)inviteFriends:(NSString *)friendname withMessage:(NSString *)text;
 - (void)fetchMembersFromGroup;
-- (void)sendGroupMessage:(NSString *)text;
-//- (void)sendGroupPicture:(NSString *)path;
-//- (void)sendGroupAudio:(NSString *)path length:(NSString *)length;
+- (void)sendMessage:(NSString *)text ToGroup:(NSString *)groupname;
+//- (void)sendPicture:(NSString *)path ToGroup:(NSString *)groupname;
+- (void)sendAudio:(NSString *)path ToGroup:(NSString *)groupname withlength:(NSString *)length;
 - (void)destroyChatRoom;
 
 

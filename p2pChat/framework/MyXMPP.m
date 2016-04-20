@@ -206,6 +206,8 @@ static NSString *myRoomDomain = @"conference.xmpp.test";
 //    XMPPUserCoreDataStorageObject
 }
 
+#pragma mark  group chat
+
 - (void)creatGroupName:(NSString *)groupname withpassword:(NSString *)roompwd andsubject:(NSString *)subject{//创建聊天室
     if (_storage==nil) {
         NSLog(@"nil");
@@ -228,9 +230,46 @@ static NSString *myRoomDomain = @"conference.xmpp.test";
     [self.chatroom fetchMembersList];
 }
 
-- (void)sendGroupMessage:(NSString *)text{
-    [self.chatroom sendMessageWithBody:text];
+- (void)sendMessage:(NSString *)text ToGroup:(NSString *)groupname{
+    NSXMLElement *body = [NSXMLElement elementWithName:@"body"];
+    [body setStringValue:text];
+    [body addAttributeWithName:@"subtype" stringValue:@"text"];
+    
+    NSXMLElement *message = [NSXMLElement elementWithName:@"message"];
+    [message addAttributeWithName:@"type" stringValue:@"groupchat"];
+    
+    
+    NSString *to = [NSString stringWithFormat:@"%@@%@", groupname, myRoomDomain];
+    [message addAttributeWithName:@"to" stringValue:to];
+    
+    [message addChild:body];
+    [self.stream sendElement:message];
+    NSLog(@"message : %@", message);
+
 }
+
+- (void)sendAudio:(NSString *)path ToGroup:(NSString *)groupname withlength:(NSString *)length{
+    NSFileManager *filemnanager=[NSFileManager defaultManager];
+    NSData *p = [filemnanager contentsAtPath:path];
+    
+    NSString *audiomsg = [p base64EncodedStringWithOptions:0];
+    NSString *audiomsgwithlength = [NSString stringWithFormat:@"%@,%@",length,audiomsg];
+    
+    NSXMLElement *body = [NSXMLElement elementWithName:@"body"];
+    [body setStringValue:audiomsgwithlength];
+    [body addAttributeWithName:@"subtype" stringValue:@"audio"];
+    
+    NSXMLElement *audiomessage = [NSXMLElement elementWithName:@"message"];
+    [audiomessage addAttributeWithName:@"type" stringValue:@"groupchat"];
+    
+    NSString *to = [NSString stringWithFormat:@"%@@%@", groupname, myRoomDomain];
+    [audiomessage addAttributeWithName:@"to" stringValue:to];
+    
+    [audiomessage addChild:body];
+    [self.stream sendElement:audiomessage];
+
+}
+
 
 - (void)destroyChatRoom{
     [self.chatroom destroyRoom];
@@ -337,7 +376,7 @@ static NSString *myRoomDomain = @"conference.xmpp.test";
     UIStoryboard *storyboard = [UIStoryboard storyboardWithName:@"Main" bundle:nil];
     [UIApplication sharedApplication].keyWindow.rootViewController = [storyboard instantiateViewControllerWithIdentifier:@"tablebar"];
     
-//    [self creatGroupName:@"222" withpassword:nil andsubject:@"ios开发"];
+    [self creatGroupName:@"222" withpassword:nil andsubject:@"ios开发"];
 //    [self inviteFriends:@"cxh" withMessage:@"hello"];
 //    [self destroyChatRoom];
 }
@@ -498,8 +537,8 @@ static NSString *myRoomDomain = @"conference.xmpp.test";
 
     [[NSNotificationCenter defaultCenter] postNotificationName:MyXmppRoomDidConfigurationNotification object:nil];
 //    [self inviteFriends:@"ht" withMessage:@"hellossss"];
-//    [self inviteFriends:@"cxh" withMessage:@"hello！"];
-    
+    [self inviteFriends:@"cxh" withMessage:@"hello！"];
+    [self sendMessage:@"hello" ToGroup:@"222"];
 //    [self sendGroupMessage:@"哈哈哈哈哈哈哈"];
 //    [sender sendMessageWithBody:@"hehehehehehhe"];
 }
@@ -510,7 +549,7 @@ static NSString *myRoomDomain = @"conference.xmpp.test";
 }
 
 - (void)xmppRoom:(XMPPRoom *)sender didReceiveMessage:(XMPPMessage *)message fromOccupant:(XMPPJID *)occupantJID{
-    NSLog(@"群组『%@』有新消息：%@",occupantJID.user,[message body]);
+    NSLog(@"群组『%@』有新消息：%@",sender.roomJID.user,[message body]);
 
 }
 
