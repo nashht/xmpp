@@ -657,7 +657,7 @@
                                             <rect key="frame" x="0.0" y="0.0" width="567" height="88.5"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
-                                                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="0.png" translatesAutoresizingMaskIntoConstraints="NO" id="JuM-KQ-elb">
+                                                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="JuM-KQ-elb">
                                                     <rect key="frame" x="15" y="5" width="80" height="80"/>
                                                 </imageView>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="VMy-zg-kgY">
@@ -876,7 +876,7 @@
                         <outlet property="groupLabel" destination="VMy-zg-kgY" id="6LX-Xm-7VB"/>
                         <outlet property="nameLabel" destination="Mvt-9V-52h" id="WkM-lo-rSu"/>
                         <outlet property="phoneLabel" destination="xOz-eS-uTd" id="fXz-5q-Jal"/>
-                        <outlet property="photoView" destination="JuM-KQ-elb" id="AzZ-Xc-EVS"/>
+                        <outlet property="photoView" destination="JuM-KQ-elb" id="3CP-c9-QTd"/>
                         <outlet property="titleLabel" destination="R30-oO-PfA" id="PyQ-yx-gI4"/>
                     </connections>
                 </tableViewController>
@@ -979,7 +979,6 @@
         </scene>
     </scenes>
     <resources>
-        <image name="0.png" width="120" height="120"/>
         <image name="ic_launcher" width="144" height="144"/>
         <image name="tabbar_chat_f" width="30" height="30"/>
         <image name="tabbar_chat_n" width="30" height="30"/>
