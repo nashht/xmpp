@@ -20,6 +20,7 @@
 @property (weak, nonatomic) IBOutlet UILabel *emailLabel;
 @property (weak, nonatomic) IBOutlet UILabel *titleLabel;
 @property (weak, nonatomic) IBOutlet UILabel *addressLabel;
+@property (weak, nonatomic) XMPPvCardTemp *myvCard;
 
 @end
 
@@ -35,6 +36,7 @@
     _titleLabel.text = myvCard.title;
     _phoneLabel.text = myvCard.note;
     _emailLabel.text = myvCard.mailer;
+    _myvCard = myvCard;
     
     _photoView.userInteractionEnabled = YES;
     
@@ -42,6 +44,9 @@
     tapImage.numberOfTapsRequired = 1; //点击次数
     tapImage.numberOfTouchesRequired = 1; //点击手指数
     [_photoView addGestureRecognizer:tapImage];
+    
+    UIImage *imagee = [UIImage imageNamed:@"0"];
+    _photoView.image = imagee;
  
     
 }
@@ -52,6 +57,10 @@
     UIImagePickerController *imagePicker = [[UIImagePickerController alloc] init];
     imagePicker.delegate = self;
     imagePicker.allowsEditing = YES;
+    
+    [self presentViewController:imagePicker animated:YES completion:^{
+        
+    }];
 }
 
 - (void)viewWillAppear:(BOOL)animated {
@@ -70,5 +79,18 @@
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
+}
+
+#pragma mark - UIImagePickerDelegate
+- (void)imagePickerController:(UIImagePickerController *)picker didFinishPickingMediaWithInfo:(NSDictionary<NSString *,id> *)info{
+    UIImage *image = info[UIImagePickerControllerEditedImage];
+    UIImage *imagee = [UIImage imageNamed:@"0"];
+    _photoView.image = imagee;
+    _nameLabel.text = @"aa";
+    NSLog(@"didFinishPickingMediaWithInfo");
+    
+    [self dismissViewControllerAnimated:YES completion:^{
+        _myvCard.photo = UIImagePNGRepresentation(self.photoView.image);
+    }];
 }
 @end
