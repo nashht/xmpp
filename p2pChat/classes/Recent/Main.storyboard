@@ -702,6 +702,9 @@
                                                 </label>
                                             </subviews>
                                         </tableViewCellContentView>
+                                        <connections>
+                                            <segue destination="Rsq-UR-4G0" kind="show" id="dzp-3i-lkT"/>
+                                        </connections>
                                     </tableViewCell>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="blue" accessoryType="disclosureIndicator" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" textLabel="WLI-bT-ajh" detailTextLabel="ndK-xO-Lxs" rowHeight="50" style="IBUITableViewCellStyleValue1" id="Ho1-O6-HhE">
                                         <rect key="frame" x="0.0" y="274" width="600" height="50"/>
@@ -726,6 +729,9 @@
                                                 </label>
                                             </subviews>
                                         </tableViewCellContentView>
+                                        <connections>
+                                            <segue destination="Zxd-O6-HJc" kind="show" id="t6U-s1-1iI"/>
+                                        </connections>
                                     </tableViewCell>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="blue" accessoryType="disclosureIndicator" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" textLabel="kDa-JM-z5b" detailTextLabel="AoV-Tp-Fuk" rowHeight="50" style="IBUITableViewCellStyleValue1" id="KVS-Fp-DfJ">
                                         <rect key="frame" x="0.0" y="324" width="600" height="50"/>
@@ -765,8 +771,8 @@
                                                     <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
-                                                <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" text="email address" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="R30-oO-PfA">
-                                                    <rect key="frame" x="464.5" y="15" width="100.5" height="19.5"/>
+                                                <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" text="title" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="R30-oO-PfA">
+                                                    <rect key="frame" x="537.5" y="15" width="27.5" height="19.5"/>
                                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                                     <fontDescription key="fontDescription" type="system" pointSize="16"/>
                                                     <color key="textColor" red="0.5568627451" green="0.5568627451" blue="0.57647058819999997" alpha="1" colorSpace="calibratedRGB"/>
@@ -865,9 +871,13 @@
                     </tableView>
                     <navigationItem key="navigationItem" id="19y-wG-004"/>
                     <connections>
+                        <outlet property="addressLabel" destination="oxu-A2-a26" id="P1N-Ai-YcF"/>
+                        <outlet property="emailLabel" destination="ndK-xO-Lxs" id="LIa-xh-wDJ"/>
                         <outlet property="groupLabel" destination="VMy-zg-kgY" id="6LX-Xm-7VB"/>
                         <outlet property="nameLabel" destination="Mvt-9V-52h" id="WkM-lo-rSu"/>
+                        <outlet property="phoneLabel" destination="xOz-eS-uTd" id="fXz-5q-Jal"/>
                         <outlet property="photoView" destination="JuM-KQ-elb" id="AzZ-Xc-EVS"/>
+                        <outlet property="titleLabel" destination="R30-oO-PfA" id="PyQ-yx-gI4"/>
                     </connections>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="mMc-FR-8Go" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -979,7 +989,7 @@
         <image name="tabbar_mine_n" width="30" height="30"/>
     </resources>
     <inferredMetricsTieBreakers>
-        <segue reference="q2g-zp-6cV"/>
         <segue reference="FZk-rq-Hm8"/>
+        <segue reference="JYE-tC-VZD"/>
     </inferredMetricsTieBreakers>
 </document>

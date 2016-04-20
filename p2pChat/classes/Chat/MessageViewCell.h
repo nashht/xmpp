@@ -7,9 +7,12 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "MyXMPP.h"
+#import "XMPPvCardTemp.h"
 
 @class MessageFrameModel;
 @interface MessageViewCell : UITableViewCell
 
 @property(nonatomic,strong) MessageFrameModel* messageFrame;
+@property(nonatomic,strong) XMPPvCardTemp *vCard;
 @end
