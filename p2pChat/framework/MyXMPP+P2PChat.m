@@ -9,6 +9,7 @@
 #import "MyXMPP+P2PChat.h"
 #import "XMPPStream.h"
 #import "XMPPMessage.h"
+#import "XMPPMessage+MyExtends.h"
 #import "NSXMLElement+XMPP.h"
 #import "DataManager.h"
 #import "Tool.h"
@@ -18,51 +19,42 @@
 
 @implementation MyXMPP (P2PChat)
 
-- (NSString *)getSubtypeFrom:(XMPPMessage *)message {
-    NSArray *bodyArr = [message elementsForName:@"body"];
-    DDXMLElement *body = bodyArr[0];
-    return [[body attributeForName:@"subtype"]stringValue];
-}
+- (void)sendMessageWithSubtype:(NSString *)subtype time:(NSDate *)time body:(NSString *)body more:(NSString *)more toUser:(NSString *)user {
+    NSXMLElement *bodyElement = [NSXMLElement elementWithName:@"body"];
+    [bodyElement addAttributeWithName:@"subtype" stringValue:subtype];
 
-- (void)sendMessage:(NSString *)text ToUser:(NSString *) user {
-    NSXMLElement *body = [NSXMLElement elementWithName:@"body"];
-    [body setStringValue:text];
-    [body addAttributeWithName:@"subtype" stringValue:@"text"];
+    NSString *timeString = [Tool stringFromDate:[NSDate date]];
+    [bodyElement addAttributeWithName:@"time" stringValue:timeString];
+    [bodyElement addAttributeWithName:@"more" stringValue:more];
+    [bodyElement setStringValue:body];
     
     NSXMLElement *message = [NSXMLElement elementWithName:@"message"];
     [message addAttributeWithName:@"type" stringValue:@"chat"];
     
-    
     NSString *to = [NSString stringWithFormat:@"%@@%@", user, myDomain];
     [message addAttributeWithName:@"to" stringValue:to];
     
-    [message addChild:body];
+    [message addChild:bodyElement];
     [self.stream sendElement:message];
-    NSLog(@"message : %@", message);
+    NSLog(@"message : %@", message);//小麦公社15-4 8968
+}
+
+- (void)sendMessage:(NSString *)text ToUser:(NSString *)user {
+    NSDate *now = [NSDate date];
+    [self sendMessageWithSubtype:@"text" time:now body:text more:nil toUser:user];
     
-    [self.dataManager saveMessageWithUsername:user time:[NSDate date] body:text isOut:YES];
-    [self.dataManager addRecentUsername:user time:[NSDate date] body:text isOut:YES];
+    [self.dataManager saveMessageWithUsername:user time:now body:text isOut:YES];
+    [self.dataManager addRecentUsername:user time:now body:text isOut:YES];
 }
 
 - (void)sendAudio:(NSString *)path ToUser:(NSString *)user length:(NSString *)length{
     NSFileManager *filemnanager=[NSFileManager defaultManager];
     NSData *p = [filemnanager contentsAtPath:path];
-    
     NSString *audiomsg = [p base64EncodedStringWithOptions:0];
-    NSString *audiomsgwithlength = [NSString stringWithFormat:@"%@,%@",length,audiomsg];
     
-    NSXMLElement *body = [NSXMLElement elementWithName:@"body"];
-    [body setStringValue:audiomsgwithlength];
-    [body addAttributeWithName:@"subtype" stringValue:@"audio"];
+    NSDate *now = [NSDate date];
     
-    NSXMLElement *audiomessage = [NSXMLElement elementWithName:@"message"];
-    [audiomessage addAttributeWithName:@"type" stringValue:@"chat"];
-    
-    NSString *to = [NSString stringWithFormat:@"%@@%@", user, myDomain];
-    [audiomessage addAttributeWithName:@"to" stringValue:to];
-    
-    [audiomessage addChild:body];
-    [self.stream sendElement:audiomessage];
+    [self sendMessageWithSubtype:@"audio" time:now body:audiomsg more:length toUser:user];
     
     [self.dataManager saveRecordWithUsername:user time:[NSDate date] path:path length:length isOut:YES];
     [self.dataManager addRecentUsername:user time:[NSDate date] body:Voice isOut:YES];
@@ -71,15 +63,18 @@
 #pragma mark - receivemessage delegate
 - (void)xmppStream:(XMPPStream *)sender didReceiveMessage:(XMPPMessage *)message {
     if ([message isChatMessageWithBody]) {
-        NSString *subtype = [self getSubtypeFrom:message];
+        NSString *subtype = [message getSubtype];
+        NSString *more = [message getMore];
+        NSString *timeStr = [message getTime];
+        NSDate *messageDate = [Tool dateFromString:timeStr];
         NSString *messageBody = [[message elementForName:@"body"] stringValue];
         XMPPJID *fromJid = message.from;
         NSString *bareJidStr = fromJid.user;
         char firstLetter = [subtype characterAtIndex:0];
         switch (firstLetter) {
             case 't':{//text
-                [self.dataManager saveMessageWithUsername:bareJidStr time:[NSDate date] body:messageBody isOut:NO];
-                [self.dataManager addRecentUsername:bareJidStr time:[NSDate date] body:messageBody isOut:NO];
+                [self.dataManager saveMessageWithUsername:bareJidStr time:messageDate body:messageBody isOut:NO];
+                [self.dataManager addRecentUsername:bareJidStr time:messageDate body:messageBody isOut:NO];
                 break;
             }
             case 'a':{//audio

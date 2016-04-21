@@ -12,6 +12,7 @@
 
 + (NSString *)getLocalIp;
 + (NSString *)stringFromDate:(NSDate *)date;
++ (NSDate *)dateFromString:(NSString *)dateString;
 + (NSString *)getFileName:(NSString *)info extension:(NSString *)extension;
 
 @end

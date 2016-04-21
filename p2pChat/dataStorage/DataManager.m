@@ -10,6 +10,7 @@
 #import "AppDelegate.h"
 #import "Message.h"
 #import "LastMessage.h"
+#import "GroupMessage.h"
 
 @interface DataManager ()
 
@@ -158,6 +159,36 @@
     [_context save:&err2];
     if (err2) {
         NSLog(@"DataManager delete recent failed: %@", err2);
+    }
+}
+
+#pragma mark - group message
+- (void)saveGroupMessageWithGroupname:(NSString *)groupname username:(NSString *)username type:(NSNumber *)type time:(NSDate *)time body:(NSString *)body more:(NSString *)more WithError:(NSError **)error {
+    GroupMessage *groupmessage = [NSEntityDescription insertNewObjectForEntityForName:@"GroupMessage" inManagedObjectContext:_context];
+    groupmessage.groupname = groupname;
+    groupmessage.username = username;
+    groupmessage.type = type;
+    groupmessage.time = time;
+    groupmessage.body = body;
+    groupmessage.more = more;
+    [_context save:error];
+}
+
+- (NSFetchedResultsController *)getMessageByGroupname:(NSString *)groupname {
+    NSPredicate *predicatae = [NSPredicate predicateWithFormat:@"groupname = %@", groupname];
+    NSError *err = nil;
+    NSFetchedResultsController *resultsController = [self fetchWithEntityName:@"GroupMessage" predicate:predicatae sortKey:@"time" ascending:YES error:&err];
+    if (err != nil) {
+        NSLog(@"DataManager fetch group message failed: %@", err);
+    }
+    return resultsController;
+}
+
+- (void)saveMessageWithGroupname:(NSString *)groupname username:(NSString *)username time:(NSDate *)time body:(NSString *)body {
+    NSError *error = nil;
+    [self saveGroupMessageWithGroupname:groupname username:username type:@0 time:time body:body more:nil WithError:&error];
+    if (error != nil) {
+        NSLog(@"DataManager save group message failed: %@", error);
     }
 }
 @end

@@ -1,5 +1,13 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<model userDefinedModelVersionIdentifier="" type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="9525" systemVersion="15D21" minimumToolsVersion="Automatic">
+<model userDefinedModelVersionIdentifier="" type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="10171" systemVersion="15C50" minimumToolsVersion="Automatic">
+    <entity name="GroupMessage" representedClassName="GroupMessage" syncable="YES">
+        <attribute name="body" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="groupname" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="more" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="time" optional="YES" attributeType="Date" syncable="YES"/>
+        <attribute name="type" optional="YES" attributeType="Integer 16" defaultValueString="0" syncable="YES"/>
+        <attribute name="username" optional="YES" attributeType="String" syncable="YES"/>
+    </entity>
     <entity name="LastMessage" representedClassName="LastMessage" syncable="YES">
         <attribute name="body" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="isOut" optional="YES" attributeType="Boolean" syncable="YES"/>
@@ -18,5 +26,6 @@
     <elements>
         <element name="LastMessage" positionX="-54" positionY="-9" width="128" height="120"/>
         <element name="Message" positionX="-36" positionY="9" width="128" height="135"/>
+        <element name="GroupMessage" positionX="-18" positionY="72" width="128" height="135"/>
     </elements>
 </model>
