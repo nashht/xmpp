@@ -20,7 +20,7 @@ NS_ASSUME_NONNULL_BEGIN
 @property (nullable, nonatomic, retain) NSNumber *type;
 @property (nullable, nonatomic, retain) NSString *body;
 @property (nullable, nonatomic, retain) NSString *more;
-@property (nullable, nonatomic, retain) NSDate *time;
+@property (nullable, nonatomic, retain) NSNumber *time;
 
 @end
 

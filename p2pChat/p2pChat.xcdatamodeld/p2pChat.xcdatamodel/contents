@@ -4,14 +4,14 @@
         <attribute name="body" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="groupname" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="more" optional="YES" attributeType="String" syncable="YES"/>
-        <attribute name="time" optional="YES" attributeType="Date" syncable="YES"/>
+        <attribute name="time" optional="YES" attributeType="Double" defaultValueString="0.0" syncable="YES"/>
         <attribute name="type" optional="YES" attributeType="Integer 16" defaultValueString="0" syncable="YES"/>
         <attribute name="username" optional="YES" attributeType="String" syncable="YES"/>
     </entity>
     <entity name="LastMessage" representedClassName="LastMessage" syncable="YES">
         <attribute name="body" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="isOut" optional="YES" attributeType="Boolean" syncable="YES"/>
-        <attribute name="time" optional="YES" attributeType="Date" syncable="YES"/>
+        <attribute name="time" optional="YES" attributeType="Double" defaultValueString="0.0" syncable="YES"/>
         <attribute name="unread" optional="YES" attributeType="Integer 16" defaultValueString="0" syncable="YES"/>
         <attribute name="username" optional="YES" attributeType="String" syncable="YES"/>
     </entity>
@@ -19,7 +19,7 @@
         <attribute name="body" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="isOut" optional="YES" attributeType="Boolean" syncable="YES"/>
         <attribute name="more" optional="YES" attributeType="String" syncable="YES"/>
-        <attribute name="time" optional="YES" attributeType="Date" syncable="YES"/>
+        <attribute name="time" optional="YES" attributeType="Double" defaultValueString="0.0" syncable="YES"/>
         <attribute name="type" optional="YES" attributeType="Integer 16" defaultValueString="0" syncable="YES"/>
         <attribute name="username" optional="YES" attributeType="String" syncable="YES"/>
     </entity>

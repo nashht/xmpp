@@ -21,10 +21,10 @@
 @interface DataManager (Message)
 
 - (NSFetchedResultsController *)getMessageByUsername:(NSString *)username;
-- (void)saveMessageWithUsername:(NSString *)username time:(NSDate *)time body:(NSString *)body isOut:(BOOL)isOut;//isOut真为发出，假为收到
-- (void)saveRecordWithUsername:(NSString *)username time:(NSDate *)time path:(NSString *)path length:(NSString *)length isOut:(BOOL)isOut;
-- (void)savePhotoWithUsername:(NSString *)username time:(NSDate *)time path:(NSString *)path thumbnail:(NSString *)thumbnailPath isOut:(BOOL)isOut;
-- (void)saveFileWithUsername:(NSString *)username time:(NSDate *)time path:(NSString *)path fileName:(NSString *)name isOut:(BOOL)isOut;
+- (void)saveMessageWithUsername:(NSString *)username time:(NSNumber *)time body:(NSString *)body isOut:(BOOL)isOut;//isOut真为发出，假为收到
+- (void)saveRecordWithUsername:(NSString *)username time:(NSNumber *)time path:(NSString *)path length:(NSString *)length isOut:(BOOL)isOut;
+- (void)savePhotoWithUsername:(NSString *)username time:(NSNumber *)time path:(NSString *)path thumbnail:(NSString *)thumbnailPath isOut:(BOOL)isOut;
+- (void)saveFileWithUsername:(NSString *)username time:(NSNumber *)time path:(NSString *)path fileName:(NSString *)name isOut:(BOOL)isOut;
 
 @end
 
@@ -32,7 +32,7 @@
 @interface DataManager (LastMessage)
 
 - (NSFetchedResultsController *)getRecent;
-- (void)addRecentUsername:(NSString *)username time:(NSDate *)time body:(NSString *)body isOut:(BOOL)isOut;
+- (void)addRecentUsername:(NSString *)username time:(NSNumber *)time body:(NSString *)body isOut:(BOOL)isOut;
 - (void)updateUsername:(NSString *)username;//已读
 - (void)deleteRecentUsername:(NSString *)username;
 
@@ -42,7 +42,7 @@
 @interface DataManager (GroupMessage)
 
 - (NSFetchedResultsController *)getMessageByGroupname:(NSString *)groupname;
-- (void)saveMessageWithGroupname:(NSString *)groupname username:(NSString *)username time:(NSDate *)time body:(NSString *)body;
-- (void)saveRecordWithGroupname:(NSString *)groupname username:(NSString *)username time:(NSDate *)time path:(NSString *)path length:(NSString *)length;
+- (void)saveMessageWithGroupname:(NSString *)groupname username:(NSString *)username time:(NSNumber *)time body:(NSString *)body;
+- (void)saveRecordWithGroupname:(NSString *)groupname username:(NSString *)username time:(NSNumber *)time path:(NSString *)path length:(NSString *)length;
 
 @end

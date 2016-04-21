@@ -19,12 +19,11 @@
 
 @implementation MyXMPP (P2PChat)
 
-- (void)sendMessageWithSubtype:(NSString *)subtype time:(NSDate *)time body:(NSString *)body more:(NSString *)more toUser:(NSString *)user {
+- (void)sendMessageWithSubtype:(NSString *)subtype time:(double)time body:(NSString *)body more:(NSString *)more toUser:(NSString *)user {
     NSXMLElement *bodyElement = [NSXMLElement elementWithName:@"body"];
     [bodyElement addAttributeWithName:@"subtype" stringValue:subtype];
 
-    NSString *timeString = [Tool stringFromDate:[NSDate date]];
-    [bodyElement addAttributeWithName:@"time" stringValue:timeString];
+    [bodyElement addAttributeWithName:@"time" stringValue:[NSString stringWithFormat:@"%f", time]];
     if (more != nil) {
         [bodyElement addAttributeWithName:@"more" stringValue:more];
     }
@@ -42,11 +41,11 @@
 }
 
 - (void)sendMessage:(NSString *)text ToUser:(NSString *)user {
-    NSDate *now = [NSDate date];
-    [self sendMessageWithSubtype:@"text" time:now body:text more:nil toUser:user];
+    NSTimeInterval time = [[NSDate date]timeIntervalSince1970];
+    [self sendMessageWithSubtype:@"text" time:time body:text more:nil toUser:user];
     
-    [self.dataManager saveMessageWithUsername:user time:now body:text isOut:YES];
-    [self.dataManager addRecentUsername:user time:now body:text isOut:YES];
+    [self.dataManager saveMessageWithUsername:user time:[NSNumber numberWithDouble:time] body:text isOut:YES];
+    [self.dataManager addRecentUsername:user time:[NSNumber numberWithDouble:time] body:text isOut:YES];
 }
 
 - (void)sendAudio:(NSString *)path ToUser:(NSString *)user length:(NSString *)length{
@@ -54,12 +53,12 @@
     NSData *p = [filemnanager contentsAtPath:path];
     NSString *audiomsg = [p base64EncodedStringWithOptions:0];
     
-    NSDate *now = [NSDate date];
+    double time = [[NSDate alloc]timeIntervalSince1970];
     
-    [self sendMessageWithSubtype:@"audio" time:now body:audiomsg more:length toUser:user];
+    [self sendMessageWithSubtype:@"audio" time:time body:audiomsg more:length toUser:user];
     
-    [self.dataManager saveRecordWithUsername:user time:[NSDate date] path:path length:length isOut:YES];
-    [self.dataManager addRecentUsername:user time:[NSDate date] body:Voice isOut:YES];
+    [self.dataManager saveRecordWithUsername:user time:[NSNumber numberWithDouble:time] path:path length:length isOut:YES];
+    [self.dataManager addRecentUsername:user time:[NSNumber numberWithDouble:time] body:Voice isOut:YES];
 }
 
 #pragma mark - receivemessage delegate
@@ -67,15 +66,15 @@
     if ([message isChatMessageWithBody]) {
         NSString *subtype = [message getSubtype];
         NSString *timeStr = [message getTime];
-        NSDate *messageDate = [Tool dateFromString:timeStr];
+        NSNumber *timeNumber = [NSNumber numberWithDouble:[timeStr doubleValue]];
         NSString *messageBody = [[message elementForName:@"body"] stringValue];
         XMPPJID *fromJid = message.from;
         NSString *bareJidStr = fromJid.user;
         char firstLetter = [subtype characterAtIndex:0];
         switch (firstLetter) {
             case 't':{//text
-                [self.dataManager saveMessageWithUsername:bareJidStr time:messageDate body:messageBody isOut:NO];
-                [self.dataManager addRecentUsername:bareJidStr time:messageDate body:messageBody isOut:NO];
+                [self.dataManager saveMessageWithUsername:bareJidStr time:timeNumber body:messageBody isOut:NO];
+                [self.dataManager addRecentUsername:bareJidStr time:timeNumber body:messageBody isOut:NO];
                 break;
             }
             case 'a':{//audio
@@ -87,8 +86,8 @@
                 [data writeToFile:tmpPath atomically:YES];
                 [VoiceConverter amrToWav:tmpPath wavSavePath:path];
                 
-                [self.dataManager saveRecordWithUsername:bareJidStr time:[NSDate date] path:path length:during isOut:NO];
-                [self.dataManager addRecentUsername:bareJidStr time:[NSDate date] body:Voice isOut:NO];
+                [self.dataManager saveRecordWithUsername:bareJidStr time:timeNumber path:path length:during isOut:NO];
+                [self.dataManager addRecentUsername:bareJidStr time:timeNumber body:Voice isOut:NO];
                 break;
             }
             case 'p':{
