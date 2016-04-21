@@ -7,8 +7,7 @@
 //
 
 #import "EditTelController.h"
-#import "MyXMPP.h"
-
+#import "MyXMPP+VCard.h"
 
 @interface EditTelController ()<UITextFieldDelegate>
 

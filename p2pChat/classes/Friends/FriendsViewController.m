@@ -10,10 +10,10 @@
 #import "FriendCell.h"
 #import "FriendsGroup.h"
 #import "FriendHeaderView.h"
-#import "XMPPUserCoreDataStorageObject.h"
-#import "XMPPGroupCoreDataStorageObject.h"
+#import "MyXMPP+Roster.h"
 #import "XMPPvCardTemp.h"
 #import "MyXMPP.h"
+#import "MyXMPP+VCard.h"
 #import "FriendInfoController.h"
 
 @interface FriendsViewController ()<FriendHeaderViewDelegate,UITableViewDelegate>

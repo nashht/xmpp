@@ -11,6 +11,7 @@
 #import "XMPPGroupCoreDataStorageObject.h"
 #import "ChatViewController.h"
 #import "MyXMPP.h"
+#import "MyXMPP+VCard.h"
 #import "XMPPvCardTemp.h"
 
 @interface FriendInfoController ()

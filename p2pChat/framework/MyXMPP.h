@@ -9,10 +9,14 @@
 #import <Foundation/Foundation.h>
 #import <CoreData/CoreData.h>
 #import "XMPPJID.h"
+@class XMPPStream;
 @class XMPPvCardTemp;
 @class XMPPGroupCoreDataStorageObject;
-
-
+@class XMPPRoster;
+@class XMPPvCardTempModule;
+@class XMPPRoom;
+@class XMPPRoomCoreDataStorage;
+@class DataManager;
 
 #define MyXmppDidLoginNotification @"MyXmppDidLoginNotification"
 #define MyXmppConnectFailedNotification @"MyXmppConnectFailedNotification"
@@ -30,36 +34,23 @@ typedef NS_ENUM (char, MessageType) {
     MessageTypeVideo,
 };
 
+static NSString *myDomain = @"xmpp.test";
+
 @interface MyXMPP : NSObject
 
 + (instancetype)shareInstance;
 
+@property (strong, nonatomic) XMPPStream *stream;
 @property (strong, nonatomic, readonly) XMPPvCardTemp *myVCardTemp;
+@property (strong, nonatomic, readonly) XMPPRoster *roster;
+@property (strong, nonatomic, readonly) XMPPvCardTempModule *vCardModule;
+@property (strong, nonatomic, readonly) XMPPJID *myjid;
+@property (strong, nonatomic) XMPPRoom *chatroom;
+@property (strong, nonatomic) XMPPRoomCoreDataStorage *roomStorage;
+
+@property (strong, nonatomic, readonly) DataManager *dataManager;
 
 - (void)loginWithName:(NSString *)user Password:(NSString *)password;
 - (void)loginout;
-
-- (void)sendMessage:(NSString *)text ToUser:(NSString *) user;
-- (void)sendAudio:(NSString *)path ToUser:(NSString *)user length:(NSString *)length;
-//- (void)sendPicture:(NSString *)path ToUser:(NSString *)user;
-
-- (void)updateFriendsList;
-- (XMPPvCardTemp *)fetchFriend:(XMPPJID *)userJid;
-
-- (void)updateMyEmail:(NSString *)email;
-- (void)updateMyNote:(NSString *)note;
-- (void)updateMyTel:(NSString *)tel;
-- (void)changeMyPassword:(NSString *)newpassword;
-
-- (NSArray<XMPPGroupCoreDataStorageObject *> *)getFriendsGroup;
-
-- (void)creatGroupName:(NSString *)groupName withpassword:(NSString *)rommpwd andsubject:(NSString *)subject;//只有创建者调用
-- (void)inviteFriends:(NSString *)friendname withMessage:(NSString *)text;
-- (void)fetchMembersFromGroup;
-- (void)sendMessage:(NSString *)text ToGroup:(NSString *)groupname;
-//- (void)sendPicture:(NSString *)path ToGroup:(NSString *)groupname;
-- (void)sendAudio:(NSString *)path ToGroup:(NSString *)groupname withlength:(NSString *)length;
-- (void)destroyChatRoom;
-
 
 @end

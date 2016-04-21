@@ -8,7 +8,7 @@
 
 #import "EditEmailController.h"
 #import "LastMessage.h"
-#import "MyXMPP.h"
+#import "MyXMPP+VCard.h"
 
 @interface EditEmailController ()<UITextFieldDelegate>
 
