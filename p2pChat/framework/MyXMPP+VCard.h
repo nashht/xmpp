@@ -8,13 +8,20 @@
 
 #import "MyXMPP.h"
 
+#define MyXmppUpdatevCardSuccessNotification @"MyXmppUpdatevCardSuccessNotification"
+#define MyXmppUpdatevCardFailedNotification @"MyXmppUpdatevCardFailedNotification"
+
 @interface MyXMPP (VCard)
 
 - (XMPPvCardTemp *)fetchFriend:(XMPPJID *)userJid;
 
 - (void)updateMyEmail:(NSString *)email;
-- (void)updateMyNote:(NSString *)note;
 - (void)updateMyTel:(NSString *)tel;
+- (void)updateMyPhone:(NSString *)phone;
+- (void)updateMyAddress:(NSString *)address;
+- (void)updataeMyPhoto:(NSData *)photoData;
+- (void)updateMyTitle:(NSString *)title;
+
 - (void)changeMyPassword:(NSString *)newpassword;
 
 @end

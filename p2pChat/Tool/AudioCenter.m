@@ -51,14 +51,13 @@
 }
 
 - (float)stopRecord {
+#warning during时长不对
     NSTimeInterval during = _recorder.currentTime;
     [_recorder stop];
-//    [self startPlay:_path];
     [VoiceConverter wavToAmr:_wavPath amrSavePath:_path];
-//    NSError *err = nil;
-//    if (![[NSFileManager defaultManager]removeItemAtPath:_wavPath error:&err]) {
-//        NSLog(@"AudioCenter delete tmp wav file failed: %@", err);
-//    }
+    NSString *convertedWavPath = [Tool getFileName:@"receive" extension:@"wav"];
+    [VoiceConverter amrToWav:_path wavSavePath:convertedWavPath];
+    [self startPlay:convertedWavPath];
     return (float)during;
 }
 

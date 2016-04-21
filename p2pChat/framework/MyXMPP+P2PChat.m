@@ -25,7 +25,9 @@
 
     NSString *timeString = [Tool stringFromDate:[NSDate date]];
     [bodyElement addAttributeWithName:@"time" stringValue:timeString];
-    [bodyElement addAttributeWithName:@"more" stringValue:more];
+    if (more != nil) {
+        [bodyElement addAttributeWithName:@"more" stringValue:more];
+    }
     [bodyElement setStringValue:body];
     
     NSXMLElement *message = [NSXMLElement elementWithName:@"message"];
@@ -36,7 +38,7 @@
     
     [message addChild:bodyElement];
     [self.stream sendElement:message];
-    NSLog(@"message : %@", message);//小麦公社15-4 8968
+    NSLog(@"message : %@", message);
 }
 
 - (void)sendMessage:(NSString *)text ToUser:(NSString *)user {
@@ -64,7 +66,6 @@
 - (void)xmppStream:(XMPPStream *)sender didReceiveMessage:(XMPPMessage *)message {
     if ([message isChatMessageWithBody]) {
         NSString *subtype = [message getSubtype];
-        NSString *more = [message getMore];
         NSString *timeStr = [message getTime];
         NSDate *messageDate = [Tool dateFromString:timeStr];
         NSString *messageBody = [[message elementForName:@"body"] stringValue];
@@ -78,21 +79,15 @@
                 break;
             }
             case 'a':{//audio
-                NSRange range1 = NSMakeRange(0, 9);
-                NSString *audiolength = [messageBody substringWithRange:range1];//获取语音消息长度
-                NSRange range2 = NSMakeRange(9, [messageBody length]-9);
-                NSString *audiomsg = [messageBody substringWithRange:range2];
-                
-                NSData *data = [[NSData alloc] initWithBase64EncodedString:audiomsg options:0];
-                
-                NSLog(@"did recieve audio message :%@, length: %lu",messageBody, (unsigned long)data.length);
+                NSString *during = [message getMore];
+                NSData *data = [[NSData alloc] initWithBase64EncodedString:messageBody options:0];
                 
                 NSString *tmpPath = [Tool getFileName:@"tmp" extension:@"amr"];
                 NSString *path = [Tool getFileName:@"receive" extension:@"wav"];
                 [data writeToFile:tmpPath atomically:YES];
                 [VoiceConverter amrToWav:tmpPath wavSavePath:path];
                 
-                [self.dataManager saveRecordWithUsername:bareJidStr time:[NSDate date] path:path length:audiolength isOut:NO];
+                [self.dataManager saveRecordWithUsername:bareJidStr time:[NSDate date] path:path length:during isOut:NO];
                 [self.dataManager addRecentUsername:bareJidStr time:[NSDate date] body:Voice isOut:NO];
                 break;
             }
