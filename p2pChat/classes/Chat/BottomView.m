@@ -7,7 +7,7 @@
 //
 
 #import "BottomView.h"
-#import "MyXMPP.h"
+#import "MyXMPP+P2PChat.h"
 #import "AudioCenter.h"
 #import "Tool.h"
 

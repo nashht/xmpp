@@ -211,6 +211,10 @@
 		DAAA186D1CABCF6500691170 /* Message+CoreDataProperties.m in Sources */ = {isa = PBXBuildFile; fileRef = DAAA18681CABCF6500691170 /* Message+CoreDataProperties.m */; };
 		DAAA186E1CABCF6500691170 /* Message.m in Sources */ = {isa = PBXBuildFile; fileRef = DAAA186A1CABCF6500691170 /* Message.m */; };
 		DAAC6D781C4CD2A2009C0859 /* PhotoLibraryCenter.m in Sources */ = {isa = PBXBuildFile; fileRef = DAAC6D771C4CD2A2009C0859 /* PhotoLibraryCenter.m */; };
+		DACDC7981CC87258005F5FA2 /* MyXMPP+Roster.m in Sources */ = {isa = PBXBuildFile; fileRef = DACDC7971CC87258005F5FA2 /* MyXMPP+Roster.m */; };
+		DACDC79B1CC879F9005F5FA2 /* MyXMPP+VCard.m in Sources */ = {isa = PBXBuildFile; fileRef = DACDC79A1CC879F9005F5FA2 /* MyXMPP+VCard.m */; };
+		DACDC79E1CC87CF2005F5FA2 /* MyXMPP+Group.m in Sources */ = {isa = PBXBuildFile; fileRef = DACDC79D1CC87CF2005F5FA2 /* MyXMPP+Group.m */; };
+		DACDC7A11CC8811C005F5FA2 /* MyXMPP+P2PChat.m in Sources */ = {isa = PBXBuildFile; fileRef = DACDC7A01CC8811C005F5FA2 /* MyXMPP+P2PChat.m */; };
 		DAD235021C424CEE003A93F9 /* MoreView.xib in Resources */ = {isa = PBXBuildFile; fileRef = DAD235011C424CEE003A93F9 /* MoreView.xib */; };
 		DAD235051C424D05003A93F9 /* MoreView.m in Sources */ = {isa = PBXBuildFile; fileRef = DAD235041C424D05003A93F9 /* MoreView.m */; };
 		DAD278811CBF3A78001508D0 /* amrFileCodec.mm in Sources */ = {isa = PBXBuildFile; fileRef = DAD278631CBF3A78001508D0 /* amrFileCodec.mm */; };
@@ -655,6 +659,14 @@
 		DAAA186A1CABCF6500691170 /* Message.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = Message.m; path = dataStorage/Message.m; sourceTree = "<group>"; };
 		DAAC6D761C4CD2A2009C0859 /* PhotoLibraryCenter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = PhotoLibraryCenter.h; path = Tool/PhotoLibraryCenter.h; sourceTree = "<group>"; };
 		DAAC6D771C4CD2A2009C0859 /* PhotoLibraryCenter.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = PhotoLibraryCenter.m; path = Tool/PhotoLibraryCenter.m; sourceTree = "<group>"; };
+		DACDC7961CC87258005F5FA2 /* MyXMPP+Roster.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "MyXMPP+Roster.h"; path = "framework/MyXMPP+Roster.h"; sourceTree = "<group>"; };
+		DACDC7971CC87258005F5FA2 /* MyXMPP+Roster.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "MyXMPP+Roster.m"; path = "framework/MyXMPP+Roster.m"; sourceTree = "<group>"; };
+		DACDC7991CC879F9005F5FA2 /* MyXMPP+VCard.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "MyXMPP+VCard.h"; path = "framework/MyXMPP+VCard.h"; sourceTree = "<group>"; };
+		DACDC79A1CC879F9005F5FA2 /* MyXMPP+VCard.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "MyXMPP+VCard.m"; path = "framework/MyXMPP+VCard.m"; sourceTree = "<group>"; };
+		DACDC79C1CC87CF2005F5FA2 /* MyXMPP+Group.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "MyXMPP+Group.h"; path = "framework/MyXMPP+Group.h"; sourceTree = "<group>"; };
+		DACDC79D1CC87CF2005F5FA2 /* MyXMPP+Group.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "MyXMPP+Group.m"; path = "framework/MyXMPP+Group.m"; sourceTree = "<group>"; };
+		DACDC79F1CC8811C005F5FA2 /* MyXMPP+P2PChat.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "MyXMPP+P2PChat.h"; path = "framework/MyXMPP+P2PChat.h"; sourceTree = "<group>"; };
+		DACDC7A01CC8811C005F5FA2 /* MyXMPP+P2PChat.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "MyXMPP+P2PChat.m"; path = "framework/MyXMPP+P2PChat.m"; sourceTree = "<group>"; };
 		DAD235011C424CEE003A93F9 /* MoreView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = MoreView.xib; sourceTree = "<group>"; };
 		DAD235031C424D05003A93F9 /* MoreView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MoreView.h; sourceTree = "<group>"; };
 		DAD235041C424D05003A93F9 /* MoreView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MoreView.m; sourceTree = "<group>"; };
@@ -1935,6 +1947,14 @@
 			children = (
 				DA968A631C8928E100FD866C /* MyXMPP.h */,
 				840104BC1CB90512005C2EBE /* MyXMPP.m */,
+				DACDC79F1CC8811C005F5FA2 /* MyXMPP+P2PChat.h */,
+				DACDC7A01CC8811C005F5FA2 /* MyXMPP+P2PChat.m */,
+				DACDC7961CC87258005F5FA2 /* MyXMPP+Roster.h */,
+				DACDC7971CC87258005F5FA2 /* MyXMPP+Roster.m */,
+				DACDC7991CC879F9005F5FA2 /* MyXMPP+VCard.h */,
+				DACDC79A1CC879F9005F5FA2 /* MyXMPP+VCard.m */,
+				DACDC79C1CC87CF2005F5FA2 /* MyXMPP+Group.h */,
+				DACDC79D1CC87CF2005F5FA2 /* MyXMPP+Group.m */,
 			);
 			name = Network;
 			sourceTree = "<group>";
@@ -2241,6 +2261,7 @@
 				DA90B1D21C8989930080E037 /* XMPPResultSet.m in Sources */,
 				DA90B1DF1C8989930080E037 /* XMPPCapabilities.xcdatamodel in Sources */,
 				DA90B1AF1C8989930080E037 /* XMPPSystemInputActivityMonitor.m in Sources */,
+				DACDC79B1CC879F9005F5FA2 /* MyXMPP+VCard.m in Sources */,
 				DA90B1991C8989930080E037 /* XMPPMessage.m in Sources */,
 				DA90B1B21C8989930080E037 /* XMPPJabberRPCModule.m in Sources */,
 				DA90B1911C8989930080E037 /* XMPPXOAuth2Google.m in Sources */,
@@ -2288,6 +2309,7 @@
 				DA90B1F21C8989930080E037 /* XMPPStreamManagement.m in Sources */,
 				DA90B1A61C8989930080E037 /* XMPPGroupCoreDataStorageObject.m in Sources */,
 				DA90B1A71C8989930080E037 /* XMPPResourceCoreDataStorageObject.m in Sources */,
+				DACDC7A11CC8811C005F5FA2 /* MyXMPP+P2PChat.m in Sources */,
 				84AD18E51CB5238C00357F60 /* EditEmailController.m in Sources */,
 				DAAA186B1CABCF6500691170 /* LastMessage+CoreDataProperties.m in Sources */,
 				DA90B1E41C8989930080E037 /* XMPPMessageArchiving.xcdatamodeld in Sources */,
@@ -2304,6 +2326,7 @@
 				DA90B1AE1C8989930080E037 /* XMPPRoster.m in Sources */,
 				DA90B20C1C8989930080E037 /* DDFileLogger.m in Sources */,
 				904175431CA9299C005A024B /* LoginViewController.m in Sources */,
+				DACDC79E1CC87CF2005F5FA2 /* MyXMPP+Group.m in Sources */,
 				DA95D5A31C3A16E6001ED1A6 /* p2pChat.xcdatamodeld in Sources */,
 				900BFA0F1CC0EC76004F7B2C /* PopoverViewController.m in Sources */,
 				DA90B1D31C8989930080E037 /* XMPPIQ+XEP_0060.m in Sources */,
@@ -2327,6 +2350,7 @@
 				90FA06441CACDAA600851B1C /* FriendInfoController.m in Sources */,
 				DAD278811CBF3A78001508D0 /* amrFileCodec.mm in Sources */,
 				DA90B20D1C8989930080E037 /* DDLog.m in Sources */,
+				DACDC7981CC87258005F5FA2 /* MyXMPP+Roster.m in Sources */,
 				DA90B2001C8989930080E037 /* NSXMLElement+XEP_0335.m in Sources */,
 				DA90B1B41C8989930080E037 /* XMPPLastActivity.m in Sources */,
 				DA90B2051C8989930080E037 /* XMPPIDTracker.m in Sources */,

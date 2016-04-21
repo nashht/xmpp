@@ -12,6 +12,9 @@
 #import "XMPPGroupCoreDataStorageObject.h"
 #import "XMPPvCardTemp.h"
 #import "MyXMPP.h"
+#import "MyXMPP+Roster.h"
+#import "MyXMPP+VCard.h"
+#import "MyXMPP+Group.h"
 #import "HeaderView.h"
 #import "CreatGroupsViewController.h"
 

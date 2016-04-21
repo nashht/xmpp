@@ -7,7 +7,7 @@
 //
 
 #import "ChangePswController.h"
-#import "MyXMPP.h"
+#import "MyXMPP+VCard.h"
 
 @interface ChangePswController ()
 
