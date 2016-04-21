@@ -11,7 +11,7 @@
 #import "PhotoLibraryCenter.h"
 #import "XMPPvCardTemp.h"
 
-@interface MeController ()<UIImagePickerControllerDelegate,UINavigationControllerDelegate>
+@interface MeController ()<UIImagePickerControllerDelegate,UITableViewDataSource,UITableViewDelegate,UINavigationControllerDelegate>
 
 //@property (weak, nonatomic) IBOutlet UIImageView *photoView;
 @property (weak, nonatomic) IBOutlet UIImageView *photoView;
@@ -29,22 +29,34 @@
 @implementation MeController 
 
 - (void)viewDidLoad {
+    [super viewDidLoad];
+    
+    NSLog(@"MEviewDidLoadME");
+    self.tableView.delegate = self;
+    self.tableView.dataSource = self;
+    
+    [self loadvCard];
+}
+
+- (void)loadvCard{
+    
     XMPPvCardTemp *myvCard = [MyXMPP shareInstance].myVCardTemp;
     self.navigationItem.title = @"我";
-    [_photoView.layer setCornerRadius:CGRectGetHeight([_photoView bounds])/2];
+    _photoView.layer.cornerRadius = CGRectGetHeight([_photoView bounds]) / 2;
     _photoView.layer.masksToBounds = true;
     _nameLabel.text = [[NSUserDefaults standardUserDefaults]stringForKey:@"name"];
-//    _groupLabel.text = myvCard.
+    //    _groupLabel.text = myvCard.
     _titleLabel.text = myvCard.title;
     _phoneLabel.text = myvCard.note;
     _emailLabel.text = myvCard.mailer;
+    
     _myvCard = myvCard;
+    
     if (_myvCard.photo) {
         _photoView.image = [UIImage imageWithData:myvCard.photo];
     }else{
-        _photoView.image = [UIImage imageNamed:@"1"];
+        _photoView.image = [UIImage imageNamed:@"filemax_pic"];
     }
-    
     
     _photoView.userInteractionEnabled = YES;
     
@@ -52,8 +64,6 @@
     tapImage.numberOfTapsRequired = 1; //点击次数
     tapImage.numberOfTouchesRequired = 1; //点击手指数
     [_photoView addGestureRecognizer:tapImage];
- 
-    
 }
 
 - (void)changeImage{
@@ -69,8 +79,10 @@
 }
 
 - (void)viewWillAppear:(BOOL)animated {
+    [super viewWillAppear:animated];
     self.tabBarController.tabBar.hidden = NO;
-//    _photoView.image = [UIImage imageNamed:@"filemax_pic"];
+
+    [self loadvCard];
 }
 
 
@@ -94,7 +106,8 @@
     NSLog(@"didFinishPickingMediaWithInfo");
     
     [self dismissViewControllerAnimated:YES completion:^{
-        _myvCard.photo = UIImagePNGRepresentation(self.photoView.image);
+//        _myvCard.photo = UIImagePNGRepresentation(self.photoView.image);
+        
     }];
 }
 @end
