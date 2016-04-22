@@ -65,7 +65,7 @@
 }
 
 - (IBAction)selectBtnClick:(UIButton *)sender {
-    [[MyXMPP shareInstance] creatGroupName:@"chat_room" withpassword:nil andsubject:nil];
+    [[MyXMPP shareInstance] creatGroupName:@"12121" withpassword:nil andsubject:nil];
     [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(invitenewfriends) name:MyXmppRoomDidConfigurationNotification object:nil];
     
     NSLog(@"selected__-----------%@",_selectedFriends);

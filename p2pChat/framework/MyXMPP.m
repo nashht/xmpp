@@ -12,6 +12,7 @@
 #import "XMPPvCardCoreDataStorage.h"
 #import "DataManager.h"
 #import "Tool.h"
+#import "MyXMPP+Group.h"
 
 @interface MyXMPP () <XMPPStreamDelegate>
 
@@ -122,6 +123,7 @@
     
     UIStoryboard *storyboard = [UIStoryboard storyboardWithName:@"Main" bundle:nil];
     [UIApplication sharedApplication].keyWindow.rootViewController = [storyboard instantiateViewControllerWithIdentifier:@"tablebar"];
+    
 }
 
 - (BOOL)xmppStream:(XMPPStream *)sender didReceiveIQ:(XMPPIQ *)iq{
