@@ -10,4 +10,6 @@
 
 @interface PopoverViewController : UIViewController
 
+- (void)setCreateGroupBlock:(void (^)(void))createGroup showGroupBlock:(void (^)(void))showGroups;
+
 @end

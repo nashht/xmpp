@@ -15,6 +15,9 @@
 @property (strong, nonatomic) CreatGroupsViewController *createGroupVC;
 @property (strong, nonatomic) RecentViewController *baseVC;
 
+@property (strong, nonatomic) void (^createGroupBlock)(void);
+@property (strong, nonatomic) void (^showGroupsBlock)(void);
+
 @end
 
 @implementation PopoverViewController
@@ -23,11 +26,18 @@
     [super viewDidLoad];
 }
 
+- (void)setCreateGroupBlock:(void (^)(void))createGroup showGroupBlock:(void (^)(void))showGroups {
+    _createGroupBlock = createGroup;
+    _showGroupsBlock = showGroups;
+}
+
 - (IBAction)creatGroup:(id)sender {
-    _createGroupVC = [[CreatGroupsViewController alloc]init];
-    [self presentViewController:_createGroupVC animated:YES completion:nil];
+    [self dismissViewControllerAnimated:NO completion:nil];
+    _createGroupBlock();
 }
 
 - (IBAction)showGroups:(id)sender {
+    [self dismissViewControllerAnimated:NO completion:nil];
+    _showGroupsBlock();
 }
 @end

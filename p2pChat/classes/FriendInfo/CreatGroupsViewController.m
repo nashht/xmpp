@@ -40,8 +40,6 @@
     tableView.frame = frame;
     _tableView = tableView;
     [self.view addSubview:tableView];
-//    tableView.backgroundColor = [UIColor orangeColor];
-    
     
     _tableView.dataSource = self;
     _tableView.delegate = self;
@@ -72,9 +70,6 @@
 }
 
 - (void)invitenewfriends{
-//    [[MyXMPP shareInstance] inviteFriends:@"cxh" withMessage:@"wewe"];
-//    [[MyXMPP shareInstance] inviteFriends:@"ht_test" withMessage:@"wewe"];
-    
     for (NSString *users in _selectedFriends) {
         [[MyXMPP shareInstance] inviteFriends:users withMessage:@"welcome"];
     }
