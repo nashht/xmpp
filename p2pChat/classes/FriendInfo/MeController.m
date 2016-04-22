@@ -13,7 +13,6 @@
 
 @interface MeController ()<UIImagePickerControllerDelegate,UITableViewDataSource,UITableViewDelegate,UINavigationControllerDelegate>
 
-//@property (weak, nonatomic) IBOutlet UIImageView *photoView;
 @property (weak, nonatomic) IBOutlet UIImageView *photoView;
 
 @property (weak, nonatomic) IBOutlet UILabel *nameLabel;
@@ -46,6 +45,7 @@
     _photoView.layer.masksToBounds = true;
     _nameLabel.text = [[NSUserDefaults standardUserDefaults]stringForKey:@"name"];
     //    _groupLabel.text = myvCard.
+    NSLog(@"itleLabel.text-------------%@",myvCard.mailer);
     _titleLabel.text = myvCard.title;
     _phoneLabel.text = myvCard.note;
     _emailLabel.text = myvCard.mailer;

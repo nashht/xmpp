@@ -11,7 +11,7 @@
 #import "MyXMPP+VCard.h"
 
 @interface EditEmailController ()<UITextFieldDelegate>
-
+@property (nonatomic, weak) XMPPvCardTemp *myvCard;
 @end
 
 @implementation EditEmailController
@@ -20,7 +20,9 @@
     [super viewDidLoad];
     // Do any additional setup after loading the view.
     
-    _emailText.text = @"ios@nmrc.com";
+    _myvCard = [MyXMPP shareInstance].myVCardTemp;
+    
+    _emailText.text = _myvCard.mailer;
     _emailText.delegate = self;
     
     UIBarButtonItem *saveItem = [[UIBarButtonItem alloc]initWithBarButtonSystemItem:UIBarButtonSystemItemSave target:self action:@selector(save)];

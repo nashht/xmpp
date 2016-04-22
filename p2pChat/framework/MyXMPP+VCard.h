@@ -7,6 +7,7 @@
 //
 
 #import "MyXMPP.h"
+#import "XMPPvCardTemp.h"
 
 @interface MyXMPP (VCard)
 

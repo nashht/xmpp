@@ -10,7 +10,7 @@
 #import "MyXMPP+VCard.h"
 
 @interface EditTelController ()<UITextFieldDelegate>
-
+@property (nonatomic, weak) XMPPvCardTemp *myvCard;
 @end
 
 @implementation EditTelController
@@ -19,7 +19,9 @@
     [super viewDidLoad];
     // Do any additional setup after loading the view.
     
-    _telText.text = @"12345678901";
+    _myvCard = [MyXMPP shareInstance].myVCardTemp;
+    
+    _telText.text = _myvCard.note;
     _telText.delegate = self;
 
     UIBarButtonItem *saveItem = [[UIBarButtonItem alloc]initWithBarButtonSystemItem:UIBarButtonSystemItemSave target:self action:@selector(save)];
@@ -41,6 +43,7 @@
 - (void)save {
 #warning 检查合法性
     [[MyXMPP shareInstance] updateMyTel:_telText.text];
+    [self.navigationController popViewControllerAnimated:YES];
 }
 
 #pragma mark text field delegate
