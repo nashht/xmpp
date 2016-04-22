@@ -7,6 +7,7 @@
 //
 
 #import "MyXMPP.h"
+#import "XMPPvCardTemp.h"
 
 #define MyXmppUpdatevCardSuccessNotification @"MyXmppUpdatevCardSuccessNotification"
 #define MyXmppUpdatevCardFailedNotification @"MyXmppUpdatevCardFailedNotification"
