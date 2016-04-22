@@ -20,16 +20,28 @@
     [self.vCardModule updateMyvCardTemp:self.myVCardTemp];
 }
 
-- (void)updateMyNote:(NSString *)note {
-    [self.vCardModule vCardTempForJID:self.myjid shouldFetch:YES];
-    [self.myVCardTemp setNote:note];
-    [self.vCardModule updateMyvCardTemp:self.myVCardTemp];
-}
-
 - (void)updateMyTel:(NSString *)tel {
     self.myVCardTemp.note = tel;
     [self.vCardModule updateMyvCardTemp:self.myVCardTemp];
-    NSLog(@"mynote%@",self.myVCardTemp);
+}
+
+- (void)updateMyPhone:(NSString *)phone {
+    self.myVCardTemp.telecomsAddresses = @[phone];
+    [self.vCardModule updateMyvCardTemp:self.myVCardTemp];
+}
+- (void)updateMyAddress:(NSString *)address {
+    self.myVCardTemp.addresses = @[address];
+    [self.vCardModule updateMyvCardTemp:self.myVCardTemp];
+}
+
+- (void)updataeMyPhoto:(NSData *)photoData {
+    self.myVCardTemp.photo = photoData;
+    [self.vCardModule updateMyvCardTemp:self.myVCardTemp];
+}
+
+- (void)updateMyTitle:(NSString *)title {
+    self.myVCardTemp.title = title;
+    [self.vCardModule updateMyvCardTemp:self.myVCardTemp];
 }
 
 - (void)changeMyPassword:(NSString *)newpassword {
@@ -66,10 +78,12 @@
 
 - (void)xmppvCardTempModuleDidUpdateMyvCard:(XMPPvCardTempModule *)vCardTempModule{
     NSLog(@"did update");
+    [[NSNotificationCenter defaultCenter]postNotificationName:MyXmppUpdatevCardSuccessNotification object:nil];
 }
 
 - (void)xmppvCardTempModule:(XMPPvCardTempModule *)vCardTempModule failedToUpdateMyvCard:(NSXMLElement *)error{
     NSLog(@"did not update");
+    [[NSNotificationCenter defaultCenter]postNotificationName:MyXmppUpdatevCardFailedNotification object:nil];
 }
 
 @end

@@ -1,5 +1,5 @@
 //
-//  LastMessage+CoreDataProperties.h
+//  GroupMessage+CoreDataProperties.h
 //  p2pChat
 //
 //  Created by admin on 16/4/21.
@@ -9,17 +9,18 @@
 //  to delete and recreate this implementation file for your updated model.
 //
 
-#import "LastMessage.h"
+#import "GroupMessage.h"
 
 NS_ASSUME_NONNULL_BEGIN
 
-@interface LastMessage (CoreDataProperties)
+@interface GroupMessage (CoreDataProperties)
 
-@property (nullable, nonatomic, retain) NSString *body;
-@property (nullable, nonatomic, retain) NSNumber *isOut;
-@property (nullable, nonatomic, retain) NSNumber *time;
-@property (nullable, nonatomic, retain) NSNumber *unread;
+@property (nullable, nonatomic, retain) NSString *groupname;
 @property (nullable, nonatomic, retain) NSString *username;
+@property (nullable, nonatomic, retain) NSNumber *type;
+@property (nullable, nonatomic, retain) NSString *body;
+@property (nullable, nonatomic, retain) NSString *more;
+@property (nullable, nonatomic, retain) NSNumber *time;
 
 @end
 

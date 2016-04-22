@@ -1,5 +1,5 @@
 //
-//  LastMessage+CoreDataProperties.m
+//  GroupMessage+CoreDataProperties.m
 //  p2pChat
 //
 //  Created by admin on 16/4/21.
@@ -9,14 +9,15 @@
 //  to delete and recreate this implementation file for your updated model.
 //
 
-#import "LastMessage+CoreDataProperties.h"
+#import "GroupMessage+CoreDataProperties.h"
 
-@implementation LastMessage (CoreDataProperties)
+@implementation GroupMessage (CoreDataProperties)
 
-@dynamic body;
-@dynamic isOut;
-@dynamic time;
-@dynamic unread;
+@dynamic groupname;
 @dynamic username;
+@dynamic type;
+@dynamic body;
+@dynamic more;
+@dynamic time;
 
 @end

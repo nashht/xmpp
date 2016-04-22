@@ -23,7 +23,6 @@
     success = getifaddrs(&interfaces);
     
     if (success == 0) { // 0 表示获取成功
-        
         temp_addr = interfaces;
         while (temp_addr != NULL) {
             if( temp_addr->ifa_addr->sa_family == AF_INET) {
@@ -45,15 +44,17 @@
 }
 
 + (NSString *)stringFromDate:(NSDate *)date{
-    
     NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
-    
     [dateFormatter setDateFormat:@"MM-dd HH:mm:ss"];
-    
     NSString *destDateString = [dateFormatter stringFromDate:date];
     
     return destDateString;
-    
+}
+
++ (NSDate *)dateFromString:(NSString *)dateString {
+    NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
+    [dateFormatter setDateFormat:@"MM-dd HH:mm:ss"];
+    return [dateFormatter dateFromString:dateString];
 }
 
 + (NSString *)getFileName:(NSString *)info extension:(NSString *)extension {
