@@ -7,6 +7,7 @@
 //
 
 #import "MyXMPP+Group.h"
+#import "DataManager.h"
 
 static NSString *myRoomDomain = @"conference.xmpp.test";
 
@@ -50,6 +51,10 @@ static NSString *myRoomDomain = @"conference.xmpp.test";
     [self.stream sendElement:message];
     NSLog(@"message : %@", message);
     
+    double time = [[NSDate alloc]timeIntervalSince1970];
+    
+    [self.dataManager saveMessageWithGroupname:groupname username:self.myjid.user time:[NSNumber numberWithDouble:time] body:text];
+    
 }
 
 - (void)sendAudio:(NSString *)path ToGroup:(NSString *)groupname withlength:(NSString *)length{
@@ -71,6 +76,10 @@ static NSString *myRoomDomain = @"conference.xmpp.test";
     
     [audiomessage addChild:body];
     [self.stream sendElement:audiomessage];
+    
+    double time = [[NSDate alloc]timeIntervalSince1970];
+    
+    [self.dataManager saveRecordWithGroupname:groupname username:self.myjid.user time:[NSNumber numberWithDouble:time] path:path length:length];
     
 }
 
@@ -115,8 +124,8 @@ static NSString *myRoomDomain = @"conference.xmpp.test";
     
     [[NSNotificationCenter defaultCenter] postNotificationName:MyXmppRoomDidConfigurationNotification object:nil];
     //    [self inviteFriends:@"ht" withMessage:@"hellossss"];
-    [self inviteFriends:@"cxh" withMessage:@"hello！"];
-    [self sendMessage:@"hello" ToGroup:@"222"];
+//    [self inviteFriends:@"cxh" withMessage:@"hello！"];
+//    [self sendMessage:@"hello" ToGroup:@"222"];
     //    [self sendGroupMessage:@"哈哈哈哈哈哈哈"];
     //    [sender sendMessageWithBody:@"hehehehehehhe"];
 }
