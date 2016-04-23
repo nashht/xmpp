@@ -15,6 +15,7 @@
 #import "ChatViewController.h"
 #import "Tool.h"
 #import "PopoverViewController.h"
+#import "CreatGroupsViewController.h"
 
 @interface RecentViewController ()<UITableViewDataSource, UITableViewDelegate,UIPopoverPresentationControllerDelegate>
 
@@ -124,7 +125,11 @@
 
 - (IBAction)PopoverBtnClick:(UIButton *)sender {
     PopoverViewController *popoverVc = [[PopoverViewController alloc] init];
-  
+    [popoverVc setCreateGroupBlock:^{//不会引起循环引用
+        [self performSegueWithIdentifier:@"createGroup" sender:nil];
+    } showGroupBlock:^{
+        
+    }];
     popoverVc.preferredContentSize = CGSizeMake(100, 150);
     popoverVc.modalPresentationStyle = UIModalPresentationPopover;
     
