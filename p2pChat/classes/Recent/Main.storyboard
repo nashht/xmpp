@@ -156,10 +156,10 @@
             </objects>
             <point key="canvasLocation" x="-453" y="-1566"/>
         </scene>
-        <!--Creat Groups View Controller-->
+        <!--Create Groups View Controller-->
         <scene sceneID="m66-U6-jZ5">
             <objects>
-                <viewController id="iNX-e8-fE5" customClass="CreatGroupsViewController" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="CreateGroupsViewController" id="iNX-e8-fE5" customClass="CreateGroupsViewController" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="IRf-L6-vyK"/>
                         <viewControllerLayoutGuide type="bottom" id="fXp-1f-FMN"/>

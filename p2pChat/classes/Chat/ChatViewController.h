@@ -12,7 +12,7 @@
 @interface ChatViewController : UIViewController
 
 @property (copy, nonatomic) NSString *chatObjectString;//可以是user，也可以是group
-@property (assign, nonatomic, getter=isP2PChat) BOOL P2PChat;
+@property (assign, nonatomic, getter=isP2PChat) BOOL p2pChat;
 
 - (void)showMoreView;
 

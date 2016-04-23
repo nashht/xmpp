@@ -51,10 +51,10 @@ static NSString *myRoomDomain = @"conference.xmpp.test";
     [self.stream sendElement:message];
     NSLog(@"message : %@", message);
     
-    double time = [[NSDate alloc]timeIntervalSince1970];
+    double time = [[NSDate date]timeIntervalSince1970];
     
     [self.dataManager saveMessageWithGroupname:groupname username:self.myjid.user time:[NSNumber numberWithDouble:time] body:text];
-    
+    [self.dataManager addRecentUsername:groupname time:[NSNumber numberWithDouble:time] body:text isOut:YES];
 }
 
 - (void)sendAudio:(NSString *)path ToGroup:(NSString *)groupname withlength:(NSString *)length{
@@ -104,8 +104,7 @@ static NSString *myRoomDomain = @"conference.xmpp.test";
     //    [sender fetchMembersList];
 }
 
-- (void)xmppRoom:(XMPPRoom *)sender didFetchConfigurationForm:(NSXMLElement *)configForm
-{
+- (void)xmppRoom:(XMPPRoom *)sender didFetchConfigurationForm:(NSXMLElement *)configForm {
     NSLog(@"didFetchConfigurationForm");
     NSXMLElement *newConfig = [configForm copy];
     NSLog(@"BEFORE Config for the room %@",newConfig);

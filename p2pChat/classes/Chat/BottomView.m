@@ -8,6 +8,7 @@
 
 #import "BottomView.h"
 #import "MyXMPP+P2PChat.h"
+#import "MyXMPP+Group.h"
 #import "AudioCenter.h"
 #import "Tool.h"
 
@@ -71,14 +72,23 @@
 - (void)stopRecord {
     NSLog(@"stop record");
     float length = [[AudioCenter shareInstance] stopRecord];
-    [[MyXMPP shareInstance]sendAudio:_recordPath ToUser:_username length:[NSString stringWithFormat:@"%f", length]];
+    if ([self isP2PChat]) {
+        [[MyXMPP shareInstance]sendAudio:_recordPath ToUser:_chatObjectString length:[NSString stringWithFormat:@"%f", length]];
+    } else {
+        [[MyXMPP shareInstance]sendAudio:_recordPath ToGroup:_chatObjectString withlength:[NSString stringWithFormat:@"%f", length]];
+    }
 }
 
 #pragma mark - text field delegate
 - (BOOL)textFieldShouldReturn:(UITextField *)textField {
     NSString *message = _messageTF.text;
     if (![message isEqualToString:@""]) {
-        [[MyXMPP shareInstance]sendMessage:message ToUser:_username];
+        if ([self isP2PChat]) {
+            [[MyXMPP shareInstance]sendMessage:message ToUser:_chatObjectString];
+        } else {
+            [[MyXMPP shareInstance]sendMessage:message ToGroup:_chatObjectString];
+        }
+        
         _messageTF.text = @"";
     }
     

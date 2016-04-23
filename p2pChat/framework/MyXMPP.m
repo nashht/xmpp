@@ -147,6 +147,7 @@
     if (presenceFromUser != myID) {
         if ([presenceType isEqualToString:@"available"]) {
             NSLog(@"%@上线了",presenceFromUser);
+            [[NSNotificationCenter defaultCenter]postNotificationName:MyXmppUserStatusChangedNotification object:nil];
         }else if([presenceType isEqualToString:@"unavailable"]){
             NSLog(@"%@下线了",presenceFromUser);
         }

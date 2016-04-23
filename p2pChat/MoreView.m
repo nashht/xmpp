@@ -70,7 +70,7 @@
     UIImage *thumbnail = [_photoCenter makeThumbnail:_image];
     _thumbnailImagePath = [Tool getFileName:@"thumbnail" extension:@"png"];
     [UIImagePNGRepresentation(thumbnail) writeToFile:_thumbnailImagePath atomically:YES];
-    [[DataManager shareManager]savePhotoWithUsername:_username time:[NSDate date] path:_originalLocalIdentifier thumbnail:_thumbnailImagePath isOut:YES];
+//    [[DataManager shareManager]savePhotoWithUsername:_username time:[NSDate date] path:_originalLocalIdentifier thumbnail:_thumbnailImagePath isOut:YES];
     
 }
 

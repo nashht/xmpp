@@ -13,6 +13,7 @@
 
 
 @interface MessageViewCell()
+
 @property(nonatomic,weak)UILabel *timeLable;
 @property(nonatomic,weak)UIImageView *photoImage;
 @property(nonatomic,weak)UIButton *bodyBtn;

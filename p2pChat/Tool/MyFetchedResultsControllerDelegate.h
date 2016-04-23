@@ -12,6 +12,6 @@
 
 @interface MyFetchedResultsControllerDelegate : NSObject <NSFetchedResultsControllerDelegate>
 
-- (id)initWithTableView:(UITableView *)tableView;
+- (id)initWithTableView:(UITableView *)tableView withScrolling:(BOOL)scroll;
 
 @end

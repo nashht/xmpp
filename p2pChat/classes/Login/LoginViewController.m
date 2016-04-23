@@ -28,11 +28,9 @@
     //认证密码失败
     [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(myXmppDidNotAuthenticate) name:MyXmppAuthenticateFailedNotification object:nil];
     
-    
     [_login.layer setCornerRadius:CGRectGetHeight([_login bounds])/4];
     _login.layer.masksToBounds = true;
-    _login.frame = CGRectMake(199, 269, 400, 32);
-    
+    _login.frame = CGRectMake(199, 269, 400, 32);    
 }
 
 - (IBAction)login:(id)sender {
@@ -41,7 +39,8 @@
     [[NSUserDefaults standardUserDefaults]setValue:name forKey:@"name"];
     [[NSUserDefaults standardUserDefaults]setValue:password forKey:@"password"];
     [[MyXMPP shareInstance]loginWithName:name Password:password];
-    
+    [_nameTF resignFirstResponder];
+    [_passwordTF resignFirstResponder];
 }
 
 - (void)myXmppDidLogin {

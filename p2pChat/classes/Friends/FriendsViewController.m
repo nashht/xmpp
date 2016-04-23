@@ -20,7 +20,6 @@
 
 @property (nonatomic, strong) NSMutableArray<FriendsGroup *> *groups;
 @property (strong, nonatomic) NSArray<XMPPGroupCoreDataStorageObject *> *groupCoreDataStorageObjects;
-@property (strong, nonatomic) FriendsGroup *group;
 
 @end
 
@@ -38,11 +37,11 @@
     
     _groupCoreDataStorageObjects = [[MyXMPP shareInstance]getFriendsGroup];
     [self initGroup];
-    
 }
 
 - (void)viewWillAppear:(BOOL)animated {
     self.tabBarController.tabBar.hidden = NO;
+    [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(headerViewDidClickedNameView:) name:MyXmppUserStatusChangedNotification object:nil];
 }
 
 - (UIStatusBarStyle)preferredStatusBarStyle{
@@ -53,19 +52,19 @@
     _groups = [[NSMutableArray alloc]init];
     for (XMPPGroupCoreDataStorageObject *groupObj in _groupCoreDataStorageObjects) {
         @autoreleasepool {
-            _group = [[FriendsGroup alloc]init];
-            _group.opened = NO;
-            _group.name = groupObj.name;
-            _group.friends = groupObj.users.allObjects;
+            FriendsGroup *group = [[FriendsGroup alloc]init];
+            group.opened = NO;
+            group.name = groupObj.name;
+            group.friends = groupObj.users.allObjects;
             int count = 0;
-            for (int i=0;i<_group.friends.count;i++) {
+            for (int i=0;i<group.friends.count;i++) {
                 XMPPUserCoreDataStorageObject *userobj = groupObj.users.allObjects[i];
                 if ([userobj isOnline] ==YES) {
                     count++;
                 };
             }
-            _group.online = count;
-            [_groups addObject:_group];
+            group.online = count;
+            [_groups addObject:group];
         }
     }
 }
@@ -91,7 +90,9 @@
     }
     
     XMPPGroupCoreDataStorageObject *groupInfo = _groupCoreDataStorageObjects[indexPath.section];
-    XMPPUserCoreDataStorageObject *obj = groupInfo.users.allObjects[indexPath.row];
+    NSSortDescriptor *sortKey = [NSSortDescriptor sortDescriptorWithKey:@"section" ascending:YES];
+    NSArray *users = [groupInfo.users sortedArrayUsingDescriptors:@[sortKey]];
+    XMPPUserCoreDataStorageObject *obj = users[indexPath.row];
     XMPPvCardTemp *vCard = [[MyXMPP shareInstance]fetchFriend:obj.jid];
     
     [cell setLabel:obj.jid.user];//设置好友名称
@@ -125,8 +126,7 @@
 }
 
 
-- (UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section
-{
+- (UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section {
     FriendHeaderView *header = [FriendHeaderView friendHeaderViewWithTableView:tableView];
     header.delegate = self;
     header.group = _groups[section];
@@ -134,11 +134,11 @@
     return header;
 }
 
-- (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath{
+- (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
     return 70;
 }
 
-- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
+- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     UIStoryboard *storyBoard = [UIStoryboard storyboardWithName:@"Main" bundle:nil];
     
     FriendInfoController *vc = (FriendInfoController *)[storyBoard instantiateViewControllerWithIdentifier:@"friendsInfo"];
@@ -148,7 +148,8 @@
     [self.navigationController pushViewController:vc animated:YES];
 }
 
-- (void)headerViewDidClickedNameView:(FriendHeaderView *)headerView{
+#pragma mark - headerView delegate
+- (void)headerViewDidClickedNameView:(FriendHeaderView *)headerView {
     [self.tableView reloadData];
 }
 

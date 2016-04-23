@@ -7,12 +7,12 @@
 //
 
 #import "PopoverViewController.h"
-#import "CreatGroupsViewController.h"
+#import "CreateGroupsViewController.h"
 #import "RecentViewController.h"
 
 @interface PopoverViewController ()
 
-@property (strong, nonatomic) CreatGroupsViewController *createGroupVC;
+@property (strong, nonatomic) CreateGroupsViewController *createGroupVC;
 @property (strong, nonatomic) RecentViewController *baseVC;
 
 @property (strong, nonatomic) void (^createGroupBlock)(void);

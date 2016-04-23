@@ -21,6 +21,7 @@
 #define MyXmppDidLoginNotification @"MyXmppDidLoginNotification"
 #define MyXmppConnectFailedNotification @"MyXmppConnectFailedNotification"
 #define MyXmppAuthenticateFailedNotification @"MyXmppAuthenticateFailedNotification"
+#define MyXmppUserStatusChangedNotification @"MyXmppUserStatusChangedNotification"
 
 #define MyXmppRoomDidConfigurationNotification @"MyXmppRoomDidConfigurationNotification"
 

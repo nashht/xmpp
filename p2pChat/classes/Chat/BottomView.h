@@ -18,8 +18,9 @@
 
 @interface BottomView : UIView
 
-@property (strong, nonatomic) NSString *username;
+@property (copy, nonatomic) NSString *chatObjectString;
 @property (weak, nonatomic) id<BottomViewDelegate> delegate;
+@property (assign, nonatomic, getter=isP2PChat) BOOL p2pChat;
 
 - (void)resignTextfield;
 

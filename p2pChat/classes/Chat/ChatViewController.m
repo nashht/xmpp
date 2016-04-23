@@ -61,11 +61,10 @@ static NSString *pictureReuseIdentifier = @"pictureMessageCell";
     if ([self isP2PChat]) {
         _historyController = [[DataManager shareManager]getMessageByUsername:_chatObjectString];
     } else {
-        
         _historyController = [[DataManager shareManager]getMessageByGroupname:_chatObjectString];
     }
     
-    _historyControllerDelegate = [[MyFetchedResultsControllerDelegate alloc]initWithTableView:_historyTableView];
+    _historyControllerDelegate = [[MyFetchedResultsControllerDelegate alloc]initWithTableView:_historyTableView withScrolling:YES];
     _historyController.delegate = _historyControllerDelegate;
     
 //    禁止选中tableView
@@ -73,6 +72,7 @@ static NSString *pictureReuseIdentifier = @"pictureMessageCell";
     
 //    backgroundColor 设置为灰色
     _historyTableView.backgroundColor = [UIColor colorWithRed:225/255.0 green:225/255.0 blue:225/255.0 alpha:1.0];
+    // 注册cell
     [_historyTableView registerClass:[MessageViewCell class] forCellReuseIdentifier:textReuseIdentifier];
     [_historyTableView registerClass:[RecordViewCell class] forCellReuseIdentifier:audioReuseIdentifier];
     [_historyTableView registerClass:[PicViewCell class] forCellReuseIdentifier:pictureReuseIdentifier];
@@ -82,7 +82,8 @@ static NSString *pictureReuseIdentifier = @"pictureMessageCell";
     // init bottom view
     _bottomView = [[NSBundle mainBundle]loadNibNamed:@"BottomView" owner:self options:nil].lastObject;
     _bottomView.frame = CGRectMake(0, _screenSize.height - BOTTOMHEIGHT, _screenSize.width, BOTTOMHEIGHT);
-    _bottomView.username = _chatObjectString;
+    _bottomView.chatObjectString = _chatObjectString;
+    _bottomView.p2pChat = [self isP2PChat];
     _bottomView.delegate = self;
     [[UIApplication sharedApplication].windows[0] addSubview:_bottomView];//bottom放在window上
     
@@ -90,7 +91,8 @@ static NSString *pictureReuseIdentifier = @"pictureMessageCell";
     _showMoreView = NO;
     _moreView = [[NSBundle mainBundle]loadNibNamed:@"MoreView" owner:self options:nil].lastObject;
     _moreView.frame = CGRectMake(0, _screenSize.height, _screenSize.width, MOREHEIGHT);
-//    _moreView.username = _username;
+    _moreView.chatObjectString = _chatObjectString;
+    _moreView.p2pChat = [self isP2PChat];
     [self.view addSubview:_moreView];
     
     [self tableViewScrollToBottom];

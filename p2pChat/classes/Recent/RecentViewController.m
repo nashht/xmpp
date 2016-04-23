@@ -10,12 +10,13 @@
 #import "DataManager.h"
 #import "MyFetchedResultsControllerDelegate.h"
 #import "MyXMPP.h"
+#import "MyXMPP+VCard.h"
 #import "LastMessage.h"
 #import "RecentCell.h"
 #import "ChatViewController.h"
 #import "Tool.h"
 #import "PopoverViewController.h"
-#import "CreatGroupsViewController.h"
+#import "CreateGroupsViewController.h"
 
 @interface RecentViewController ()<UITableViewDataSource, UITableViewDelegate,UIPopoverPresentationControllerDelegate>
 
@@ -47,7 +48,7 @@
     _recentTableView.delegate = self;
     _dataManager = [DataManager shareManager];
     _recentController = [_dataManager getRecent];
-    _resultsControllerDelegate = [[MyFetchedResultsControllerDelegate alloc]initWithTableView:_recentTableView];
+    _resultsControllerDelegate = [[MyFetchedResultsControllerDelegate alloc]initWithTableView:_recentTableView withScrolling:NO];
     _recentController.delegate = _resultsControllerDelegate;
     [_recentTableView registerNib:[UINib nibWithNibName:@"RecentCell" bundle:[NSBundle mainBundle]] forCellReuseIdentifier:@"recentCell"];//注册nib
     
@@ -62,9 +63,12 @@
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
     if ([segue.identifier isEqualToString:@"chat"]) {
         ChatViewController *destinationVC = segue.destinationViewController;
-        XMPPJID *jid = [XMPPJID jidWithUser:sender domain:@"xmpp.test" resource:@"iphone"];
         destinationVC.title = sender;
-        destinationVC.chatObjectString = jid.user;
+        destinationVC.chatObjectString = sender;
+    } else if ([segue.identifier isEqualToString:@"createGroup"]) {
+        UINavigationController *destinationNavigationController = segue.destinationViewController;
+        CreateGroupsViewController *createGroupVC = destinationNavigationController.childViewControllers[0];
+        createGroupVC.fatherVC = self;
     }
 }
 
@@ -98,11 +102,16 @@
     static NSString *recentIdentifier = @"recentCell";
     RecentCell *cell = [tableView dequeueReusableCellWithIdentifier:recentIdentifier forIndexPath:indexPath];//在此之前需要对nib 的cell进行注册
     LastMessage *lastMessage = [_recentController objectAtIndexPath:indexPath];
+    XMPPvCardTemp *vCardTemp = [[MyXMPP shareInstance]fetchFriend:[XMPPJID jidWithUser:lastMessage.username domain:myDomain resource:nil]];
     cell.usernamelabel.text = lastMessage.username;
     cell.lastmessagelabel.text = lastMessage.body;
     [cell awakeFromNib];
-    cell.userimage.image = [UIImage imageNamed:@"1"];
-    cell.lastmessagetime.text = [Tool stringFromDate:lastMessage.time];
+    if (vCardTemp.photo != nil) {
+        cell.userimage.image = [UIImage imageWithData:vCardTemp.photo];
+    } else {
+        cell.userimage.image = [UIImage imageNamed:@"1"];
+    }
+    cell.lastmessagetime.text = [NSString stringWithFormat:@"%f", lastMessage.time.doubleValue];
 
     NSNumber *num = lastMessage.unread;
     cell.nonreadmessagenum.text = [num stringValue];

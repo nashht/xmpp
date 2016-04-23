@@ -16,9 +16,11 @@
 #import "MyXMPP+VCard.h"
 #import "MyXMPP+Group.h"
 #import "HeaderView.h"
-#import "CreatGroupsViewController.h"
+#import "CreateGroupsViewController.h"
 
-@interface CreatGroupsViewController ()<UITableViewDelegate,UITableViewDataSource,HeaderViewDelegate>
+static NSString *defaultGroupName = @"my group";
+
+@interface CreateGroupsViewController ()<UITableViewDelegate,UITableViewDataSource,HeaderViewDelegate>
 
 @property (nonatomic, strong) NSMutableArray<FriendsGroup *> *groups;
 @property (strong, nonatomic) NSArray<XMPPGroupCoreDataStorageObject *> *groupCoreDataStorageObjects;
@@ -27,7 +29,7 @@
 
 @end
 
-@implementation CreatGroupsViewController
+@implementation CreateGroupsViewController
 
 - (void)viewDidLoad {
     [super viewDidLoad];
@@ -53,19 +55,23 @@
     _selectedFriends = [NSMutableArray array];
     
 }
+
+- (void)viewDidDisappear:(BOOL)animated {
+    [_fatherVC performSegueWithIdentifier:@"chat" sender:defaultGroupName];
+}
+
 - (UIStatusBarStyle)preferredStatusBarStyle{
     return YES;
 }
-
 
 - (IBAction)cancelBtnClick:(id)sender {
     [self dismissViewControllerAnimated:YES completion:nil];
 }
 
 - (IBAction)selectBtnClick:(UIButton *)sender {
-    [[MyXMPP shareInstance] creatGroupName:@"12121" withpassword:nil andsubject:nil];
+    [[MyXMPP shareInstance] creatGroupName:defaultGroupName withpassword:nil andsubject:nil];
     [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(invitenewfriends) name:MyXmppRoomDidConfigurationNotification object:nil];
-    
+    [self dismissViewControllerAnimated:YES completion:nil];
     NSLog(@"selected__-----------%@",_selectedFriends);
 }
 
