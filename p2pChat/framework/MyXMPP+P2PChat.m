@@ -41,11 +41,13 @@
 }
 
 - (void)sendMessage:(NSString *)text ToUser:(NSString *)user {
-    NSTimeInterval time = [[NSDate date]timeIntervalSince1970];
+    NSTimeInterval t = [[NSDate date]timeIntervalSince1970];
+    int time = (int)t;
+    
     [self sendMessageWithSubtype:@"text" time:time body:text more:nil toUser:user];
     
-    [self.dataManager saveMessageWithUsername:user time:[NSNumber numberWithDouble:time] body:text isOut:YES];
-    [self.dataManager addRecentUsername:user time:[NSNumber numberWithDouble:time] body:text isOut:YES];
+    [self.dataManager saveMessageWithUsername:user time:[NSNumber numberWithInt:time] body:text isOut:YES];
+    [self.dataManager addRecentUsername:user time:[NSNumber numberWithInt:time] body:text isOut:YES];
 }
 
 - (void)sendAudio:(NSString *)path ToUser:(NSString *)user length:(NSString *)length{
@@ -57,8 +59,8 @@
     
     [self sendMessageWithSubtype:@"audio" time:time body:audiomsg more:length toUser:user];
     
-    [self.dataManager saveRecordWithUsername:user time:[NSNumber numberWithDouble:time] path:path length:length isOut:YES];
-    [self.dataManager addRecentUsername:user time:[NSNumber numberWithDouble:time] body:Voice isOut:YES];
+    [self.dataManager saveRecordWithUsername:user time:[NSNumber numberWithInt:time] path:path length:length isOut:YES];
+    [self.dataManager addRecentUsername:user time:[NSNumber numberWithInt:time] body:Voice isOut:YES];
 }
 
 #pragma mark - receivemessage delegate
@@ -67,11 +69,13 @@
         NSString *subtype = [message getSubtype];
         NSString *timeStr = [message getTime];
         NSNumber *timeNumber = [NSNumber numberWithDouble:[timeStr doubleValue]];
+        NSDate *date = [NSDate dateWithTimeIntervalSince1970:[timeNumber doubleValue]];
+        NSLog(@"recieve time:%@",date);
         NSString *messageBody = [[message elementForName:@"body"] stringValue];
         XMPPJID *fromJid = message.from;
         NSString *bareJidStr = fromJid.user;
         char firstLetter = [subtype characterAtIndex:0];
-        switch (firstLetter) {
+        switch(firstLetter) {
             case 't':{//text
                 [self.dataManager saveMessageWithUsername:bareJidStr time:timeNumber body:messageBody isOut:NO];
                 [self.dataManager addRecentUsername:bareJidStr time:timeNumber body:messageBody isOut:NO];
@@ -99,6 +103,8 @@
                 break;
         }
         
+        NSLog(@"%@", message);
+
     } else {
         NSLog(@"%@", message);
     }
