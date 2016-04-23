@@ -20,6 +20,7 @@
 
 @property (nonatomic, strong) NSMutableArray<FriendsGroup *> *groups;
 @property (strong, nonatomic) NSArray<XMPPGroupCoreDataStorageObject *> *groupCoreDataStorageObjects;
+@property (strong, nonatomic) FriendsGroup *group;
 
 @end
 
@@ -52,11 +53,19 @@
     _groups = [[NSMutableArray alloc]init];
     for (XMPPGroupCoreDataStorageObject *groupObj in _groupCoreDataStorageObjects) {
         @autoreleasepool {
-            FriendsGroup *group = [[FriendsGroup alloc]init];
-            group.opened = NO;
-            group.name = groupObj.name;
-            group.friends = groupObj.users.allObjects;
-            [_groups addObject:group];
+            _group = [[FriendsGroup alloc]init];
+            _group.opened = NO;
+            _group.name = groupObj.name;
+            _group.friends = groupObj.users.allObjects;
+            int count = 0;
+            for (int i=0;i<_group.friends.count;i++) {
+                XMPPUserCoreDataStorageObject *userobj = groupObj.users.allObjects[i];
+                if ([userobj isOnline] ==YES) {
+                    count++;
+                };
+            }
+            _group.online = count;
+            [_groups addObject:_group];
         }
     }
 }
@@ -85,23 +94,28 @@
     XMPPUserCoreDataStorageObject *obj = groupInfo.users.allObjects[indexPath.row];
     XMPPvCardTemp *vCard = [[MyXMPP shareInstance]fetchFriend:obj.jid];
     
-    [cell setLabel:obj.jid.user];
-    if (vCard.photo != nil) {
+    [cell setLabel:obj.jid.user];//设置好友名称
+    if (vCard.photo != nil) {//设置好友默认头像
         [cell setIcon:[UIImage imageWithData:vCard.photo]];
     } else {
         [cell setIcon:[UIImage imageNamed:@"0"]];
     }
-    [cell setDepartment:@"职位"];
+    
+    if (vCard.title == nil) {//设置好友职务
+        [cell setDepartment:@"职务"];
+    }else{
+        [cell setDepartment:vCard.title];
+    }
     
     switch (obj.section) {
         case 0:
-            [cell setStatus:@"online"];
+            [cell setStatus:@"[在线]"];
             break;
         case 1:
-            [cell setStatus:@"away"];
+            [cell setStatus:@"[离开]"];
             break;
         case 2:
-            [cell setStatus:@"offline"];
+            [cell setStatus:@"[离线]"];
             break;
         default:
             break;
