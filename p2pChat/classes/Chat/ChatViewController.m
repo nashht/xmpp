@@ -58,7 +58,13 @@ static NSString *pictureReuseIdentifier = @"pictureMessageCell";
     _historyTableView.dataSource = self;
     _historyTableView.delegate = self;
     _historyTableView.separatorStyle = UITableViewCellSeparatorStyleNone;
-    _historyController = [[DataManager shareManager]getMessageByUsername:_userJid.user];
+    if ([self isP2PChat]) {
+        _historyController = [[DataManager shareManager]getMessageByUsername:_chatObjectString];
+    } else {
+        
+        _historyController = [[DataManager shareManager]getMessageByGroupname:_chatObjectString];
+    }
+    
     _historyControllerDelegate = [[MyFetchedResultsControllerDelegate alloc]initWithTableView:_historyTableView];
     _historyController.delegate = _historyControllerDelegate;
     
@@ -76,7 +82,7 @@ static NSString *pictureReuseIdentifier = @"pictureMessageCell";
     // init bottom view
     _bottomView = [[NSBundle mainBundle]loadNibNamed:@"BottomView" owner:self options:nil].lastObject;
     _bottomView.frame = CGRectMake(0, _screenSize.height - BOTTOMHEIGHT, _screenSize.width, BOTTOMHEIGHT);
-    _bottomView.username = _userJid.user;
+    _bottomView.username = _chatObjectString;
     _bottomView.delegate = self;
     [[UIApplication sharedApplication].windows[0] addSubview:_bottomView];//bottom放在window上
     
@@ -129,7 +135,6 @@ static NSString *pictureReuseIdentifier = @"pictureMessageCell";
  *  tableView自动显示最后一行
  */
 - (void)tableViewScrollToBottom{
-    
     NSUInteger sectionCount = [_historyTableView numberOfSections];
     if (sectionCount) {
         
@@ -179,6 +184,7 @@ static NSString *pictureReuseIdentifier = @"pictureMessageCell";
         }
         case MessageTypeRecord:{
             RecordViewCell *cell = [_historyTableView dequeueReusableCellWithIdentifier:audioReuseIdentifier];
+            
             if (cell == nil) {
                 cell = [[RecordViewCell alloc] initWithStyle:UITableViewCellStyleSubtitle reuseIdentifier:audioReuseIdentifier];
             }

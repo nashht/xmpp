@@ -64,7 +64,7 @@
         ChatViewController *destinationVC = segue.destinationViewController;
         XMPPJID *jid = [XMPPJID jidWithUser:sender domain:@"xmpp.test" resource:@"iphone"];
         destinationVC.title = sender;
-        destinationVC.userJid = jid;
+        destinationVC.chatObjectString = jid.user;
     }
 }
 

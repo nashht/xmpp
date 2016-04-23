@@ -11,7 +11,8 @@
 
 @interface ChatViewController : UIViewController
 
-@property (strong, nonatomic) XMPPJID *userJid;
+@property (copy, nonatomic) NSString *chatObjectString;//可以是user，也可以是group
+@property (assign, nonatomic, getter=isP2PChat) BOOL P2PChat;
 
 - (void)showMoreView;
 
