@@ -71,6 +71,7 @@
         self.stream = [[XMPPStream alloc] init];
         [self.stream addDelegate:self delegateQueue:dispatch_get_main_queue()];
         _dataManager = [DataManager shareManager];
+        self.stream.enableBackgroundingOnSocket = YES;
     }
     
     return self;

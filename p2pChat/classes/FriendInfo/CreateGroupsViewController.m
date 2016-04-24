@@ -57,7 +57,7 @@ static NSString *defaultGroupName = @"my group";
 }
 
 - (void)viewDidDisappear:(BOOL)animated {
-    [_fatherVC performSegueWithIdentifier:@"chat" sender:defaultGroupName];
+    [_fatherVC performSegueWithIdentifier:@"chat" sender:defaultGroupName];//进入聊天的界面
 }
 
 - (UIStatusBarStyle)preferredStatusBarStyle{

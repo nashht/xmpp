@@ -22,7 +22,13 @@
     [super viewDidLoad];
     
     XMPPvCardTemp *vCard = [[MyXMPP shareInstance]fetchFriend:[XMPPJID jidWithUser:_friendName domain:myDomain resource:nil]];
-    [_friendPhotoBtn setImage:[UIImage imageWithData:vCard.photo] forState:UIControlStateNormal];
+    UIImage *image = nil;
+    if (vCard.photo != nil) {
+        image = [UIImage imageWithData:vCard.photo];
+    } else {
+        image = [UIImage imageNamed:@"1"];
+    }
+    [_friendPhotoBtn setImage:image forState:UIControlStateNormal];
     _friendNameLabel.text = _friendName;
 }
 

@@ -6,6 +6,7 @@
 //  Copyright © 2016年 xiaokun. All rights reserved.
 //
 
+#import <UIKit/UIKit.h>
 #import "MyXMPP+P2PChat.h"
 #import "XMPPStream.h"
 #import "XMPPMessage.h"
@@ -74,11 +75,16 @@
         NSString *messageBody = [[message elementForName:@"body"] stringValue];
         XMPPJID *fromJid = message.from;
         NSString *bareJidStr = fromJid.user;
+        
+        UILocalNotification *localNotification = [[UILocalNotification alloc]init];
+        localNotification.fireDate = [NSDate date];
+        
         char firstLetter = [subtype characterAtIndex:0];
         switch(firstLetter) {
             case 't':{//text
                 [self.dataManager saveMessageWithUsername:bareJidStr time:timeNumber body:messageBody isOut:NO];
                 [self.dataManager addRecentUsername:bareJidStr time:timeNumber body:messageBody isOut:NO];
+                localNotification.alertBody = [NSString stringWithFormat:@"%@:%@", bareJidStr, messageBody];
                 break;
             }
             case 'a':{//audio
@@ -92,6 +98,7 @@
                 
                 [self.dataManager saveRecordWithUsername:bareJidStr time:timeNumber path:path length:during isOut:NO];
                 [self.dataManager addRecentUsername:bareJidStr time:timeNumber body:Voice isOut:NO];
+                localNotification.alertBody = [NSString stringWithFormat:@"%@:[语音]", bareJidStr];
                 break;
             }
             case 'p':{
@@ -104,7 +111,8 @@
         }
         
         NSLog(@"%@", message);
-
+        
+        [[UIApplication sharedApplication]presentLocalNotificationNow:localNotification];
     } else {
         NSLog(@"%@", message);
     }
