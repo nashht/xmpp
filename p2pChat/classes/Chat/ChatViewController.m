@@ -94,7 +94,8 @@ static NSString *pictureReuseIdentifier = @"pictureMessageCell";
     _moreView = [[NSBundle mainBundle]loadNibNamed:@"MoreView" owner:self options:nil].lastObject;
     _moreView.frame = CGRectMake(0, _screenSize.height, _screenSize.width, MOREHEIGHT);
     _moreView.chatObjectString = _chatObjectString;
-    _moreView.p2pChat = [self isP2PChat];
+//    _moreView.p2pChat = [self isP2PChat];
+    _moreView.p2pChat = YES;
     [self.view addSubview:_moreView];
     
     [self tableViewScrollToBottom];

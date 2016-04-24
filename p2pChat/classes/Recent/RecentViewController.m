@@ -63,8 +63,10 @@
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
     if ([segue.identifier isEqualToString:@"chat"]) {
         ChatViewController *destinationVC = segue.destinationViewController;
-        destinationVC.title = sender;
-        destinationVC.chatObjectString = sender;
+        LastMessage *message = sender;
+        destinationVC.title = message.username;
+        destinationVC.chatObjectString = message.username;
+        destinationVC.p2pChat = message.isP2P;
     } else if ([segue.identifier isEqualToString:@"createGroup"]) {
         UINavigationController *destinationNavigationController = segue.destinationViewController;
         CreateGroupsViewController *createGroupVC = destinationNavigationController.childViewControllers[0];
@@ -127,7 +129,7 @@
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     LastMessage *lastMessage = [_recentController objectAtIndexPath:indexPath];
-    [self performSegueWithIdentifier:@"chat" sender:lastMessage.username];//跳转到chat界面，并传参数，即当前聊天对象名称
+    [self performSegueWithIdentifier:@"chat" sender:lastMessage];//跳转到chat界面，并传参数，即当前聊天对象名称
     [_dataManager updateUsername:lastMessage.username];
 }//当点击一个tableview时会调用以上代理，触发跳转到聊天界面
 

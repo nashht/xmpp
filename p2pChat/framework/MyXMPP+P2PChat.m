@@ -48,7 +48,7 @@
     [self sendMessageWithSubtype:@"text" time:time body:text more:nil toUser:user];
     
     [self.dataManager saveMessageWithUsername:user time:[NSNumber numberWithInt:time] body:text isOut:YES];
-    [self.dataManager addRecentUsername:user time:[NSNumber numberWithInt:time] body:text isOut:YES];
+    [self.dataManager addRecentUsername:user time:[NSNumber numberWithInt:time] body:text isOut:YES isP2P:YES];
 }
 
 - (void)sendAudio:(NSString *)path ToUser:(NSString *)user length:(NSString *)length{
@@ -61,7 +61,7 @@
     [self sendMessageWithSubtype:@"audio" time:time body:audiomsg more:length toUser:user];
     
     [self.dataManager saveRecordWithUsername:user time:[NSNumber numberWithInt:time] path:path length:length isOut:YES];
-    [self.dataManager addRecentUsername:user time:[NSNumber numberWithInt:time] body:Voice isOut:YES];
+    [self.dataManager addRecentUsername:user time:[NSNumber numberWithInt:time] body:Voice isOut:YES isP2P:YES];
 }
 
 #pragma mark - receivemessage delegate
@@ -83,7 +83,7 @@
         switch(firstLetter) {
             case 't':{//text
                 [self.dataManager saveMessageWithUsername:bareJidStr time:timeNumber body:messageBody isOut:NO];
-                [self.dataManager addRecentUsername:bareJidStr time:timeNumber body:messageBody isOut:NO];
+                [self.dataManager addRecentUsername:bareJidStr time:timeNumber body:messageBody isOut:NO isP2P:YES];
                 localNotification.alertBody = [NSString stringWithFormat:@"%@:%@", bareJidStr, messageBody];
                 break;
             }
@@ -97,7 +97,7 @@
                 [VoiceConverter amrToWav:tmpPath wavSavePath:path];
                 
                 [self.dataManager saveRecordWithUsername:bareJidStr time:timeNumber path:path length:during isOut:NO];
-                [self.dataManager addRecentUsername:bareJidStr time:timeNumber body:Voice isOut:NO];
+                [self.dataManager addRecentUsername:bareJidStr time:timeNumber body:Voice isOut:NO isP2P:YES];
                 localNotification.alertBody = [NSString stringWithFormat:@"%@:[语音]", bareJidStr];
                 break;
             }

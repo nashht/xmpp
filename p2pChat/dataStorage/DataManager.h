@@ -32,7 +32,7 @@
 @interface DataManager (LastMessage)
 
 - (NSFetchedResultsController *)getRecent;
-- (void)addRecentUsername:(NSString *)username time:(NSNumber *)time body:(NSString *)body isOut:(BOOL)isOut;
+- (void)addRecentUsername:(NSString *)username time:(NSNumber *)time body:(NSString *)body isOut:(BOOL)isOut isP2P:(BOOL)isP2P;
 - (void)updateUsername:(NSString *)username;//已读
 - (void)deleteRecentUsername:(NSString *)username;
 

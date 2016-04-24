@@ -77,6 +77,7 @@
 
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
     ChatViewController *chatVc = (ChatViewController *)segue.destinationViewController;
+    chatVc.p2pChat = YES;
     chatVc.title = _userObj.jid.user;
     chatVc.chatObjectString = _userObj.jid.user;
 }
