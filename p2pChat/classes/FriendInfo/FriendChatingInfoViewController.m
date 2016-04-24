@@ -32,11 +32,6 @@
     _friendNameLabel.text = _friendName;
 }
 
-- (void)didReceiveMemoryWarning {
-    [super didReceiveMemoryWarning];
-    // Dispose of any resources that can be recreated.
-}
-
 - (IBAction)createGroup:(id)sender {
     
 }
