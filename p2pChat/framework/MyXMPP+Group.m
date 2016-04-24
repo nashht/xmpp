@@ -8,6 +8,7 @@
 
 #import "MyXMPP+Group.h"
 #import "DataManager.h"
+#import "Tool.h"
 
 static NSString *myRoomDomain = @"conference.xmpp.test";
 
@@ -51,7 +52,8 @@ static NSString *myRoomDomain = @"conference.xmpp.test";
     [self.stream sendElement:message];
     NSLog(@"message : %@", message);
     
-    double time = [[NSDate date]timeIntervalSince1970];
+    NSDate *date = [Tool transferDate:[NSDate date]];
+    double time = [date timeIntervalSince1970];
     
     [self.dataManager saveMessageWithGroupname:groupname username:self.myjid.user time:[NSNumber numberWithDouble:time] body:text];
     [self.dataManager addRecentUsername:groupname time:[NSNumber numberWithDouble:time] body:text isOut:YES];
@@ -77,7 +79,8 @@ static NSString *myRoomDomain = @"conference.xmpp.test";
     [audiomessage addChild:body];
     [self.stream sendElement:audiomessage];
     
-    double time = [[NSDate alloc]timeIntervalSince1970];
+    NSDate *date = [Tool transferDate:[NSDate date]];
+    double time = [date timeIntervalSince1970];
     
     [self.dataManager saveRecordWithGroupname:groupname username:self.myjid.user time:[NSNumber numberWithDouble:time] path:path length:length];
     
@@ -135,7 +138,8 @@ static NSString *myRoomDomain = @"conference.xmpp.test";
 
 - (void)xmppRoom:(XMPPRoom *)sender didReceiveMessage:(XMPPMessage *)message fromOccupant:(XMPPJID *)occupantJID{
     NSLog(@"群组『%@』有新消息：%@",sender.roomJID.user,[message body]);
-    [[DataManager shareManager]addRecentUsername:sender.roomJID.user time:[NSNumber numberWithDouble:[[NSDate date]timeIntervalSince1970]] body:message.body isOut:NO];
+    NSDate *date = [Tool transferDate:[NSDate date]];
+    [[DataManager shareManager]addRecentUsername:sender.roomJID.user time:[NSNumber numberWithDouble:[date timeIntervalSince1970]] body:message.body isOut:NO];
 }
 
 - (void)xmppRoom:(XMPPRoom *)sender occupantDidLeave:(XMPPJID *)occupantJID

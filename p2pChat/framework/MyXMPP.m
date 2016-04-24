@@ -94,6 +94,8 @@
     _myVCardTemp = [_vCardModule myvCardTemp];
 }
 
+
+
 #pragma mark - xmpp delegate
 - (void)xmppStreamDidConnect:(XMPPStream *)sender {
     NSError *err = nil;

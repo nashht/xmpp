@@ -15,6 +15,7 @@
 #import "DataManager.h"
 #import "Tool.h"
 #import "VoiceConverter.h"
+#import "Tool.h"
 
 #define Voice @"[语音]"
 
@@ -42,7 +43,8 @@
 }
 
 - (void)sendMessage:(NSString *)text ToUser:(NSString *)user {
-    NSTimeInterval t = [[NSDate date]timeIntervalSince1970];
+    NSDate *date = [Tool transferDate:[NSDate date]];
+    NSTimeInterval t = [date timeIntervalSince1970];
     int time = (int)t;
     
     [self sendMessageWithSubtype:@"text" time:time body:text more:nil toUser:user];
@@ -56,7 +58,10 @@
     NSData *p = [filemnanager contentsAtPath:path];
     NSString *audiomsg = [p base64EncodedStringWithOptions:0];
     
-    double time = [[NSDate alloc]timeIntervalSince1970];
+    NSDate *date = [Tool transferDate:[NSDate date]];
+    double time = [date timeIntervalSince1970];
+//    int time = (int)t;
+//    double time = [[NSDate alloc]timeIntervalSince1970];
     
     [self sendMessageWithSubtype:@"audio" time:time body:audiomsg more:length toUser:user];
     
@@ -69,9 +74,12 @@
     if ([message isChatMessageWithBody]) {
         NSString *subtype = [message getSubtype];
         NSString *timeStr = [message getTime];
-        NSNumber *timeNumber = [NSNumber numberWithDouble:[timeStr doubleValue]];
-        NSDate *date = [NSDate dateWithTimeIntervalSince1970:[timeNumber doubleValue]];
+        NSNumber *timenum = [NSNumber numberWithDouble:[timeStr doubleValue]];
+        NSDate *d = [NSDate dateWithTimeIntervalSince1970:[timenum doubleValue]];
+        NSDate *date = [Tool transferDate:d];
+        NSNumber *timeNumber = [NSNumber numberWithDouble:[date timeIntervalSinceReferenceDate]];
         NSLog(@"recieve time:%@",date);
+        
         NSString *messageBody = [[message elementForName:@"body"] stringValue];
         XMPPJID *fromJid = message.from;
         NSString *bareJidStr = fromJid.user;
