@@ -56,7 +56,7 @@ static NSString *myRoomDomain = @"conference.xmpp.test";
     double time = [date timeIntervalSince1970];
     
     [self.dataManager saveMessageWithGroupname:groupname username:self.myjid.user time:[NSNumber numberWithDouble:time] body:text];
-    [self.dataManager addRecentUsername:groupname time:[NSNumber numberWithDouble:time] body:text isOut:YES];
+    [self.dataManager addRecentUsername:groupname time:[NSNumber numberWithDouble:time] body:text isOut:YES isP2P:NO];
 }
 
 - (void)sendAudio:(NSString *)path ToGroup:(NSString *)groupname withlength:(NSString *)length{
@@ -138,8 +138,7 @@ static NSString *myRoomDomain = @"conference.xmpp.test";
 
 - (void)xmppRoom:(XMPPRoom *)sender didReceiveMessage:(XMPPMessage *)message fromOccupant:(XMPPJID *)occupantJID{
     NSLog(@"群组『%@』有新消息：%@",sender.roomJID.user,[message body]);
-    NSDate *date = [Tool transferDate:[NSDate date]];
-    [[DataManager shareManager]addRecentUsername:sender.roomJID.user time:[NSNumber numberWithDouble:[date timeIntervalSince1970]] body:message.body isOut:NO];
+    [[DataManager shareManager]addRecentUsername:sender.roomJID.user time:[NSNumber numberWithDouble:[[NSDate date]timeIntervalSince1970]] body:message.body isOut:NO isP2P:NO];
 }
 
 - (void)xmppRoom:(XMPPRoom *)sender occupantDidLeave:(XMPPJID *)occupantJID

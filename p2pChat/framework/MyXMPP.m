@@ -161,7 +161,7 @@
 - (void)xmppStreamDidDisconnect:(XMPPStream *)sender withError:(NSError *)error {
     NSLog(@"DidDisconnect");
     NSLog(@"disconnet error:%@",error);
-//    [[NSNotificationCenter defaultCenter]postNotificationName:MyXmppConnectFailedNotification object:nil];
+    [[NSNotificationCenter defaultCenter]postNotificationName:MyXmppConnectFailedNotification object:nil];
 }
 
 - (void)xmppStream:(XMPPStream *)sender didNotAuthenticate:(NSXMLElement *)error {

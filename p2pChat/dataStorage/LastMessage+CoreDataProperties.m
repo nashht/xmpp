@@ -2,7 +2,7 @@
 //  LastMessage+CoreDataProperties.m
 //  p2pChat
 //
-//  Created by admin on 16/4/21.
+//  Created by xiaokun on 16/4/24.
 //  Copyright © 2016年 xiaokun. All rights reserved.
 //
 //  Choose "Create NSManagedObject Subclass…" from the Core Data editor menu
@@ -18,5 +18,6 @@
 @dynamic time;
 @dynamic unread;
 @dynamic username;
+@dynamic isP2P;
 
 @end

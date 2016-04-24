@@ -144,7 +144,10 @@
     FriendInfoController *vc = (FriendInfoController *)[storyBoard instantiateViewControllerWithIdentifier:@"friendsInfo"];
     vc.title = @"个人资料";
     XMPPGroupCoreDataStorageObject *group = _groupCoreDataStorageObjects[indexPath.section];
-    vc.userObj = group.users.allObjects[indexPath.row];
+    NSSortDescriptor *sortKey = [NSSortDescriptor sortDescriptorWithKey:@"section" ascending:YES];
+    NSArray *users = [group.users sortedArrayUsingDescriptors:@[sortKey]];
+    XMPPUserCoreDataStorageObject *obj = users[indexPath.row];
+    vc.userObj = obj;
     [self.navigationController pushViewController:vc animated:YES];
 }
 
