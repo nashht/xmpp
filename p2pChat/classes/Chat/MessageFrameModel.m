@@ -8,13 +8,11 @@
 
 #define bodyPedding 20
 #import "MessageFrameModel.h"
-#import "Message.h"
-#import "Message+CoreDataProperties.h"
+#import "MessageBean.h"
 
 @implementation MessageFrameModel
 
-
-- (void)setMessage:(Message *)message{
+- (void)setMessage:(MessageBean *)message{
     _message = message;
     //    设置屏幕的宽
     CGFloat screenW = [UIScreen mainScreen].bounds.size.width;
@@ -33,18 +31,17 @@
     CGFloat photoY = CGRectGetMaxY(_timeFrame) + padding;
     CGFloat photoW = 50;
     CGFloat photoH = 50;
-    
+
     if ([message.isOut boolValue]) {
-//        自己发送的消息，头像在右边
+        //        自己发送的消息，头像在右边
         photoX = screenW - padding - photoW;
-//          NSLog(@"icon in right");
+        //          NSLog(@"icon in right");
     }else{
         photoX = padding;
-//            NSLog(@"icon in left");
+        //            NSLog(@"icon in left");
     }
-    
     _photoFrame = CGRectMake(photoX, photoY, photoW, photoH);
- 
+    
     CGSize bodySize =  [message.body boundingRectWithSize:CGSizeMake(screenW - photoW * 2 - padding * 2, MAXFLOAT) options:NSStringDrawingUsesLineFragmentOrigin attributes:@{NSFontAttributeName:[UIFont systemFontOfSize:15.0f]} context:nil].size;
     
     CGSize lastBodySize = CGSizeMake(bodySize.width + bodyPedding * 2, bodySize.height + bodyPedding * 2);
@@ -59,7 +56,6 @@
     }
     
     _bodyFrame = (CGRect){{bodyX,bodyY},lastBodySize};
-    
     
     //    cell的高度
     CGFloat maxBodyH = CGRectGetMaxY(_bodyFrame);

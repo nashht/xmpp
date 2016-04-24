@@ -15,6 +15,8 @@
 #import "MessageViewCell.h"
 #import "DataManager.h"
 #import "Message.h"
+#import "GroupMessage.h"
+#import "MessageBean.h"
 #import "MyFetchedResultsControllerDelegate.h"
 #import "MessageCell.h"
 #import "AudioCenter.h"
@@ -159,7 +161,15 @@ static NSString *pictureReuseIdentifier = @"pictureMessageCell";
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     self.tableViewHeight = _historyTableView.contentSize.height + 150;
-    Message *message = [_historyController objectAtIndexPath:indexPath];
+    NSManagedObject *messageObj = [_historyController objectAtIndexPath:indexPath];
+    MessageBean *message = nil;
+    if (self.isP2PChat) {
+        Message *p2pMessage = (Message *)messageObj;
+        message = [[MessageBean alloc]initWithUsername:p2pMessage.username type:p2pMessage.type body:p2pMessage.body time:p2pMessage.time isOut:p2pMessage.isOut isP2P:YES];
+    } else {
+        GroupMessage *groupMessage = (GroupMessage *)messageObj;
+        message = [[MessageBean alloc]initWithUsername:groupMessage.username type:groupMessage.type body:groupMessage.body time:groupMessage.time isOut:nil isP2P:NO];
+    }
     MessageType type = message.type.charValue;
     switch (type) {
         case MessageTypeMessage:{
@@ -180,7 +190,7 @@ static NSString *pictureReuseIdentifier = @"pictureMessageCell";
                 cell = [[PicViewCell alloc] initWithStyle:UITableViewCellStyleSubtitle reuseIdentifier:pictureReuseIdentifier];
             }
             PicFrameModel *messageFrameModel = [[PicFrameModel alloc] init];
-            messageFrameModel.message = message;
+//            messageFrameModel.message = message;
             cell.picFrame = messageFrameModel;
             return cell;
         }
@@ -191,7 +201,7 @@ static NSString *pictureReuseIdentifier = @"pictureMessageCell";
                 cell = [[RecordViewCell alloc] initWithStyle:UITableViewCellStyleSubtitle reuseIdentifier:audioReuseIdentifier];
             }
             RecordFrameModel *recordFrameMode = [[RecordFrameModel alloc] init];
-            recordFrameMode.message = message;
+//            recordFrameMode.message = message;
             cell.recordFrame = recordFrameMode;
             return cell;
         }
@@ -204,8 +214,15 @@ static NSString *pictureReuseIdentifier = @"pictureMessageCell";
 
 #pragma mark - table view delegate
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
-    Message *message = [_historyController objectAtIndexPath:indexPath];
-    
+    NSManagedObject *messageObj = [_historyController objectAtIndexPath:indexPath];
+    MessageBean *message = nil;
+    if (self.isP2PChat) {
+        Message *p2pMessage = (Message *)messageObj;
+        message = [[MessageBean alloc]initWithUsername:p2pMessage.username type:p2pMessage.type body:p2pMessage.body time:p2pMessage.time isOut:p2pMessage.isOut isP2P:YES];
+    } else {
+        GroupMessage *groupMessage = (GroupMessage *)messageObj;
+        message = [[MessageBean alloc]initWithUsername:groupMessage.username type:groupMessage.type body:groupMessage.body time:groupMessage.time isOut:nil isP2P:NO];
+    }
     MessageType type = message.type.charValue;
     switch (type) {
         case MessageTypeMessage:{
@@ -216,13 +233,13 @@ static NSString *pictureReuseIdentifier = @"pictureMessageCell";
             break;
         case MessageTypePicture:{
             PicFrameModel *picFrameModel = [[PicFrameModel alloc] init];
-            picFrameModel.message = message;
+//            picFrameModel.message = message;
             return picFrameModel.cellHeight + 1;
         }
             break;
         case MessageTypeRecord:{
             RecordFrameModel *recordFrameMode = [[RecordFrameModel alloc] init];
-            recordFrameMode.message = message;
+//            recordFrameMode.message = message;
             return recordFrameMode.cellHeight + 1;
         }
             break;

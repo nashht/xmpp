@@ -10,7 +10,8 @@
 #import "MessageViewCell.h"
 #import "MessageFrameModel.h"
 #import "Tool.h"
-
+#import "MessageBean.h"
+#import "MyXmpp+VCard.h"
 
 @interface MessageViewCell()
 
@@ -56,29 +57,28 @@
 
 - (void) setMessageFrame:(MessageFrameModel *)messageFrame{
     _messageFrame = messageFrame;
-    
+    MessageBean *message = messageFrame.message;
+    XMPPvCardTemp *vCard = [[MyXMPP shareInstance]fetchFriend:[XMPPJID jidWithUser:message.username domain:myDomain resource:nil]];
     //    数据模型
-    Message *msg = messageFrame.message;
-    
-    _timeLable.text = [Tool stringFromDate:msg.time];
+    _timeLable.text = [Tool stringFromDate:message.time];
     _timeLable.frame = messageFrame.timeFrame;
-    _vCard = messageFrame.vCard;
     
-    if ([msg.isOut boolValue]) {
+    if (vCard.photo != nil) {
+        _photoImage.image = [UIImage imageWithData:vCard.photo];
+    } else {
         _photoImage.image = [UIImage imageNamed:@"0"];
-    }else{
-        _photoImage.image = [UIImage imageNamed:@"1"];
     }
     
     _photoImage.frame = messageFrame.photoFrame;
-    [_photoImage.layer setCornerRadius:CGRectGetHeight([_photoImage bounds]) / 2];
+//    [_photoImage.layer setCornerRadius:CGRectGetHeight([_photoImage bounds]) / 2];
+    [_photoImage.layer setCornerRadius:10];
     _photoImage.layer.masksToBounds = true;
     
-    [_bodyBtn setTitle:msg.body forState:UIControlStateNormal];
+    [_bodyBtn setTitle:message.body forState:UIControlStateNormal];
     _bodyBtn.frame = messageFrame.bodyFrame;
     
 //    文字背景
-    if ([msg.isOut boolValue]) {
+    if ([message.isOut boolValue]) {
         [_bodyBtn setBackgroundImage: [self resizeImageWithName:@"chat_send_nor"] forState:UIControlStateNormal];
     }else{
         [_bodyBtn setBackgroundImage:[self resizeImageWithName:@"chat_recive_nor"] forState:UIControlStateNormal];
