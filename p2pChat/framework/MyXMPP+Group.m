@@ -8,6 +8,7 @@
 
 #import "MyXMPP+Group.h"
 #import "DataManager.h"
+#import "Tool.h"
 
 static NSString *myRoomDomain = @"conference.xmpp.test";
 
@@ -51,7 +52,8 @@ static NSString *myRoomDomain = @"conference.xmpp.test";
     [self.stream sendElement:message];
     NSLog(@"message : %@", message);
     
-    double time = [[NSDate date]timeIntervalSince1970];
+    NSDate *date = [Tool transferDate:[NSDate date]];
+    double time = [date timeIntervalSince1970];
     
     [self.dataManager saveMessageWithGroupname:groupname username:self.myjid.user time:[NSNumber numberWithDouble:time] body:text];
     [self.dataManager addRecentUsername:groupname time:[NSNumber numberWithDouble:time] body:text isOut:YES isP2P:NO];
@@ -77,7 +79,8 @@ static NSString *myRoomDomain = @"conference.xmpp.test";
     [audiomessage addChild:body];
     [self.stream sendElement:audiomessage];
     
-    double time = [[NSDate alloc]timeIntervalSince1970];
+    NSDate *date = [Tool transferDate:[NSDate date]];
+    double time = [date timeIntervalSince1970];
     
     [self.dataManager saveRecordWithGroupname:groupname username:self.myjid.user time:[NSNumber numberWithDouble:time] path:path length:length];
     

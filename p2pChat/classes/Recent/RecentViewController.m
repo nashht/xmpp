@@ -113,7 +113,8 @@
     } else {
         cell.userimage.image = [UIImage imageNamed:@"1"];
     }
-    cell.lastmessagetime.text = [NSString stringWithFormat:@"%f", lastMessage.time.doubleValue];
+    NSDate *date1 = [NSDate dateWithTimeIntervalSince1970:lastMessage.time.doubleValue];
+    cell.lastmessagetime.text = [NSString stringWithFormat:@"%@", date1];
 
     NSNumber *num = lastMessage.unread;
     cell.nonreadmessagenum.text = [num stringValue];
