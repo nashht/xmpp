@@ -60,8 +60,6 @@
     
     NSDate *date = [Tool transferDate:[NSDate date]];
     double time = [date timeIntervalSince1970];
-//    int time = (int)t;
-//    double time = [[NSDate alloc]timeIntervalSince1970];
     
     [self sendMessageWithSubtype:@"audio" time:time body:audiomsg more:length toUser:user];
     
