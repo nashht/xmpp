@@ -214,6 +214,7 @@
 		DAAA186D1CABCF6500691170 /* Message+CoreDataProperties.m in Sources */ = {isa = PBXBuildFile; fileRef = DAAA18681CABCF6500691170 /* Message+CoreDataProperties.m */; };
 		DAAA186E1CABCF6500691170 /* Message.m in Sources */ = {isa = PBXBuildFile; fileRef = DAAA186A1CABCF6500691170 /* Message.m */; };
 		DAAC6D781C4CD2A2009C0859 /* PhotoLibraryCenter.m in Sources */ = {isa = PBXBuildFile; fileRef = DAAC6D771C4CD2A2009C0859 /* PhotoLibraryCenter.m */; };
+		DAAF2C0A1CCC66B500C51494 /* MessageBean.m in Sources */ = {isa = PBXBuildFile; fileRef = DAAF2C091CCC66B500C51494 /* MessageBean.m */; };
 		DACDC7981CC87258005F5FA2 /* MyXMPP+Roster.m in Sources */ = {isa = PBXBuildFile; fileRef = DACDC7971CC87258005F5FA2 /* MyXMPP+Roster.m */; };
 		DACDC79B1CC879F9005F5FA2 /* MyXMPP+VCard.m in Sources */ = {isa = PBXBuildFile; fileRef = DACDC79A1CC879F9005F5FA2 /* MyXMPP+VCard.m */; };
 		DACDC79E1CC87CF2005F5FA2 /* MyXMPP+Group.m in Sources */ = {isa = PBXBuildFile; fileRef = DACDC79D1CC87CF2005F5FA2 /* MyXMPP+Group.m */; };
@@ -668,6 +669,8 @@
 		DAAA186A1CABCF6500691170 /* Message.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = Message.m; path = dataStorage/Message.m; sourceTree = "<group>"; };
 		DAAC6D761C4CD2A2009C0859 /* PhotoLibraryCenter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = PhotoLibraryCenter.h; path = Tool/PhotoLibraryCenter.h; sourceTree = "<group>"; };
 		DAAC6D771C4CD2A2009C0859 /* PhotoLibraryCenter.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = PhotoLibraryCenter.m; path = Tool/PhotoLibraryCenter.m; sourceTree = "<group>"; };
+		DAAF2C081CCC66B500C51494 /* MessageBean.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MessageBean.h; sourceTree = "<group>"; };
+		DAAF2C091CCC66B500C51494 /* MessageBean.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MessageBean.m; sourceTree = "<group>"; };
 		DACDC7961CC87258005F5FA2 /* MyXMPP+Roster.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "MyXMPP+Roster.h"; path = "framework/MyXMPP+Roster.h"; sourceTree = "<group>"; };
 		DACDC7971CC87258005F5FA2 /* MyXMPP+Roster.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "MyXMPP+Roster.m"; path = "framework/MyXMPP+Roster.m"; sourceTree = "<group>"; };
 		DACDC7991CC879F9005F5FA2 /* MyXMPP+VCard.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "MyXMPP+VCard.h"; path = "framework/MyXMPP+VCard.h"; sourceTree = "<group>"; };
@@ -824,6 +827,8 @@
 				900122541CA91EE2005D5BFA /* RecordFrameModel.m */,
 				900122551CA91EE2005D5BFA /* RecordViewCell.h */,
 				900122561CA91EE2005D5BFA /* RecordViewCell.m */,
+				DAAF2C081CCC66B500C51494 /* MessageBean.h */,
+				DAAF2C091CCC66B500C51494 /* MessageBean.m */,
 				84F32C441CBF766C00BB9BD1 /* BottomView */,
 				DAD235061C424D0E003A93F9 /* MoreView */,
 			);
@@ -2328,6 +2333,7 @@
 				DACDC7A11CC8811C005F5FA2 /* MyXMPP+P2PChat.m in Sources */,
 				844988071CC8C794009AE90E /* XMPPMessage+MyExtends.m in Sources */,
 				84AD18E51CB5238C00357F60 /* EditEmailController.m in Sources */,
+				DAAF2C0A1CCC66B500C51494 /* MessageBean.m in Sources */,
 				844988031CC8BE21009AE90E /* GroupMessage+CoreDataProperties.m in Sources */,
 				DAAA186B1CABCF6500691170 /* LastMessage+CoreDataProperties.m in Sources */,
 				DA90B1E41C8989930080E037 /* XMPPMessageArchiving.xcdatamodeld in Sources */,
