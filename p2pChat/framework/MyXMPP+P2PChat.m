@@ -74,10 +74,8 @@
     if ([message isChatMessageWithBody]) {
         NSString *subtype = [message getSubtype];
         NSString *timeStr = [message getTime];
-        NSNumber *timenum = [NSNumber numberWithDouble:[timeStr doubleValue]];
-        NSDate *d = [NSDate dateWithTimeIntervalSince1970:[timenum doubleValue]];
-        NSDate *date = [Tool transferDate:d];
-        NSNumber *timeNumber = [NSNumber numberWithDouble:[date timeIntervalSinceReferenceDate]];
+        NSNumber *timeNumber = [NSNumber numberWithInt:[timeStr intValue]];
+        NSDate *date = [NSDate dateWithTimeIntervalSince1970:[timeNumber doubleValue]];
         NSLog(@"recieve time:%@",date);
         
         NSString *messageBody = [[message elementForName:@"body"] stringValue];
