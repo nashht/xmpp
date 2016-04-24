@@ -24,7 +24,7 @@
 #import "BottomView.h"
 #import "MoreView.h"
 #import "MyXMPP.h"
-#import "objc/runtime.h"
+#import "FriendChatingInfoViewController.h"
 
 #define MOREHEIGHT 100
 #define BOTTOMHEIGHT 40
@@ -150,6 +150,13 @@ static NSString *pictureReuseIdentifier = @"pictureMessageCell";
             [_historyTableView scrollToRowAtIndexPath:indexPath
                                      atScrollPosition:UITableViewScrollPositionBottom animated:YES];
         }
+    }
+}
+
+- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
+    if ([segue.identifier isEqualToString:@"showFriendInfo"]) {
+        FriendChatingInfoViewController *infoVC = segue.destinationViewController;
+        infoVC.friendName = _chatObjectString;
     }
 }
 

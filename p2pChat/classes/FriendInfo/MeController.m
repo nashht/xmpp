@@ -10,6 +10,7 @@
 #import "MyXMPP.h"
 #import "PhotoLibraryCenter.h"
 #import "XMPPvCardTemp.h"
+#import "EditViewController.h"
 
 @interface MeController ()<UIImagePickerControllerDelegate,UITableViewDataSource,UITableViewDelegate,UINavigationControllerDelegate>
 
@@ -41,14 +42,14 @@
     
     XMPPvCardTemp *myvCard = [MyXMPP shareInstance].myVCardTemp;
     self.navigationItem.title = @"我";
-    _photoView.layer.cornerRadius = CGRectGetHeight([_photoView bounds]) / 2;
+//    _photoView.layer.cornerRadius = CGRectGetHeight([_photoView bounds]) / 2;
+    _photoView.layer.cornerRadius = 10;
     _photoView.layer.masksToBounds = true;
     _nameLabel.text = [[NSUserDefaults standardUserDefaults]stringForKey:@"name"];
     //    _groupLabel.text = myvCard.
-    NSLog(@"itleLabel.text-------------%@",myvCard.mailer);
     _titleLabel.text = myvCard.title;
     _phoneLabel.text = myvCard.note;
-    _emailLabel.text = myvCard.mailer;
+    _emailLabel.text = myvCard.emailAddresses[0];
     
     _myvCard = myvCard;
     
@@ -85,6 +86,13 @@
     [self loadvCard];
 }
 
+- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
+    if ([segue.identifier isEqualToString:@"editInfo"]) {
+        EditViewController *editVC = segue.destinationViewController;
+        NSIndexPath *indexPath = sender;
+        editVC.type = indexPath.row;
+    }
+}
 
 - (IBAction)updatePassword:(id)sender {
     
@@ -96,6 +104,9 @@
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
+    if (indexPath.section == 1) {
+        [self performSegueWithIdentifier:@"editInfo" sender:indexPath];
+    }
 }
 
 #pragma mark - UIImagePickerDelegate

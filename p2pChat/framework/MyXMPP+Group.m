@@ -109,8 +109,7 @@ static NSString *myRoomDomain = @"conference.xmpp.test";
     NSXMLElement *newConfig = [configForm copy];
     NSLog(@"BEFORE Config for the room %@",newConfig);
     NSArray *fields = [newConfig elementsForName:@"field"];
-    for (NSXMLElement *field in fields)
-    {
+    for (NSXMLElement *field in fields) {
         NSString *var = [field attributeStringValueForName:@"var"];
         // 使房间变成永久的
         if ([var isEqualToString:@"muc#roomconfig_persistentroom"]) {
@@ -136,7 +135,7 @@ static NSString *myRoomDomain = @"conference.xmpp.test";
 
 - (void)xmppRoom:(XMPPRoom *)sender didReceiveMessage:(XMPPMessage *)message fromOccupant:(XMPPJID *)occupantJID{
     NSLog(@"群组『%@』有新消息：%@",sender.roomJID.user,[message body]);
-    
+    [[DataManager shareManager]addRecentUsername:sender.roomJID.user time:[NSNumber numberWithDouble:[[NSDate date]timeIntervalSince1970]] body:message.body isOut:NO];
 }
 
 - (void)xmppRoom:(XMPPRoom *)sender occupantDidLeave:(XMPPJID *)occupantJID

@@ -8,6 +8,8 @@
 
 #import "MyXMPP+VCard.h"
 #import "XMPPvCardTempModule.h"
+#import "XMPPvCardTempEmail.h"
+#import "XMPPvCardTempAdr.h"
 
 @implementation MyXMPP (VCard)
 
@@ -15,32 +17,29 @@
     return [self.vCardModule vCardTempForJID: userJid shouldFetch:YES];
 }
 
-- (void)updateMyEmail:(NSString *)email {
-    [self.myVCardTemp setMailer:email];
-    [self.vCardModule updateMyvCardTemp:self.myVCardTemp];
-}
+- (void)updateMyInfo:(NSString *)newValue withType:(MyXmppUpdateType)type {
+    switch (type) {
+        case MyXmppUpdateTypeMobilePhone:
+            self.myVCardTemp.note = newValue;
+            break;
+        case MyXmppUpdateTypeAddress:
+            
+            break;
+        case MyXmppUpdateTypeEmail:
 
-- (void)updateMyTel:(NSString *)tel {
-    self.myVCardTemp.note = tel;
-    [self.vCardModule updateMyvCardTemp:self.myVCardTemp];
-}
-
-- (void)updateMyPhone:(NSString *)phone {
-    self.myVCardTemp.telecomsAddresses = @[phone];
-    [self.vCardModule updateMyvCardTemp:self.myVCardTemp];
-}
-- (void)updateMyAddress:(NSString *)address {
-    self.myVCardTemp.addresses = @[address];
+            break;
+        case MyXmppUpdateTypePhone:
+            
+            break;
+        case MyXmppUpdateTypeTitle:
+            self.myVCardTemp.title = newValue;
+            break;
+    }
     [self.vCardModule updateMyvCardTemp:self.myVCardTemp];
 }
 
 - (void)updataeMyPhoto:(NSData *)photoData {
     self.myVCardTemp.photo = photoData;
-    [self.vCardModule updateMyvCardTemp:self.myVCardTemp];
-}
-
-- (void)updateMyTitle:(NSString *)title {
-    self.myVCardTemp.title = title;
     [self.vCardModule updateMyvCardTemp:self.myVCardTemp];
 }
 

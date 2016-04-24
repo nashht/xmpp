@@ -12,9 +12,6 @@
 		844988031CC8BE21009AE90E /* GroupMessage+CoreDataProperties.m in Sources */ = {isa = PBXBuildFile; fileRef = 844988001CC8BE21009AE90E /* GroupMessage+CoreDataProperties.m */; };
 		844988041CC8BE21009AE90E /* GroupMessage.m in Sources */ = {isa = PBXBuildFile; fileRef = 844988021CC8BE21009AE90E /* GroupMessage.m */; };
 		844988071CC8C794009AE90E /* XMPPMessage+MyExtends.m in Sources */ = {isa = PBXBuildFile; fileRef = 844988061CC8C794009AE90E /* XMPPMessage+MyExtends.m */; };
-		84AD18E21CB4ADEE00357F60 /* EditTelController.m in Sources */ = {isa = PBXBuildFile; fileRef = 84AD18E11CB4ADEE00357F60 /* EditTelController.m */; };
-		84AD18E51CB5238C00357F60 /* EditEmailController.m in Sources */ = {isa = PBXBuildFile; fileRef = 84AD18E41CB5238C00357F60 /* EditEmailController.m */; };
-		84AD18E81CB52AF200357F60 /* ChangePswController.m in Sources */ = {isa = PBXBuildFile; fileRef = 84AD18E71CB52AF200357F60 /* ChangePswController.m */; };
 		900122631CA91EE3005D5BFA /* ChatViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 900122461CA91EE2005D5BFA /* ChatViewController.m */; };
 		900122641CA91EE3005D5BFA /* MessageCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 900122481CA91EE2005D5BFA /* MessageCell.m */; };
 		900122651CA91EE3005D5BFA /* MessageFrameModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 9001224A1CA91EE2005D5BFA /* MessageFrameModel.m */; };
@@ -215,6 +212,8 @@
 		DAAA186E1CABCF6500691170 /* Message.m in Sources */ = {isa = PBXBuildFile; fileRef = DAAA186A1CABCF6500691170 /* Message.m */; };
 		DAAC6D781C4CD2A2009C0859 /* PhotoLibraryCenter.m in Sources */ = {isa = PBXBuildFile; fileRef = DAAC6D771C4CD2A2009C0859 /* PhotoLibraryCenter.m */; };
 		DAAF2C0A1CCC66B500C51494 /* MessageBean.m in Sources */ = {isa = PBXBuildFile; fileRef = DAAF2C091CCC66B500C51494 /* MessageBean.m */; };
+		DAAF2C101CCCA18200C51494 /* FriendChatingInfoViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = DAAF2C0F1CCCA18200C51494 /* FriendChatingInfoViewController.m */; };
+		DAAF2C131CCCA87700C51494 /* EditViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = DAAF2C121CCCA87700C51494 /* EditViewController.m */; };
 		DACDC7981CC87258005F5FA2 /* MyXMPP+Roster.m in Sources */ = {isa = PBXBuildFile; fileRef = DACDC7971CC87258005F5FA2 /* MyXMPP+Roster.m */; };
 		DACDC79B1CC879F9005F5FA2 /* MyXMPP+VCard.m in Sources */ = {isa = PBXBuildFile; fileRef = DACDC79A1CC879F9005F5FA2 /* MyXMPP+VCard.m */; };
 		DACDC79E1CC87CF2005F5FA2 /* MyXMPP+Group.m in Sources */ = {isa = PBXBuildFile; fileRef = DACDC79D1CC87CF2005F5FA2 /* MyXMPP+Group.m */; };
@@ -268,12 +267,6 @@
 		844988021CC8BE21009AE90E /* GroupMessage.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = GroupMessage.m; path = dataStorage/GroupMessage.m; sourceTree = "<group>"; };
 		844988051CC8C794009AE90E /* XMPPMessage+MyExtends.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "XMPPMessage+MyExtends.h"; path = "framework/XMPPMessage+MyExtends.h"; sourceTree = "<group>"; };
 		844988061CC8C794009AE90E /* XMPPMessage+MyExtends.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "XMPPMessage+MyExtends.m"; path = "framework/XMPPMessage+MyExtends.m"; sourceTree = "<group>"; };
-		84AD18E01CB4ADEE00357F60 /* EditTelController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EditTelController.h; sourceTree = "<group>"; };
-		84AD18E11CB4ADEE00357F60 /* EditTelController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EditTelController.m; sourceTree = "<group>"; };
-		84AD18E31CB5238C00357F60 /* EditEmailController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EditEmailController.h; sourceTree = "<group>"; };
-		84AD18E41CB5238C00357F60 /* EditEmailController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EditEmailController.m; sourceTree = "<group>"; };
-		84AD18E61CB52AF200357F60 /* ChangePswController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ChangePswController.h; sourceTree = "<group>"; };
-		84AD18E71CB52AF200357F60 /* ChangePswController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ChangePswController.m; sourceTree = "<group>"; };
 		900122451CA91EE2005D5BFA /* ChatViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ChatViewController.h; sourceTree = "<group>"; };
 		900122461CA91EE2005D5BFA /* ChatViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ChatViewController.m; sourceTree = "<group>"; };
 		900122471CA91EE2005D5BFA /* MessageCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MessageCell.h; sourceTree = "<group>"; };
@@ -671,6 +664,10 @@
 		DAAC6D771C4CD2A2009C0859 /* PhotoLibraryCenter.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = PhotoLibraryCenter.m; path = Tool/PhotoLibraryCenter.m; sourceTree = "<group>"; };
 		DAAF2C081CCC66B500C51494 /* MessageBean.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MessageBean.h; sourceTree = "<group>"; };
 		DAAF2C091CCC66B500C51494 /* MessageBean.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MessageBean.m; sourceTree = "<group>"; };
+		DAAF2C0E1CCCA18200C51494 /* FriendChatingInfoViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FriendChatingInfoViewController.h; sourceTree = "<group>"; };
+		DAAF2C0F1CCCA18200C51494 /* FriendChatingInfoViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FriendChatingInfoViewController.m; sourceTree = "<group>"; };
+		DAAF2C111CCCA87700C51494 /* EditViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EditViewController.h; sourceTree = "<group>"; };
+		DAAF2C121CCCA87700C51494 /* EditViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EditViewController.m; sourceTree = "<group>"; };
 		DACDC7961CC87258005F5FA2 /* MyXMPP+Roster.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "MyXMPP+Roster.h"; path = "framework/MyXMPP+Roster.h"; sourceTree = "<group>"; };
 		DACDC7971CC87258005F5FA2 /* MyXMPP+Roster.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "MyXMPP+Roster.m"; path = "framework/MyXMPP+Roster.m"; sourceTree = "<group>"; };
 		DACDC7991CC879F9005F5FA2 /* MyXMPP+VCard.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "MyXMPP+VCard.h"; path = "framework/MyXMPP+VCard.h"; sourceTree = "<group>"; };
@@ -753,33 +750,6 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
-		84AD18D01CB4A91800357F60 /* EditTel */ = {
-			isa = PBXGroup;
-			children = (
-				84AD18E01CB4ADEE00357F60 /* EditTelController.h */,
-				84AD18E11CB4ADEE00357F60 /* EditTelController.m */,
-			);
-			name = EditTel;
-			sourceTree = "<group>";
-		};
-		84AD18D11CB4A92F00357F60 /* ChangePsw */ = {
-			isa = PBXGroup;
-			children = (
-				84AD18E61CB52AF200357F60 /* ChangePswController.h */,
-				84AD18E71CB52AF200357F60 /* ChangePswController.m */,
-			);
-			name = ChangePsw;
-			sourceTree = "<group>";
-		};
-		84AD18D51CB4ACA000357F60 /* EditEmail */ = {
-			isa = PBXGroup;
-			children = (
-				84AD18E31CB5238C00357F60 /* EditEmailController.h */,
-				84AD18E41CB5238C00357F60 /* EditEmailController.m */,
-			);
-			name = EditEmail;
-			sourceTree = "<group>";
-		};
 		84F32C441CBF766C00BB9BD1 /* BottomView */ = {
 			isa = PBXGroup;
 			children = (
@@ -794,9 +764,6 @@
 			isa = PBXGroup;
 			children = (
 				90F711151CBC89FC00042A99 /* Main.storyboard */,
-				84AD18D51CB4ACA000357F60 /* EditEmail */,
-				84AD18D11CB4A92F00357F60 /* ChangePsw */,
-				84AD18D01CB4A91800357F60 /* EditTel */,
 				90FA06501CAE06D400851B1C /* Me */,
 				904175401CA9290D005A024B /* Login */,
 				900122711CA9206B005D5BFA /* Main */,
@@ -840,6 +807,8 @@
 			children = (
 				90FA06421CACDAA600851B1C /* FriendInfoController.h */,
 				90FA06431CACDAA600851B1C /* FriendInfoController.m */,
+				DAAF2C0E1CCCA18200C51494 /* FriendChatingInfoViewController.h */,
+				DAAF2C0F1CCCA18200C51494 /* FriendChatingInfoViewController.m */,
 			);
 			path = FriendInfo;
 			sourceTree = "<group>";
@@ -922,6 +891,8 @@
 			children = (
 				90FA06511CAE094600851B1C /* MeController.h */,
 				90FA06521CAE094600851B1C /* MeController.m */,
+				DAAF2C111CCCA87700C51494 /* EditViewController.h */,
+				DAAF2C121CCCA87700C51494 /* EditViewController.m */,
 			);
 			name = Me;
 			path = FriendInfo;
@@ -2314,7 +2285,6 @@
 				DA90B1A51C8989930080E037 /* XMPPReconnect.m in Sources */,
 				DA90B20E1C8989930080E037 /* DDTTYLogger.m in Sources */,
 				DA90B1F81C8989930080E037 /* XEP_0223.m in Sources */,
-				84AD18E21CB4ADEE00357F60 /* EditTelController.m in Sources */,
 				DA90B1D51C8989930080E037 /* TURNSocket.m in Sources */,
 				DA90B1C71C8989930080E037 /* XMPPvCardCoreDataStorageObject.m in Sources */,
 				DA90B1921C8989930080E037 /* NSData+XMPP.m in Sources */,
@@ -2330,9 +2300,9 @@
 				DA90B1F21C8989930080E037 /* XMPPStreamManagement.m in Sources */,
 				DA90B1A61C8989930080E037 /* XMPPGroupCoreDataStorageObject.m in Sources */,
 				DA90B1A71C8989930080E037 /* XMPPResourceCoreDataStorageObject.m in Sources */,
+				DAAF2C101CCCA18200C51494 /* FriendChatingInfoViewController.m in Sources */,
 				DACDC7A11CC8811C005F5FA2 /* MyXMPP+P2PChat.m in Sources */,
 				844988071CC8C794009AE90E /* XMPPMessage+MyExtends.m in Sources */,
-				84AD18E51CB5238C00357F60 /* EditEmailController.m in Sources */,
 				DAAF2C0A1CCC66B500C51494 /* MessageBean.m in Sources */,
 				844988031CC8BE21009AE90E /* GroupMessage+CoreDataProperties.m in Sources */,
 				DAAA186B1CABCF6500691170 /* LastMessage+CoreDataProperties.m in Sources */,
@@ -2385,7 +2355,6 @@
 				DA90B1F91C8989930080E037 /* XMPPAttentionModule.m in Sources */,
 				DA90B19F1C8989930080E037 /* XMPPCoreDataStorage.m in Sources */,
 				DA90B1EE1C8989930080E037 /* XMPPMessageDeliveryReceipts.m in Sources */,
-				84AD18E81CB52AF200357F60 /* ChangePswController.m in Sources */,
 				DA90B2151C8989930080E037 /* DDXMLElement.m in Sources */,
 				DA90B2161C8989930080E037 /* DDXMLNode.m in Sources */,
 				DA90B2141C8989930080E037 /* DDXMLDocument.m in Sources */,
@@ -2399,6 +2368,7 @@
 				DA90B1A41C8989930080E037 /* XMPPProcessOne.m in Sources */,
 				DA90B2071C8989930080E037 /* XMPPStringPrep.m in Sources */,
 				DA90B1B91C8989930080E037 /* XMPPRoomOccupantCoreDataStorageObject.m in Sources */,
+				DAAF2C131CCCA87700C51494 /* EditViewController.m in Sources */,
 				DA90B1D61C8989930080E037 /* XMPPIQ+XEP_0066.m in Sources */,
 				DA90B1A01C8989930080E037 /* XMPPFileTransfer.m in Sources */,
 				90FA06601CAE4BDE00851B1C /* RecentViewController.m in Sources */,
