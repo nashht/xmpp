@@ -159,6 +159,8 @@ static NSString *serverHost = @"10.108.136.59";
     UIStoryboard *storyboard = [UIStoryboard storyboardWithName:@"Main" bundle:nil];
     [UIApplication sharedApplication].keyWindow.rootViewController = [storyboard instantiateViewControllerWithIdentifier:@"tablebar"];
     
+//    [self creatGroupName:@"11111" withpassword:nil andsubject:@"11111"];
+    
 }
 
 - (BOOL)xmppStream:(XMPPStream *)sender didReceiveIQ:(XMPPIQ *)iq{
