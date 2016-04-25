@@ -18,7 +18,7 @@
 #import "HeaderView.h"
 #import "CreateGroupsViewController.h"
 
-static NSString *defaultGroupName = @"my group";
+static NSString *defaultGroupName = @"11111111";
 
 @interface CreateGroupsViewController ()<UITableViewDelegate,UITableViewDataSource,HeaderViewDelegate>
 
@@ -65,8 +65,9 @@ static NSString *defaultGroupName = @"my group";
 }
 
 - (IBAction)selectBtnClick:(UIButton *)sender {
-    [[MyXMPP shareInstance] creatGroupName:defaultGroupName withpassword:nil andsubject:nil];
+    [[MyXMPP shareInstance] creatGroupName:@"1212121" withpassword:nil andsubject:nil];
     [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(invitenewfriends) name:MyXmppRoomDidConfigurationNotification object:nil];
+    
     if (_selectedFriends.count == 0) {
         UIAlertController *alert = [UIAlertController alertControllerWithTitle:@"未选择好友" message:nil preferredStyle:UIAlertControllerStyleAlert];
         UIAlertAction *okAction = [UIAlertAction actionWithTitle:@"ok" style:UIAlertActionStyleDefault handler:nil];
@@ -76,6 +77,7 @@ static NSString *defaultGroupName = @"my group";
     NSLog(@"selected__-----------%@",_selectedFriends);
 }
 
+
 - (void)invitenewfriends{
     [self dismissViewControllerAnimated:YES completion: ^{
         NSArray *option = @[defaultGroupName, @0];
@@ -84,6 +86,8 @@ static NSString *defaultGroupName = @"my group";
     for (NSString *users in _selectedFriends) {
         [[MyXMPP shareInstance] inviteFriends:users withMessage:@"welcome"];
     }
+    [[NSNotificationCenter defaultCenter]removeObserver:self name:MyXmppRoomDidConfigurationNotification object:nil];
+
 }
 
 - (void)initGroup{
