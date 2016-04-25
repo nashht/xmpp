@@ -7,9 +7,9 @@
 //
 
 #import "MeController.h"
-#import "MyXMPP.h"
+#import "XMPP.h"
+#import "MyXMPP+VCard.h"
 #import "PhotoLibraryCenter.h"
-#import "XMPPvCardTemp.h"
 
 @interface MeController ()<UIImagePickerControllerDelegate,UITableViewDataSource,UITableViewDelegate,UINavigationControllerDelegate>
 
@@ -25,7 +25,8 @@
 
 @end
 
-@implementation MeController 
+@implementation MeController
+
 
 - (void)viewDidLoad {
     [super viewDidLoad];
@@ -34,26 +35,29 @@
     self.tableView.delegate = self;
     self.tableView.dataSource = self;
     
-    [self loadvCard];
+    
 }
 
 - (void)loadvCard{
-    
-    XMPPvCardTemp *myvCard = [MyXMPP shareInstance].myVCardTemp;
+  
+//    XMPPvCardTemp *myvCard = [MyXMPP shareInstance].myVCardTemp;
+    NSLog(@"myjid--------%@",[MyXMPP shareInstance].myjid);
+    XMPPvCardTemp *myvCard = [[MyXMPP shareInstance]fetchFriend:[MyXMPP shareInstance].myjid];
+    _myvCard = myvCard;
     self.navigationItem.title = @"我";
     _photoView.layer.cornerRadius = CGRectGetHeight([_photoView bounds]) / 2;
     _photoView.layer.masksToBounds = true;
     _nameLabel.text = [[NSUserDefaults standardUserDefaults]stringForKey:@"name"];
-    //    _groupLabel.text = myvCard.
-    NSLog(@"itleLabel.text-------------%@",myvCard.mailer);
-    _titleLabel.text = myvCard.title;
-    _phoneLabel.text = myvCard.note;
-    _emailLabel.text = myvCard.mailer;
+    //    _groupLabel.text = myvCard
+    NSLog(@"titleLabel.text-------------%@",_myvCard.note);
+    _titleLabel.text = _myvCard.note;
+    _phoneLabel.text = _myvCard.note;
+    _emailLabel.text = _myvCard.mailer;
     
-    _myvCard = myvCard;
+    
     
     if (_myvCard.photo) {
-        _photoView.image = [UIImage imageWithData:myvCard.photo];
+        _photoView.image = [UIImage imageWithData:_myvCard.photo];
     }else{
         _photoView.image = [UIImage imageNamed:@"filemax_pic"];
     }
@@ -67,7 +71,7 @@
 }
 
 - (void)changeImage{
-    NSLog(@"changeiamge");
+    NSLog(@"changeimage");
     
     UIImagePickerController *imagePicker = [[UIImagePickerController alloc] init];
     imagePicker.delegate = self;
@@ -103,11 +107,11 @@
     UIImage *image = info[UIImagePickerControllerEditedImage];
     _photoView.image = image;
 
+    [[MyXMPP shareInstance]updataeMyPhoto:UIImagePNGRepresentation(self.photoView.image)];
     NSLog(@"didFinishPickingMediaWithInfo");
     
     [self dismissViewControllerAnimated:YES completion:^{
-//        _myvCard.photo = UIImagePNGRepresentation(self.photoView.image);
-        
+      
     }];
 }
 @end
