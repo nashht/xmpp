@@ -7,6 +7,7 @@
 //
 
 #import "MeController.h"
+#import "XMPP.h"
 #import "MyXMPP+VCard.h"
 #import "MyXMPP+Roster.h"
 #import "PhotoLibraryCenter.h"
@@ -27,7 +28,8 @@
 
 @end
 
-@implementation MeController 
+@implementation MeController
+
 
 - (void)viewDidLoad {
     [super viewDidLoad];
@@ -36,7 +38,7 @@
     self.tableView.delegate = self;
     self.tableView.dataSource = self;
     
-    [self loadvCard];
+    
 }
 
 - (void)loadvCard{    
@@ -46,6 +48,12 @@
     _photoView.layer.masksToBounds = true;
     NSString *myName = [[NSUserDefaults standardUserDefaults]stringForKey:@"name"];
     _nameLabel.text = myName;
+    XMPPUserCoreDataStorageObject *user = [[MyXMPP shareInstance]fetchUserWithUsername:myName];
+    _groupLabel.text = user.groups.allObjects[0];
+    _titleLabel.text = _myvCard.title;
+    _phoneLabel.text = _myvCard.note;
+    _emailLabel.text = _myvCard.emailAddresses[0];
+    
     
     _titleLabel.text = _myvCard.title ? : @"未设置";
     _phoneLabel.text = _myvCard.note ? : @"未设置";
@@ -68,7 +76,7 @@
 }
 
 - (void)changeImage{
-    NSLog(@"changeiamge");
+    NSLog(@"changeimage");
     
     UIImagePickerController *imagePicker = [[UIImagePickerController alloc] init];
     imagePicker.delegate = self;
@@ -114,11 +122,11 @@
     UIImage *image = info[UIImagePickerControllerEditedImage];
     _photoView.image = image;
 
+    [[MyXMPP shareInstance]updataeMyPhoto:UIImagePNGRepresentation(self.photoView.image)];
     NSLog(@"didFinishPickingMediaWithInfo");
     
     [self dismissViewControllerAnimated:YES completion:^{
-//        _myvCard.photo = UIImagePNGRepresentation(self.photoView.image);
-        
+      
     }];
 }
 @end
