@@ -39,22 +39,18 @@
 }
 
 - (void)loadvCard{    
-    XMPPvCardTemp *myvCard = [MyXMPP shareInstance].myVCardTemp;
+    _myvCard = [MyXMPP shareInstance].myVCardTemp;
     self.navigationItem.title = @"我";
     _photoView.layer.cornerRadius = 10;
     _photoView.layer.masksToBounds = true;
     NSString *myName = [[NSUserDefaults standardUserDefaults]stringForKey:@"name"];
     _nameLabel.text = myName;
-    XMPPUserCoreDataStorageObject *user = [[MyXMPP shareInstance]fetchUserWithUsername:myName];
-    _groupLabel.text = user.groups.allObjects[0];
-    _titleLabel.text = myvCard.title;
-    _phoneLabel.text = myvCard.note;
-    _emailLabel.text = myvCard.emailAddresses[0];
-    
-    _myvCard = myvCard;
+    _titleLabel.text = _myvCard.title;
+    _phoneLabel.text = _myvCard.note;
+//    _emailLabel.text = _myvCard.emailAddresses[0];
     
     if (_myvCard.photo) {
-        _photoView.image = [UIImage imageWithData:myvCard.photo];
+        _photoView.image = [UIImage imageWithData:_myvCard.photo];
     }else{
         _photoView.image = [UIImage imageNamed:@"filemax_pic"];
     }

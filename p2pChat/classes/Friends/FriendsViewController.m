@@ -34,6 +34,7 @@
     
     self.tableView.rowHeight = 50;
     self.tableView.sectionHeaderHeight = 44;
+    self.tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
     
     _groupCoreDataStorageObjects = [[MyXMPP shareInstance]getFriendsGroup];
     [self initGroup];
@@ -102,8 +103,8 @@
         [cell setIcon:[UIImage imageNamed:@"0"]];
     }
     
-    if (vCard.title == nil) {//设置好友职务
-        [cell setDepartment:@"职务"];
+    if (vCard.title == nil || [vCard.title isEqualToString:@""]) {//设置好友职务
+        [cell setDepartment:@"职务未填写"];
     }else{
         [cell setDepartment:vCard.title];
     }
@@ -125,7 +126,7 @@
     return cell;
 }
 
-
+#pragma mark - table view delegate
 - (UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section {
     FriendHeaderView *header = [FriendHeaderView friendHeaderViewWithTableView:tableView];
     header.delegate = self;
@@ -139,8 +140,9 @@
 }
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
-    UIStoryboard *storyBoard = [UIStoryboard storyboardWithName:@"Main" bundle:nil];
+    [tableView deselectRowAtIndexPath:indexPath animated:NO];
     
+    UIStoryboard *storyBoard = [UIStoryboard storyboardWithName:@"Main" bundle:nil];
     FriendInfoController *vc = (FriendInfoController *)[storyBoard instantiateViewControllerWithIdentifier:@"friendsInfo"];
     vc.title = @"个人资料";
     XMPPGroupCoreDataStorageObject *group = _groupCoreDataStorageObjects[indexPath.section];
