@@ -138,6 +138,11 @@ static NSString *myRoomDomain = @"conference.xmpp.test";
 
 - (void)xmppRoom:(XMPPRoom *)sender didReceiveMessage:(XMPPMessage *)message fromOccupant:(XMPPJID *)occupantJID{
     NSLog(@"群组『%@』有新消息：%@",sender.roomJID.user,[message body]);
+    NSDate *date = [Tool transferDate:[NSDate date]];
+    NSNumber *timeNum = [NSNumber numberWithDouble:[date timeIntervalSince1970]];
+    NSString *text = [message body];
+    
+    [[DataManager shareManager]saveMessageWithGroupname:sender.roomJID.user username:occupantJID.user time:timeNum body:text];
     [[DataManager shareManager]addRecentUsername:sender.roomJID.user time:[NSNumber numberWithDouble:[[NSDate date]timeIntervalSince1970]] body:message.body isOut:NO isP2P:NO];
 }
 
