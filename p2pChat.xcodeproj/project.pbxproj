@@ -45,6 +45,8 @@
 		90FA06601CAE4BDE00851B1C /* RecentViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 90FA065D1CAE4BDE00851B1C /* RecentViewController.m */; };
 		90FA06621CAE656500851B1C /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 90FA06611CAE656500851B1C /* Assets.xcassets */; };
 		DA01456E1C3E4C5700C85680 /* AsyncSocket.m in Sources */ = {isa = PBXBuildFile; fileRef = DA01456D1C3E4C5700C85680 /* AsyncSocket.m */; };
+		DA4EBEB11CCDFBC800239331 /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DA4EBEB01CCDFBC800239331 /* SystemConfiguration.framework */; };
+		DA4EBEB41CCDFCB000239331 /* Reachability.m in Sources */ = {isa = PBXBuildFile; fileRef = DA4EBEB31CCDFCB000239331 /* Reachability.m */; };
 		DA57261C1CBF40830045CEF2 /* BottomView.m in Sources */ = {isa = PBXBuildFile; fileRef = DA57261B1CBF40830045CEF2 /* BottomView.m */; };
 		DA57261E1CBF409D0045CEF2 /* BottomView.xib in Resources */ = {isa = PBXBuildFile; fileRef = DA57261D1CBF409D0045CEF2 /* BottomView.xib */; };
 		DA9046AA1C3A49EB009E75B7 /* DataManager.m in Sources */ = {isa = PBXBuildFile; fileRef = DA9046A91C3A49EB009E75B7 /* DataManager.m */; };
@@ -322,6 +324,9 @@
 		90FA06611CAE656500851B1C /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		DA01456C1C3E4C5700C85680 /* AsyncSocket.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = AsyncSocket.h; path = framework/AsyncSocket.h; sourceTree = "<group>"; };
 		DA01456D1C3E4C5700C85680 /* AsyncSocket.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = AsyncSocket.m; path = framework/AsyncSocket.m; sourceTree = "<group>"; };
+		DA4EBEB01CCDFBC800239331 /* SystemConfiguration.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SystemConfiguration.framework; path = System/Library/Frameworks/SystemConfiguration.framework; sourceTree = SDKROOT; };
+		DA4EBEB21CCDFCB000239331 /* Reachability.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Reachability.h; path = framework/Reachability.h; sourceTree = "<group>"; };
+		DA4EBEB31CCDFCB000239331 /* Reachability.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = Reachability.m; path = framework/Reachability.m; sourceTree = "<group>"; };
 		DA57261A1CBF40830045CEF2 /* BottomView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BottomView.h; sourceTree = "<group>"; };
 		DA57261B1CBF40830045CEF2 /* BottomView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BottomView.m; sourceTree = "<group>"; };
 		DA57261D1CBF409D0045CEF2 /* BottomView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = BottomView.xib; sourceTree = "<group>"; };
@@ -712,6 +717,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				DA4EBEB11CCDFBC800239331 /* SystemConfiguration.framework in Frameworks */,
 				DAD278871CBF3A78001508D0 /* libopencore-amrnb.a.i386 in Frameworks */,
 				90E3E89F1C9955930076F28C /* AVFoundation.framework in Frameworks */,
 				DA968A621C8927B400FD866C /* CFNetwork.framework in Frameworks */,
@@ -896,6 +902,15 @@
 			);
 			name = Me;
 			path = FriendInfo;
+			sourceTree = "<group>";
+		};
+		DA4EBEB51CCDFCC100239331 /* Reachive */ = {
+			isa = PBXGroup;
+			children = (
+				DA4EBEB21CCDFCB000239331 /* Reachability.h */,
+				DA4EBEB31CCDFCB000239331 /* Reachability.m */,
+			);
+			name = Reachive;
 			sourceTree = "<group>";
 		};
 		DA9046B91C3A51A8009E75B7 /* Tools */ = {
@@ -1851,11 +1866,13 @@
 				DA968A491C89255500FD866C /* AsyncSocket */,
 				DA95D5A61C3A16E6001ED1A6 /* LaunchScreen.storyboard */,
 				90E3E8881C97AA840076F28C /* Snip20151210_2.png */,
+				DA4EBEB51CCDFCC100239331 /* Reachive */,
 				DA9046BD1C3A5601009E75B7 /* 0.png */,
 				90E3E89C1C99540E0076F28C /* happy.mp3 */,
 				DA9046BE1C3A5601009E75B7 /* 1.png */,
 				90FA064D1CAD11AC00851B1C /* bg_show_count.png */,
 				DA95D5A91C3A16E6001ED1A6 /* Info.plist */,
+				DA4EBEB01CCDFBC800239331 /* SystemConfiguration.framework */,
 				90E3E89E1C9955930076F28C /* AVFoundation.framework */,
 				DA968A611C8927B400FD866C /* CFNetwork.framework */,
 				DA968A5F1C8927AE00FD866C /* Security.framework */,
@@ -2263,6 +2280,7 @@
 				DA90B1DB1C8989930080E037 /* XMPPMessage+XEP_0085.m in Sources */,
 				DA90B1EF1C8989930080E037 /* XMPPBlocking.m in Sources */,
 				DA90B1AD1C8989930080E037 /* XMPPUserMemoryStorageObject.m in Sources */,
+				DA4EBEB41CCDFCB000239331 /* Reachability.m in Sources */,
 				DA90B1D01C8989930080E037 /* XMPPvCardTempTel.m in Sources */,
 				DA90B1DC1C8989930080E037 /* XMPPSoftwareVersion.m in Sources */,
 				DA90B1C91C8989930080E037 /* XMPPvCardTemp.m in Sources */,

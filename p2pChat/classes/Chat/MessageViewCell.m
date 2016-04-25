@@ -60,7 +60,10 @@
     MessageBean *message = messageFrame.message;
     XMPPvCardTemp *vCard = [[MyXMPP shareInstance]fetchFriend:[XMPPJID jidWithUser:message.username domain:myDomain resource:nil]];
     //    数据模型
-    _timeLable.text = [Tool stringFromDate:message.time];
+    
+    _timeLable.text = [Tool stringFromDate:[NSDate dateWithTimeIntervalSince1970:message.time.doubleValue]];
+    
+    
     _timeLable.frame = messageFrame.timeFrame;
     
     if (vCard.photo != nil) {

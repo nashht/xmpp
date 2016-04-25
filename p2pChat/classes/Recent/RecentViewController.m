@@ -22,6 +22,7 @@
 
 @property (weak, nonatomic) IBOutlet UIButton *addBtn;
 @property (weak, nonatomic) IBOutlet UITableView *recentTableView;
+@property (weak, nonatomic)  UIRefreshControl *refreshControl;
 
 @property (strong, nonatomic) DataManager *dataManager;
 @property (strong, nonatomic) NSFetchedResultsController *recentController;
@@ -52,6 +53,26 @@
     _resultsControllerDelegate = [[MyFetchedResultsControllerDelegate alloc]initWithTableView:_recentTableView withScrolling:NO];
     _recentController.delegate = _resultsControllerDelegate;
     [_recentTableView registerNib:[UINib nibWithNibName:@"RecentCell" bundle:[NSBundle mainBundle]] forCellReuseIdentifier:@"recentCell"];//注册nib
+    
+    UIRefreshControl *refresh = [[UIRefreshControl alloc] init];
+    self.refreshControl = refresh;
+    [self.recentTableView addSubview:refresh];
+    
+    refresh.attributedTitle = [[NSAttributedString alloc] initWithString:@"下拉刷新"];
+    [refresh addTarget:self action:@selector(refreshTableView:) forControlEvents:UIControlEventValueChanged];
+    
+    [self refreshTableView:refresh];
+    
+}
+
+- (void)refreshTableView:(UIRefreshControl *)refreshControl{
+    NSLog(@"refreshTableView");
+    if ([[MyXMPP shareInstance].stream isDisconnected]) {
+        [[MyXMPP shareInstance] reconnect];
+    }
+
+    [refreshControl endRefreshing];
+
 }
 
 - (void)viewWillAppear:(BOOL)animated {
@@ -60,7 +81,6 @@
     }
     if ([[MyXMPP shareInstance].stream isDisconnected]) {
         self.navigationItem.title = @"最近联系人(连接中)";
-        [[MyXMPP shareInstance]reconnect];
     }
 }
 

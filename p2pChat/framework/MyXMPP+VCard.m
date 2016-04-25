@@ -23,13 +23,13 @@
             self.myVCardTemp.note = newValue;
             break;
         case MyXmppUpdateTypeAddress:
-            
+            self.myVCardTemp.url = newValue;
             break;
         case MyXmppUpdateTypeEmail:
-
+            self.myVCardTemp.mailer = newValue;
             break;
         case MyXmppUpdateTypePhone:
-            
+            self.myVCardTemp.uid = newValue;
             break;
         case MyXmppUpdateTypeTitle:
             self.myVCardTemp.title = newValue;
