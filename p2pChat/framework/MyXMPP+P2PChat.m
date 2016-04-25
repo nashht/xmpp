@@ -114,7 +114,7 @@
                 break;
         }
         
-        NSLog(@"%@", message);
+//        NSLog(@"%@", message);
         
         [[UIApplication sharedApplication]presentLocalNotificationNow:localNotification];
     } else {

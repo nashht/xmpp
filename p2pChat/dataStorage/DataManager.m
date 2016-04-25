@@ -27,6 +27,14 @@
     return manager;
 }
 
+- (id)init {
+    if (self = [super init]) {
+        _totalUnreadNumber = 0;
+        [self addObserver:self forKeyPath:@"totalUnreadNumber" options:NSKeyValueObservingOptionNew context:NULL];
+    }
+    return self;
+}
+
 - (NSFetchedResultsController *)fetchWithEntityName:(NSString *)name predicate:(NSPredicate *)predicate sortKey:(NSString *)key ascending:(BOOL)ascending error:(NSError **)error {
     NSFetchRequest *request = [NSFetchRequest fetchRequestWithEntityName:name];
     request.predicate = predicate;
@@ -120,6 +128,7 @@
     lastMessage.time = time;
     if (!isOut) {
         lastMessage.unread = @(lastMessage.unread.intValue + 1);
+        self.totalUnreadNumber++;
     }
     lastMessage.body = body;
     lastMessage.isOut = [NSNumber numberWithBool:isOut];
@@ -139,6 +148,7 @@
         NSLog(@"DataManager fetch recent failed: %@", err);
     }
     LastMessage *lastMessage = [resultController fetchedObjects].firstObject;
+    self.totalUnreadNumber -= lastMessage.unread.intValue;
     lastMessage.unread = [NSNumber numberWithUnsignedShort:0];
     NSError *err2 = nil;
     [_context save:&err2];
@@ -190,6 +200,12 @@
     [self saveGroupMessageWithGroupname:groupname username:username type:@0 time:time body:body more:nil WithError:&error];
     if (error != nil) {
         NSLog(@"DataManager save group message failed: %@", error);
+    }
+}
+
+- (void)observeValueForKeyPath:(NSString *)keyPath ofObject:(id)object change:(NSDictionary<NSString *,id> *)change context:(void *)context {
+    if ([keyPath isEqualToString:@"totalUnreadNumber"]) {
+        [UIApplication sharedApplication].applicationIconBadgeNumber = _totalUnreadNumber;
     }
 }
 @end
