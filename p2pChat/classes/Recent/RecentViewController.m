@@ -112,6 +112,7 @@
     XMPPvCardTemp *vCardTemp = [[MyXMPP shareInstance]fetchFriend:[XMPPJID jidWithUser:lastMessage.username domain:myDomain resource:nil]];
     cell.usernamelabel.text = lastMessage.username;
     cell.lastmessagelabel.text = lastMessage.body;
+    
     if (vCardTemp.photo != nil) {
         cell.userimage.image = [UIImage imageWithData:vCardTemp.photo];
     } else {
@@ -134,7 +135,13 @@
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     LastMessage *lastMessage = [_recentController objectAtIndexPath:indexPath];
-    NSArray *options = @[lastMessage.username, @1];
+    NSArray *options = nil;
+    if (lastMessage.isP2P) {
+        options = @[lastMessage.username, @1];
+    } else {
+        options = @[lastMessage.username, @0];
+    }
+//    NSArray *options = @[lastMessage.username, @1];
     [self performSegueWithIdentifier:@"chat" sender:options];//跳转到chat界面，并传参数，即当前聊天对象名称
     [_dataManager updateUsername:lastMessage.username];
 }//当点击一个tableview时会调用以上代理，触发跳转到聊天界面

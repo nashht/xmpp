@@ -9,6 +9,7 @@
 #import "MyXMPP.h"
 #import "XMPPRoomCoreDataStorage.h"
 
+
 @interface MyXMPP (Group)<XMPPRoomStorage, XMPPRoomDelegate>
 
 - (void)creatGroupName:(NSString *)groupName withpassword:(NSString *)rommpwd andsubject:(NSString *)subject;//只有创建者调用

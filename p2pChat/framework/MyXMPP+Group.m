@@ -9,6 +9,7 @@
 #import "MyXMPP+Group.h"
 #import "DataManager.h"
 #import "Tool.h"
+#import "XMPPMessage+MyExtends.h"
 
 static NSString *myRoomDomain = @"conference.xmpp.test";
 
@@ -138,13 +139,28 @@ static NSString *myRoomDomain = @"conference.xmpp.test";
 }
 
 - (void)xmppRoom:(XMPPRoom *)sender didReceiveMessage:(XMPPMessage *)message fromOccupant:(XMPPJID *)occupantJID{
-    NSLog(@"群组『%@』有新消息：%@",sender.roomJID.user,[message body]);
-    NSDate *date = [Tool transferDate:[NSDate date]];
-    NSNumber *timeNum = [NSNumber numberWithDouble:[date timeIntervalSince1970]];
-    NSString *text = [message body];
     
-    [[DataManager shareManager]saveMessageWithGroupname:sender.roomJID.user username:occupantJID.user time:timeNum body:text];
-    [[DataManager shareManager]addRecentUsername:sender.roomJID.user time:[NSNumber numberWithDouble:[[NSDate date]timeIntervalSince1970]] body:message.body isOut:NO isP2P:NO];
+//    NSString *subtype = [message getSubtype];
+//    NSString *timeStr = [message getTime];
+//    NSNumber *timeNumber = [NSNumber numberWithInt:[timeStr intValue]];
+    NSDate *date = [NSDate date];
+    NSNumber *timeNumber = [NSNumber numberWithDouble:[date timeIntervalSince1970]];
+    NSLog(@"recieve time:%@",date);
+    NSString *text = [message body];
+    if ([message.type isEqualToString:@"groupchat"]) {
+      
+        [[DataManager shareManager]saveMessageWithGroupname:sender.roomJID.user username:occupantJID.user time:timeNumber body:text];
+        [[DataManager shareManager]addRecentUsername:sender.roomJID.user time:[NSNumber numberWithDouble:[[NSDate date]timeIntervalSince1970]] body:message.body isOut:NO isP2P:NO];
+        
+    }else{
+        NSLog(@"群组『%@』有新消息：%@",sender.roomJID.user,[message body]);
+    }
+    
+//    NSDate *date = [Tool transferDate:[NSDate date]];
+//    NSNumber *timeNum = [NSNumber numberWithDouble:[date timeIntervalSince1970]];
+//    NSString *text = [message body];[NSNumber numberWithDouble:[[NSDate date]timeIntervalSince1970]]
+    
+    
 }
 
 - (void)xmppRoom:(XMPPRoom *)sender occupantDidLeave:(XMPPJID *)occupantJID
