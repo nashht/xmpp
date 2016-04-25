@@ -23,6 +23,7 @@
 @property (weak, nonatomic) IBOutlet UILabel *titleLabel;
 @property (weak, nonatomic) IBOutlet UILabel *addressLabel;
 @property (weak, nonatomic) XMPPvCardTemp *myvCard;
+@property (weak, nonatomic) IBOutlet UILabel *zuojiLabel;
 
 @end
 
@@ -50,6 +51,7 @@
     _phoneLabel.text = _myvCard.note ? : @"未设置";
     _emailLabel.text = _myvCard.mailer ? : @"未设置";
     _addressLabel.text = _myvCard.url ? : @"未设置";
+    _zuojiLabel.text = _myvCard.uid ? : @"未设置";
     
     if (_myvCard.photo) {
         _photoView.image = [UIImage imageWithData:_myvCard.photo];
