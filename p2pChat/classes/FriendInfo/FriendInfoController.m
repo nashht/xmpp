@@ -32,7 +32,7 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     XMPPvCardTemp *friendVCard = [[MyXMPP shareInstance]fetchFriend:_userObj.jid];
-    [_photoImageView.layer setCornerRadius:CGRectGetHeight([_photoImageView bounds])/2];
+    [_photoImageView.layer setCornerRadius:10];
     _photoImageView.layer.masksToBounds = true;
     if (friendVCard.photo == nil) {//好友头像
         [_photoImageView setImage:[UIImage imageNamed:@"0"]];

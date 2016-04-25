@@ -46,27 +46,32 @@
     }
     _recentTableView.dataSource = self;
     _recentTableView.delegate = self;
+    _recentTableView.separatorStyle = UITableViewCellSeparatorStyleNone;
     _dataManager = [DataManager shareManager];
     _recentController = [_dataManager getRecent];
     _resultsControllerDelegate = [[MyFetchedResultsControllerDelegate alloc]initWithTableView:_recentTableView withScrolling:NO];
     _recentController.delegate = _resultsControllerDelegate;
     [_recentTableView registerNib:[UINib nibWithNibName:@"RecentCell" bundle:[NSBundle mainBundle]] forCellReuseIdentifier:@"recentCell"];//注册nib
-    
 }
 
 - (void)viewWillAppear:(BOOL)animated {
     if (self.tabBarController.tabBar.hidden == YES) {
         self.tabBarController.tabBar.hidden = NO;
     }
+    if ([[MyXMPP shareInstance].stream isDisconnected]) {
+        self.navigationItem.title = @"最近联系人(连接中)";
+        [[MyXMPP shareInstance]reconnect];
+    }
 }
 
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
-    if ([segue.identifier isEqualToString:@"chat"]) {
+    if ([segue.identifier isEqualToString:@"chat"]) {//sender为数组，第一个为name，第二个用于指示是否p2p
         ChatViewController *destinationVC = segue.destinationViewController;
-        LastMessage *message = sender;
-        destinationVC.title = message.username;
-        destinationVC.chatObjectString = message.username;
-        destinationVC.p2pChat = message.isP2P;
+        NSArray *options = sender;
+        destinationVC.title = options[0];
+        destinationVC.chatObjectString = options[0];
+        NSNumber *isP2P = options[1];
+        destinationVC.p2pChat = isP2P.boolValue;
     } else if ([segue.identifier isEqualToString:@"createGroup"]) {
         UINavigationController *destinationNavigationController = segue.destinationViewController;
         CreateGroupsViewController *createGroupVC = destinationNavigationController.childViewControllers[0];
@@ -107,7 +112,6 @@
     XMPPvCardTemp *vCardTemp = [[MyXMPP shareInstance]fetchFriend:[XMPPJID jidWithUser:lastMessage.username domain:myDomain resource:nil]];
     cell.usernamelabel.text = lastMessage.username;
     cell.lastmessagelabel.text = lastMessage.body;
-    [cell awakeFromNib];
     if (vCardTemp.photo != nil) {
         cell.userimage.image = [UIImage imageWithData:vCardTemp.photo];
     } else {
@@ -130,11 +134,25 @@
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     LastMessage *lastMessage = [_recentController objectAtIndexPath:indexPath];
-    [self performSegueWithIdentifier:@"chat" sender:lastMessage];//跳转到chat界面，并传参数，即当前聊天对象名称
+    NSArray *options = @[lastMessage.username, @1];
+    [self performSegueWithIdentifier:@"chat" sender:options];//跳转到chat界面，并传参数，即当前聊天对象名称
     [_dataManager updateUsername:lastMessage.username];
 }//当点击一个tableview时会调用以上代理，触发跳转到聊天界面
 
+- (BOOL)tableView:(UITableView *)tableView canEditRowAtIndexPath:(nonnull NSIndexPath *)indexPath {
+    return YES;
+}
 
+- (UITableViewCellEditingStyle)tableView:(UITableView *)tableView editingStyleForRowAtIndexPath:(NSIndexPath *)indexPath {
+    return UITableViewCellEditingStyleDelete;
+}
+
+- (void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath {
+    LastMessage *message = [_recentController objectAtIndexPath:indexPath];
+    [_dataManager deleteRecentUsername:message.username];
+}
+
+#pragma mark - popover view
 - (IBAction)PopoverBtnClick:(UIButton *)sender {
     PopoverViewController *popoverVc = [[PopoverViewController alloc] init];
     [popoverVc setCreateGroupBlock:^{//不会引起循环引用

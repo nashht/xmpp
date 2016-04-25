@@ -87,7 +87,6 @@ static NSString *pictureReuseIdentifier = @"pictureMessageCell";
     _bottomView.chatObjectString = _chatObjectString;
     _bottomView.p2pChat = [self isP2PChat];
     _bottomView.delegate = self;
-    [[UIApplication sharedApplication].windows[0] addSubview:_bottomView];//bottom放在window上
     
     // init more view
     _showMoreView = NO;
@@ -117,6 +116,7 @@ static NSString *pictureReuseIdentifier = @"pictureMessageCell";
 
 - (void)viewWillAppear:(BOOL)animated {
     self.tabBarController.tabBar.hidden = YES;
+    [[UIApplication sharedApplication].windows[0] addSubview:_bottomView];//bottom放在window上
     [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(keyboardWillShow:) name:UIKeyboardWillShowNotification object:nil];
     [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(keyboardWillHidden:) name:UIKeyboardWillHideNotification object:nil];
     if (_historyTableView.contentSize.height < _screenSize.height) {
@@ -135,6 +135,13 @@ static NSString *pictureReuseIdentifier = @"pictureMessageCell";
         
     };
 }
+- (IBAction)showChatingInfo:(id)sender {
+    if (self.isP2PChat) {
+        [self performSegueWithIdentifier:@"showFriendInfo" sender:nil];
+    } else {
+        [self performSegueWithIdentifier:@"showGroupInfo" sender:nil];
+    }
+}
 
 /**
  *  tableView自动显示最后一行
@@ -142,10 +149,8 @@ static NSString *pictureReuseIdentifier = @"pictureMessageCell";
 - (void)tableViewScrollToBottom{
     NSUInteger sectionCount = [_historyTableView numberOfSections];
     if (sectionCount) {
-        
         NSUInteger rowCount = [_historyTableView numberOfRowsInSection:0];
         if (rowCount) {
-            
             NSUInteger ii[2] = {0, rowCount - 1};
             NSIndexPath* indexPath = [NSIndexPath indexPathWithIndexes:ii length:2];
             [_historyTableView scrollToRowAtIndexPath:indexPath
@@ -158,6 +163,8 @@ static NSString *pictureReuseIdentifier = @"pictureMessageCell";
     if ([segue.identifier isEqualToString:@"showFriendInfo"]) {
         FriendChatingInfoViewController *infoVC = segue.destinationViewController;
         infoVC.friendName = _chatObjectString;
+    } else if ([segue.identifier isEqualToString:@"showGroupInfo"]) {
+        
     }
 }
 

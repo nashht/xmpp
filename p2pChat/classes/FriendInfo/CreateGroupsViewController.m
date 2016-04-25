@@ -56,10 +56,6 @@ static NSString *defaultGroupName = @"11111111";
     
 }
 
-- (void)viewDidDisappear:(BOOL)animated {
-    [_fatherVC performSegueWithIdentifier:@"chat" sender:defaultGroupName];//进入聊天的界面
-}
-
 - (UIStatusBarStyle)preferredStatusBarStyle{
     return YES;
 }
@@ -78,6 +74,10 @@ static NSString *defaultGroupName = @"11111111";
 
 
 - (void)invitenewfriends{
+    [self dismissViewControllerAnimated:YES completion: ^{
+        NSArray *option = @[defaultGroupName, @0];
+        [_fatherVC performSegueWithIdentifier:@"chat" sender:option];//进入聊天的界面
+    }];
     for (NSString *users in _selectedFriends) {
         [[MyXMPP shareInstance] inviteFriends:users withMessage:@"welcome"];
     }

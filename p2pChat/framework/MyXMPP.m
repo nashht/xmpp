@@ -14,7 +14,9 @@
 #import "Tool.h"
 #import "MyXMPP+Group.h"
 
-@interface MyXMPP () <XMPPStreamDelegate>
+@interface MyXMPP () <XMPPStreamDelegate> {
+    BOOL _hasInit;
+}
 
 @property (strong, nonatomic) NSString *password;
 
@@ -54,6 +56,10 @@
     [self disconnected];
 }
 
+- (void)reconnect {
+    [self loginWithName:_myjid.user Password:_password];
+}
+
 /**
  *  断开连接
  */
@@ -66,7 +72,7 @@
 #pragma mark - private method
 - (id)init {
     self = [super init];
-    
+    _hasInit = NO;
     if (self.stream == nil) {
         self.stream = [[XMPPStream alloc] init];
         [self.stream addDelegate:self delegateQueue:dispatch_get_main_queue()];
@@ -166,7 +172,7 @@
 }
 
 - (void)xmppStream:(XMPPStream *)sender didNotAuthenticate:(NSXMLElement *)error {
-    NSLog(@"用户名或密码错误");
+    NSLog(@"用户名或密码错误, %@", error);
     [[NSUserDefaults standardUserDefaults]removeObjectForKey:@"name"];
     [[NSUserDefaults standardUserDefaults]removeObjectForKey:@"password"];
     [[NSNotificationCenter defaultCenter]postNotificationName:MyXmppAuthenticateFailedNotification object:nil];

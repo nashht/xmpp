@@ -29,17 +29,16 @@
     if (err != nil) {
         NSLog(@"myxmpp fetch friend groups failed: %@", err);
     }
-    
-    //XMPPUserCoreDataStorageObject  *obj类型的
-    //名称为 obj.displayName
+
     return friendGroups;
 }
 
-- (XMPPUserCoreDataStorageObject *)fetchUserWithNickname:(NSString *)nickname {
+- (XMPPUserCoreDataStorageObject *)fetchUserWithUsername:(NSString *)username {
     NSManagedObjectContext *context = [[XMPPRosterCoreDataStorage sharedInstance] mainThreadManagedObjectContext];
+    XMPPJID *jid = [XMPPJID jidWithUser:username domain:myDomain resource:nil];
     NSFetchRequest *request = [[NSFetchRequest alloc] initWithEntityName:@"XMPPUserCoreDataStorageObject"];
-    NSPredicate *predicate = [NSPredicate predicateWithFormat:@"nickname = %@", nickname];
-    NSSortDescriptor *sort = [NSSortDescriptor sortDescriptorWithKey:@"nickname" ascending:YES];
+    NSPredicate *predicate = [NSPredicate predicateWithFormat:@"jidStr = %@", jid.full];
+    NSSortDescriptor *sort = [NSSortDescriptor sortDescriptorWithKey:@"jidStr" ascending:YES];
     request.predicate = predicate;
     request.sortDescriptors = @[sort];
     NSError *err = nil;
