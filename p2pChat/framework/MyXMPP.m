@@ -120,12 +120,13 @@
     
     //roster初始化
     [self initRoster];
-    
     //vcard初始化
     [self initVCard];
     
     UIStoryboard *storyboard = [UIStoryboard storyboardWithName:@"Main" bundle:nil];
     [UIApplication sharedApplication].keyWindow.rootViewController = [storyboard instantiateViewControllerWithIdentifier:@"tablebar"];
+    
+//    [self creatGroupName:@"11111" withpassword:nil andsubject:@"11111"];
     
 }
 

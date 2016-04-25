@@ -18,7 +18,7 @@
 #import "HeaderView.h"
 #import "CreateGroupsViewController.h"
 
-static NSString *defaultGroupName = @"my group";
+static NSString *defaultGroupName = @"11111111";
 
 @interface CreateGroupsViewController ()<UITableViewDelegate,UITableViewDataSource,HeaderViewDelegate>
 
@@ -69,11 +69,13 @@ static NSString *defaultGroupName = @"my group";
 }
 
 - (IBAction)selectBtnClick:(UIButton *)sender {
-    [[MyXMPP shareInstance] creatGroupName:defaultGroupName withpassword:nil andsubject:nil];
+    [[MyXMPP shareInstance] creatGroupName:@"111222" withpassword:nil andsubject:nil];
     [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(invitenewfriends) name:MyXmppRoomDidConfigurationNotification object:nil];
+    [[NSNotificationCenter defaultCenter]removeObserver:self name:MyXmppRoomDidConfigurationNotification object:nil];
     [self dismissViewControllerAnimated:YES completion:nil];
     NSLog(@"selected__-----------%@",_selectedFriends);
 }
+
 
 - (void)invitenewfriends{
     for (NSString *users in _selectedFriends) {

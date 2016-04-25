@@ -123,12 +123,13 @@ static NSString *myRoomDomain = @"conference.xmpp.test";
     NSLog(@"AFTER Config for the room %@",newConfig);
     [sender configureRoomUsingOptions:newConfig];
     
-    [[NSNotificationCenter defaultCenter] postNotificationName:MyXmppRoomDidConfigurationNotification object:nil];
-    //    [self inviteFriends:@"ht" withMessage:@"hellossss"];
-//    [self inviteFriends:@"cxh" withMessage:@"hello！"];
+    [[NSNotificationCenter defaultCenter]postNotificationName:MyXmppRoomDidConfigurationNotification object:nil];
+    
+//    [self inviteFriends:@"ht" withMessage:@"hellossss"];
+//    [self inviteFriends:@"ht" withMessage:@"hello！"];
 //    [self sendMessage:@"hello" ToGroup:@"222"];
-    //    [self sendGroupMessage:@"哈哈哈哈哈哈哈"];
-    //    [sender sendMessageWithBody:@"hehehehehehhe"];
+//    [self sendGroupMessage:@"哈哈哈哈哈哈哈"];
+//    [sender sendMessageWithBody:@"hehehehehehhe"];
 }
 
 - (void)xmppRoom:(XMPPRoom *)sender didFetchMembersList:(NSArray *)items{
