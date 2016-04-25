@@ -156,7 +156,7 @@
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     LastMessage *lastMessage = [_recentController objectAtIndexPath:indexPath];
     NSArray *options = nil;
-    if (lastMessage.isP2P) {
+    if (lastMessage.isP2P.boolValue) {
         options = @[lastMessage.username, @1];
     } else {
         options = @[lastMessage.username, @0];

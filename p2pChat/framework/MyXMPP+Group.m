@@ -11,6 +11,8 @@
 #import "Tool.h"
 #import "XMPPMessage+MyExtends.h"
 
+#define Voice @"[语音]"
+
 static NSString *myRoomDomain = @"conference.xmpp.test";
 
 @implementation MyXMPP (Group)
@@ -37,24 +39,35 @@ static NSString *myRoomDomain = @"conference.xmpp.test";
     [self.chatroom fetchMembersList];
 }
 
-- (void)sendMessage:(NSString *)text ToGroup:(NSString *)groupname{
-    NSXMLElement *body = [NSXMLElement elementWithName:@"body"];
-    [body setStringValue:text];
-    [body addAttributeWithName:@"subtype" stringValue:@"text"];
+- (void)sendMessageWithSubtype:(NSString *)subtype time:(double)time body:(NSString *)body more:(NSString *)more toGroup:(NSString *)groupname {
+    NSXMLElement *bodyElement = [NSXMLElement elementWithName:@"body"];
+    [bodyElement addAttributeWithName:@"subtype" stringValue:subtype];
+    
+    [bodyElement addAttributeWithName:@"time" stringValue:[NSString stringWithFormat:@"%f", time]];
+    if (more != nil) {
+        [bodyElement addAttributeWithName:@"more" stringValue:more];
+    }
+    [bodyElement setStringValue:body];
     
     NSXMLElement *message = [NSXMLElement elementWithName:@"message"];
     [message addAttributeWithName:@"type" stringValue:@"groupchat"];
     
-    
     NSString *to = [NSString stringWithFormat:@"%@@%@", groupname, myRoomDomain];
     [message addAttributeWithName:@"to" stringValue:to];
     
-    [message addChild:body];
+    [message addChild:bodyElement];
     [self.stream sendElement:message];
     NSLog(@"message : %@", message);
+}
+
+
+- (void)sendMessage:(NSString *)text ToGroup:(NSString *)groupname{
+
+    NSDate *date = [NSDate date];
+    NSTimeInterval t = [date timeIntervalSince1970];
+    int time = (int)t;
     
-    NSDate *date = [Tool transferDate:[NSDate date]];
-    double time = [date timeIntervalSince1970];
+    [self sendMessageWithSubtype:@"text" time:time body:text more:nil toGroup:groupname];
     
     [self.dataManager saveMessageWithGroupname:groupname username:self.myjid.user time:[NSNumber numberWithDouble:time] body:text];
     [self.dataManager addRecentUsername:groupname time:[NSNumber numberWithDouble:time] body:text isOut:YES isP2P:NO];
@@ -63,28 +76,30 @@ static NSString *myRoomDomain = @"conference.xmpp.test";
 - (void)sendAudio:(NSString *)path ToGroup:(NSString *)groupname withlength:(NSString *)length{
     NSFileManager *filemnanager=[NSFileManager defaultManager];
     NSData *p = [filemnanager contentsAtPath:path];
-    
     NSString *audiomsg = [p base64EncodedStringWithOptions:0];
-    NSString *audiomsgwithlength = [NSString stringWithFormat:@"%@,%@",length,audiomsg];
-    
-    NSXMLElement *body = [NSXMLElement elementWithName:@"body"];
-    [body setStringValue:audiomsgwithlength];
-    [body addAttributeWithName:@"subtype" stringValue:@"audio"];
-    
-    NSXMLElement *audiomessage = [NSXMLElement elementWithName:@"message"];
-    [audiomessage addAttributeWithName:@"type" stringValue:@"groupchat"];
-    
-    NSString *to = [NSString stringWithFormat:@"%@@%@", groupname, myRoomDomain];
-    [audiomessage addAttributeWithName:@"to" stringValue:to];
-    
-    [audiomessage addChild:body];
-    [self.stream sendElement:audiomessage];
     
     NSDate *date = [Tool transferDate:[NSDate date]];
     double time = [date timeIntervalSince1970];
     
-    [self.dataManager saveRecordWithGroupname:groupname username:self.myjid.user time:[NSNumber numberWithDouble:time] path:path length:length];
+//    NSXMLElement *body = [NSXMLElement elementWithName:@"body"];
+//    [body setStringValue:audiomsgwithlength];
+//    [body addAttributeWithName:@"subtype" stringValue:@"audio"];
+//    
+//    NSXMLElement *audiomessage = [NSXMLElement elementWithName:@"message"];
+//    [audiomessage addAttributeWithName:@"type" stringValue:@"groupchat"];
+//    
+//    NSString *to = [NSString stringWithFormat:@"%@@%@", groupname, myRoomDomain];
+//    [audiomessage addAttributeWithName:@"to" stringValue:to];
+//    
+//    [audiomessage addChild:body];
+//    [self.stream sendElement:audiomessage];
     
+//    NSDate *date = [Tool transferDate:[NSDate date]];
+//    double time = [date timeIntervalSince1970];
+    [self sendMessageWithSubtype:@"audio" time:time body:audiomsg more:length toGroup:groupname];
+    
+    [self.dataManager saveRecordWithGroupname:groupname username:self.myjid.user time:[NSNumber numberWithDouble:time] path:path length:length];
+    [self.dataManager addRecentUsername:groupname time:[NSNumber numberWithInt:time] body:Voice isOut:YES isP2P:NO];
 }
 
 - (void)destroyChatRoom{
