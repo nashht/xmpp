@@ -55,14 +55,26 @@
     [_recentTableView registerNib:[UINib nibWithNibName:@"RecentCell" bundle:[NSBundle mainBundle]] forCellReuseIdentifier:@"recentCell"];//注册nib
     
     UIRefreshControl *refresh = [[UIRefreshControl alloc] init];
-    refresh.attributedTitle = [[NSAttributedString alloc] initWithString:@"下拉刷新"];
-    [refresh addTarget:self action:@selector(refreshTableView) forControlEvents:UIControlEventValueChanged];
-//    self.refreshControl = refresh;
     [self.recentTableView addSubview:refresh];
+    
+    refresh.attributedTitle = [[NSAttributedString alloc] initWithString:@"下拉刷新"];
+    [refresh addTarget:self action:@selector(refreshTableView:) forControlEvents:UIControlEventValueChanged];
+    
+    [self refreshTableView:refresh];
+    
 }
 
-- (void)refreshTableView{
+- (void)refreshTableView:(UIRefreshControl *)refreshControl{
     NSLog(@"refreshTableView");
+    if ([[MyXMPP shareInstance].stream isDisconnected]) {
+        [[MyXMPP shareInstance] reconnect];
+    }
+    
+    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.5 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+            [refreshControl endRefreshing];
+    });
+    
+
 }
 
 - (void)viewWillAppear:(BOOL)animated {
