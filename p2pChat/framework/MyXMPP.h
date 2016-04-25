@@ -12,6 +12,7 @@
 @class XMPPStream;
 @class XMPPvCardTemp;
 @class XMPPGroupCoreDataStorageObject;
+@class XMPPUserCoreDataStorageObject;
 @class XMPPRoster;
 @class XMPPvCardTempModule;
 @class XMPPRoom;
@@ -43,6 +44,7 @@ static NSString *myDomain = @"xmpp.test";
 
 @property (strong, nonatomic) XMPPStream *stream;
 @property (strong, nonatomic, readonly) XMPPvCardTemp *myVCardTemp;
+@property (strong, nonatomic, readonly) XMPPUserCoreDataStorageObject *myCoreData;
 @property (strong, nonatomic, readonly) XMPPRoster *roster;
 @property (strong, nonatomic, readonly) XMPPvCardTempModule *vCardModule;
 @property (strong, nonatomic, readonly) XMPPJID *myjid;

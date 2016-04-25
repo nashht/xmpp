@@ -45,7 +45,6 @@
     XMPPvCardTemp *myvCard = [[MyXMPP shareInstance]fetchFriend:[MyXMPP shareInstance].myjid];
     _myvCard = myvCard;
     self.navigationItem.title = @"我";
-//    _photoView.layer.cornerRadius = CGRectGetHeight([_photoView bounds]) / 2;
     _photoView.layer.cornerRadius = 10;
     _photoView.layer.masksToBounds = true;
     _nameLabel.text = [[NSUserDefaults standardUserDefaults]stringForKey:@"name"];
