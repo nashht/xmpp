@@ -7,9 +7,9 @@
 //
 
 #import "MeController.h"
-#import "MyXMPP.h"
+#import "MyXMPP+VCard.h"
+#import "MyXMPP+Roster.h"
 #import "PhotoLibraryCenter.h"
-#import "XMPPvCardTemp.h"
 #import "EditViewController.h"
 
 @interface MeController ()<UIImagePickerControllerDelegate,UITableViewDataSource,UITableViewDelegate,UINavigationControllerDelegate>
@@ -38,15 +38,13 @@
     [self loadvCard];
 }
 
-- (void)loadvCard{
-    
+- (void)loadvCard{    
     XMPPvCardTemp *myvCard = [MyXMPP shareInstance].myVCardTemp;
     self.navigationItem.title = @"我";
-//    _photoView.layer.cornerRadius = CGRectGetHeight([_photoView bounds]) / 2;
     _photoView.layer.cornerRadius = 10;
     _photoView.layer.masksToBounds = true;
     _nameLabel.text = [[NSUserDefaults standardUserDefaults]stringForKey:@"name"];
-    //    _groupLabel.text = myvCard.
+    
     _titleLabel.text = myvCard.title;
     _phoneLabel.text = myvCard.note;
     _emailLabel.text = myvCard.emailAddresses[0];

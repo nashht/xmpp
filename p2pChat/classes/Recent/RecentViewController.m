@@ -108,7 +108,6 @@
     XMPPvCardTemp *vCardTemp = [[MyXMPP shareInstance]fetchFriend:[XMPPJID jidWithUser:lastMessage.username domain:myDomain resource:nil]];
     cell.usernamelabel.text = lastMessage.username;
     cell.lastmessagelabel.text = lastMessage.body;
-    [cell awakeFromNib];
     if (vCardTemp.photo != nil) {
         cell.userimage.image = [UIImage imageWithData:vCardTemp.photo];
     } else {

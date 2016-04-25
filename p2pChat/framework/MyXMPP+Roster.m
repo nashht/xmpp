@@ -29,9 +29,7 @@
     if (err != nil) {
         NSLog(@"myxmpp fetch friend groups failed: %@", err);
     }
-    
-    //XMPPUserCoreDataStorageObject  *obj类型的
-    //名称为 obj.displayName
+
     return friendGroups;
 }
 
