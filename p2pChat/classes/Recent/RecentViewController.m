@@ -22,6 +22,7 @@
 
 @property (weak, nonatomic) IBOutlet UIButton *addBtn;
 @property (weak, nonatomic) IBOutlet UITableView *recentTableView;
+@property (weak, nonatomic)  UIRefreshControl *refreshControl;
 
 @property (strong, nonatomic) DataManager *dataManager;
 @property (strong, nonatomic) NSFetchedResultsController *recentController;
@@ -52,6 +53,16 @@
     _resultsControllerDelegate = [[MyFetchedResultsControllerDelegate alloc]initWithTableView:_recentTableView withScrolling:NO];
     _recentController.delegate = _resultsControllerDelegate;
     [_recentTableView registerNib:[UINib nibWithNibName:@"RecentCell" bundle:[NSBundle mainBundle]] forCellReuseIdentifier:@"recentCell"];//注册nib
+    
+    UIRefreshControl *refresh = [[UIRefreshControl alloc] init];
+    refresh.attributedTitle = [[NSAttributedString alloc] initWithString:@"下拉刷新"];
+    [refresh addTarget:self action:@selector(refreshTableView) forControlEvents:UIControlEventValueChanged];
+//    self.refreshControl = refresh;
+    [self.recentTableView addSubview:refresh];
+}
+
+- (void)refreshTableView{
+    NSLog(@"refreshTableView");
 }
 
 - (void)viewWillAppear:(BOOL)animated {

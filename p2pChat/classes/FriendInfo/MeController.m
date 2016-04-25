@@ -49,9 +49,9 @@
     _nameLabel.text = myName;
     XMPPUserCoreDataStorageObject *user = [[MyXMPP shareInstance]fetchUserWithUsername:myName];
     _groupLabel.text = user.groups.allObjects[0];
-    _titleLabel.text = myvCard.title;
-    _phoneLabel.text = myvCard.note;
-    _emailLabel.text = myvCard.emailAddresses[0];
+    _titleLabel.text = _myvCard.title;
+    _phoneLabel.text = _myvCard.note;
+    _emailLabel.text = _myvCard.emailAddresses[0];
     
     
     
