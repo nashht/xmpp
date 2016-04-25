@@ -15,6 +15,8 @@
 #import "MessageViewCell.h"
 #import "DataManager.h"
 #import "Message.h"
+#import "GroupMessage.h"
+#import "MessageBean.h"
 #import "MyFetchedResultsControllerDelegate.h"
 #import "MessageCell.h"
 #import "AudioCenter.h"
@@ -22,22 +24,20 @@
 #import "BottomView.h"
 #import "MoreView.h"
 #import "MyXMPP.h"
+#import "FriendChatingInfoViewController.h"
 
 #define MOREHEIGHT 100
 #define BOTTOMHEIGHT 40
 
-#define MyMessageCell @"my message"
-#define FriendMessageCell @"friend message"
-#define MyRecordCell @"my record"
-#define FriendRecordCell @"friend record"
-#define MyPhotoCell @"my photo"
-#define FriendPhotoCell @"friend photo"
+static NSString *textReuseIdentifier = @"textMessageCell";
+static NSString *audioReuseIdentifier = @"audioMessageCell";
+static NSString *pictureReuseIdentifier = @"pictureMessageCell";
 
 @interface ChatViewController () <UITableViewDataSource, UITableViewDelegate, UITextFieldDelegate, BottomViewDelegate> {
     NSString *_photoPath;
     BOOL _showMoreView;
-    BOOL _bottomPostion;
     CGSize _screenSize;
+    CGFloat _keyboardHeight;//底下弹出的高度，不只是键盘
 }
 
 @property (weak, nonatomic) IBOutlet UITableView *historyTableView;
@@ -46,6 +46,8 @@
 
 @property (strong, nonatomic) NSFetchedResultsController *historyController;
 @property (strong, nonatomic) MyFetchedResultsControllerDelegate *historyControllerDelegate;
+
+@property (assign, nonatomic) CGFloat tableViewHeight;
 
 @end
 
@@ -58,8 +60,13 @@
     _historyTableView.dataSource = self;
     _historyTableView.delegate = self;
     _historyTableView.separatorStyle = UITableViewCellSeparatorStyleNone;
-    _historyController = [[DataManager shareManager]getMessageByUsername:_userJid.user];
-    _historyControllerDelegate = [[MyFetchedResultsControllerDelegate alloc]initWithTableView:_historyTableView];
+    if ([self isP2PChat]) {
+        _historyController = [[DataManager shareManager]getMessageByUsername:_chatObjectString];
+    } else {
+        _historyController = [[DataManager shareManager]getMessageByGroupname:_chatObjectString];
+    }
+    
+    _historyControllerDelegate = [[MyFetchedResultsControllerDelegate alloc]initWithTableView:_historyTableView withScrolling:YES];
     _historyController.delegate = _historyControllerDelegate;
     
 //    禁止选中tableView
@@ -67,21 +74,27 @@
     
 //    backgroundColor 设置为灰色
     _historyTableView.backgroundColor = [UIColor colorWithRed:225/255.0 green:225/255.0 blue:225/255.0 alpha:1.0];
+    // 注册cell
+    [_historyTableView registerClass:[MessageViewCell class] forCellReuseIdentifier:textReuseIdentifier];
+    [_historyTableView registerClass:[RecordViewCell class] forCellReuseIdentifier:audioReuseIdentifier];
+    [_historyTableView registerClass:[PicViewCell class] forCellReuseIdentifier:pictureReuseIdentifier];
     
     _screenSize = [UIScreen mainScreen].bounds.size;
+    _keyboardHeight = 0;
     // init bottom view
     _bottomView = [[NSBundle mainBundle]loadNibNamed:@"BottomView" owner:self options:nil].lastObject;
     _bottomView.frame = CGRectMake(0, _screenSize.height - BOTTOMHEIGHT, _screenSize.width, BOTTOMHEIGHT);
-    _bottomView.username = _userJid.user;
+    _bottomView.chatObjectString = _chatObjectString;
+    _bottomView.p2pChat = [self isP2PChat];
     _bottomView.delegate = self;
-    _bottomPostion = YES;
-    [self.view addSubview:_bottomView];
     
     // init more view
     _showMoreView = NO;
     _moreView = [[NSBundle mainBundle]loadNibNamed:@"MoreView" owner:self options:nil].lastObject;
     _moreView.frame = CGRectMake(0, _screenSize.height, _screenSize.width, MOREHEIGHT);
-//    _moreView.username = _username;
+    _moreView.chatObjectString = _chatObjectString;
+//    _moreView.p2pChat = [self isP2PChat];
+    _moreView.p2pChat = YES;
     [self.view addSubview:_moreView];
     
     [self tableViewScrollToBottom];
@@ -97,37 +110,61 @@
 - (void)commentTableViewTouchInSide {
     [_bottomView resignTextfield];
     if (_showMoreView) {
-        _showMoreView = NO;
-        [self moveDownView:MOREHEIGHT];
+        [self hideMoreView];
     }
 }
 
 - (void)viewWillAppear:(BOOL)animated {
     self.tabBarController.tabBar.hidden = YES;
+    [[UIApplication sharedApplication].windows[0] addSubview:_bottomView];//bottom放在window上
     [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(keyboardWillShow:) name:UIKeyboardWillShowNotification object:nil];
     [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(keyboardWillHidden:) name:UIKeyboardWillHideNotification object:nil];
+    if (_historyTableView.contentSize.height < _screenSize.height) {
+        [self addObserver:self forKeyPath:@"tableViewHeight" options:NSKeyValueObservingOptionNew context:NULL];
+    }
 }
 
 - (void)viewWillDisappear:(BOOL)animated {
     [[NSNotificationCenter defaultCenter]removeObserver:self name:nil object:nil];
+    [_bottomView resignFirstResponder];
+    [_bottomView removeFromSuperview];
+    @try {
+        [self removeObserver:self forKeyPath:@"tableViewHeight"];
+    }
+    @catch (NSException *exception) {
+        
+    };
+}
+- (IBAction)showChatingInfo:(id)sender {
+    if (self.isP2PChat) {
+        [self performSegueWithIdentifier:@"showFriendInfo" sender:nil];
+    } else {
+        [self performSegueWithIdentifier:@"showGroupInfo" sender:nil];
+    }
 }
 
 /**
  *  tableView自动显示最后一行
  */
 - (void)tableViewScrollToBottom{
-    
     NSUInteger sectionCount = [_historyTableView numberOfSections];
     if (sectionCount) {
-        
         NSUInteger rowCount = [_historyTableView numberOfRowsInSection:0];
         if (rowCount) {
-            
             NSUInteger ii[2] = {0, rowCount - 1};
             NSIndexPath* indexPath = [NSIndexPath indexPathWithIndexes:ii length:2];
             [_historyTableView scrollToRowAtIndexPath:indexPath
                                      atScrollPosition:UITableViewScrollPositionBottom animated:YES];
         }
+    }
+}
+
+- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
+    if ([segue.identifier isEqualToString:@"showFriendInfo"]) {
+        FriendChatingInfoViewController *infoVC = segue.destinationViewController;
+        infoVC.friendName = _chatObjectString;
+    } else if ([segue.identifier isEqualToString:@"showGroupInfo"]) {
+        
     }
 }
 
@@ -138,56 +175,69 @@
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
-    
-    Message *message = [_historyController objectAtIndexPath:indexPath];
+    self.tableViewHeight = _historyTableView.contentSize.height + 150;
+    NSManagedObject *messageObj = [_historyController objectAtIndexPath:indexPath];
+    MessageBean *message = nil;
+    if (self.isP2PChat) {
+        Message *p2pMessage = (Message *)messageObj;
+        message = [[MessageBean alloc]initWithUsername:p2pMessage.username type:p2pMessage.type body:p2pMessage.body time:p2pMessage.time isOut:p2pMessage.isOut isP2P:YES];
+    } else {
+        GroupMessage *groupMessage = (GroupMessage *)messageObj;
+        message = [[MessageBean alloc]initWithUsername:groupMessage.username type:groupMessage.type body:groupMessage.body time:groupMessage.time isOut:nil isP2P:NO];
+    }
     MessageType type = message.type.charValue;
     switch (type) {
         case MessageTypeMessage:{
-            static NSString *reuseIdentifier = @"messageCell";
-            MessageViewCell *cell = [_historyTableView dequeueReusableCellWithIdentifier:reuseIdentifier];
+            MessageViewCell *cell = [_historyTableView dequeueReusableCellWithIdentifier:textReuseIdentifier];
             
             if (cell == nil) {
-                cell = [[MessageViewCell alloc] initWithStyle:UITableViewCellStyleSubtitle reuseIdentifier:reuseIdentifier];
+                cell = [[MessageViewCell alloc] initWithStyle:UITableViewCellStyleSubtitle reuseIdentifier:textReuseIdentifier];
             }
             MessageFrameModel *messageFrameModel = [[MessageFrameModel alloc] init];
             messageFrameModel.message = message;
             cell.messageFrame = messageFrameModel;
-            
             return cell;
         }
         case MessageTypePicture:{
-            static NSString *reuseIdentifier = @"picCell";
-            PicViewCell *cell = [_historyTableView dequeueReusableCellWithIdentifier:reuseIdentifier];
+            PicViewCell *cell = [_historyTableView dequeueReusableCellWithIdentifier:pictureReuseIdentifier];
             
             if (cell == nil) {
-                cell = [[PicViewCell alloc] initWithStyle:UITableViewCellStyleSubtitle reuseIdentifier:reuseIdentifier];
+                cell = [[PicViewCell alloc] initWithStyle:UITableViewCellStyleSubtitle reuseIdentifier:pictureReuseIdentifier];
             }
             PicFrameModel *messageFrameModel = [[PicFrameModel alloc] init];
-            messageFrameModel.message = message;
+//            messageFrameModel.message = message;
             cell.picFrame = messageFrameModel;
             return cell;
         }
         case MessageTypeRecord:{
-            static NSString *reuseIdentifier = @"recordCell";
-            RecordViewCell *cell = [_historyTableView dequeueReusableCellWithIdentifier:reuseIdentifier];
+            RecordViewCell *cell = [_historyTableView dequeueReusableCellWithIdentifier:audioReuseIdentifier];
+            
             if (cell == nil) {
-                cell = [[RecordViewCell alloc] initWithStyle:UITableViewCellStyleSubtitle reuseIdentifier:reuseIdentifier];
+                cell = [[RecordViewCell alloc] initWithStyle:UITableViewCellStyleSubtitle reuseIdentifier:audioReuseIdentifier];
             }
             RecordFrameModel *recordFrameMode = [[RecordFrameModel alloc] init];
-            recordFrameMode.message = message;
+//            recordFrameMode.message = message;
             cell.recordFrame = recordFrameMode;
             return cell;
         }
         default:
             break;
     }
+    
     return nil;
 }
 
 #pragma mark - table view delegate
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
-    Message *message = [_historyController objectAtIndexPath:indexPath];
-    
+    NSManagedObject *messageObj = [_historyController objectAtIndexPath:indexPath];
+    MessageBean *message = nil;
+    if (self.isP2PChat) {
+        Message *p2pMessage = (Message *)messageObj;
+        message = [[MessageBean alloc]initWithUsername:p2pMessage.username type:p2pMessage.type body:p2pMessage.body time:p2pMessage.time isOut:p2pMessage.isOut isP2P:YES];
+    } else {
+        GroupMessage *groupMessage = (GroupMessage *)messageObj;
+        message = [[MessageBean alloc]initWithUsername:groupMessage.username type:groupMessage.type body:groupMessage.body time:groupMessage.time isOut:nil isP2P:NO];
+    }
     MessageType type = message.type.charValue;
     switch (type) {
         case MessageTypeMessage:{
@@ -198,13 +248,13 @@
             break;
         case MessageTypePicture:{
             PicFrameModel *picFrameModel = [[PicFrameModel alloc] init];
-            picFrameModel.message = message;
+//            picFrameModel.message = message;
             return picFrameModel.cellHeight + 1;
         }
             break;
         case MessageTypeRecord:{
             RecordFrameModel *recordFrameMode = [[RecordFrameModel alloc] init];
-            recordFrameMode.message = message;
+//            recordFrameMode.message = message;
             return recordFrameMode.cellHeight + 1;
         }
             break;
@@ -222,61 +272,98 @@
     [self.view endEditing:YES];
 }
 
-- (BOOL)moveUpView:(CGFloat)offset {//view是否需要往上弹
-//    BOOL flag = _historyTableView.contentSize.height + offset +BOTTOMHEIGHT >= _historyTableView.frame.size.height;
-//    if (flag) {
-        [UIView animateWithDuration:0.5 animations:^{
-            self.view.frame = CGRectMake(0, -offset, _screenSize.width, _screenSize.height);
-        }];
-//    }
-    return YES;
-}
-
-- (void)moveDownView:(CGFloat)height {
-    if (_historyTableView.contentSize.height + height + BOTTOMHEIGHT >=  _historyTableView.frame.size.height) {
-        [UIView animateWithDuration:0.5 animations:^{
-            self.view.frame = CGRectMake(0, 0, _screenSize.width, _screenSize.height);
-        }];
-    }
-}
-
 #pragma mark -keyboard notification
 - (void)keyboardWillShow:(NSNotification *)notification {
     CGFloat height = [notification.userInfo[UIKeyboardFrameEndUserInfoKey] CGRectValue].size.height;
-    [self moveUpView:height];
-    [self tableViewScrollToBottom];
-    if (_historyTableView.contentSize.height + height +BOTTOMHEIGHT <= _historyTableView.frame.size.height) {
-        _bottomPostion = NO;
+    _keyboardHeight = height;
+    _showMoreView = NO;
+    _moreView.frame = CGRectMake(0, _screenSize.height, _screenSize.width, MOREHEIGHT);
+    if (_historyTableView.contentSize.height + 100 > _screenSize.height) {//内容已经很多，view全部上移即可
         [UIView animateWithDuration:0.5 animations:^{
-//            _bottomView.frame = CGRectMake(0, _screenSize.height - height - BOTTOMHEIGHT, _screenSize.width, BOTTOMHEIGHT);
+            self.view.frame = CGRectMake(0, -(height + BOTTOMHEIGHT), _screenSize.width, _screenSize.height);
+            _bottomView.frame = CGRectMake(0, _screenSize.height - height - BOTTOMHEIGHT, _screenSize.width, BOTTOMHEIGHT);
+        }];
+    } else if (_historyTableView.contentSize.height + height + BOTTOMHEIGHT + 100 > _screenSize.height) {//内容不是很多，view只需移动一点
+        [UIView animateWithDuration:0.5 animations:^{
+            self.view.frame = CGRectMake(0, _screenSize.height - height - BOTTOMHEIGHT - _historyTableView.contentSize.height - 100, _screenSize.width, _screenSize.height);
+            _bottomView.frame = CGRectMake(0, _screenSize.height - height - BOTTOMHEIGHT, _screenSize.width, BOTTOMHEIGHT);
+        }];
+    } else {//内容很少，view不用上移
+        [UIView animateWithDuration:0.5 animations:^{
+            _bottomView.frame = CGRectMake(0, _screenSize.height - height - BOTTOMHEIGHT, _screenSize.width, BOTTOMHEIGHT);
         }];
     }
 }
 
 - (void)keyboardWillHidden:(NSNotification *)notification {
-    CGFloat height = [notification.userInfo[UIKeyboardFrameEndUserInfoKey] CGRectValue].size.height;
-    if (!_bottomPostion) {
-        [UIView animateWithDuration:0.5 animations:^{
-            _bottomView.frame = CGRectMake(0, _screenSize.height - BOTTOMHEIGHT, _screenSize.width, BOTTOMHEIGHT);
-        }];
-    } else {
-        [self moveDownView:height];
-    }
+    _keyboardHeight = 0;
+    [UIView animateWithDuration:0.5 animations:^{
+        self.view.frame = CGRectMake(0, 0, _screenSize.width, _screenSize.height);
+        _bottomView.frame = CGRectMake(0, _screenSize.height - BOTTOMHEIGHT, _screenSize.width, BOTTOMHEIGHT);
+    }];
 }
 
 #pragma mark - bottom delegate
 - (void)showMoreView {
     if (_showMoreView) {
-        [self moveDownView:MOREHEIGHT];
+        _keyboardHeight = 0;
+        [UIView animateWithDuration:0.5 animations:^{
+            self.view.frame = CGRectMake(0, 0, _screenSize.width, _screenSize.height);
+            _bottomView.frame = CGRectMake(0, _screenSize.height - BOTTOMHEIGHT, _screenSize.width, BOTTOMHEIGHT);
+            _moreView.frame = CGRectMake(0, _screenSize.height, _screenSize.width, MOREHEIGHT);
+        }];
     } else {
-        [self moveUpView:MOREHEIGHT];
+        _keyboardHeight = MOREHEIGHT;
+        if (_historyTableView.contentSize.height + 100 > _screenSize.height) {
+            [UIView animateWithDuration:0.5 animations:^{
+                self.view.frame = CGRectMake(0, -MOREHEIGHT, _screenSize.width, _screenSize.height);
+                _bottomView.frame = CGRectMake(0, _screenSize.height - MOREHEIGHT - BOTTOMHEIGHT, _screenSize.width, BOTTOMHEIGHT);
+            }];
+        } else if (_historyTableView.contentSize.height + MOREHEIGHT + BOTTOMHEIGHT + 100 > _screenSize.height) {
+            [UIView animateWithDuration:0.5 animations:^{
+                self.view.frame = CGRectMake(0, _screenSize.height - MOREHEIGHT - BOTTOMHEIGHT - _historyTableView.contentSize.height - 100, _screenSize.width, _screenSize.height);
+                _bottomView.frame = CGRectMake(0, _screenSize.height - MOREHEIGHT, _screenSize.width, BOTTOMHEIGHT);
+            }];
+        } else {
+            [UIView animateWithDuration:0.5 animations:^{
+                _bottomView.frame = CGRectMake(0, _screenSize.height - MOREHEIGHT - BOTTOMHEIGHT, _screenSize.width, BOTTOMHEIGHT);
+                _moreView.frame = CGRectMake(0, _screenSize.height - MOREHEIGHT, _screenSize.width, MOREHEIGHT);
+            }];
+        }
     }
     _showMoreView = !_showMoreView;
 }
 
 - (void)hideMoreView {
     if (_showMoreView) {
-        [self moveDownView:MOREHEIGHT];
+        [UIView animateWithDuration:0.5 animations:^{
+            self.view.frame = CGRectMake(0, 0, _screenSize.width, _screenSize.height);
+            _bottomView.frame = CGRectMake(0, _screenSize.height - BOTTOMHEIGHT, _screenSize.width, BOTTOMHEIGHT);
+            _moreView.frame = CGRectMake(0, _screenSize.height, _screenSize.width, MOREHEIGHT);
+        }];
+    }
+}
+
+#pragma mark - kvo
+-(void)observeValueForKeyPath:(NSString *)keyPath ofObject:(id)object change:(NSDictionary<NSString *,id> *)change context:(void *)context {
+    if ([keyPath isEqualToString:@"tableViewHeight"]) {
+        NSNumber *new = change[@"new"];
+        if (new.doubleValue > _screenSize.height - _keyboardHeight - 100 && new.doubleValue < _screenSize.height - 100) {
+            [UIView animateWithDuration:0.2 animations:^{
+                self.view.frame = CGRectMake(0, -1 * (_keyboardHeight + new.doubleValue - _screenSize.height + 100), _screenSize.width, _screenSize.height);
+            }];
+        }
+        if (new.doubleValue + 100 >= _screenSize.height) {
+            [UIView animateWithDuration:0.2 animations:^{
+                self.view.frame = CGRectMake(0, -_keyboardHeight, _screenSize.width, _screenSize.height);
+            }];
+            @try {
+                [self removeObserver:self forKeyPath:@"tableViewHeight"];
+            }
+            @catch (NSException *exception) {
+                
+            };
+        }
     }
 }
 

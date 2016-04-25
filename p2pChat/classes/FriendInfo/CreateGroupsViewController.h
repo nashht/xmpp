@@ -8,6 +8,8 @@
 
 #import <UIKit/UIKit.h>
 
-@interface CreatGroupsViewController : UIViewController
+@interface CreateGroupsViewController : UIViewController
+
+@property (nonatomic, weak) UIViewController *fatherVC;
 
 @end

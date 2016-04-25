@@ -11,7 +11,7 @@
 
 @interface MoreView : UIView <UINavigationControllerDelegate, UIImagePickerControllerDelegate>
 
-@property (strong, nonatomic) NSString *username;
-@property (strong, nonatomic) NSString *ipStr;
+@property (copy, nonatomic) NSString *chatObjectString;
+@property (assign, nonatomic, getter=isP2PChat) BOOL p2pChat;
 
 @end

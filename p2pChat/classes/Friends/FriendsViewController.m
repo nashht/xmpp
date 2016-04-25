@@ -37,11 +37,11 @@
     
     _groupCoreDataStorageObjects = [[MyXMPP shareInstance]getFriendsGroup];
     [self initGroup];
-    
 }
 
 - (void)viewWillAppear:(BOOL)animated {
     self.tabBarController.tabBar.hidden = NO;
+    [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(headerViewDidClickedNameView:) name:MyXmppUserStatusChangedNotification object:nil];
 }
 
 - (UIStatusBarStyle)preferredStatusBarStyle{
@@ -56,6 +56,14 @@
             group.opened = NO;
             group.name = groupObj.name;
             group.friends = groupObj.users.allObjects;
+            int count = 0;
+            for (int i=0;i<group.friends.count;i++) {
+                XMPPUserCoreDataStorageObject *userobj = groupObj.users.allObjects[i];
+                if ([userobj isOnline] ==YES) {
+                    count++;
+                };
+            }
+            group.online = count;
             [_groups addObject:group];
         }
     }
@@ -82,26 +90,33 @@
     }
     
     XMPPGroupCoreDataStorageObject *groupInfo = _groupCoreDataStorageObjects[indexPath.section];
-    XMPPUserCoreDataStorageObject *obj = groupInfo.users.allObjects[indexPath.row];
+    NSSortDescriptor *sortKey = [NSSortDescriptor sortDescriptorWithKey:@"section" ascending:YES];
+    NSArray *users = [groupInfo.users sortedArrayUsingDescriptors:@[sortKey]];
+    XMPPUserCoreDataStorageObject *obj = users[indexPath.row];
     XMPPvCardTemp *vCard = [[MyXMPP shareInstance]fetchFriend:obj.jid];
     
-    [cell setLabel:obj.jid.user];
-    if (vCard.photo != nil) {
+    [cell setLabel:obj.jid.user];//设置好友名称
+    if (vCard.photo != nil) {//设置好友默认头像
         [cell setIcon:[UIImage imageWithData:vCard.photo]];
     } else {
         [cell setIcon:[UIImage imageNamed:@"0"]];
     }
-    [cell setDepartment:@"职位"];
+    
+    if (vCard.title == nil) {//设置好友职务
+        [cell setDepartment:@"职务"];
+    }else{
+        [cell setDepartment:vCard.title];
+    }
     
     switch (obj.section) {
         case 0:
-            [cell setStatus:@"online"];
+            [cell setStatus:@"[在线]"];
             break;
         case 1:
-            [cell setStatus:@"away"];
+            [cell setStatus:@"[离开]"];
             break;
         case 2:
-            [cell setStatus:@"offline"];
+            [cell setStatus:@"[离线]"];
             break;
         default:
             break;
@@ -111,8 +126,7 @@
 }
 
 
-- (UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section
-{
+- (UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section {
     FriendHeaderView *header = [FriendHeaderView friendHeaderViewWithTableView:tableView];
     header.delegate = self;
     header.group = _groups[section];
@@ -120,21 +134,25 @@
     return header;
 }
 
-- (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath{
+- (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
     return 70;
 }
 
-- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
+- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     UIStoryboard *storyBoard = [UIStoryboard storyboardWithName:@"Main" bundle:nil];
     
     FriendInfoController *vc = (FriendInfoController *)[storyBoard instantiateViewControllerWithIdentifier:@"friendsInfo"];
     vc.title = @"个人资料";
     XMPPGroupCoreDataStorageObject *group = _groupCoreDataStorageObjects[indexPath.section];
-    vc.userObj = group.users.allObjects[indexPath.row];
+    NSSortDescriptor *sortKey = [NSSortDescriptor sortDescriptorWithKey:@"section" ascending:YES];
+    NSArray *users = [group.users sortedArrayUsingDescriptors:@[sortKey]];
+    XMPPUserCoreDataStorageObject *obj = users[indexPath.row];
+    vc.userObj = obj;
     [self.navigationController pushViewController:vc animated:YES];
 }
 
-- (void)headerViewDidClickedNameView:(FriendHeaderView *)headerView{
+#pragma mark - headerView delegate
+- (void)headerViewDidClickedNameView:(FriendHeaderView *)headerView {
     [self.tableView reloadData];
 }
 

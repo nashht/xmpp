@@ -7,10 +7,16 @@
 //
 
 #import "PopoverViewController.h"
+#import "CreateGroupsViewController.h"
+#import "RecentViewController.h"
 
 @interface PopoverViewController ()
-@property (weak, nonatomic) IBOutlet UIButton *creatGroupButton;
-@property (weak, nonatomic) IBOutlet UIButton *checkGroupButton;
+
+@property (strong, nonatomic) CreateGroupsViewController *createGroupVC;
+@property (strong, nonatomic) RecentViewController *baseVC;
+
+@property (strong, nonatomic) void (^createGroupBlock)(void);
+@property (strong, nonatomic) void (^showGroupsBlock)(void);
 
 @end
 
@@ -18,8 +24,20 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    
 }
 
+- (void)setCreateGroupBlock:(void (^)(void))createGroup showGroupBlock:(void (^)(void))showGroups {
+    _createGroupBlock = createGroup;
+    _showGroupsBlock = showGroups;
+}
 
+- (IBAction)creatGroup:(id)sender {
+    [self dismissViewControllerAnimated:NO completion:nil];
+    _createGroupBlock();
+}
+
+- (IBAction)showGroups:(id)sender {
+    [self dismissViewControllerAnimated:NO completion:nil];
+    _showGroupsBlock();
+}
 @end

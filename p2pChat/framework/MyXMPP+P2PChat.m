@@ -6,6 +6,7 @@
 //  Copyright © 2016年 xiaokun. All rights reserved.
 //
 
+#import <UIKit/UIKit.h>
 #import "MyXMPP+P2PChat.h"
 #import "XMPPStream.h"
 #import "XMPPMessage.h"
@@ -14,6 +15,7 @@
 #import "DataManager.h"
 #import "Tool.h"
 #import "VoiceConverter.h"
+#import "Tool.h"
 
 #define Voice @"[语音]"
 
@@ -41,11 +43,14 @@
 }
 
 - (void)sendMessage:(NSString *)text ToUser:(NSString *)user {
-    NSTimeInterval time = [[NSDate date]timeIntervalSince1970];
+    NSDate *date = [Tool transferDate:[NSDate date]];
+    NSTimeInterval t = [date timeIntervalSince1970];
+    int time = (int)t;
+    
     [self sendMessageWithSubtype:@"text" time:time body:text more:nil toUser:user];
     
-    [self.dataManager saveMessageWithUsername:user time:[NSNumber numberWithDouble:time] body:text isOut:YES];
-    [self.dataManager addRecentUsername:user time:[NSNumber numberWithDouble:time] body:text isOut:YES];
+    [self.dataManager saveMessageWithUsername:user time:[NSNumber numberWithInt:time] body:text isOut:YES];
+    [self.dataManager addRecentUsername:user time:[NSNumber numberWithInt:time] body:text isOut:YES isP2P:YES];
 }
 
 - (void)sendAudio:(NSString *)path ToUser:(NSString *)user length:(NSString *)length{
@@ -53,12 +58,13 @@
     NSData *p = [filemnanager contentsAtPath:path];
     NSString *audiomsg = [p base64EncodedStringWithOptions:0];
     
-    double time = [[NSDate alloc]timeIntervalSince1970];
+    NSDate *date = [Tool transferDate:[NSDate date]];
+    double time = [date timeIntervalSince1970];
     
     [self sendMessageWithSubtype:@"audio" time:time body:audiomsg more:length toUser:user];
     
-    [self.dataManager saveRecordWithUsername:user time:[NSNumber numberWithDouble:time] path:path length:length isOut:YES];
-    [self.dataManager addRecentUsername:user time:[NSNumber numberWithDouble:time] body:Voice isOut:YES];
+    [self.dataManager saveRecordWithUsername:user time:[NSNumber numberWithInt:time] path:path length:length isOut:YES];
+    [self.dataManager addRecentUsername:user time:[NSNumber numberWithInt:time] body:Voice isOut:YES isP2P:YES];
 }
 
 #pragma mark - receivemessage delegate
@@ -66,15 +72,23 @@
     if ([message isChatMessageWithBody]) {
         NSString *subtype = [message getSubtype];
         NSString *timeStr = [message getTime];
-        NSNumber *timeNumber = [NSNumber numberWithDouble:[timeStr doubleValue]];
+        NSNumber *timeNumber = [NSNumber numberWithInt:[timeStr intValue]];
+        NSDate *date = [NSDate dateWithTimeIntervalSince1970:[timeNumber doubleValue]];
+        NSLog(@"recieve time:%@",date);
+        
         NSString *messageBody = [[message elementForName:@"body"] stringValue];
         XMPPJID *fromJid = message.from;
         NSString *bareJidStr = fromJid.user;
+        
+        UILocalNotification *localNotification = [[UILocalNotification alloc]init];
+        localNotification.fireDate = [NSDate date];
+        
         char firstLetter = [subtype characterAtIndex:0];
-        switch (firstLetter) {
+        switch(firstLetter) {
             case 't':{//text
                 [self.dataManager saveMessageWithUsername:bareJidStr time:timeNumber body:messageBody isOut:NO];
-                [self.dataManager addRecentUsername:bareJidStr time:timeNumber body:messageBody isOut:NO];
+                [self.dataManager addRecentUsername:bareJidStr time:timeNumber body:messageBody isOut:NO isP2P:YES];
+                localNotification.alertBody = [NSString stringWithFormat:@"%@:%@", bareJidStr, messageBody];
                 break;
             }
             case 'a':{//audio
@@ -87,7 +101,8 @@
                 [VoiceConverter amrToWav:tmpPath wavSavePath:path];
                 
                 [self.dataManager saveRecordWithUsername:bareJidStr time:timeNumber path:path length:during isOut:NO];
-                [self.dataManager addRecentUsername:bareJidStr time:timeNumber body:Voice isOut:NO];
+                [self.dataManager addRecentUsername:bareJidStr time:timeNumber body:Voice isOut:NO isP2P:YES];
+                localNotification.alertBody = [NSString stringWithFormat:@"%@:[语音]", bareJidStr];
                 break;
             }
             case 'p':{
@@ -99,6 +114,9 @@
                 break;
         }
         
+        NSLog(@"%@", message);
+        
+        [[UIApplication sharedApplication]presentLocalNotificationNow:localNotification];
     } else {
         NSLog(@"%@", message);
     }

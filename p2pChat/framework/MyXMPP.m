@@ -12,6 +12,7 @@
 #import "XMPPvCardCoreDataStorage.h"
 #import "DataManager.h"
 #import "Tool.h"
+#import "MyXMPP+Group.h"
 
 @interface MyXMPP () <XMPPStreamDelegate>
 
@@ -70,6 +71,7 @@
         self.stream = [[XMPPStream alloc] init];
         [self.stream addDelegate:self delegateQueue:dispatch_get_main_queue()];
         _dataManager = [DataManager shareManager];
+        self.stream.enableBackgroundingOnSocket = YES;
     }
     
     return self;
@@ -91,6 +93,8 @@
     [_vCardAvatar activate:_stream];
     _myVCardTemp = [_vCardModule myvCardTemp];
 }
+
+
 
 #pragma mark - xmpp delegate
 - (void)xmppStreamDidConnect:(XMPPStream *)sender {
@@ -122,6 +126,7 @@
     
     UIStoryboard *storyboard = [UIStoryboard storyboardWithName:@"Main" bundle:nil];
     [UIApplication sharedApplication].keyWindow.rootViewController = [storyboard instantiateViewControllerWithIdentifier:@"tablebar"];
+    
 }
 
 - (BOOL)xmppStream:(XMPPStream *)sender didReceiveIQ:(XMPPIQ *)iq{
@@ -145,6 +150,7 @@
     if (presenceFromUser != myID) {
         if ([presenceType isEqualToString:@"available"]) {
             NSLog(@"%@上线了",presenceFromUser);
+            [[NSNotificationCenter defaultCenter]postNotificationName:MyXmppUserStatusChangedNotification object:nil];
         }else if([presenceType isEqualToString:@"unavailable"]){
             NSLog(@"%@下线了",presenceFromUser);
         }

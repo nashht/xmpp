@@ -12,14 +12,16 @@
 
 @property (strong, nonatomic) UITableView *tableView;
 @property (weak, nonatomic) NSFetchedResultsController *controller;
+@property (assign, nonatomic, getter=needsScrolling) BOOL scroll;
 
 @end
 
 @implementation MyFetchedResultsControllerDelegate
 
-- (id)initWithTableView:(UITableView *)tableView {
+- (id)initWithTableView:(UITableView *)tableView withScrolling:(BOOL)scroll {
     self = [super init];
     _tableView = tableView;
+    _scroll = scroll;
     return self;
 }
 
@@ -57,7 +59,9 @@
 - (void)controllerDidChangeContent:(NSFetchedResultsController *)controller {
     _controller = controller;
     [_tableView endUpdates];
-    [self scrollToBottom];
+    if ([self needsScrolling]) {
+        [self scrollToBottom];
+    }
 }
 
 - (void)scrollToBottom {

@@ -27,12 +27,30 @@
     NSError *err = nil;
     NSArray<XMPPGroupCoreDataStorageObject *> *friendGroups = [context executeFetchRequest:request error:&err];
     if (err != nil) {
-        NSLog(@"myxmpp fetch friend failed: %@", err);
+        NSLog(@"myxmpp fetch friend groups failed: %@", err);
     }
     
     //XMPPUserCoreDataStorageObject  *obj类型的
     //名称为 obj.displayName
     return friendGroups;
+}
+
+- (XMPPUserCoreDataStorageObject *)fetchUserWithNickname:(NSString *)nickname {
+    NSManagedObjectContext *context = [[XMPPRosterCoreDataStorage sharedInstance] mainThreadManagedObjectContext];
+    NSFetchRequest *request = [[NSFetchRequest alloc] initWithEntityName:@"XMPPUserCoreDataStorageObject"];
+    NSPredicate *predicate = [NSPredicate predicateWithFormat:@"nickname = %@", nickname];
+    NSSortDescriptor *sort = [NSSortDescriptor sortDescriptorWithKey:@"nickname" ascending:YES];
+    request.predicate = predicate;
+    request.sortDescriptors = @[sort];
+    NSError *err = nil;
+    NSArray *array = [context executeFetchRequest:request error:&err];
+    if (err != nil) {
+        NSLog(@"myxmpp fetch user failed: %@", err);
+    }
+    if (array.count != 0) {
+        return array[0];
+    }
+    return nil;
 }
 
 @end

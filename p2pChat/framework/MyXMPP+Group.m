@@ -7,6 +7,8 @@
 //
 
 #import "MyXMPP+Group.h"
+#import "DataManager.h"
+#import "Tool.h"
 
 static NSString *myRoomDomain = @"conference.xmpp.test";
 
@@ -50,6 +52,11 @@ static NSString *myRoomDomain = @"conference.xmpp.test";
     [self.stream sendElement:message];
     NSLog(@"message : %@", message);
     
+    NSDate *date = [Tool transferDate:[NSDate date]];
+    double time = [date timeIntervalSince1970];
+    
+    [self.dataManager saveMessageWithGroupname:groupname username:self.myjid.user time:[NSNumber numberWithDouble:time] body:text];
+    [self.dataManager addRecentUsername:groupname time:[NSNumber numberWithDouble:time] body:text isOut:YES isP2P:NO];
 }
 
 - (void)sendAudio:(NSString *)path ToGroup:(NSString *)groupname withlength:(NSString *)length{
@@ -71,6 +78,11 @@ static NSString *myRoomDomain = @"conference.xmpp.test";
     
     [audiomessage addChild:body];
     [self.stream sendElement:audiomessage];
+    
+    NSDate *date = [Tool transferDate:[NSDate date]];
+    double time = [date timeIntervalSince1970];
+    
+    [self.dataManager saveRecordWithGroupname:groupname username:self.myjid.user time:[NSNumber numberWithDouble:time] path:path length:length];
     
 }
 
@@ -95,14 +107,12 @@ static NSString *myRoomDomain = @"conference.xmpp.test";
     //    [sender fetchMembersList];
 }
 
-- (void)xmppRoom:(XMPPRoom *)sender didFetchConfigurationForm:(NSXMLElement *)configForm
-{
+- (void)xmppRoom:(XMPPRoom *)sender didFetchConfigurationForm:(NSXMLElement *)configForm {
     NSLog(@"didFetchConfigurationForm");
     NSXMLElement *newConfig = [configForm copy];
     NSLog(@"BEFORE Config for the room %@",newConfig);
     NSArray *fields = [newConfig elementsForName:@"field"];
-    for (NSXMLElement *field in fields)
-    {
+    for (NSXMLElement *field in fields) {
         NSString *var = [field attributeStringValueForName:@"var"];
         // 使房间变成永久的
         if ([var isEqualToString:@"muc#roomconfig_persistentroom"]) {
@@ -115,8 +125,8 @@ static NSString *myRoomDomain = @"conference.xmpp.test";
     
     [[NSNotificationCenter defaultCenter] postNotificationName:MyXmppRoomDidConfigurationNotification object:nil];
     //    [self inviteFriends:@"ht" withMessage:@"hellossss"];
-    [self inviteFriends:@"cxh" withMessage:@"hello！"];
-    [self sendMessage:@"hello" ToGroup:@"222"];
+//    [self inviteFriends:@"cxh" withMessage:@"hello！"];
+//    [self sendMessage:@"hello" ToGroup:@"222"];
     //    [self sendGroupMessage:@"哈哈哈哈哈哈哈"];
     //    [sender sendMessageWithBody:@"hehehehehehhe"];
 }
@@ -128,7 +138,7 @@ static NSString *myRoomDomain = @"conference.xmpp.test";
 
 - (void)xmppRoom:(XMPPRoom *)sender didReceiveMessage:(XMPPMessage *)message fromOccupant:(XMPPJID *)occupantJID{
     NSLog(@"群组『%@』有新消息：%@",sender.roomJID.user,[message body]);
-    
+    [[DataManager shareManager]addRecentUsername:sender.roomJID.user time:[NSNumber numberWithDouble:[[NSDate date]timeIntervalSince1970]] body:message.body isOut:NO isP2P:NO];
 }
 
 - (void)xmppRoom:(XMPPRoom *)sender occupantDidLeave:(XMPPJID *)occupantJID

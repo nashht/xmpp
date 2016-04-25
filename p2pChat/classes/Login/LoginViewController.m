@@ -23,16 +23,14 @@
     [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(myXmppDidLogin) name:MyXmppDidLoginNotification object:nil];
     
     //链接服务器失败
-    [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(myXmppDidNotConnect) name:MyXmppConnectFailedNotification object:nil];
+//    [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(myXmppDidNotConnect) name:MyXmppConnectFailedNotification object:nil];
     
     //认证密码失败
     [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(myXmppDidNotAuthenticate) name:MyXmppAuthenticateFailedNotification object:nil];
     
-    
     [_login.layer setCornerRadius:CGRectGetHeight([_login bounds])/4];
     _login.layer.masksToBounds = true;
-    _login.frame = CGRectMake(199, 269, 400, 32);
-    
+    _login.frame = CGRectMake(199, 269, 400, 32);    
 }
 
 - (IBAction)login:(id)sender {
@@ -41,7 +39,8 @@
     [[NSUserDefaults standardUserDefaults]setValue:name forKey:@"name"];
     [[NSUserDefaults standardUserDefaults]setValue:password forKey:@"password"];
     [[MyXMPP shareInstance]loginWithName:name Password:password];
-    
+    [_nameTF resignFirstResponder];
+    [_passwordTF resignFirstResponder];
 }
 
 - (void)myXmppDidLogin {
@@ -51,16 +50,16 @@
     [self dismissViewControllerAnimated:YES completion:nil];
 }
 
-- (void)myXmppDidNotConnect{
-   [[NSNotificationCenter defaultCenter]removeObserver:self];
-    
-    //添加服务器链接失败弹窗
-    UIAlertController *alertController = [UIAlertController alertControllerWithTitle:@"连接失败" message:@"服务器连接失败，请检查网络。" preferredStyle:UIAlertControllerStyleAlert];
-    UIAlertAction *okAction = [UIAlertAction actionWithTitle:@"确定" style:UIAlertActionStyleDefault handler:nil];
-    [alertController addAction:okAction];
-    [self presentViewController:alertController animated:YES completion:nil];
-    
-}
+//- (void)myXmppDidNotConnect{
+//   [[NSNotificationCenter defaultCenter]removeObserver:self];
+//    
+//    //添加服务器链接失败弹窗
+//    UIAlertController *alertController = [UIAlertController alertControllerWithTitle:@"连接失败" message:@"服务器连接失败，请检查网络。" preferredStyle:UIAlertControllerStyleAlert];
+//    UIAlertAction *okAction = [UIAlertAction actionWithTitle:@"确定" style:UIAlertActionStyleDefault handler:nil];
+//    [alertController addAction:okAction];
+//    [self presentViewController:alertController animated:YES completion:nil];
+//    
+//}
 
 - (void)myXmppDidNotAuthenticate{
    [[NSNotificationCenter defaultCenter]removeObserver:self];

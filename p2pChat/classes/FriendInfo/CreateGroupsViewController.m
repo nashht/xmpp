@@ -16,9 +16,11 @@
 #import "MyXMPP+VCard.h"
 #import "MyXMPP+Group.h"
 #import "HeaderView.h"
-#import "CreatGroupsViewController.h"
+#import "CreateGroupsViewController.h"
 
-@interface CreatGroupsViewController ()<UITableViewDelegate,UITableViewDataSource,HeaderViewDelegate>
+static NSString *defaultGroupName = @"my group";
+
+@interface CreateGroupsViewController ()<UITableViewDelegate,UITableViewDataSource,HeaderViewDelegate>
 
 @property (nonatomic, strong) NSMutableArray<FriendsGroup *> *groups;
 @property (strong, nonatomic) NSArray<XMPPGroupCoreDataStorageObject *> *groupCoreDataStorageObjects;
@@ -27,7 +29,7 @@
 
 @end
 
-@implementation CreatGroupsViewController
+@implementation CreateGroupsViewController
 
 - (void)viewDidLoad {
     [super viewDidLoad];
@@ -40,40 +42,41 @@
     tableView.frame = frame;
     _tableView = tableView;
     [self.view addSubview:tableView];
-    tableView.backgroundColor = [UIColor orangeColor];
-    
     
     _tableView.dataSource = self;
     _tableView.delegate = self;
     
     
     [_tableView setEditing:YES animated:YES];
+    
     _groupCoreDataStorageObjects = [[MyXMPP shareInstance]getFriendsGroup];
     [self initGroup];
     
     _selectedFriends = [NSMutableArray array];
     
 }
+
+- (void)viewDidDisappear:(BOOL)animated {
+    NSArray *option = @[defaultGroupName, @0];
+    [_fatherVC performSegueWithIdentifier:@"chat" sender:option];//进入聊天的界面
+}
+
 - (UIStatusBarStyle)preferredStatusBarStyle{
     return YES;
 }
-
 
 - (IBAction)cancelBtnClick:(id)sender {
     [self dismissViewControllerAnimated:YES completion:nil];
 }
 
 - (IBAction)selectBtnClick:(UIButton *)sender {
-    [[MyXMPP shareInstance] creatGroupName:@"chat_room" withpassword:nil andsubject:nil];
+    [[MyXMPP shareInstance] creatGroupName:defaultGroupName withpassword:nil andsubject:nil];
     [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(invitenewfriends) name:MyXmppRoomDidConfigurationNotification object:nil];
-    
+    [self dismissViewControllerAnimated:YES completion:nil];
     NSLog(@"selected__-----------%@",_selectedFriends);
 }
 
 - (void)invitenewfriends{
-//    [[MyXMPP shareInstance] inviteFriends:@"cxh" withMessage:@"wewe"];
-//    [[MyXMPP shareInstance] inviteFriends:@"ht_test" withMessage:@"wewe"];
-    
     for (NSString *users in _selectedFriends) {
         [[MyXMPP shareInstance] inviteFriends:users withMessage:@"welcome"];
     }
@@ -112,22 +115,18 @@
     if (cell == nil) {
         cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleSubtitle reuseIdentifier:ID];
     }
-//    cell.selectionStyle = UITableViewCellSelectionStyleNone;
     cell.selected = NO;
     
     XMPPGroupCoreDataStorageObject *groupInfo = _groupCoreDataStorageObjects[indexPath.section];
     XMPPUserCoreDataStorageObject *obj = groupInfo.users.allObjects[indexPath.row];
     XMPPvCardTemp *vCard = [[MyXMPP shareInstance]fetchFriend:obj.jid];
-
+    
     if (vCard.photo != nil) {
         cell.imageView.image = [UIImage imageWithData:vCard.photo];
     } else {
         cell.imageView.image = [UIImage imageNamed:@"0"];
     }
-//    cell.selectedBackgroundView = [[UIView alloc]initWithFrame:CGRectZero];
-    cell.backgroundColor = [UIColor yellowColor];
     cell.textLabel.text = obj.jid.user;
-    cell.selected = YES;
     return cell;
 }
 
@@ -156,11 +155,6 @@
     XMPPUserCoreDataStorageObject *obj = groupInfo.users.allObjects[indexPath.row];
     
     [_selectedFriends removeObject:obj.jid.user];
-    
-//    HeaderView *view = (HeaderView *)[_tableView headerViewForSection:indexPath.section];
-//    view.allSelected = NO;
-//    [view Image:[UIImage imageNamed:@"1"]];
-
 }
 
 
@@ -179,7 +173,6 @@
     [view Name:name];
     return view;
 }
-
 
 #pragma mark - HeaderViewDelegate
 - (void)headerViewDidClicked:(HeaderView *)headerView{

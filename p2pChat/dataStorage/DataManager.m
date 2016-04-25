@@ -103,7 +103,7 @@
     return resultController;
 }
 
-- (void)addRecentUsername:(NSString *)username time:(NSNumber *)time body:(NSString *)body isOut:(BOOL)isOut {
+- (void)addRecentUsername:(NSString *)username time:(NSNumber *)time body:(NSString *)body isOut:(BOOL)isOut isP2P:(BOOL)isP2P {
     LastMessage *lastMessage = nil;
     NSPredicate *predicate = [NSPredicate predicateWithFormat:@"username = %@", username];
     NSError *err = nil;
@@ -123,6 +123,7 @@
     }
     lastMessage.body = body;
     lastMessage.isOut = [NSNumber numberWithBool:isOut];
+    lastMessage.isP2P = [NSNumber numberWithBool:isP2P];
     NSError *err2 = nil;
     [_context save:&err2];
     if (err2) {
