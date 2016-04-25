@@ -119,6 +119,7 @@ static NSString *pictureReuseIdentifier = @"pictureMessageCell";
     [[UIApplication sharedApplication].windows[0] addSubview:_bottomView];//bottom放在window上
     [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(keyboardWillShow:) name:UIKeyboardWillShowNotification object:nil];
     [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(keyboardWillHidden:) name:UIKeyboardWillHideNotification object:nil];
+    [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(applicationEnteredBackground) name:UIApplicationDidEnterBackgroundNotification object:nil];
     if (_historyTableView.contentSize.height < _screenSize.height) {
         [self addObserver:self forKeyPath:@"tableViewHeight" options:NSKeyValueObservingOptionNew context:NULL];
     }
@@ -128,6 +129,7 @@ static NSString *pictureReuseIdentifier = @"pictureMessageCell";
     [[NSNotificationCenter defaultCenter]removeObserver:self name:nil object:nil];
     [_bottomView resignFirstResponder];
     [_bottomView removeFromSuperview];
+    [[DataManager shareManager]updateUsername:_chatObjectString];
     @try {
         [self removeObserver:self forKeyPath:@"tableViewHeight"];
     }
@@ -301,6 +303,11 @@ static NSString *pictureReuseIdentifier = @"pictureMessageCell";
         self.view.frame = CGRectMake(0, 0, _screenSize.width, _screenSize.height);
         _bottomView.frame = CGRectMake(0, _screenSize.height - BOTTOMHEIGHT, _screenSize.width, BOTTOMHEIGHT);
     }];
+}
+
+#pragma mark - application notifition
+- (void)applicationEnteredBackground {
+    [[DataManager shareManager]updateUsername:_chatObjectString];
 }
 
 #pragma mark - bottom delegate

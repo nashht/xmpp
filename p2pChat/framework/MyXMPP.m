@@ -55,7 +55,6 @@ static NSString *serverHost = @"10.108.136.59";
     if (![self.stream connectWithTimeout:XMPPStreamTimeoutNone error:&error ]) {
         NSLog(@"Connect Error: %@", [[error userInfo] description]);
     }
-    
 }
 
 - (void)loginout {

@@ -51,11 +51,11 @@
 }
 
 - (void)applicationDidBecomeActive:(UIApplication *)application {
-    NSLog(@"applicationDidBecomeActive");
+    
 }
 
 - (void)applicationDidEnterBackground:(UIApplication *)application {
-    NSLog(@"applicationDidEnterBackground");
+    
 }
 
 #pragma mark - Core Data stack

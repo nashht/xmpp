@@ -13,6 +13,8 @@
 
 @property (strong, nonatomic) NSManagedObjectContext *context;
 
+@property (assign, nonatomic) NSInteger totalUnreadNumber;
+
 + (instancetype)shareManager;
 
 @end
