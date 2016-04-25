@@ -9,7 +9,9 @@
 #import "MeController.h"
 #import "XMPP.h"
 #import "MyXMPP+VCard.h"
+#import "MyXMPP+Roster.h"
 #import "PhotoLibraryCenter.h"
+#import "EditViewController.h"
 
 @interface MeController ()<UIImagePickerControllerDelegate,UITableViewDataSource,UITableViewDelegate,UINavigationControllerDelegate>
 
@@ -38,21 +40,18 @@
     
 }
 
-- (void)loadvCard{
-  
-//    XMPPvCardTemp *myvCard = [MyXMPP shareInstance].myVCardTemp;
-    NSLog(@"myjid--------%@",[MyXMPP shareInstance].myjid);
-    XMPPvCardTemp *myvCard = [[MyXMPP shareInstance]fetchFriend:[MyXMPP shareInstance].myjid];
-    _myvCard = myvCard;
+- (void)loadvCard{    
+    XMPPvCardTemp *myvCard = [MyXMPP shareInstance].myVCardTemp;
     self.navigationItem.title = @"我";
     _photoView.layer.cornerRadius = 10;
     _photoView.layer.masksToBounds = true;
-    _nameLabel.text = [[NSUserDefaults standardUserDefaults]stringForKey:@"name"];
-    //    _groupLabel.text = myvCard
-    NSLog(@"titleLabel.text-------------%@",_myvCard.note);
-    _titleLabel.text = _myvCard.note;
-    _phoneLabel.text = _myvCard.note;
-    _emailLabel.text = _myvCard.mailer;
+    NSString *myName = [[NSUserDefaults standardUserDefaults]stringForKey:@"name"];
+    _nameLabel.text = myName;
+    XMPPUserCoreDataStorageObject *user = [[MyXMPP shareInstance]fetchUserWithUsername:myName];
+    _groupLabel.text = user.groups.allObjects[0];
+    _titleLabel.text = myvCard.title;
+    _phoneLabel.text = myvCard.note;
+    _emailLabel.text = myvCard.emailAddresses[0];
     
     
     
