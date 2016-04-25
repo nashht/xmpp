@@ -124,10 +124,15 @@
     
     [[NSNotificationCenter defaultCenter]postNotificationName:MyXmppDidLoginNotification object:nil];
     
-    //roster初始化
-    [self initRoster];
-    //vcard初始化
-    [self initVCard];
+    if (!_hasInit) {
+        //roster初始化
+        [self initRoster];
+        
+        //vcard初始化
+        [self initVCard];
+        
+        _hasInit = YES;
+    }
     
     UIStoryboard *storyboard = [UIStoryboard storyboardWithName:@"Main" bundle:nil];
     [UIApplication sharedApplication].keyWindow.rootViewController = [storyboard instantiateViewControllerWithIdentifier:@"tablebar"];
