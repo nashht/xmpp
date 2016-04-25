@@ -45,9 +45,11 @@
     _photoView.layer.masksToBounds = true;
     NSString *myName = [[NSUserDefaults standardUserDefaults]stringForKey:@"name"];
     _nameLabel.text = myName;
-    _titleLabel.text = _myvCard.title;
-    _phoneLabel.text = _myvCard.note;
-//    _emailLabel.text = _myvCard.emailAddresses[0];
+    
+    _titleLabel.text = _myvCard.title ? : @"未设置";
+    _phoneLabel.text = _myvCard.note ? : @"未设置";
+    _emailLabel.text = _myvCard.mailer ? : @"未设置";
+    _addressLabel.text = _myvCard.url ? : @"未设置";
     
     if (_myvCard.photo) {
         _photoView.image = [UIImage imageWithData:_myvCard.photo];
