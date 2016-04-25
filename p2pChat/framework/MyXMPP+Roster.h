@@ -13,5 +13,6 @@
 
 - (void)updateFriendsList;
 - (NSArray<XMPPGroupCoreDataStorageObject *> *)getFriendsGroup;
+- (XMPPUserCoreDataStorageObject *)fetchUserWithUsername:(NSString *)username;
 
 @end

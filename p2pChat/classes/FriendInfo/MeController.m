@@ -43,8 +43,10 @@
     self.navigationItem.title = @"我";
     _photoView.layer.cornerRadius = 10;
     _photoView.layer.masksToBounds = true;
-    _nameLabel.text = [[NSUserDefaults standardUserDefaults]stringForKey:@"name"];
-    
+    NSString *myName = [[NSUserDefaults standardUserDefaults]stringForKey:@"name"];
+    _nameLabel.text = myName;
+    XMPPUserCoreDataStorageObject *user = [[MyXMPP shareInstance]fetchUserWithUsername:myName];
+    _groupLabel.text = user.groups.allObjects[0];
     _titleLabel.text = myvCard.title;
     _phoneLabel.text = myvCard.note;
     _emailLabel.text = myvCard.emailAddresses[0];

@@ -56,11 +56,6 @@ static NSString *defaultGroupName = @"my group";
     
 }
 
-- (void)viewDidDisappear:(BOOL)animated {
-    NSArray *option = @[defaultGroupName, @0];
-    [_fatherVC performSegueWithIdentifier:@"chat" sender:option];//进入聊天的界面
-}
-
 - (UIStatusBarStyle)preferredStatusBarStyle{
     return YES;
 }
@@ -72,11 +67,20 @@ static NSString *defaultGroupName = @"my group";
 - (IBAction)selectBtnClick:(UIButton *)sender {
     [[MyXMPP shareInstance] creatGroupName:defaultGroupName withpassword:nil andsubject:nil];
     [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(invitenewfriends) name:MyXmppRoomDidConfigurationNotification object:nil];
-    [self dismissViewControllerAnimated:YES completion:nil];
+    if (_selectedFriends.count == 0) {
+        UIAlertController *alert = [UIAlertController alertControllerWithTitle:@"未选择好友" message:nil preferredStyle:UIAlertControllerStyleAlert];
+        UIAlertAction *okAction = [UIAlertAction actionWithTitle:@"ok" style:UIAlertActionStyleDefault handler:nil];
+        [alert addAction:okAction];
+        [self presentViewController:alert animated:YES completion:nil];
+    }
     NSLog(@"selected__-----------%@",_selectedFriends);
 }
 
 - (void)invitenewfriends{
+    [self dismissViewControllerAnimated:YES completion: ^{
+        NSArray *option = @[defaultGroupName, @0];
+        [_fatherVC performSegueWithIdentifier:@"chat" sender:option];//进入聊天的界面
+    }];
     for (NSString *users in _selectedFriends) {
         [[MyXMPP shareInstance] inviteFriends:users withMessage:@"welcome"];
     }
