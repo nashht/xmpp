@@ -55,5 +55,6 @@ static NSString *myDomain = @"xmpp.test";
 
 - (void)loginWithName:(NSString *)user Password:(NSString *)password;
 - (void)loginout;
+- (void)reconnect;
 
 @end

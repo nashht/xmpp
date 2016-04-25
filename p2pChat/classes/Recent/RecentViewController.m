@@ -46,17 +46,21 @@
     }
     _recentTableView.dataSource = self;
     _recentTableView.delegate = self;
+    _recentTableView.separatorStyle = UITableViewCellSeparatorStyleNone;
     _dataManager = [DataManager shareManager];
     _recentController = [_dataManager getRecent];
     _resultsControllerDelegate = [[MyFetchedResultsControllerDelegate alloc]initWithTableView:_recentTableView withScrolling:NO];
     _recentController.delegate = _resultsControllerDelegate;
     [_recentTableView registerNib:[UINib nibWithNibName:@"RecentCell" bundle:[NSBundle mainBundle]] forCellReuseIdentifier:@"recentCell"];//注册nib
-    
 }
 
 - (void)viewWillAppear:(BOOL)animated {
     if (self.tabBarController.tabBar.hidden == YES) {
         self.tabBarController.tabBar.hidden = NO;
+    }
+    if ([[MyXMPP shareInstance].stream isDisconnected]) {
+        self.navigationItem.title = @"最近联系人(连接中)";
+        [[MyXMPP shareInstance]reconnect];
     }
 }
 

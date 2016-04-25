@@ -3,6 +3,7 @@
     <dependencies>
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="9529"/>
+        <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
     </dependencies>
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
@@ -14,28 +15,36 @@
                 <rect key="frame" x="0.0" y="0.0" width="321" height="82"/>
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
+                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="Gsv-tC-WOW">
+                        <rect key="frame" x="8" y="11" width="60" height="60"/>
+                        <constraints>
+                            <constraint firstAttribute="width" constant="60" id="QTv-rT-yKN"/>
+                            <constraint firstAttribute="height" constant="60" id="w8K-ui-NEr"/>
+                        </constraints>
+                    </imageView>
                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="name" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="G2X-yD-U7g">
-                        <rect key="frame" x="102" y="8" width="117" height="31"/>
+                        <rect key="frame" x="93" y="9" width="117" height="31"/>
                         <fontDescription key="fontDescription" type="system" pointSize="18"/>
                         <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                         <nil key="highlightedColor"/>
                     </label>
                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="【状态】" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="s0M-Qp-XgU">
-                        <rect key="frame" x="93" y="40" width="56" height="21"/>
+                        <rect key="frame" x="93" y="48" width="56" height="21"/>
                         <fontDescription key="fontDescription" type="system" pointSize="14"/>
                         <color key="textColor" red="0.56206597219999999" green="0.56206597219999999" blue="0.56206597219999999" alpha="1" colorSpace="calibratedRGB"/>
                         <nil key="highlightedColor"/>
                     </label>
                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="department" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="I8q-HE-dsS">
-                        <rect key="frame" x="157" y="36" width="108" height="29"/>
+                        <rect key="frame" x="164" y="42" width="108" height="29"/>
                         <fontDescription key="fontDescription" type="system" pointSize="13"/>
                         <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                         <nil key="highlightedColor"/>
                     </label>
-                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Gsv-tC-WOW">
-                        <rect key="frame" x="8" y="11" width="60" height="60"/>
-                    </imageView>
                 </subviews>
+                <constraints>
+                    <constraint firstAttribute="leadingMargin" secondItem="Gsv-tC-WOW" secondAttribute="leading" id="8lV-wD-iXI"/>
+                    <constraint firstItem="Gsv-tC-WOW" firstAttribute="centerY" secondItem="H2p-sc-9uM" secondAttribute="centerY" id="Rc6-U8-wEp"/>
+                </constraints>
             </tableViewCellContentView>
             <connections>
                 <outlet property="departmentLabel" destination="I8q-HE-dsS" id="h8b-u1-yJg"/>

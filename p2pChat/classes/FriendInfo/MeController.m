@@ -41,7 +41,7 @@
 }
 
 - (void)loadvCard{    
-    XMPPvCardTemp *myvCard = [MyXMPP shareInstance].myVCardTemp;
+    _myvCard = [MyXMPP shareInstance].myVCardTemp;
     self.navigationItem.title = @"我";
     _photoView.layer.cornerRadius = 10;
     _photoView.layer.masksToBounds = true;
