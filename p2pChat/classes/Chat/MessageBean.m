@@ -17,11 +17,12 @@
 
 @implementation MessageBean
 
-- (instancetype)initWithUsername:(NSString *)username type:(NSNumber *)type body:(NSString *)body time:(NSNumber *)time isOut:(NSNumber *)isOut isP2P:(BOOL)isP2P {
+- (instancetype)initWithUsername:(NSString *)username type:(NSNumber *)type body:(NSString *)body more:(NSString *)more time:(NSNumber *)time isOut:(NSNumber *)isOut isP2P:(BOOL)isP2P {
     if (self = [super init]) {
         _username = username;
         _type = type;
         _body = body;
+        _more = more;
         _time = time;
         if (isP2P) {
             _isOut = isOut;

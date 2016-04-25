@@ -173,6 +173,7 @@ static NSString *pictureReuseIdentifier = @"pictureMessageCell";
 #pragma mark -table view data source
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
     id<NSFetchedResultsSectionInfo> sectionInfo = _historyController.sections[section];
+    NSLog(@"history chatting cnt : %d", sectionInfo.numberOfObjects);
     return sectionInfo.numberOfObjects;
 }
 
@@ -182,10 +183,10 @@ static NSString *pictureReuseIdentifier = @"pictureMessageCell";
     MessageBean *message = nil;
     if (self.isP2PChat) {
         Message *p2pMessage = (Message *)messageObj;
-        message = [[MessageBean alloc]initWithUsername:p2pMessage.username type:p2pMessage.type body:p2pMessage.body time:p2pMessage.time isOut:p2pMessage.isOut isP2P:YES];
+        message = [[MessageBean alloc]initWithUsername:p2pMessage.username type:p2pMessage.type body:p2pMessage.body more:p2pMessage.more time:p2pMessage.time isOut:p2pMessage.isOut isP2P:YES];
     } else {
         GroupMessage *groupMessage = (GroupMessage *)messageObj;
-        message = [[MessageBean alloc]initWithUsername:groupMessage.username type:groupMessage.type body:groupMessage.body time:groupMessage.time isOut:nil isP2P:NO];
+        message = [[MessageBean alloc]initWithUsername:groupMessage.username type:groupMessage.type body:groupMessage.body more:groupMessage.more time:groupMessage.time isOut:nil isP2P:NO];
     }
     MessageType type = message.type.charValue;
     switch (type) {
@@ -218,7 +219,7 @@ static NSString *pictureReuseIdentifier = @"pictureMessageCell";
                 cell = [[RecordViewCell alloc] initWithStyle:UITableViewCellStyleSubtitle reuseIdentifier:audioReuseIdentifier];
             }
             RecordFrameModel *recordFrameMode = [[RecordFrameModel alloc] init];
-//            recordFrameMode.message = message;
+            recordFrameMode.message = message;
             cell.recordFrame = recordFrameMode;
             return cell;
         }
@@ -235,10 +236,10 @@ static NSString *pictureReuseIdentifier = @"pictureMessageCell";
     MessageBean *message = nil;
     if (self.isP2PChat) {
         Message *p2pMessage = (Message *)messageObj;
-        message = [[MessageBean alloc]initWithUsername:p2pMessage.username type:p2pMessage.type body:p2pMessage.body time:p2pMessage.time isOut:p2pMessage.isOut isP2P:YES];
+        message = [[MessageBean alloc]initWithUsername:p2pMessage.username type:p2pMessage.type body:p2pMessage.body more:p2pMessage.more time:p2pMessage.time isOut:p2pMessage.isOut isP2P:YES];
     } else {
         GroupMessage *groupMessage = (GroupMessage *)messageObj;
-        message = [[MessageBean alloc]initWithUsername:groupMessage.username type:groupMessage.type body:groupMessage.body time:groupMessage.time isOut:nil isP2P:NO];
+        message = [[MessageBean alloc]initWithUsername:groupMessage.username type:groupMessage.type body:groupMessage.body more:groupMessage.more time:groupMessage.time isOut:nil isP2P:NO];
     }
     MessageType type = message.type.charValue;
     switch (type) {

@@ -15,7 +15,6 @@
 
 @property (strong, nonatomic) AVAudioRecorder *recorder;
 @property (strong, nonatomic) AVAudioPlayer *player;
-@property (copy, nonatomic) NSString *wavPath;
 
 @end
 
@@ -33,11 +32,10 @@
 - (void)startRecord {
     NSLog(@"AudioCenter: record start");
     NSDictionary *settings = @{AVFormatIDKey : @(kAudioFormatLinearPCM), AVSampleRateKey : @(8000.f), AVChannelLayoutKey : @(1), AVLinearPCMBitDepthKey : @(8), AVLinearPCMIsFloatKey : @(YES)};
-    _wavPath = [Tool getFileName:@"tmp" extension:@"wav"];
     NSError *err = nil;
     _recorder = nil;
     [[AVAudioSession sharedInstance]setCategory:AVAudioSessionCategoryRecord error:nil];
-    _recorder = [[AVAudioRecorder alloc]initWithURL:[NSURL fileURLWithPath:_wavPath] settings:settings error:&err];
+    _recorder = [[AVAudioRecorder alloc]initWithURL:[NSURL fileURLWithPath:_path] settings:settings error:&err];
     if (err) {
         NSLog(@"AudioCenter record error: %@", err);
     }
@@ -54,10 +52,7 @@
 #warning during时长不对
     NSTimeInterval during = _recorder.currentTime;
     [_recorder stop];
-    [VoiceConverter wavToAmr:_wavPath amrSavePath:_path];
-    NSString *convertedWavPath = [Tool getFileName:@"receive" extension:@"wav"];
-    [VoiceConverter amrToWav:_path wavSavePath:convertedWavPath];
-    [self startPlay:convertedWavPath];
+    [self startPlay:_path];
     return (float)during;
 }
 
@@ -69,7 +64,7 @@
     NSError *err = nil;
     _player = nil;
     _player = [[AVAudioPlayer alloc]initWithContentsOfURL:[NSURL fileURLWithPath:path] error:&err];
-    NSLog(@"record path: %@", path);
+//    NSLog(@"record path: %@", path);
     if (err) {
         NSLog(@"AudioCenter play error: %@", err);
     }

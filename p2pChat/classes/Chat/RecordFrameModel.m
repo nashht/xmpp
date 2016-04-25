@@ -9,12 +9,12 @@
 #define bodyPedding 20
 
 #import "RecordFrameModel.h"
-#import "Message.h"
+#import "MessageBean.h"
 #import "Message+CoreDataProperties.h"
 
 @implementation RecordFrameModel
 
-- (void)setMessage:(Message *)message{
+- (void)setMessage:(MessageBean *)message{
     _message = message;
     //    设置屏幕的宽
     CGFloat screenW = [UIScreen mainScreen].bounds.size.width;

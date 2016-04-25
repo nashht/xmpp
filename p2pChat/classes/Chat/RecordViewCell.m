@@ -10,6 +10,7 @@
 #import "Tool.h"
 #import "RecordFrameModel.h"
 #import "AudioCenter.h"
+#import "MessageBean.h"
 
 @interface RecordViewCell()
 
@@ -53,7 +54,7 @@
     _recordFrame = recordFrame;
     
     //    数据模型
-    Message *msg = _recordFrame.message;
+    MessageBean *msg = _recordFrame.message;
     
     _timeLable.text = [Tool stringFromDate:msg.time];
     _timeLable.frame = _recordFrame.timeFrame;
@@ -65,7 +66,7 @@
     }
     
     _photoImage.frame = _recordFrame.photoFrame;
-    [_photoImage.layer setCornerRadius:CGRectGetHeight([_photoImage bounds]) / 2];
+    [_photoImage.layer setCornerRadius:10];
     _photoImage.layer.masksToBounds = true;
     
 //    [_bodyBtn setTitle:msg.body forState:UIControlStateNormal];

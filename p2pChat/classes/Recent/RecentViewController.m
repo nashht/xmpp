@@ -60,9 +60,6 @@
     
     refresh.attributedTitle = [[NSAttributedString alloc] initWithString:@"下拉刷新"];
     [refresh addTarget:self action:@selector(refreshTableView:) forControlEvents:UIControlEventValueChanged];
-    
-    [self refreshTableView:refresh];
-    
 }
 
 - (void)refreshTableView:(UIRefreshControl *)refreshControl{
@@ -79,8 +76,10 @@
     if (self.tabBarController.tabBar.hidden == YES) {
         self.tabBarController.tabBar.hidden = NO;
     }
-    if ([[MyXMPP shareInstance].stream isDisconnected]) {
+    if ([[MyXMPP shareInstance].stream isConnecting]) {
         self.navigationItem.title = @"最近联系人(连接中)";
+    } else if ([[MyXMPP shareInstance].stream isDisconnected]) {
+        self.navigationItem.title = @"最近联系人(未连接)";
     }
 }
 

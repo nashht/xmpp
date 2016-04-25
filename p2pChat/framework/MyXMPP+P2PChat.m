@@ -39,7 +39,7 @@
     
     [message addChild:bodyElement];
     [self.stream sendElement:message];
-    NSLog(@"message : %@", message);
+//    NSLog(@"message : %@", message);
 }
 
 - (void)sendMessage:(NSString *)text ToUser:(NSString *)user {
@@ -56,6 +56,7 @@
 - (void)sendAudio:(NSString *)path ToUser:(NSString *)user length:(NSString *)length{
     NSFileManager *filemnanager=[NSFileManager defaultManager];
     NSData *p = [filemnanager contentsAtPath:path];
+    NSLog(@"MyXmpp: audio file length :%lu", (unsigned long)p.length);
     NSString *audiomsg = [p base64EncodedStringWithOptions:0];
     
     NSDate *date = [Tool transferDate:[NSDate date]];
@@ -95,11 +96,8 @@
                 NSString *during = [message getMore];
                 NSData *data = [[NSData alloc] initWithBase64EncodedString:messageBody options:0];
                 
-                NSString *tmpPath = [Tool getFileName:@"tmp" extension:@"amr"];
                 NSString *path = [Tool getFileName:@"receive" extension:@"wav"];
-                [data writeToFile:tmpPath atomically:YES];
-                [VoiceConverter amrToWav:tmpPath wavSavePath:path];
-                
+                [data writeToFile:path atomically:YES];
                 [self.dataManager saveRecordWithUsername:bareJidStr time:timeNumber path:path length:during isOut:NO];
                 [self.dataManager addRecentUsername:bareJidStr time:timeNumber body:Voice isOut:NO isP2P:YES];
                 localNotification.alertBody = [NSString stringWithFormat:@"%@:[语音]", bareJidStr];

@@ -15,7 +15,8 @@
 @property (nonatomic, readonly, strong) NSNumber *type;
 @property (nonatomic, readonly, strong) NSNumber *time;
 @property (nonatomic, readonly, copy) NSString *username;
+@property (nonatomic, readonly, copy) NSString *more;
 
-- (instancetype)initWithUsername:(NSString *)username type:(NSNumber *)type body:(NSString *)body time:(NSNumber *)time isOut:(NSNumber *)isOut isP2P:(BOOL)isP2P;
+- (instancetype)initWithUsername:(NSString *)username type:(NSNumber *)type body:(NSString *)body more:(NSString *)more time:(NSNumber *)time isOut:(NSNumber *)isOut isP2P:(BOOL)isP2P;
 
 @end
