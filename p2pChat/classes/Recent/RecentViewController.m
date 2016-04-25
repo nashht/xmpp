@@ -60,7 +60,6 @@
     }
     if ([[MyXMPP shareInstance].stream isDisconnected]) {
         self.navigationItem.title = @"最近联系人(连接中)";
-        [[MyXMPP shareInstance]reconnect];
     }
 }
 

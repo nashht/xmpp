@@ -13,16 +13,22 @@
 #import "DataManager.h"
 #import "Tool.h"
 #import "MyXMPP+Group.h"
+#import "Reachability.h"
 
 @interface MyXMPP () <XMPPStreamDelegate> {
     BOOL _hasInit;
+    BOOL _timerIsRunning;
 }
 
 @property (strong, nonatomic) NSString *password;
-
 @property (strong, nonatomic) XMPPvCardAvatarModule *vCardAvatar;
+@property (strong, nonatomic) NSTimer *reconnectTimer;
+
+@property (strong, nonatomic) Reachability *reachability;
 
 @end
+
+static NSString *serverHost = @"10.108.136.59";
 
 @implementation MyXMPP
 
@@ -42,7 +48,7 @@
         [self disconnected];
     }
     _myjid = [XMPPJID jidWithUser:user domain:myDomain resource:@"iphone"];
-    [self.stream setHostName:@"10.108.136.59"];
+    [self.stream setHostName:serverHost];
     [self.stream setMyJID:self.myjid];
     
     NSError *error = nil;
@@ -80,6 +86,14 @@
         self.stream.enableBackgroundingOnSocket = YES;
     }
     
+    _reconnectTimer = [NSTimer scheduledTimerWithTimeInterval:20 target:self selector:@selector(reconnect) userInfo:nil repeats:YES];
+    [_reconnectTimer setFireDate:[NSDate distantFuture]];
+    _timerIsRunning = NO;
+    
+    _reachability = [Reachability reachabilityWithHostName:serverHost];//监测网络状态的类
+    [_reachability startNotifier];
+    [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(networkStatusChanaged) name:kReachabilityChangedNotification object:nil];
+    
     return self;
 }
 
@@ -100,7 +114,13 @@
     _myVCardTemp = [_vCardModule myvCardTemp];
 }
 
-
+- (void)networkStatusChanaged {
+    NSLog(@"网络状态变化");
+    if (!_stream.isConnected) {
+        [_reconnectTimer setFireDate:[NSDate date]];
+        _timerIsRunning = YES;
+    }
+}
 
 #pragma mark - xmpp delegate
 - (void)xmppStreamDidConnect:(XMPPStream *)sender {
@@ -111,6 +131,8 @@
     else{
         NSLog(@"正在验证密码...");
     }
+    [_reconnectTimer setFireDate:[NSDate distantFuture]];
+    _timerIsRunning = NO;
 }
 
 - (void)xmppStreamConnectDidTimeout:(XMPPStream *)sender{
@@ -172,6 +194,11 @@
     NSLog(@"DidDisconnect");
     NSLog(@"disconnet error:%@",error);
     [[NSNotificationCenter defaultCenter]postNotificationName:MyXmppConnectFailedNotification object:nil];
+    if (!_timerIsRunning) {
+        [_reconnectTimer setFireDate:[NSDate date]];
+        _timerIsRunning = YES;
+    }
+    
 }
 
 - (void)xmppStream:(XMPPStream *)sender didNotAuthenticate:(NSXMLElement *)error {
