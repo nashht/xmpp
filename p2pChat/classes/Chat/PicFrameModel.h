@@ -21,6 +21,4 @@
 @property (nonatomic,strong) MessageBean *message;
 @property (nonatomic, strong, readonly) UIImage *image;
 
-- (void)setMessage:(MessageBean *)message withCompletionHandler:(void (^)(PicFrameModel *model))handler;
-
 @end

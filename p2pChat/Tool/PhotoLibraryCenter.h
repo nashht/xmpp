@@ -18,7 +18,7 @@
 
 @interface PhotoLibraryCenter : NSObject
 
-- (void)saveImage:(UIImage *)image withCompletionHandler:(void (^)(NSString *identifier))completionHandler;
+- (void)saveImage:(UIImage *)image withCompletionHandler:(void (^)(NSString *identifier, NSString *thumbnailPath))completionHandler;
 - (void)getImageDataWithLocalIdentifier:(NSString *)identifier withCompletionHandler:(void (^)(NSData *imageData))completionHandler;
 - (void)getImageWithLocalIdentifier:(NSString *)identifier withCompletionHandler:(void (^)(UIImage *image))completionHandler;;
 

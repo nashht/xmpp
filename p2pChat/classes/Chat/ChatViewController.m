@@ -203,18 +203,7 @@ static NSString *pictureReuseIdentifier = @"pictureMessageCell";
             cell.messageFrame = messageFrameModel;
             return cell;
         }
-        case MessageTypePicture:{
-            PicViewCell *cell = [_historyTableView dequeueReusableCellWithIdentifier:pictureReuseIdentifier];
             
-            if (cell == nil) {
-                cell = [[PicViewCell alloc] initWithStyle:UITableViewCellStyleSubtitle reuseIdentifier:pictureReuseIdentifier];
-            }
-            PicFrameModel *messageFrameModel = [[PicFrameModel alloc] init];
-            [messageFrameModel setMessage:message withCompletionHandler:^(PicFrameModel *model) {//涉及到异步操作
-                cell.picFrame = model;
-            }];
-            return cell;
-        }
         case MessageTypeRecord:{
             RecordViewCell *cell = [_historyTableView dequeueReusableCellWithIdentifier:audioReuseIdentifier];
             
@@ -226,6 +215,19 @@ static NSString *pictureReuseIdentifier = @"pictureMessageCell";
             cell.recordFrame = recordFrameMode;
             return cell;
         }
+            
+        case MessageTypePicture:{
+            PicViewCell *cell = [_historyTableView dequeueReusableCellWithIdentifier:pictureReuseIdentifier];
+            
+            if (cell == nil) {
+                cell = [[PicViewCell alloc] initWithStyle:UITableViewCellStyleSubtitle reuseIdentifier:pictureReuseIdentifier];
+            }
+            
+            PicFrameModel *messageFrameModel = [[PicFrameModel alloc] init];
+            cell.picFrame = messageFrameModel;
+            return cell;
+        }
+        
         default:
             break;
     }

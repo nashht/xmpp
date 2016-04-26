@@ -14,7 +14,7 @@
 
 @implementation PicFrameModel
 
-- (void)setMessage:(MessageBean *)message withCompletionHandler:(void (^)(PicFrameModel *model))handler {
+- (void)setMessage:(MessageBean *)message {
     _message = message;
     //    设置屏幕的宽
     CGFloat screenW = [UIScreen mainScreen].bounds.size.width;
@@ -43,27 +43,25 @@
     
     _photoFrame = CGRectMake(photoX, photoY, photoW, photoH);
     
-    [[[PhotoLibraryCenter alloc]init]getImageWithLocalIdentifier:message.body withCompletionHandler:^(UIImage *image) {
-        _image = image;
- 
-        CGSize bodySize =  [self makeThumbnail:image].size;
-        CGSize lastBodySize = CGSizeMake(bodySize.width + bodyPedding * 2, bodySize.height + bodyPedding * 2);
-        
-        CGFloat bodyX;
-        CGFloat bodyY =  photoY;
-        if ([message.isOut boolValue]) {
-            //        发送的消息，frame靠右边确定
-            bodyX = screenW - lastBodySize.width - padding - photoW;
-        }else{
-            bodyX = CGRectGetMaxX(_photoFrame) + padding;
-        }
-        _bodyFrame = (CGRect){{bodyX,bodyY},lastBodySize};
-        
-        CGFloat maxBodyH = CGRectGetMaxY(_bodyFrame);
-        CGFloat maxPhotoH = CGRectGetMaxY(_photoFrame);
-        _cellHeight = MAX(maxBodyH, maxPhotoH);
-        handler(self);
-    }];
+    UIImage *image = [UIImage imageWithContentsOfFile:message.more];
+    _image = image;
+
+    CGSize bodySize =  [self makeThumbnail:image].size;
+    CGSize lastBodySize = CGSizeMake(bodySize.width + bodyPedding * 2, bodySize.height + bodyPedding * 2);
+    
+    CGFloat bodyX;
+    CGFloat bodyY =  photoY;
+    if ([message.isOut boolValue]) {
+        //        发送的消息，frame靠右边确定
+        bodyX = screenW - lastBodySize.width - padding - photoW;
+    }else{
+        bodyX = CGRectGetMaxX(_photoFrame) + padding;
+    }
+    _bodyFrame = (CGRect){{bodyX,bodyY},lastBodySize};
+    
+    CGFloat maxBodyH = CGRectGetMaxY(_bodyFrame);
+    CGFloat maxPhotoH = CGRectGetMaxY(_photoFrame);
+    _cellHeight = MAX(maxBodyH, maxPhotoH);
 }
 
 - (UIImage *)makeThumbnail:(UIImage *)originalImage {
