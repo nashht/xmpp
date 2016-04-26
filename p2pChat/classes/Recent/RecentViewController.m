@@ -175,7 +175,7 @@
 
 - (void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath {
     LastMessage *message = [_recentController objectAtIndexPath:indexPath];
-    [_dataManager deleteRecentUsername:message.username];
+    [_dataManager deleteRecentUsername:message.username isP2P:message.isP2P.boolValue];
 }
 
 #pragma mark - popover view

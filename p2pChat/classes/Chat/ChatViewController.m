@@ -224,6 +224,7 @@ static NSString *pictureReuseIdentifier = @"pictureMessageCell";
             }
             
             PicFrameModel *messageFrameModel = [[PicFrameModel alloc] init];
+            messageFrameModel.message = message;
             cell.picFrame = messageFrameModel;
             return cell;
         }

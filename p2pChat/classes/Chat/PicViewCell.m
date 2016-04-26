@@ -121,29 +121,16 @@
     [[UIApplication sharedApplication].keyWindow addSubview:v];
     _v = v;
     
-    UIScrollView *imageScroll = [[UIScrollView alloc] initWithFrame:[UIScreen mainScreen].bounds];
-    UIImageView *imageView = [[UIImageView alloc] initWithImage:_image];
-    [imageScroll addSubview:imageView];
-
-    _aImageView = imageView;
-    _bodyScroll = imageScroll;
-    
-    _bodyScroll.contentSize = _image.size;
-    _bodyScroll.delegate = self;
-    
-    _bodyScroll.maximumZoomScale = 3.0;
-    _bodyScroll.minimumZoomScale = 0.5;
-    
-    [UIView animateWithDuration:0.3 animations:^{
-        imageView.frame=CGRectMake(0,([UIScreen mainScreen].bounds.size.height-_image.size.height*[UIScreen mainScreen].bounds.size.width/_image.size.width)/2, [UIScreen mainScreen].bounds.size.width, _image.size.height*[UIScreen mainScreen].bounds.size.width/_image.size.width);
+    [[[PhotoLibraryCenter alloc]init]getImageWithLocalIdentifier:_picFrame.message.body withCompletionHandler:^(UIImage *image) {
+        UIImageView *imageView = [[UIImageView alloc]initWithFrame:[UIScreen mainScreen].bounds];
+        imageView.contentMode = UIViewContentModeScaleAspectFit;
+        imageView.image = image;
+        
+        [v addSubview:imageView];
     }];
-    
-    [v addSubview:_bodyScroll];
-    
     UITapGestureRecognizer *tap=[[UITapGestureRecognizer alloc]initWithTarget:self action:@selector(hideImage:)];
-    [_bodyScroll addGestureRecognizer: tap];
-
-   }
+    [_v addGestureRecognizer: tap];
+}
 
 - (UIView *)viewForZoomingInScrollView:(UIScrollView *)scrollView{
     return _aImageView;
