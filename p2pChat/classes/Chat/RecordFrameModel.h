@@ -15,6 +15,7 @@
 @property(nonatomic,assign,readonly) CGRect timeFrame;
 @property(nonatomic,assign,readonly) CGRect bodyFrame;
 @property(nonatomic,assign,readonly) CGRect photoFrame;
+@property(nonatomic,assign,readonly) CGRect voiceLengthFrame;
 @property(nonatomic,assign,readonly) CGFloat cellHeight;
 
 @property(nonatomic,strong) MessageBean *message;

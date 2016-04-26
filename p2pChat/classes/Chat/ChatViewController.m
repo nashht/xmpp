@@ -257,7 +257,7 @@ static NSString *pictureReuseIdentifier = @"pictureMessageCell";
             break;
         case MessageTypeRecord:{
             RecordFrameModel *recordFrameMode = [[RecordFrameModel alloc] init];
-//            recordFrameMode.message = message;
+            recordFrameMode.message = message;
             return recordFrameMode.cellHeight + 1;
         }
             break;

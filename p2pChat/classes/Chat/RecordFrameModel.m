@@ -28,6 +28,12 @@
     CGFloat timeH = 44;
     _timeFrame = CGRectMake(timeX, timeY, timeW, timeH);
     
+    //    时长
+    CGFloat voiceLengthX;
+    CGFloat voiceLengthY;
+    CGFloat voiceLengthW = 30;
+    CGFloat voiceLengthH = 30;
+    
     //    头像
     CGFloat photoX;
     CGFloat photoY = CGRectGetMaxY(_timeFrame) + padding;
@@ -43,23 +49,44 @@
     
     _photoFrame = CGRectMake(photoX, photoY, photoW, photoH);
     
+    NSLog(@"_------more %f", [message.more doubleValue]);
+    double length = [message.more doubleValue];
     
-    CGSize lastBodySize = CGSizeMake(150,45);
+    CGFloat bodyLength = 100;
+    if (length <=2) {
+        bodyLength = 100;
+    }else if(length <= 10){
+        bodyLength += 10 * (int)(length - 2);
+    }else if(length <= 60){
+        bodyLength = 10 * (int)((length - 10) / 10) + 110;
+    }else{
+        bodyLength = 350;
+    }
+    
+    CGSize lastBodySize = CGSizeMake(bodyLength,45);
     
     CGFloat bodyX;
-    CGFloat bodyY =  photoY;
+    CGFloat bodyY = photoY;
+     voiceLengthY = bodyY + 10;
+    
     if ([message.isOut boolValue]) {
         //        发送的消息，frame靠右边确定
         bodyX = screenW - lastBodySize.width - padding - photoW;
+        voiceLengthX = bodyX - 20;
+        
     }else{
         bodyX = CGRectGetMaxX(_photoFrame) + padding;
+        voiceLengthX = bodyX + bodyLength - 8;
     }
+    
     _bodyFrame = (CGRect){{bodyX,bodyY},lastBodySize};
+    _voiceLengthFrame = CGRectMake(voiceLengthX, voiceLengthY, voiceLengthW, voiceLengthH);
     
     //    cell的高度
     CGFloat maxBodyH = CGRectGetMaxY(_bodyFrame);
     CGFloat maxPhotoH = CGRectGetMaxY(_photoFrame);
     _cellHeight = MAX(maxBodyH, maxPhotoH);
+
 }
 
 @end
