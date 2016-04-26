@@ -640,14 +640,14 @@
 		DA90B1871C8989930080E037 /* libidn.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libidn.a; sourceTree = "<group>"; };
 		DA90B1881C8989930080E037 /* stringprep.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = stringprep.h; sourceTree = "<group>"; };
 		DA90B1891C8989930080E037 /* XMPPFramework.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = XMPPFramework.h; path = framework/XMPPFramework.h; sourceTree = "<group>"; };
-		DA95D5921C3A16E6001ED1A6 /* p2pChat.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = p2pChat.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		DA95D5921C3A16E6001ED1A6 /* XMPP.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = XMPP.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		DA95D5A21C3A16E6001ED1A6 /* p2pChat.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = p2pChat.xcdatamodel; sourceTree = "<group>"; };
 		DA95D5A71C3A16E6001ED1A6 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		DA95D5A91C3A16E6001ED1A6 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		DA95D5AE1C3A16E6001ED1A6 /* p2pChatTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = p2pChatTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		DA95D5AE1C3A16E6001ED1A6 /* XMPP.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = XMPP.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		DA95D5B21C3A16E6001ED1A6 /* p2pChatTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = p2pChatTests.m; sourceTree = "<group>"; };
 		DA95D5B41C3A16E6001ED1A6 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		DA95D5B91C3A16E6001ED1A6 /* p2pChatUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = p2pChatUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		DA95D5B91C3A16E6001ED1A6 /* XMPP.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = XMPP.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		DA95D5BD1C3A16E6001ED1A6 /* p2pChatUITests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = p2pChatUITests.m; sourceTree = "<group>"; };
 		DA95D5BF1C3A16E6001ED1A6 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		DA968A461C891F6A00FD866C /* MyViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MyViewController.h; sourceTree = "<group>"; };
@@ -1836,9 +1836,9 @@
 		DA95D5931C3A16E6001ED1A6 /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				DA95D5921C3A16E6001ED1A6 /* p2pChat.app */,
-				DA95D5AE1C3A16E6001ED1A6 /* p2pChatTests.xctest */,
-				DA95D5B91C3A16E6001ED1A6 /* p2pChatUITests.xctest */,
+				DA95D5921C3A16E6001ED1A6 /* XMPP.app */,
+				DA95D5AE1C3A16E6001ED1A6 /* XMPP.xctest */,
+				DA95D5B91C3A16E6001ED1A6 /* XMPP.xctest */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -2074,9 +2074,9 @@
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
-		DA95D5911C3A16E6001ED1A6 /* p2pChat */ = {
+		DA95D5911C3A16E6001ED1A6 /* XMPP */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = DA95D5C21C3A16E6001ED1A6 /* Build configuration list for PBXNativeTarget "p2pChat" */;
+			buildConfigurationList = DA95D5C21C3A16E6001ED1A6 /* Build configuration list for PBXNativeTarget "XMPP" */;
 			buildPhases = (
 				DA95D58E1C3A16E6001ED1A6 /* Sources */,
 				DA95D58F1C3A16E6001ED1A6 /* Frameworks */,
@@ -2086,14 +2086,14 @@
 			);
 			dependencies = (
 			);
-			name = p2pChat;
+			name = XMPP;
 			productName = p2pChat;
-			productReference = DA95D5921C3A16E6001ED1A6 /* p2pChat.app */;
+			productReference = DA95D5921C3A16E6001ED1A6 /* XMPP.app */;
 			productType = "com.apple.product-type.application";
 		};
-		DA95D5AD1C3A16E6001ED1A6 /* p2pChatTests */ = {
+		DA95D5AD1C3A16E6001ED1A6 /* XMPPTests */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = DA95D5C51C3A16E6001ED1A6 /* Build configuration list for PBXNativeTarget "p2pChatTests" */;
+			buildConfigurationList = DA95D5C51C3A16E6001ED1A6 /* Build configuration list for PBXNativeTarget "XMPPTests" */;
 			buildPhases = (
 				DA95D5AA1C3A16E6001ED1A6 /* Sources */,
 				DA95D5AB1C3A16E6001ED1A6 /* Frameworks */,
@@ -2104,14 +2104,14 @@
 			dependencies = (
 				DA95D5B01C3A16E6001ED1A6 /* PBXTargetDependency */,
 			);
-			name = p2pChatTests;
+			name = XMPPTests;
 			productName = p2pChatTests;
-			productReference = DA95D5AE1C3A16E6001ED1A6 /* p2pChatTests.xctest */;
+			productReference = DA95D5AE1C3A16E6001ED1A6 /* XMPP.xctest */;
 			productType = "com.apple.product-type.bundle.unit-test";
 		};
-		DA95D5B81C3A16E6001ED1A6 /* p2pChatUITests */ = {
+		DA95D5B81C3A16E6001ED1A6 /* XMPPUITests */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = DA95D5C81C3A16E6001ED1A6 /* Build configuration list for PBXNativeTarget "p2pChatUITests" */;
+			buildConfigurationList = DA95D5C81C3A16E6001ED1A6 /* Build configuration list for PBXNativeTarget "XMPPUITests" */;
 			buildPhases = (
 				DA95D5B51C3A16E6001ED1A6 /* Sources */,
 				DA95D5B61C3A16E6001ED1A6 /* Frameworks */,
@@ -2122,9 +2122,9 @@
 			dependencies = (
 				DA95D5BB1C3A16E6001ED1A6 /* PBXTargetDependency */,
 			);
-			name = p2pChatUITests;
+			name = XMPPUITests;
 			productName = p2pChatUITests;
-			productReference = DA95D5B91C3A16E6001ED1A6 /* p2pChatUITests.xctest */;
+			productReference = DA95D5B91C3A16E6001ED1A6 /* XMPP.xctest */;
 			productType = "com.apple.product-type.bundle.ui-testing";
 		};
 /* End PBXNativeTarget section */
@@ -2152,7 +2152,7 @@
 					};
 				};
 			};
-			buildConfigurationList = DA95D58D1C3A16E6001ED1A6 /* Build configuration list for PBXProject "p2pChat" */;
+			buildConfigurationList = DA95D58D1C3A16E6001ED1A6 /* Build configuration list for PBXProject "XMPP" */;
 			compatibilityVersion = "Xcode 3.2";
 			developmentRegion = English;
 			hasScannedForEncodings = 0;
@@ -2165,9 +2165,9 @@
 			projectDirPath = "";
 			projectRoot = "";
 			targets = (
-				DA95D5911C3A16E6001ED1A6 /* p2pChat */,
-				DA95D5AD1C3A16E6001ED1A6 /* p2pChatTests */,
-				DA95D5B81C3A16E6001ED1A6 /* p2pChatUITests */,
+				DA95D5911C3A16E6001ED1A6 /* XMPP */,
+				DA95D5AD1C3A16E6001ED1A6 /* XMPPTests */,
+				DA95D5B81C3A16E6001ED1A6 /* XMPPUITests */,
 			);
 		};
 /* End PBXProject section */
@@ -2438,12 +2438,12 @@
 /* Begin PBXTargetDependency section */
 		DA95D5B01C3A16E6001ED1A6 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
-			target = DA95D5911C3A16E6001ED1A6 /* p2pChat */;
+			target = DA95D5911C3A16E6001ED1A6 /* XMPP */;
 			targetProxy = DA95D5AF1C3A16E6001ED1A6 /* PBXContainerItemProxy */;
 		};
 		DA95D5BB1C3A16E6001ED1A6 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
-			target = DA95D5911C3A16E6001ED1A6 /* p2pChat */;
+			target = DA95D5911C3A16E6001ED1A6 /* XMPP */;
 			targetProxy = DA95D5BA1C3A16E6001ED1A6 /* PBXContainerItemProxy */;
 		};
 /* End PBXTargetDependency section */
@@ -2564,7 +2564,7 @@
 				);
 				OTHER_LDFLAGS = "";
 				PRODUCT_BUNDLE_IDENTIFIER = nmrc.xmppChat;
-				PRODUCT_NAME = "$(TARGET_NAME)";
+				PRODUCT_NAME = XMPP;
 				PROVISIONING_PROFILE = "";
 			};
 			name = Debug;
@@ -2591,7 +2591,7 @@
 				);
 				OTHER_LDFLAGS = "";
 				PRODUCT_BUNDLE_IDENTIFIER = nmrc.xmppChat;
-				PRODUCT_NAME = "$(TARGET_NAME)";
+				PRODUCT_NAME = XMPP;
 				PROVISIONING_PROFILE = "";
 			};
 			name = Release;
@@ -2603,8 +2603,8 @@
 				INFOPLIST_FILE = p2pChatTests/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = zxkleetcode.p2pChatTests;
-				PRODUCT_NAME = "$(TARGET_NAME)";
-				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/p2pChat.app/p2pChat";
+				PRODUCT_NAME = XMPP;
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/XMPP.app/XMPP";
 			};
 			name = Debug;
 		};
@@ -2615,8 +2615,8 @@
 				INFOPLIST_FILE = p2pChatTests/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = zxkleetcode.p2pChatTests;
-				PRODUCT_NAME = "$(TARGET_NAME)";
-				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/p2pChat.app/p2pChat";
+				PRODUCT_NAME = XMPP;
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/XMPP.app/XMPP";
 			};
 			name = Release;
 		};
@@ -2626,7 +2626,7 @@
 				INFOPLIST_FILE = p2pChatUITests/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = zxkleetcode.p2pChatUITests;
-				PRODUCT_NAME = "$(TARGET_NAME)";
+				PRODUCT_NAME = XMPP;
 				TEST_TARGET_NAME = p2pChat;
 				USES_XCTRUNNER = YES;
 			};
@@ -2638,7 +2638,7 @@
 				INFOPLIST_FILE = p2pChatUITests/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = zxkleetcode.p2pChatUITests;
-				PRODUCT_NAME = "$(TARGET_NAME)";
+				PRODUCT_NAME = XMPP;
 				TEST_TARGET_NAME = p2pChat;
 				USES_XCTRUNNER = YES;
 			};
@@ -2647,7 +2647,7 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
-		DA95D58D1C3A16E6001ED1A6 /* Build configuration list for PBXProject "p2pChat" */ = {
+		DA95D58D1C3A16E6001ED1A6 /* Build configuration list for PBXProject "XMPP" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				DA95D5C01C3A16E6001ED1A6 /* Debug */,
@@ -2656,7 +2656,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		DA95D5C21C3A16E6001ED1A6 /* Build configuration list for PBXNativeTarget "p2pChat" */ = {
+		DA95D5C21C3A16E6001ED1A6 /* Build configuration list for PBXNativeTarget "XMPP" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				DA95D5C31C3A16E6001ED1A6 /* Debug */,
@@ -2665,7 +2665,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		DA95D5C51C3A16E6001ED1A6 /* Build configuration list for PBXNativeTarget "p2pChatTests" */ = {
+		DA95D5C51C3A16E6001ED1A6 /* Build configuration list for PBXNativeTarget "XMPPTests" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				DA95D5C61C3A16E6001ED1A6 /* Debug */,
@@ -2674,7 +2674,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		DA95D5C81C3A16E6001ED1A6 /* Build configuration list for PBXNativeTarget "p2pChatUITests" */ = {
+		DA95D5C81C3A16E6001ED1A6 /* Build configuration list for PBXNativeTarget "XMPPUITests" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				DA95D5C91C3A16E6001ED1A6 /* Debug */,

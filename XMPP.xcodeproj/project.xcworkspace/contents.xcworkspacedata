@@ -2,6 +2,6 @@
 <Workspace
    version = "1.0">
    <FileRef
-      location = "self:p2pChat.xcodeproj">
+      location = "self:/Users/xiaokun/Documents/xmpp/XMPP.xcodeproj">
    </FileRef>
 </Workspace>

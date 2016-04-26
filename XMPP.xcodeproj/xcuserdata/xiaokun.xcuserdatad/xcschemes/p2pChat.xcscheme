@@ -15,9 +15,9 @@
             <BuildableReference
                BuildableIdentifier = "primary"
                BlueprintIdentifier = "DA95D5911C3A16E6001ED1A6"
-               BuildableName = "p2pChat.app"
-               BlueprintName = "p2pChat"
-               ReferencedContainer = "container:p2pChat.xcodeproj">
+               BuildableName = "XMPP.app"
+               BlueprintName = "XMPP"
+               ReferencedContainer = "container:XMPP.xcodeproj">
             </BuildableReference>
          </BuildActionEntry>
       </BuildActionEntries>
@@ -33,9 +33,9 @@
             <BuildableReference
                BuildableIdentifier = "primary"
                BlueprintIdentifier = "DA95D5AD1C3A16E6001ED1A6"
-               BuildableName = "p2pChatTests.xctest"
-               BlueprintName = "p2pChatTests"
-               ReferencedContainer = "container:p2pChat.xcodeproj">
+               BuildableName = "XMPP.xctest"
+               BlueprintName = "XMPPTests"
+               ReferencedContainer = "container:XMPP.xcodeproj">
             </BuildableReference>
          </TestableReference>
          <TestableReference
@@ -43,9 +43,9 @@
             <BuildableReference
                BuildableIdentifier = "primary"
                BlueprintIdentifier = "DA95D5B81C3A16E6001ED1A6"
-               BuildableName = "p2pChatUITests.xctest"
-               BlueprintName = "p2pChatUITests"
-               ReferencedContainer = "container:p2pChat.xcodeproj">
+               BuildableName = "XMPP.xctest"
+               BlueprintName = "XMPPUITests"
+               ReferencedContainer = "container:XMPP.xcodeproj">
             </BuildableReference>
          </TestableReference>
       </Testables>
@@ -53,9 +53,9 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "DA95D5911C3A16E6001ED1A6"
-            BuildableName = "p2pChat.app"
-            BlueprintName = "p2pChat"
-            ReferencedContainer = "container:p2pChat.xcodeproj">
+            BuildableName = "XMPP.app"
+            BlueprintName = "XMPP"
+            ReferencedContainer = "container:XMPP.xcodeproj">
          </BuildableReference>
       </MacroExpansion>
       <AdditionalOptions>
@@ -76,9 +76,9 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "DA95D5911C3A16E6001ED1A6"
-            BuildableName = "p2pChat.app"
-            BlueprintName = "p2pChat"
-            ReferencedContainer = "container:p2pChat.xcodeproj">
+            BuildableName = "XMPP.app"
+            BlueprintName = "XMPP"
+            ReferencedContainer = "container:XMPP.xcodeproj">
          </BuildableReference>
       </BuildableProductRunnable>
       <AdditionalOptions>
@@ -95,9 +95,9 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "DA95D5911C3A16E6001ED1A6"
-            BuildableName = "p2pChat.app"
-            BlueprintName = "p2pChat"
-            ReferencedContainer = "container:p2pChat.xcodeproj">
+            BuildableName = "XMPP.app"
+            BlueprintName = "XMPP"
+            ReferencedContainer = "container:XMPP.xcodeproj">
          </BuildableReference>
       </BuildableProductRunnable>
    </ProfileAction>
