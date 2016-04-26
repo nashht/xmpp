@@ -9,12 +9,12 @@
 #define bodyPedding 20
 #import "PicFrameModel.h"
 #import "MessageFrameModel.h"
-#import "Message.h"
-#import "Message+CoreDataProperties.h"
+#import "MessageBean.h"
+#import "PhotoLibraryCenter.h"
 
 @implementation PicFrameModel
 
-- (void)setMessage:(Message *)message{
+- (void)setMessage:(MessageBean *)message withCompletionHandler:(void (^)(PicFrameModel *model))handler {
     _message = message;
     //    设置屏幕的宽
     CGFloat screenW = [UIScreen mainScreen].bounds.size.width;
@@ -43,25 +43,27 @@
     
     _photoFrame = CGRectMake(photoX, photoY, photoW, photoH);
     
-     UIImage *image = [UIImage imageWithContentsOfFile:message.body];
-    
-    CGSize bodySize =  [self makeThumbnail:image].size;
-    
-    CGSize lastBodySize = CGSizeMake(bodySize.width + bodyPedding * 2, bodySize.height + bodyPedding * 2);
-    
-    CGFloat bodyX;
-    CGFloat bodyY =  photoY;
-    if ([message.isOut boolValue]) {
-        //        发送的消息，frame靠右边确定
-        bodyX = screenW - lastBodySize.width - padding - photoW;
-    }else{
-        bodyX = CGRectGetMaxX(_photoFrame) + padding;
-    }
-    _bodyFrame = (CGRect){{bodyX,bodyY},lastBodySize};
-    
-    CGFloat maxBodyH = CGRectGetMaxY(_bodyFrame);
-    CGFloat maxPhotoH = CGRectGetMaxY(_photoFrame);
-    _cellHeight = MAX(maxBodyH, maxPhotoH);
+    [[[PhotoLibraryCenter alloc]init]getImageWithLocalIdentifier:message.body withCompletionHandler:^(UIImage *image) {
+        _image = image;
+ 
+        CGSize bodySize =  [self makeThumbnail:image].size;
+        CGSize lastBodySize = CGSizeMake(bodySize.width + bodyPedding * 2, bodySize.height + bodyPedding * 2);
+        
+        CGFloat bodyX;
+        CGFloat bodyY =  photoY;
+        if ([message.isOut boolValue]) {
+            //        发送的消息，frame靠右边确定
+            bodyX = screenW - lastBodySize.width - padding - photoW;
+        }else{
+            bodyX = CGRectGetMaxX(_photoFrame) + padding;
+        }
+        _bodyFrame = (CGRect){{bodyX,bodyY},lastBodySize};
+        
+        CGFloat maxBodyH = CGRectGetMaxY(_bodyFrame);
+        CGFloat maxPhotoH = CGRectGetMaxY(_photoFrame);
+        _cellHeight = MAX(maxBodyH, maxPhotoH);
+        handler(self);
+    }];
 }
 
 - (UIImage *)makeThumbnail:(UIImage *)originalImage {

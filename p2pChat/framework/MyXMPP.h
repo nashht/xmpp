@@ -18,6 +18,7 @@
 @class XMPPRoom;
 @class XMPPRoomCoreDataStorage;
 @class DataManager;
+@class PhotoLibraryCenter;
 
 #define MyXmppDidLoginNotification @"MyXmppDidLoginNotification"
 #define MyXmppConnectFailedNotification @"MyXmppConnectFailedNotification"
@@ -52,6 +53,7 @@ static NSString *myDomain = @"xmpp.test";
 @property (strong, nonatomic) XMPPRoomCoreDataStorage *roomStorage;
 
 @property (strong, nonatomic, readonly) DataManager *dataManager;
+@property (strong, nonatomic, readonly) PhotoLibraryCenter *photoLibraryCenter;
 
 - (void)loginWithName:(NSString *)user Password:(NSString *)password;
 - (void)loginout;

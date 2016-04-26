@@ -16,16 +16,22 @@
 #import "Tool.h"
 #import "VoiceConverter.h"
 #import "Tool.h"
+#import "PhotoLibraryCenter.h"
 
-#define Voice @"[语音]"
+static NSString *voiceType = @"[语音]";
+static NSString *pictureType = @"[图片]";
+
+@interface MyXMPP () 
+
+@end
 
 @implementation MyXMPP (P2PChat)
 
-- (void)sendMessageWithSubtype:(NSString *)subtype time:(double)time body:(NSString *)body more:(NSString *)more toUser:(NSString *)user {
+- (void)sendMessageWithSubtype:(NSString *)subtype time:(int)time body:(NSString *)body more:(NSString *)more toUser:(NSString *)user {
     NSXMLElement *bodyElement = [NSXMLElement elementWithName:@"body"];
     [bodyElement addAttributeWithName:@"subtype" stringValue:subtype];
 
-    [bodyElement addAttributeWithName:@"time" stringValue:[NSString stringWithFormat:@"%f", time]];
+    [bodyElement addAttributeWithName:@"time" stringValue:[NSString stringWithFormat:@"%d", time]];
     if (more != nil) {
         [bodyElement addAttributeWithName:@"more" stringValue:more];
     }
@@ -60,12 +66,21 @@
     NSString *audiomsg = [p base64EncodedStringWithOptions:0];
     
     NSDate *date = [Tool transferDate:[NSDate date]];
-    double time = [date timeIntervalSince1970];
+    int time = (int)[date timeIntervalSince1970];
     
     [self sendMessageWithSubtype:@"audio" time:time body:audiomsg more:length toUser:user];
     
     [self.dataManager saveRecordWithUsername:user time:[NSNumber numberWithInt:time] path:path length:length isOut:YES];
-    [self.dataManager addRecentUsername:user time:[NSNumber numberWithInt:time] body:Voice isOut:YES isP2P:YES];
+    [self.dataManager addRecentUsername:user time:[NSNumber numberWithInt:time] body:voiceType isOut:YES isP2P:YES];
+}
+
+- (void)sendPictureIdentifier:(NSString *)identifier data:(NSData *)imageData ToUser:(NSString *)user {
+    NSString *picString = [imageData base64EncodedStringWithOptions:0];
+    NSDate *date = [Tool transferDate:[NSDate date]];
+    int time = (int)[date timeIntervalSince1970];
+    [self sendMessageWithSubtype:@"picture" time:time body:picString more:nil toUser:user];
+    [self.dataManager savePhotoWithUsername:user time:[NSNumber numberWithInt:time] path:identifier thumbnail:nil isOut:YES];
+    [self.dataManager addRecentUsername:user time:[NSNumber numberWithInt:time] body:pictureType isOut:YES isP2P:YES];
 }
 
 #pragma mark - receivemessage delegate
@@ -99,12 +114,16 @@
                 NSString *path = [Tool getFileName:@"receive" extension:@"wav"];
                 [data writeToFile:path atomically:YES];
                 [self.dataManager saveRecordWithUsername:bareJidStr time:timeNumber path:path length:during isOut:NO];
-                [self.dataManager addRecentUsername:bareJidStr time:timeNumber body:Voice isOut:NO isP2P:YES];
-                localNotification.alertBody = [NSString stringWithFormat:@"%@:[语音]", bareJidStr];
+                [self.dataManager addRecentUsername:bareJidStr time:timeNumber body:voiceType isOut:NO isP2P:YES];
+                localNotification.alertBody = [NSString stringWithFormat:@"%@:%@", bareJidStr, voiceType];
                 break;
             }
             case 'p':{
-                
+                NSData *data = [[NSData alloc]initWithBase64EncodedString:messageBody options:0];
+                [self.photoLibraryCenter saveImage:[UIImage imageWithData:data] withCompletionHandler:^(NSString *identifier) {
+                    [self.dataManager savePhotoWithUsername:bareJidStr time:timeNumber path:identifier thumbnail:nil isOut:NO];
+                    [self.dataManager addRecentUsername:bareJidStr time:timeNumber body:pictureType isOut:NO isP2P:NO];
+                }];
                 break;
             }
                 

@@ -62,8 +62,6 @@
     //    数据模型
     
     _timeLable.text = [Tool stringFromDate:[NSDate dateWithTimeIntervalSince1970:message.time.doubleValue]];
-    
-    
     _timeLable.frame = messageFrame.timeFrame;
     
     if (vCard.photo != nil) {
@@ -73,7 +71,6 @@
     }
     
     _photoImage.frame = messageFrame.photoFrame;
-//    [_photoImage.layer setCornerRadius:CGRectGetHeight([_photoImage bounds]) / 2];
     [_photoImage.layer setCornerRadius:10];
     _photoImage.layer.masksToBounds = true;
     

@@ -12,5 +12,6 @@
 
 - (void)sendMessage:(NSString *)text ToUser:(NSString *) user;
 - (void)sendAudio:(NSString *)path ToUser:(NSString *)user length:(NSString *)length;
+- (void)sendPictureIdentifier:(NSString *)identifier data:(NSData *)imageData ToUser:(NSString *)user;//发送的是缩略后的图
 
 @end

@@ -14,6 +14,7 @@
 #import "Tool.h"
 #import "MyXMPP+Group.h"
 #import "Reachability.h"
+#import "PhotoLibraryCenter.h"
 
 @interface MyXMPP () <XMPPStreamDelegate> {
     BOOL _hasInit;
@@ -81,9 +82,9 @@ static NSString *serverHost = @"10.108.136.59";
     if (self.stream == nil) {
         self.stream = [[XMPPStream alloc] init];
         [self.stream addDelegate:self delegateQueue:dispatch_get_main_queue()];
-        _dataManager = [DataManager shareManager];
         self.stream.enableBackgroundingOnSocket = YES;
     }
+    _dataManager = [DataManager shareManager];
     
     _reconnectTimer = [NSTimer scheduledTimerWithTimeInterval:20 target:self selector:@selector(reconnect) userInfo:nil repeats:YES];
     [_reconnectTimer setFireDate:[NSDate distantFuture]];
@@ -92,6 +93,8 @@ static NSString *serverHost = @"10.108.136.59";
     _reachability = [Reachability reachabilityWithHostName:serverHost];//监测网络状态的类
     [_reachability startNotifier];
     [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(networkStatusChanaged) name:kReachabilityChangedNotification object:nil];
+    
+    _photoLibraryCenter = [[PhotoLibraryCenter alloc]init];
     
     return self;
 }

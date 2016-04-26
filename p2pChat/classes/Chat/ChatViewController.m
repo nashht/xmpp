@@ -55,7 +55,10 @@ static NSString *pictureReuseIdentifier = @"pictureMessageCell";
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-
+    
+    UIBarButtonItem *back = [[UIBarButtonItem alloc]initWithTitle:@"返回" style:UIBarButtonItemStylePlain target:nil action:nil];
+    self.navigationItem.backBarButtonItem = back;
+    
     // init table view
     _historyTableView.dataSource = self;
     _historyTableView.delegate = self;
@@ -173,7 +176,6 @@ static NSString *pictureReuseIdentifier = @"pictureMessageCell";
 #pragma mark -table view data source
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
     id<NSFetchedResultsSectionInfo> sectionInfo = _historyController.sections[section];
-    NSLog(@"history chatting cnt : %d", sectionInfo.numberOfObjects);
     return sectionInfo.numberOfObjects;
 }
 
@@ -208,8 +210,9 @@ static NSString *pictureReuseIdentifier = @"pictureMessageCell";
                 cell = [[PicViewCell alloc] initWithStyle:UITableViewCellStyleSubtitle reuseIdentifier:pictureReuseIdentifier];
             }
             PicFrameModel *messageFrameModel = [[PicFrameModel alloc] init];
-//            messageFrameModel.message = message;
-            cell.picFrame = messageFrameModel;
+            [messageFrameModel setMessage:message withCompletionHandler:^(PicFrameModel *model) {//涉及到异步操作
+                cell.picFrame = model;
+            }];
             return cell;
         }
         case MessageTypeRecord:{
@@ -251,13 +254,13 @@ static NSString *pictureReuseIdentifier = @"pictureMessageCell";
             break;
         case MessageTypePicture:{
             PicFrameModel *picFrameModel = [[PicFrameModel alloc] init];
-//            picFrameModel.message = message;
+            picFrameModel.message = message;
             return picFrameModel.cellHeight + 1;
         }
             break;
         case MessageTypeRecord:{
             RecordFrameModel *recordFrameMode = [[RecordFrameModel alloc] init];
-//            recordFrameMode.message = message;
+            recordFrameMode.message = message;
             return recordFrameMode.cellHeight + 1;
         }
             break;

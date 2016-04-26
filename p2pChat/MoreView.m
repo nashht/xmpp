@@ -10,8 +10,10 @@
 #import "Tool.h"
 #import "DataManager.h"
 #import "PhotoLibraryCenter.h"
+#import "MyXMPP+P2PChat.h"
+#import "MyXMPP+Group.h"
 
-@interface MoreView () <PhotoLibraryCenterDelegate> {
+@interface MoreView () {
     int imagePiecesNum;
 }
 @property (strong, nonatomic) PhotoLibraryCenter *photoCenter;
@@ -19,8 +21,8 @@
 @property (strong, nonatomic) UIImagePickerController *imagePickerVC;
 @property (strong, nonatomic) UIImage *image;
 @property (strong, nonatomic) NSData *imageData;
-@property (strong, nonatomic) NSString *originalLocalIdentifier;
-@property (strong, nonatomic) NSString *thumbnailImagePath;
+@property (strong, nonatomic) NSString *localIdentifier;
+
 @property (strong, nonatomic) UIView *previewView;
 
 @end
@@ -28,7 +30,6 @@
 @implementation MoreView
 - (void) awakeFromNib {
     _photoCenter = [[PhotoLibraryCenter alloc]init];
-    _photoCenter.delegate = self;
 }
 
 - (IBAction)pickPicture:(id)sender {
@@ -67,11 +68,8 @@
         [_previewView removeFromSuperview];
     }
     [_imagePickerVC dismissViewControllerAnimated:YES completion:nil];
-    UIImage *thumbnail = [_photoCenter makeThumbnail:_image];
-    _thumbnailImagePath = [Tool getFileName:@"thumbnail" extension:@"png"];
-    [UIImagePNGRepresentation(thumbnail) writeToFile:_thumbnailImagePath atomically:YES];
-//    [[DataManager shareManager]savePhotoWithUsername:_username time:[NSDate date] path:_originalLocalIdentifier thumbnail:_thumbnailImagePath isOut:YES];
-    
+
+    [[MyXMPP shareInstance]sendPictureIdentifier:_localIdentifier data:_imageData ToUser:_chatObjectString];
 }
 
 - (void)cancel {
@@ -112,8 +110,8 @@
     if (_imagePickerVC.sourceType == UIImagePickerControllerSourceTypePhotoLibrary) {
         [self initPreview];
         
-        NSURL *url = info[UIImagePickerControllerReferenceURL];
-        _originalLocalIdentifier = [_photoCenter getLocalIdentifierFromPath:[url absoluteString]];
+        NSURL *url = info[UIImagePickerControllerReferenceURL];//这个url和identifier相差一些字符
+        _localIdentifier = [_photoCenter getLocalIdentifierFromPath:[url absoluteString] ];
         CGSize size = [UIScreen mainScreen].bounds.size;
         CGFloat scale = MIN(size.width / _image.size.width, size.height / _image.size.height);
         UIImageView *imageView = [[UIImageView alloc]initWithImage:_image];
@@ -121,20 +119,15 @@
         [_previewView addSubview:imageView];
         [picker.view addSubview:_previewView];
         
-        [_photoCenter getImageDataWithLocalIdentifier:_originalLocalIdentifier];
+        [_photoCenter getImageDataWithLocalIdentifier:_localIdentifier withCompletionHandler:^(NSData *imageData) {
+            _imageData = imageData;
+        }];
     } else {
-        [_photoCenter saveImage:_image];
+        [_photoCenter saveImage:_image withCompletionHandler:^(NSString *identifier) {
+            _localIdentifier = identifier;
+        }];
         [self sendPic];
     }
-}
-
-#pragma mark - photo library center delegate
-- (void)photoLibraryCenterSavedImageWithLocalIdentifier:(NSString *)localIdentifier {
-    _originalLocalIdentifier = localIdentifier;
-}
-
-- (void)photoLibraryCenterDidGetImageData:(NSData *)imageData {
-    _imageData = imageData;
 }
 
 @end

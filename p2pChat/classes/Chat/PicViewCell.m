@@ -11,8 +11,12 @@
 #import "PicFrameModel.h"
 #import "Tool.h"
 #import "PicViewCell.h"
+#import "MessageBean.h"
+#import "MyXMPP+VCard.h"
+#import "PhotoLibraryCenter.h"
 
 @interface PicViewCell()
+
 @property(nonatomic,weak)UILabel *timeLable;
 @property(nonatomic,weak)UIImageView *photoImage;
 @property(nonatomic,weak)UIButton *bodyBtn;
@@ -59,22 +63,28 @@
     _picFrame = picFrame;
     
     //    数据模型
-    Message *msg = picFrame.message;
+    MessageBean *msg = picFrame.message;
     
     _timeLable.text = [Tool stringFromDate:msg.time];
     _timeLable.frame = picFrame.timeFrame;
     
+    XMPPvCardTemp *vCard;
     if ([msg.isOut boolValue]) {
-        _photoImage.image = [UIImage imageNamed:@"0"];
+        vCard = [MyXMPP shareInstance].myVCardTemp;
     }else{
-        _photoImage.image = [UIImage imageNamed:@"1"];
+        vCard = [[MyXMPP shareInstance]fetchFriend:[XMPPJID jidWithUser:msg.username domain:myDomain resource:nil]];
+    }
+    if (vCard.photo != nil) {
+        _photoImage.image = [UIImage imageWithData:vCard.photo];
+    } else {
+        _photoImage.image = [UIImage imageNamed:@"0"];
     }
     
     _photoImage.frame = picFrame.photoFrame;
-    [_photoImage.layer setCornerRadius:CGRectGetHeight([_photoImage bounds]) / 2];
+    [_photoImage.layer setCornerRadius:10];
     _photoImage.layer.masksToBounds = true;
     
-    UIImage *image = [UIImage imageWithContentsOfFile:picFrame.message.body];
+    UIImage *image = picFrame.image;
     [_bodyBtn setImage:image forState:UIControlStateNormal];
     _bodyBtn.frame = picFrame.bodyFrame;
     [_bodyBtn addTarget:self action:@selector(picBtnClick) forControlEvents:UIControlEventTouchUpInside];
@@ -86,7 +96,7 @@
     }else{
         [_bodyBtn setBackgroundImage:[self resizeImageWithName:@"chat_recive_nor"] forState:UIControlStateNormal];
     }
-    
+ 
 }
 
 - (UIImage *)resizeImageWithName:(NSString *)name
@@ -114,7 +124,7 @@
     UIScrollView *imageScroll = [[UIScrollView alloc] initWithFrame:[UIScreen mainScreen].bounds];
     UIImageView *imageView = [[UIImageView alloc] initWithImage:_image];
     [imageScroll addSubview:imageView];
-//    UIImage *image = [UIImage imageNamed:@"Snip20151210_2.png"];
+
     _aImageView = imageView;
     _bodyScroll = imageScroll;
     
