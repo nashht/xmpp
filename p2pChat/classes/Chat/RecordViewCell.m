@@ -14,9 +14,10 @@
 
 @interface RecordViewCell()
 
-@property(nonatomic,weak)UILabel *timeLable;
-@property(nonatomic,weak)UIImageView *photoImage;
-@property(nonatomic,weak)UIButton *bodyBtn;
+@property(nonatomic, weak) UILabel *timeLable;
+@property(nonatomic, weak) UILabel *voiceLength;
+@property(nonatomic, weak) UIImageView *photoImage;
+@property(nonatomic, weak) UIButton *bodyBtn;
 
 @end
 
@@ -31,6 +32,15 @@
         [self.contentView addSubview:timeLable];
         _timeLable = timeLable;
         
+        //        语音长度
+        UILabel *voiceLength = [[UILabel alloc] init];
+        voiceLength.textAlignment = NSTextAlignmentCenter;
+        voiceLength.font = [UIFont systemFontOfSize:17.f];
+        voiceLength.textColor = [UIColor grayColor];
+//        voiceLength.backgroundColor = [UIColor yellowColor];
+        [self.contentView addSubview:voiceLength];
+        _voiceLength = voiceLength;
+        
         //        2.头像
         UIImageView *photoImage = [[UIImageView alloc] init];
         [self.contentView addSubview:photoImage];
@@ -40,8 +50,10 @@
         UIButton *btn = [[UIButton alloc] init];
         
         [self.contentView addSubview:btn];
+//        btn.backgroundColor = [UIColor greenColor];
         _bodyBtn = btn;
         
+
         
         self.backgroundColor = [UIColor clearColor];
     }
@@ -56,8 +68,13 @@
     //    数据模型
     MessageBean *msg = _recordFrame.message;
     
-    _timeLable.text = [Tool stringFromDate:msg.time];
+    _timeLable.text = [Tool stringFromDate:[NSDate dateWithTimeIntervalSince1970:msg.time.doubleValue]];
     _timeLable.frame = _recordFrame.timeFrame;
+    
+    int intLength = [msg.more intValue];
+    NSString *strLength = [NSString stringWithFormat:@"%d''",intLength];
+    _voiceLength.text = strLength;
+    _voiceLength.frame = _recordFrame.voiceLengthFrame;
     
     if ([msg.isOut boolValue]) {
         _photoImage.image = [UIImage imageNamed:@"0"];
