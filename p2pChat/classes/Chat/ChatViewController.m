@@ -266,7 +266,7 @@ static NSString *pictureReuseIdentifier = @"pictureMessageCell";
  */
 - (void)scrollViewWillBeginDragging:(UIScrollView *)scrollView
 {
-    [_bottomView resignTextfield];
+//    [_bottomView resignTextfield];
 }
 
 #pragma mark -keyboard notification
@@ -300,6 +300,7 @@ static NSString *pictureReuseIdentifier = @"pictureMessageCell";
 - (void)showMoreView {
     if (_showMoreView) {
         _tableBottomHeight.constant = BOTTOMHEIGHT;
+        [self tableViewScrollToBottom];
         [UIView animateWithDuration:0.5 animations:^{
             [self.view layoutIfNeeded];
             _bottomView.frame = CGRectMake(0, _screenSize.height - BOTTOMHEIGHT, _screenSize.width, BOTTOMHEIGHT);

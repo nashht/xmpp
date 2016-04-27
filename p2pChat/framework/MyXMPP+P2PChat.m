@@ -120,10 +120,15 @@ static NSString *pictureType = @"[图片]";
             }
             case 'p':{
                 NSData *data = [[NSData alloc]initWithBase64EncodedString:messageBody options:0];
-                [self.photoLibraryCenter saveImage:[UIImage imageWithData:data] withCompletionHandler:^(NSString *identifier, NSString *thumbnailPath) {
-                    [self.dataManager savePhotoWithUsername:bareJidStr time:timeNumber path:identifier thumbnail:thumbnailPath isOut:NO];
-                    [self.dataManager addRecentUsername:bareJidStr time:timeNumber body:pictureType isOut:NO isP2P:NO];
-                }];
+                NSString *path = [Tool getFileName:@"receive" extension:@"png"];
+                dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
+                    [data writeToFile:path atomically:YES];
+                });
+                UIImage *thumbnail = [self.photoLibraryCenter makeThumbnail:[UIImage imageWithData:data] WithSize:thumbnailSize];
+                NSString *thumbnailPath = [Tool getFileName:@"receive_thumbnail" extension:@"png"];
+                [UIImagePNGRepresentation(thumbnail) writeToFile:thumbnailPath atomically:YES];
+                [self.dataManager savePhotoWithUsername:bareJidStr time:timeNumber path:path thumbnail:thumbnailPath isOut:NO];
+                [self.dataManager addRecentUsername:bareJidStr time:timeNumber body:pictureType isOut:NO isP2P:NO];
                 break;
             }
                 

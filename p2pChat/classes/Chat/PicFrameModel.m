@@ -10,7 +10,6 @@
 #import "PicFrameModel.h"
 #import "MessageFrameModel.h"
 #import "MessageBean.h"
-#import "PhotoLibraryCenter.h"
 
 @implementation PicFrameModel
 
@@ -46,7 +45,7 @@
     UIImage *image = [UIImage imageWithContentsOfFile:message.more];
     _image = image;
 
-    CGSize bodySize =  [self makeThumbnail:image].size;
+    CGSize bodySize =  image.size;
     CGSize lastBodySize = CGSizeMake(bodySize.width + bodyPedding * 2, bodySize.height + bodyPedding * 2);
     
     CGFloat bodyX;
@@ -63,17 +62,5 @@
     CGFloat maxPhotoH = CGRectGetMaxY(_photoFrame);
     _cellHeight = MAX(maxBodyH, maxPhotoH);
 }
-
-- (UIImage *)makeThumbnail:(UIImage *)originalImage {
-    UIImage *thumbnail = nil;
-    CGFloat scale = MIN(150 / originalImage.size.width, 150 / originalImage.size.height);
-    CGSize smallSize = CGSizeMake(originalImage.size.width * scale, originalImage.size.height * scale);//缩略图大小
-    UIGraphicsBeginImageContextWithOptions(smallSize, NO, 1.0);
-    [originalImage drawInRect:CGRectMake(0, 0, smallSize.width, smallSize.height)];
-    thumbnail = UIGraphicsGetImageFromCurrentImageContext();
-    UIGraphicsEndImageContext();
-    return thumbnail;
-}
-
 
 @end

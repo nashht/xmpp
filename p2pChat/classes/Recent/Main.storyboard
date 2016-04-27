@@ -237,6 +237,7 @@
                     <simulatedToolbarMetrics key="simulatedBottomBarMetrics"/>
                     <connections>
                         <outlet property="historyTableView" destination="muC-YX-hit" id="05n-cX-Tkr"/>
+                        <outlet property="tableBottomHeight" destination="EI7-0U-ZER" id="mQg-1T-JCN"/>
                         <segue destination="X3u-9p-tB9" kind="push" identifier="showGroupInfo" id="HQD-HV-sgU"/>
                         <segue destination="hiD-gm-DEB" kind="push" identifier="showFriendInfo" id="hND-IJ-8I0"/>
                     </connections>

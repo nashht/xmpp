@@ -10,6 +10,8 @@
 #import "AppDelegate.h"
 #import "Tool.h"
 
+CGSize thumbnailSize = {200, 200};
+
 @interface PhotoLibraryCenter ()
 
 @property (strong, nonatomic) PHAssetCollection *collection;
@@ -42,10 +44,7 @@
     return self;
 }
 
-- (void)saveImage:(UIImage *)image withCompletionHandler:(void (^)(NSString *localIdentifier, NSString *thumbnailPath))completionHandler {
-    UIImage *thumbnailImage = [self makeThumbnail:image WithSize:CGSizeMake(100, 100)];
-    NSString *thumbnailPath = [Tool getFileName:@"thumbnail" extension:@"png"];
-    [UIImagePNGRepresentation(thumbnailImage) writeToFile:thumbnailPath atomically:YES];
+- (void)saveImage:(UIImage *)image withCompletionHandler:(void (^)(NSString *localIdentifier))completionHandler {
     [[PHPhotoLibrary sharedPhotoLibrary] performChanges:^{
         PHAssetChangeRequest *createAssetRequest = [PHAssetChangeRequest creationRequestForAssetFromImage:image];
         PHAssetCollectionChangeRequest *albumChangeRequest = [PHAssetCollectionChangeRequest changeRequestForAssetCollection:_collection];
@@ -54,7 +53,7 @@
         [albumChangeRequest addAssets:@[assetPlaceholder]];
     } completionHandler:^(BOOL success, NSError *error) {
         NSLog(@"Finished adding asset. %@", (success ? @"Success" : error));
-        completionHandler(_localIdentifier, thumbnailPath);
+        completionHandler(_localIdentifier);
     }];
 }
 
