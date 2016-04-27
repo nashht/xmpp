@@ -49,14 +49,26 @@ static NSString *pictureType = @"[图片]";
 }
 
 - (void)sendMessage:(NSString *)text ToUser:(NSString *)user {
-    NSDate *date = [Tool transferDate:[NSDate date]];
+//    NSDate *d = [NSDate date];
+//    NSDate *date = [Tool transferDate:d];
+//    NSNumber *t = [NSNumber numberWithDouble:[date timeIntervalSince1970]];
+//    int time = [t intValue];
+    
+    NSDate *date = [NSDate date];
     NSTimeInterval t = [date timeIntervalSince1970];
     int time = (int)t;
     
+    NSDate *d = [Tool transferDate:date];
+    NSNumber *ltime= [NSNumber numberWithDouble:[d timeIntervalSince1970]];
+//    NSNumber *lasttime= [NSNumber numberWithInt:time];
+//    NSDate *d2 = [NSDate dateWithTimeIntervalSince1970:[t intValue]];
+//    NSDate *d1 = [Tool transferDate:d];
+//    NSLog(@"send time :%@",d1);
+    
     [self sendMessageWithSubtype:@"text" time:time body:text more:nil toUser:user];
     
-    [self.dataManager saveMessageWithUsername:user time:[NSNumber numberWithInt:time] body:text isOut:YES];
-    [self.dataManager addRecentUsername:user time:[NSNumber numberWithInt:time] body:text isOut:YES isP2P:YES];
+    [self.dataManager saveMessageWithUsername:user time:[NSNumber numberWithDouble:time]  body:text isOut:YES];
+    [self.dataManager addRecentUsername:user time:ltime body:text isOut:YES isP2P:YES];
 }
 
 - (void)sendAudio:(NSString *)path ToUser:(NSString *)user length:(NSString *)length{
@@ -65,22 +77,32 @@ static NSString *pictureType = @"[图片]";
     NSLog(@"MyXmpp: audio file length :%lu", (unsigned long)p.length);
     NSString *audiomsg = [p base64EncodedStringWithOptions:0];
     
-    NSDate *date = [Tool transferDate:[NSDate date]];
-    int time = (int)[date timeIntervalSince1970];
+    NSDate *date = [NSDate date];
+    NSTimeInterval t = [date timeIntervalSince1970];
+    int time = (int)t;
+    
+    NSDate *d = [Tool transferDate:date];
+    NSNumber *ltime= [NSNumber numberWithDouble:[d timeIntervalSince1970]];
     
     [self sendMessageWithSubtype:@"audio" time:time body:audiomsg more:length toUser:user];
     
     [self.dataManager saveRecordWithUsername:user time:[NSNumber numberWithInt:time] path:path length:length isOut:YES];
-    [self.dataManager addRecentUsername:user time:[NSNumber numberWithInt:time] body:voiceType isOut:YES isP2P:YES];
+    [self.dataManager addRecentUsername:user time:ltime body:voiceType isOut:YES isP2P:YES];
 }
 
 - (void)sendPictureIdentifier:(NSString *)identifier data:(NSData *)imageData thumbnailPath:(NSString *)path ToUser:(NSString *)user {
     NSString *picString = [imageData base64EncodedStringWithOptions:0];
-    NSDate *date = [Tool transferDate:[NSDate date]];
-    int time = (int)[date timeIntervalSince1970];
+    
+    NSDate *date = [NSDate date];
+    NSTimeInterval t = [date timeIntervalSince1970];
+    int time = (int)t;
+    
+    NSDate *d = [Tool transferDate:date];
+    NSNumber *ltime= [NSNumber numberWithDouble:[d timeIntervalSince1970]];
+    
     [self sendMessageWithSubtype:@"picture" time:time body:picString more:nil toUser:user];
     [self.dataManager savePhotoWithUsername:user time:[NSNumber numberWithInt:time] path:identifier thumbnail:path isOut:YES];
-    [self.dataManager addRecentUsername:user time:[NSNumber numberWithInt:time] body:pictureType isOut:YES isP2P:YES];
+    [self.dataManager addRecentUsername:user time:ltime body:pictureType isOut:YES isP2P:YES];
 }
 
 #pragma mark - receivemessage delegate
@@ -88,9 +110,12 @@ static NSString *pictureType = @"[图片]";
     if ([message isChatMessageWithBody]) {
         NSString *subtype = [message getSubtype];
         NSString *timeStr = [message getTime];
-        NSNumber *timeNumber = [NSNumber numberWithInt:[timeStr intValue]];
+        NSNumber *timeNumber = [NSNumber numberWithInt:[timeStr intValue]];//聊天记录中的时间
         NSDate *date = [NSDate dateWithTimeIntervalSince1970:[timeNumber doubleValue]];
         NSLog(@"recieve time:%@",date);
+        
+        NSDate *d = [Tool transferDate:date];
+        NSNumber *ltime= [NSNumber numberWithDouble:[d timeIntervalSince1970]];//最后一条消息的时间
         
         NSString *messageBody = [[message elementForName:@"body"] stringValue];
         XMPPJID *fromJid = message.from;
@@ -103,7 +128,7 @@ static NSString *pictureType = @"[图片]";
         switch(firstLetter) {
             case 't':{//text
                 [self.dataManager saveMessageWithUsername:bareJidStr time:timeNumber body:messageBody isOut:NO];
-                [self.dataManager addRecentUsername:bareJidStr time:timeNumber body:messageBody isOut:NO isP2P:YES];
+                [self.dataManager addRecentUsername:bareJidStr time:ltime body:messageBody isOut:NO isP2P:YES];
                 localNotification.alertBody = [NSString stringWithFormat:@"%@:%@", bareJidStr, messageBody];
                 break;
             }
@@ -114,7 +139,7 @@ static NSString *pictureType = @"[图片]";
                 NSString *path = [Tool getFileName:@"receive" extension:@"wav"];
                 [data writeToFile:path atomically:YES];
                 [self.dataManager saveRecordWithUsername:bareJidStr time:timeNumber path:path length:during isOut:NO];
-                [self.dataManager addRecentUsername:bareJidStr time:timeNumber body:voiceType isOut:NO isP2P:YES];
+                [self.dataManager addRecentUsername:bareJidStr time:ltime body:voiceType isOut:NO isP2P:YES];
                 localNotification.alertBody = [NSString stringWithFormat:@"%@:%@", bareJidStr, voiceType];
                 break;
             }
@@ -128,7 +153,7 @@ static NSString *pictureType = @"[图片]";
                 NSString *thumbnailPath = [Tool getFileName:@"receive_thumbnail" extension:@"png"];
                 [UIImagePNGRepresentation(thumbnail) writeToFile:thumbnailPath atomically:YES];
                 [self.dataManager savePhotoWithUsername:bareJidStr time:timeNumber path:path thumbnail:thumbnailPath isOut:NO];
-                [self.dataManager addRecentUsername:bareJidStr time:timeNumber body:pictureType isOut:NO isP2P:NO];
+                [self.dataManager addRecentUsername:bareJidStr time:ltime body:pictureType isOut:NO isP2P:NO];
                 break;
             }
                 

@@ -154,18 +154,36 @@ static NSString *myRoomDomain = @"conference.xmpp.test";
 }
 
 - (void)xmppRoom:(XMPPRoom *)sender didReceiveMessage:(XMPPMessage *)message fromOccupant:(XMPPJID *)occupantJID{
-    
-//    NSString *subtype = [message getSubtype];
-//    NSString *timeStr = [message getTime];
-//    NSNumber *timeNumber = [NSNumber numberWithInt:[timeStr intValue]];
-    NSDate *date = [NSDate date];
-    NSNumber *timeNumber = [NSNumber numberWithDouble:[date timeIntervalSince1970]];
-    NSLog(@"recieve time:%@",date);
-    NSString *text = [message body];
     if ([message.type isEqualToString:@"groupchat"]) {
       
-        [[DataManager shareManager]saveMessageWithGroupname:sender.roomJID.user username:occupantJID.user time:timeNumber body:text];
-        [[DataManager shareManager]addRecentUsername:sender.roomJID.user time:[NSNumber numberWithDouble:[[NSDate date]timeIntervalSince1970]] body:message.body isOut:NO isP2P:NO];
+        NSDate *date = [NSDate date];
+        NSNumber *timeNumber = [NSNumber numberWithDouble:[date timeIntervalSince1970]];
+        
+        NSDate *d = [Tool transferDate:date];
+        NSNumber *time= [NSNumber numberWithDouble:[d timeIntervalSince1970]];
+        
+        NSLog(@"recieve time:%@",date);
+        NSString *text = [message body];
+        NSString *subtype = [message getSubtype];//[NSNumber numberWithDouble:[[NSDate date]timeIntervalSince1970]]
+        NSLog(@"group subtype:%@",subtype);
+        char firstLetter = [subtype characterAtIndex:0];
+        switch (firstLetter) {
+            case 't':{//text
+                [[DataManager shareManager]saveMessageWithGroupname:sender.roomJID.user username:occupantJID.user time:timeNumber body:text];
+                [[DataManager shareManager]addRecentUsername:sender.roomJID.user time:time body:message.body isOut:NO isP2P:NO];
+                break;
+            }
+            case 'a':{//audio
+                
+                break;
+            }
+            case 'p':{//photo
+                
+                break;
+            }
+            default:
+                break;
+        }
         
     }else{
         NSLog(@"群组『%@』有新消息：%@",sender.roomJID.user,[message body]);
