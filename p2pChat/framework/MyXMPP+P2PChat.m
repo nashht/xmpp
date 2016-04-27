@@ -74,12 +74,12 @@ static NSString *pictureType = @"[图片]";
     [self.dataManager addRecentUsername:user time:[NSNumber numberWithInt:time] body:voiceType isOut:YES isP2P:YES];
 }
 
-- (void)sendPictureIdentifier:(NSString *)identifier data:(NSData *)imageData ToUser:(NSString *)user {
+- (void)sendPictureIdentifier:(NSString *)identifier data:(NSData *)imageData thumbnailPath:(NSString *)path ToUser:(NSString *)user {
     NSString *picString = [imageData base64EncodedStringWithOptions:0];
     NSDate *date = [Tool transferDate:[NSDate date]];
     int time = (int)[date timeIntervalSince1970];
     [self sendMessageWithSubtype:@"picture" time:time body:picString more:nil toUser:user];
-    [self.dataManager savePhotoWithUsername:user time:[NSNumber numberWithInt:time] path:identifier thumbnail:nil isOut:YES];
+    [self.dataManager savePhotoWithUsername:user time:[NSNumber numberWithInt:time] path:identifier thumbnail:path isOut:YES];
     [self.dataManager addRecentUsername:user time:[NSNumber numberWithInt:time] body:pictureType isOut:YES isP2P:YES];
 }
 
@@ -120,10 +120,15 @@ static NSString *pictureType = @"[图片]";
             }
             case 'p':{
                 NSData *data = [[NSData alloc]initWithBase64EncodedString:messageBody options:0];
-                [self.photoLibraryCenter saveImage:[UIImage imageWithData:data] withCompletionHandler:^(NSString *identifier) {
-                    [self.dataManager savePhotoWithUsername:bareJidStr time:timeNumber path:identifier thumbnail:nil isOut:NO];
-                    [self.dataManager addRecentUsername:bareJidStr time:timeNumber body:pictureType isOut:NO isP2P:NO];
-                }];
+                NSString *path = [Tool getFileName:@"receive" extension:@"png"];
+                dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
+                    [data writeToFile:path atomically:YES];
+                });
+                UIImage *thumbnail = [self.photoLibraryCenter makeThumbnail:[UIImage imageWithData:data] WithSize:thumbnailSize];
+                NSString *thumbnailPath = [Tool getFileName:@"receive_thumbnail" extension:@"png"];
+                [UIImagePNGRepresentation(thumbnail) writeToFile:thumbnailPath atomically:YES];
+                [self.dataManager savePhotoWithUsername:bareJidStr time:timeNumber path:path thumbnail:thumbnailPath isOut:NO];
+                [self.dataManager addRecentUsername:bareJidStr time:timeNumber body:pictureType isOut:NO isP2P:NO];
                 break;
             }
                 

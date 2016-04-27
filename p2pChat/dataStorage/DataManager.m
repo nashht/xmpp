@@ -69,9 +69,27 @@
     return resultController;
 }
 
+- (void)clearMessageByUsername:(NSString *)username {
+    NSFetchRequest *request = [[NSFetchRequest alloc]init];
+    NSEntityDescription *entityDescription = [NSEntityDescription entityForName:@"Message" inManagedObjectContext:_context];
+    request.entity = entityDescription;
+    NSPredicate *predicate = [NSPredicate predicateWithFormat:@"username = %@", username];
+    request.predicate = predicate;
+    NSError *err = nil;
+    NSArray *messageArray = [_context executeFetchRequest:request error:&err];
+    if (err == nil && messageArray.count > 0) {
+        for (NSManagedObject *messageObj in messageArray) {
+            [_context deleteObject:messageObj];
+        }
+    }
+    if (![_context save:&err]) {
+        NSLog(@"DataManager clear history message failed: %@", err);
+    }
+}
+
 - (void)saveMessageWithUsername:(NSString *)username time:(NSNumber *)time body:(NSString *)body isOut:(BOOL)isOut{
     NSError *err = nil;
-    [self saveMessageWithUsername:username time:time type:[NSNumber numberWithChar:0] body:body more:nil error:&err isOut:isOut];
+    [self saveMessageWithUsername:username time:time type:@0 body:body more:nil error:&err isOut:isOut];
     if (err) {
         NSLog(@"DataManager save message failed: %@", err);
     }
@@ -79,7 +97,7 @@
 
 - (void)saveRecordWithUsername:(NSString *)username time:(NSNumber *)time path:(NSString *)path length:(NSString *)length isOut:(BOOL)isOut {
     NSError *err = nil;
-    [self saveMessageWithUsername:username time:time type:[NSNumber numberWithChar:1] body:path more:length error:&err isOut:isOut];
+    [self saveMessageWithUsername:username time:time type:@1 body:path more:length error:&err isOut:isOut];
     if (err) {
         NSLog(@"DataManager save message failed: %@", err);
     }
@@ -87,7 +105,7 @@
 
 - (void)savePhotoWithUsername:(NSString *)username time:(NSNumber *)time path:(NSString *)path thumbnail:(NSString *)thumbnailPath isOut:(BOOL)isOut{
     NSError *err = nil;
-    [self saveMessageWithUsername:username time:time type:[NSNumber numberWithChar:2] body:path more:thumbnailPath error:&err isOut:isOut];
+    [self saveMessageWithUsername:username time:time type:@2 body:path more:thumbnailPath error:&err isOut:isOut];
     if (err) {
         NSLog(@"DataManager save message failed: %@", err);
     }
@@ -95,7 +113,7 @@
 
 - (void)saveFileWithUsername:(NSString *)username time:(NSNumber *)time path:(NSString *)path fileName:(NSString *)name isOut:(BOOL)isOut {
     NSError *err = nil;
-    [self saveMessageWithUsername:username time:time type:[NSNumber numberWithChar:3] body:path more:name error:&err isOut:isOut];
+    [self saveMessageWithUsername:username time:time type:@3 body:path more:name error:&err isOut:isOut];
     if (err) {
         NSLog(@"DataManager save message failed: %@", err);
     }
@@ -157,7 +175,7 @@
     }
 }
 
-- (void)deleteRecentUsername:(NSString *)username {
+- (void)deleteRecentUsername:(NSString *)username isP2P:(BOOL) isP2P {
     NSPredicate *predicate = [NSPredicate predicateWithFormat:@"username = %@", username];
     NSError *err = nil;
     NSFetchedResultsController *resultController = [self fetchWithEntityName:@"LastMessage" predicate:predicate sortKey:@"time" ascending:YES error:&err];
@@ -171,6 +189,11 @@
     if (err2) {
         NSLog(@"DataManager delete recent failed: %@", err2);
     }
+    if (isP2P) {
+        [self clearMessageByUsername:username];
+    } else {
+        [self clearMessageByGroupname:username];
+    }    
 }
 
 #pragma mark - group message
@@ -183,6 +206,24 @@
     groupmessage.body = body;
     groupmessage.more = more;
     [_context save:error];
+}
+
+- (void)clearMessageByGroupname:(NSString *)groupname {
+    NSFetchRequest *request = [[NSFetchRequest alloc]init];
+    NSEntityDescription *entityDescription = [NSEntityDescription entityForName:@"GroupMessage" inManagedObjectContext:_context];
+    request.entity = entityDescription;
+    NSPredicate *predicate = [NSPredicate predicateWithFormat:@"groupname = %@", groupname];
+    request.predicate = predicate;
+    NSError *err = nil;
+    NSArray *messageArray = [_context executeFetchRequest:request error:&err];
+    if (err == nil && messageArray.count > 0) {
+        for (NSManagedObject *messageObj in messageArray) {
+            [_context deleteObject:messageObj];
+        }
+    }
+    if (![_context save:&err]) {
+        NSLog(@"DataManager clear group history message failed: %@", err);
+    }
 }
 
 - (NSFetchedResultsController *)getMessageByGroupname:(NSString *)groupname {
@@ -203,6 +244,7 @@
     }
 }
 
+#pragma mark - kvo
 - (void)observeValueForKeyPath:(NSString *)keyPath ofObject:(id)object change:(NSDictionary<NSString *,id> *)change context:(void *)context {
     if ([keyPath isEqualToString:@"totalUnreadNumber"]) {
         [UIApplication sharedApplication].applicationIconBadgeNumber = _totalUnreadNumber;

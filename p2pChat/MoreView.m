@@ -22,6 +22,7 @@
 @property (strong, nonatomic) UIImage *image;
 @property (strong, nonatomic) NSData *imageData;
 @property (strong, nonatomic) NSString *localIdentifier;
+@property (strong, nonatomic) NSString *thumbnailPath;
 
 @property (strong, nonatomic) UIView *previewView;
 
@@ -69,7 +70,7 @@
     }
     [_imagePickerVC dismissViewControllerAnimated:YES completion:nil];
 
-    [[MyXMPP shareInstance]sendPictureIdentifier:_localIdentifier data:_imageData ToUser:_chatObjectString];
+    [[MyXMPP shareInstance]sendPictureIdentifier:_localIdentifier data:_imageData thumbnailPath:_thumbnailPath ToUser:_chatObjectString];
 }
 
 - (void)cancel {
@@ -107,7 +108,11 @@
 #pragma mark - image picker delegate
 - (void)imagePickerController:(UIImagePickerController *)picker didFinishPickingMediaWithInfo:(nonnull NSDictionary<NSString *,id> *)info {
     _image = info[UIImagePickerControllerOriginalImage];
-    if (_imagePickerVC.sourceType == UIImagePickerControllerSourceTypePhotoLibrary) {
+    _thumbnailPath = [Tool getFileName:@"thumbnail" extension:@"png"];
+    UIImage *thumbnailImage = [_photoCenter makeThumbnail:_image WithSize:CGSizeMake(100, 100)];
+    [UIImagePNGRepresentation(thumbnailImage) writeToFile:_thumbnailPath atomically:YES];
+    
+    if (_imagePickerVC.sourceType == UIImagePickerControllerSourceTypePhotoLibrary) {//图片来自图库
         [self initPreview];
         
         NSURL *url = info[UIImagePickerControllerReferenceURL];//这个url和identifier相差一些字符
@@ -122,11 +127,11 @@
         [_photoCenter getImageDataWithLocalIdentifier:_localIdentifier withCompletionHandler:^(NSData *imageData) {
             _imageData = imageData;
         }];
-    } else {
+    } else {//图片来自拍照
         [_photoCenter saveImage:_image withCompletionHandler:^(NSString *identifier) {
             _localIdentifier = identifier;
+            [self sendPic];
         }];
-        [self sendPic];
     }
 }
 

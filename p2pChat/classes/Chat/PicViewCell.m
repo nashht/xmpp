@@ -117,33 +117,29 @@
 
 - (void)picBtnClick{
     UIView *v = [[UIView alloc]initWithFrame:[UIScreen mainScreen].bounds];
-    v.backgroundColor = [UIColor whiteColor];
+    v.backgroundColor = [UIColor blackColor];
     [[UIApplication sharedApplication].keyWindow addSubview:v];
     _v = v;
-    
-    UIScrollView *imageScroll = [[UIScrollView alloc] initWithFrame:[UIScreen mainScreen].bounds];
-    UIImageView *imageView = [[UIImageView alloc] initWithImage:_image];
-    [imageScroll addSubview:imageView];
-
-    _aImageView = imageView;
-    _bodyScroll = imageScroll;
-    
-    _bodyScroll.contentSize = _image.size;
-    _bodyScroll.delegate = self;
-    
-    _bodyScroll.maximumZoomScale = 3.0;
-    _bodyScroll.minimumZoomScale = 0.5;
-    
-    [UIView animateWithDuration:0.3 animations:^{
-        imageView.frame=CGRectMake(0,([UIScreen mainScreen].bounds.size.height-_image.size.height*[UIScreen mainScreen].bounds.size.width/_image.size.width)/2, [UIScreen mainScreen].bounds.size.width, _image.size.height*[UIScreen mainScreen].bounds.size.width/_image.size.width);
-    }];
-    
-    [v addSubview:_bodyScroll];
+    if (_picFrame.message.isOut) {//发送出去的图片原图在图库里
+        [[[PhotoLibraryCenter alloc]init]getImageWithLocalIdentifier:_picFrame.message.body withCompletionHandler:^(UIImage *image) {
+            UIImageView *imageView = [[UIImageView alloc]initWithFrame:[UIScreen mainScreen].bounds];
+            imageView.contentMode = UIViewContentModeScaleAspectFit;
+            imageView.image = image;
+            
+            [v addSubview:imageView];
+        }];
+    } else {
+        UIImage *image = [UIImage imageWithContentsOfFile:_picFrame.message.body];
+        UIImageView *imageView = [[UIImageView alloc]initWithFrame:[UIScreen mainScreen].bounds];
+        imageView.contentMode = UIViewContentModeScaleAspectFit;
+        imageView.image = image;
+        
+        [v addSubview:imageView];
+    }
     
     UITapGestureRecognizer *tap=[[UITapGestureRecognizer alloc]initWithTarget:self action:@selector(hideImage:)];
-    [_bodyScroll addGestureRecognizer: tap];
-
-   }
+    [_v addGestureRecognizer: tap];
+}
 
 - (UIView *)viewForZoomingInScrollView:(UIScrollView *)scrollView{
     return _aImageView;

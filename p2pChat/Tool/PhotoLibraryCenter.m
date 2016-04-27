@@ -8,6 +8,9 @@
 
 #import "PhotoLibraryCenter.h"
 #import "AppDelegate.h"
+#import "Tool.h"
+
+CGSize thumbnailSize = {200, 200};
 
 @interface PhotoLibraryCenter ()
 
@@ -41,7 +44,7 @@
     return self;
 }
 
-- (void)saveImage:(UIImage *)image withCompletionHandler:(void (^)(NSString *))completionHandler {
+- (void)saveImage:(UIImage *)image withCompletionHandler:(void (^)(NSString *localIdentifier))completionHandler {
     [[PHPhotoLibrary sharedPhotoLibrary] performChanges:^{
         PHAssetChangeRequest *createAssetRequest = [PHAssetChangeRequest creationRequestForAssetFromImage:image];
         PHAssetCollectionChangeRequest *albumChangeRequest = [PHAssetCollectionChangeRequest changeRequestForAssetCollection:_collection];

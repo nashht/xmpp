@@ -16,6 +16,8 @@
 #import <Foundation/Foundation.h>
 #import <Photos/Photos.h>
 
+extern CGSize thumbnailSize;
+
 @interface PhotoLibraryCenter : NSObject
 
 - (void)saveImage:(UIImage *)image withCompletionHandler:(void (^)(NSString *identifier))completionHandler;
