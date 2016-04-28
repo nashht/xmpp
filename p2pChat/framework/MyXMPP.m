@@ -124,6 +124,14 @@ static NSString *serverHost = @"10.108.136.59";
     }
 }
 
+- (void)initmuc{
+    
+    self.muc = [[XMPPMUC alloc] initWithDispatchQueue:dispatch_get_main_queue()];
+    [self.muc activate:self.stream];
+    [self.muc addDelegate:self delegateQueue:dispatch_get_main_queue()];
+
+}
+
 #pragma mark - xmpp delegate
 - (void)xmppStreamDidConnect:(XMPPStream *)sender {
     NSError *err = nil;
@@ -154,6 +162,9 @@ static NSString *serverHost = @"10.108.136.59";
         
         //vcard初始化
         [self initVCard];
+        
+        //muc初始化，用于接受群邀请
+        [self initmuc];
         
         _hasInit = YES;
     }

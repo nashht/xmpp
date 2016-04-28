@@ -18,6 +18,7 @@
 #import "Tool.h"
 #import "PhotoLibraryCenter.h"
 
+
 static NSString *voiceType = @"[语音]";
 static NSString *pictureType = @"[图片]";
 
@@ -112,10 +113,10 @@ static NSString *pictureType = @"[图片]";
         NSString *timeStr = [message getTime];
         NSNumber *timeNumber = [NSNumber numberWithInt:[timeStr intValue]];//聊天记录中的时间
         NSDate *date = [NSDate dateWithTimeIntervalSince1970:[timeNumber doubleValue]];
-        NSLog(@"recieve time:%@",date);
         
         NSDate *d = [Tool transferDate:date];
         NSNumber *ltime= [NSNumber numberWithDouble:[d timeIntervalSince1970]];//最后一条消息的时间
+        NSLog(@"recieve time:%@",d);
         
         NSString *messageBody = [[message elementForName:@"body"] stringValue];
         XMPPJID *fromJid = message.from;
@@ -161,13 +162,12 @@ static NSString *pictureType = @"[图片]";
                 break;
         }
         
-//        NSLog(@"%@", message);
-        
         [[UIApplication sharedApplication]presentLocalNotificationNow:localNotification];
     } else {
         NSLog(@"%@", message);
     }
 }
+
 
 #pragma mark - sendmessage delegate
 - (void)xmppStream:(XMPPStream *)sender didFailToSendMessage:(XMPPMessage *)message error:(NSError *)error {
