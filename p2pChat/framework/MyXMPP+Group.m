@@ -10,10 +10,13 @@
 #import "DataManager.h"
 #import "Tool.h"
 #import "XMPPMessage+MyExtends.h"
+#import "XMPPMUC.h"
 
-#define Voice @"[语音]"
 
 static NSString *myRoomDomain = @"conference.xmpp.test";
+static NSString *voiceType = @"[语音]";
+static NSString *pictureType = @"[图片]";
+
 
 @implementation MyXMPP (Group)
 
@@ -76,30 +79,17 @@ static NSString *myRoomDomain = @"conference.xmpp.test";
 - (void)sendAudio:(NSString *)path ToGroup:(NSString *)groupname withlength:(NSString *)length{
     NSFileManager *filemnanager=[NSFileManager defaultManager];
     NSData *p = [filemnanager contentsAtPath:path];
+    NSLog(@"MyXmpp: audio file length :%lu", (unsigned long)p.length);
     NSString *audiomsg = [p base64EncodedStringWithOptions:0];
     
     NSDate *date = [Tool transferDate:[NSDate date]];
-    double time = [date timeIntervalSince1970];
+    double time = [[NSDate date] timeIntervalSince1970];
+    double ltime = [date timeIntervalSince1970];
     
-//    NSXMLElement *body = [NSXMLElement elementWithName:@"body"];
-//    [body setStringValue:audiomsgwithlength];
-//    [body addAttributeWithName:@"subtype" stringValue:@"audio"];
-//    
-//    NSXMLElement *audiomessage = [NSXMLElement elementWithName:@"message"];
-//    [audiomessage addAttributeWithName:@"type" stringValue:@"groupchat"];
-//    
-//    NSString *to = [NSString stringWithFormat:@"%@@%@", groupname, myRoomDomain];
-//    [audiomessage addAttributeWithName:@"to" stringValue:to];
-//    
-//    [audiomessage addChild:body];
-//    [self.stream sendElement:audiomessage];
-    
-//    NSDate *date = [Tool transferDate:[NSDate date]];
-//    double time = [date timeIntervalSince1970];
     [self sendMessageWithSubtype:@"audio" time:time body:audiomsg more:length toGroup:groupname];
     
     [self.dataManager saveRecordWithGroupname:groupname username:self.myjid.user time:[NSNumber numberWithDouble:time] path:path length:length];
-    [self.dataManager addRecentUsername:groupname time:[NSNumber numberWithInt:time] body:Voice isOut:YES isP2P:NO];
+    [self.dataManager addRecentUsername:groupname time:[NSNumber numberWithInt:ltime] body:voiceType isOut:YES isP2P:NO];
 }
 
 - (void)destroyChatRoom{
@@ -154,51 +144,72 @@ static NSString *myRoomDomain = @"conference.xmpp.test";
 }
 
 - (void)xmppRoom:(XMPPRoom *)sender didReceiveMessage:(XMPPMessage *)message fromOccupant:(XMPPJID *)occupantJID{
-    if ([message.type isEqualToString:@"groupchat"]) {
-      
-        NSDate *date = [NSDate date];
-        NSNumber *timeNumber = [NSNumber numberWithDouble:[date timeIntervalSince1970]];
-        
-        NSDate *d = [Tool transferDate:date];
-        NSNumber *time= [NSNumber numberWithDouble:[d timeIntervalSince1970]];
-        
-        NSLog(@"recieve time:%@",date);
-        NSString *text = [message body];
-        NSString *subtype = [message getSubtype];//[NSNumber numberWithDouble:[[NSDate date]timeIntervalSince1970]]
-        NSLog(@"group subtype:%@",subtype);
-        char firstLetter = [subtype characterAtIndex:0];
-        switch (firstLetter) {
-            case 't':{//text
-                [[DataManager shareManager]saveMessageWithGroupname:sender.roomJID.user username:occupantJID.user time:timeNumber body:text];
-                [[DataManager shareManager]addRecentUsername:sender.roomJID.user time:time body:message.body isOut:NO isP2P:NO];
-                break;
+    NSString *user = occupantJID.resource;
+    NSString *myName = [[NSUserDefaults standardUserDefaults]stringForKey:@"name"];
+    if (![user isEqualToString:myName]) {
+        if ([message.type isEqualToString:@"groupchat"]) {
+            NSDate *date = [NSDate date];
+            NSNumber *timeNumber = [NSNumber numberWithDouble:[date timeIntervalSince1970]];//聊天记录中消息的时间
+            
+            NSDate *d = [Tool transferDate:date];
+            NSNumber *time= [NSNumber numberWithDouble:[d timeIntervalSince1970]];//最后一条消息的时间
+            
+            NSLog(@"recieve time:%@",date);
+            NSString *text = [message body];
+            NSString *subtype = [message getSubtype];
+            NSLog(@"group subtype:%@",subtype);
+            
+            NSString *messageBody = [[message elementForName:@"body"] stringValue];
+            
+            char firstLetter = [subtype characterAtIndex:0];
+            switch (firstLetter) {
+                case 't':{//text
+                    [[DataManager shareManager]saveMessageWithGroupname:occupantJID.user username:user time:timeNumber body:text];
+                    [[DataManager shareManager]addRecentUsername:sender.roomJID.user time:time body:message.body isOut:NO isP2P:NO];
+                    break;
+                }
+                case 'a':{//audio
+                    NSString *during = [message getMore];
+                    NSData *data = [[NSData alloc] initWithBase64EncodedString:messageBody options:0];
+                    NSString *path = [Tool getFileName:@"receive" extension:@"wav"];
+                    [data writeToFile:path atomically:YES];
+                    [self.dataManager saveRecordWithGroupname:occupantJID.user username:occupantJID.resource time:timeNumber path:path length:during];
+                    [self.dataManager addRecentUsername:occupantJID.user time:time body:voiceType isOut:NO isP2P:NO];
+                    break;
+                }
+                case 'p':{//photo
+                    
+                    break;
+                }
+                default:
+                    break;
             }
-            case 'a':{//audio
-                
-                break;
-            }
-            case 'p':{//photo
-                
-                break;
-            }
-            default:
-                break;
+            
+        }else{
+            NSLog(@"群组『%@』有新消息：%@",sender.roomJID.user,[message body]);
         }
-        
-    }else{
-        NSLog(@"群组『%@』有新消息：%@",sender.roomJID.user,[message body]);
-    }
-    
-//    NSDate *date = [Tool transferDate:[NSDate date]];
-//    NSNumber *timeNum = [NSNumber numberWithDouble:[date timeIntervalSince1970]];
-//    NSString *text = [message body];[NSNumber numberWithDouble:[[NSDate date]timeIntervalSince1970]]
-    
-    
+   }
+
 }
 
 - (void)xmppRoom:(XMPPRoom *)sender occupantDidLeave:(XMPPJID *)occupantJID
 {
     NSLog(@"%@离开了房间",occupantJID.user);
+}
+
+#pragma mark recieve invitation delegate
+
+-(void)xmppMUC:(XMPPMUC *)sender roomJID:(XMPPJID *)roomJID didReceiveInvitation:(XMPPMessage *)message
+{
+    NSLog(@"did recieve invite message :%@", message);
+    NSLog(@"room jid:%@",roomJID);
+    
+    self.roomStorage = [[XMPPRoomCoreDataStorage alloc]init];
+    self.chatroom = [[XMPPRoom alloc] initWithRoomStorage:self.roomStorage jid:roomJID];
+    [self.chatroom activate:self.stream];
+    [self.chatroom addDelegate:self delegateQueue:dispatch_get_main_queue()];
+    NSString *joinname = [[NSUserDefaults standardUserDefaults]stringForKey:@"name"];
+    [self.chatroom joinRoomUsingNickname:joinname history:nil];
 }
 
 

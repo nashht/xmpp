@@ -226,6 +226,8 @@
     }
 }
 
+
+
 - (NSFetchedResultsController *)getMessageByGroupname:(NSString *)groupname {
     NSPredicate *predicatae = [NSPredicate predicateWithFormat:@"groupname = %@", groupname];
     NSError *err = nil;
@@ -242,6 +244,15 @@
     if (error != nil) {
         NSLog(@"DataManager save group message failed: %@", error);
     }
+}
+
+- (void)saveRecordWithGroupname:(NSString *)groupname username:(NSString *)username time:(NSNumber *)time path:(NSString *)path length:(NSString *)length{
+    NSError *err1 = nil;
+    [self saveGroupMessageWithGroupname:groupname username:username type:@1 time:time body:path more:length WithError:&err1];
+    if (err1 != nil) {
+        NSLog(@"DataManager save group record failed: %@", err1);
+    }
+
 }
 
 #pragma mark - kvo

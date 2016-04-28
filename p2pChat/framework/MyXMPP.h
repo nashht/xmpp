@@ -9,6 +9,7 @@
 #import <Foundation/Foundation.h>
 #import <CoreData/CoreData.h>
 #import "XMPPJID.h"
+#import "XMPPMUC.h"
 @class XMPPStream;
 @class XMPPvCardTemp;
 @class XMPPGroupCoreDataStorageObject;
@@ -51,6 +52,7 @@ static NSString *myDomain = @"xmpp.test";
 @property (strong, nonatomic, readonly) XMPPJID *myjid;
 @property (strong, nonatomic) XMPPRoom *chatroom;
 @property (strong, nonatomic) XMPPRoomCoreDataStorage *roomStorage;
+@property (strong, nonatomic) XMPPMUC *muc;
 
 @property (strong, nonatomic, readonly) DataManager *dataManager;
 @property (strong, nonatomic, readonly) PhotoLibraryCenter *photoLibraryCenter;

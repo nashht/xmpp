@@ -52,7 +52,7 @@
 #warning during时长不对
     NSTimeInterval during = _recorder.currentTime;
     [_recorder stop];
-    [self startPlay:_path];
+//    [self startPlay:_path];
     return (float)during;
 }
 
