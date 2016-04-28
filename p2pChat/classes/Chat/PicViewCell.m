@@ -117,17 +117,26 @@
 
 - (void)picBtnClick{
     UIView *v = [[UIView alloc]initWithFrame:[UIScreen mainScreen].bounds];
-    v.backgroundColor = [UIColor whiteColor];
+    v.backgroundColor = [UIColor blackColor];
     [[UIApplication sharedApplication].keyWindow addSubview:v];
     _v = v;
-    
-    [[[PhotoLibraryCenter alloc]init]getImageWithLocalIdentifier:_picFrame.message.body withCompletionHandler:^(UIImage *image) {
+    if (_picFrame.message.isOut) {//发送出去的图片原图在图库里
+        [[[PhotoLibraryCenter alloc]init]getImageWithLocalIdentifier:_picFrame.message.body withCompletionHandler:^(UIImage *image) {
+            UIImageView *imageView = [[UIImageView alloc]initWithFrame:[UIScreen mainScreen].bounds];
+            imageView.contentMode = UIViewContentModeScaleAspectFit;
+            imageView.image = image;
+            
+            [v addSubview:imageView];
+        }];
+    } else {
+        UIImage *image = [UIImage imageWithContentsOfFile:_picFrame.message.body];
         UIImageView *imageView = [[UIImageView alloc]initWithFrame:[UIScreen mainScreen].bounds];
         imageView.contentMode = UIViewContentModeScaleAspectFit;
         imageView.image = image;
         
         [v addSubview:imageView];
-    }];
+    }
+    
     UITapGestureRecognizer *tap=[[UITapGestureRecognizer alloc]initWithTarget:self action:@selector(hideImage:)];
     [_v addGestureRecognizer: tap];
 }

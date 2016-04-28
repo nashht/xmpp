@@ -37,7 +37,7 @@ static NSString *pictureReuseIdentifier = @"pictureMessageCell";
     NSString *_photoPath;
     BOOL _showMoreView;
     CGSize _screenSize;
-    CGFloat _keyboardHeight;//底下弹出的高度，不只是键盘
+    CGFloat _scrollOffset;//用于判断滚动的方向
 }
 
 @property (weak, nonatomic) IBOutlet UITableView *historyTableView;
@@ -46,8 +46,7 @@ static NSString *pictureReuseIdentifier = @"pictureMessageCell";
 
 @property (strong, nonatomic) NSFetchedResultsController *historyController;
 @property (strong, nonatomic) MyFetchedResultsControllerDelegate *historyControllerDelegate;
-
-@property (assign, nonatomic) CGFloat tableViewHeight;
+@property (weak, nonatomic) IBOutlet NSLayoutConstraint *tableBottomHeight;
 
 @end
 
@@ -63,6 +62,7 @@ static NSString *pictureReuseIdentifier = @"pictureMessageCell";
     _historyTableView.dataSource = self;
     _historyTableView.delegate = self;
     _historyTableView.separatorStyle = UITableViewCellSeparatorStyleNone;
+    
     if ([self isP2PChat]) {
         _historyController = [[DataManager shareManager]getMessageByUsername:_chatObjectString];
     } else {
@@ -83,13 +83,13 @@ static NSString *pictureReuseIdentifier = @"pictureMessageCell";
     [_historyTableView registerClass:[PicViewCell class] forCellReuseIdentifier:pictureReuseIdentifier];
     
     _screenSize = [UIScreen mainScreen].bounds.size;
-    _keyboardHeight = 0;
     // init bottom view
     _bottomView = [[NSBundle mainBundle]loadNibNamed:@"BottomView" owner:self options:nil].lastObject;
     _bottomView.frame = CGRectMake(0, _screenSize.height - BOTTOMHEIGHT, _screenSize.width, BOTTOMHEIGHT);
     _bottomView.chatObjectString = _chatObjectString;
     _bottomView.p2pChat = [self isP2PChat];
     _bottomView.delegate = self;
+    [self.view addSubview:_bottomView];
     
     // init more view
     _showMoreView = NO;
@@ -112,9 +112,7 @@ static NSString *pictureReuseIdentifier = @"pictureMessageCell";
 
 - (void)commentTableViewTouchInSide {
     [_bottomView resignTextfield];
-    if (_showMoreView) {
-        [self hideMoreView];
-    }
+    [self hideMoreView];
 }
 
 - (void)viewWillAppear:(BOOL)animated {
@@ -123,9 +121,6 @@ static NSString *pictureReuseIdentifier = @"pictureMessageCell";
     [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(keyboardWillShow:) name:UIKeyboardWillShowNotification object:nil];
     [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(keyboardWillHidden:) name:UIKeyboardWillHideNotification object:nil];
     [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(applicationEnteredBackground) name:UIApplicationDidEnterBackgroundNotification object:nil];
-    if (_historyTableView.contentSize.height < _screenSize.height) {
-        [self addObserver:self forKeyPath:@"tableViewHeight" options:NSKeyValueObservingOptionNew context:NULL];
-    }
 }
 
 - (void)viewWillDisappear:(BOOL)animated {
@@ -133,12 +128,6 @@ static NSString *pictureReuseIdentifier = @"pictureMessageCell";
     [_bottomView resignFirstResponder];
     [_bottomView removeFromSuperview];
     [[DataManager shareManager]updateUsername:_chatObjectString];
-    @try {
-        [self removeObserver:self forKeyPath:@"tableViewHeight"];
-    }
-    @catch (NSException *exception) {
-        
-    };
 }
 - (IBAction)showChatingInfo:(id)sender {
     if (self.isP2PChat) {
@@ -180,7 +169,6 @@ static NSString *pictureReuseIdentifier = @"pictureMessageCell";
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
-    self.tableViewHeight = _historyTableView.contentSize.height + 150;
     NSManagedObject *messageObj = [_historyController objectAtIndexPath:indexPath];
     MessageBean *message = nil;
     if (self.isP2PChat) {
@@ -278,36 +266,27 @@ static NSString *pictureReuseIdentifier = @"pictureMessageCell";
  */
 - (void)scrollViewWillBeginDragging:(UIScrollView *)scrollView
 {
-    [self.view endEditing:YES];
+//    [_bottomView resignTextfield];
 }
 
 #pragma mark -keyboard notification
 - (void)keyboardWillShow:(NSNotification *)notification {
     CGFloat height = [notification.userInfo[UIKeyboardFrameEndUserInfoKey] CGRectValue].size.height;
-    _keyboardHeight = height;
     _showMoreView = NO;
     _moreView.frame = CGRectMake(0, _screenSize.height, _screenSize.width, MOREHEIGHT);
-    if (_historyTableView.contentSize.height + 100 > _screenSize.height) {//内容已经很多，view全部上移即可
-        [UIView animateWithDuration:0.5 animations:^{
-            self.view.frame = CGRectMake(0, -(height + BOTTOMHEIGHT), _screenSize.width, _screenSize.height);
-            _bottomView.frame = CGRectMake(0, _screenSize.height - height - BOTTOMHEIGHT, _screenSize.width, BOTTOMHEIGHT);
-        }];
-    } else if (_historyTableView.contentSize.height + height + BOTTOMHEIGHT + 100 > _screenSize.height) {//内容不是很多，view只需移动一点
-        [UIView animateWithDuration:0.5 animations:^{
-            self.view.frame = CGRectMake(0, _screenSize.height - height - BOTTOMHEIGHT - _historyTableView.contentSize.height - 100, _screenSize.width, _screenSize.height);
-            _bottomView.frame = CGRectMake(0, _screenSize.height - height - BOTTOMHEIGHT, _screenSize.width, BOTTOMHEIGHT);
-        }];
-    } else {//内容很少，view不用上移
-        [UIView animateWithDuration:0.5 animations:^{
-            _bottomView.frame = CGRectMake(0, _screenSize.height - height - BOTTOMHEIGHT, _screenSize.width, BOTTOMHEIGHT);
-        }];
-    }
+    _tableBottomHeight.constant = height;
+    [UIView animateWithDuration:0.5 animations:^{
+        _bottomView.frame = CGRectMake(0, _screenSize.height - height - BOTTOMHEIGHT, _screenSize.width, BOTTOMHEIGHT);
+        [self.view layoutIfNeeded];
+    }];
+    
+    [self tableViewScrollToBottom];
 }
 
 - (void)keyboardWillHidden:(NSNotification *)notification {
-    _keyboardHeight = 0;
+    _tableBottomHeight.constant = BOTTOMHEIGHT;
     [UIView animateWithDuration:0.5 animations:^{
-        self.view.frame = CGRectMake(0, 0, _screenSize.width, _screenSize.height);
+        [self.view layoutIfNeeded];
         _bottomView.frame = CGRectMake(0, _screenSize.height - BOTTOMHEIGHT, _screenSize.width, BOTTOMHEIGHT);
     }];
 }
@@ -320,64 +299,32 @@ static NSString *pictureReuseIdentifier = @"pictureMessageCell";
 #pragma mark - bottom delegate
 - (void)showMoreView {
     if (_showMoreView) {
-        _keyboardHeight = 0;
+        _tableBottomHeight.constant = BOTTOMHEIGHT;
+        [self tableViewScrollToBottom];
         [UIView animateWithDuration:0.5 animations:^{
-            self.view.frame = CGRectMake(0, 0, _screenSize.width, _screenSize.height);
+            [self.view layoutIfNeeded];
             _bottomView.frame = CGRectMake(0, _screenSize.height - BOTTOMHEIGHT, _screenSize.width, BOTTOMHEIGHT);
             _moreView.frame = CGRectMake(0, _screenSize.height, _screenSize.width, MOREHEIGHT);
         }];
     } else {
-        _keyboardHeight = MOREHEIGHT;
-        if (_historyTableView.contentSize.height + 100 > _screenSize.height) {
-            [UIView animateWithDuration:0.5 animations:^{
-                self.view.frame = CGRectMake(0, -MOREHEIGHT, _screenSize.width, _screenSize.height);
-                _bottomView.frame = CGRectMake(0, _screenSize.height - MOREHEIGHT - BOTTOMHEIGHT, _screenSize.width, BOTTOMHEIGHT);
-            }];
-        } else if (_historyTableView.contentSize.height + MOREHEIGHT + BOTTOMHEIGHT + 100 > _screenSize.height) {
-            [UIView animateWithDuration:0.5 animations:^{
-                self.view.frame = CGRectMake(0, _screenSize.height - MOREHEIGHT - BOTTOMHEIGHT - _historyTableView.contentSize.height - 100, _screenSize.width, _screenSize.height);
-                _bottomView.frame = CGRectMake(0, _screenSize.height - MOREHEIGHT, _screenSize.width, BOTTOMHEIGHT);
-            }];
-        } else {
-            [UIView animateWithDuration:0.5 animations:^{
-                _bottomView.frame = CGRectMake(0, _screenSize.height - MOREHEIGHT - BOTTOMHEIGHT, _screenSize.width, BOTTOMHEIGHT);
-                _moreView.frame = CGRectMake(0, _screenSize.height - MOREHEIGHT, _screenSize.width, MOREHEIGHT);
-            }];
-        }
+        _tableBottomHeight.constant = BOTTOMHEIGHT + MOREHEIGHT;
+        [UIView animateWithDuration:0.5 animations:^{
+            [self.view layoutIfNeeded];
+            _bottomView.frame = CGRectMake(0, _screenSize.height - BOTTOMHEIGHT - MOREHEIGHT, _screenSize.width, BOTTOMHEIGHT);
+            _moreView.frame = CGRectMake(0, _screenSize.height - MOREHEIGHT, _screenSize.width, MOREHEIGHT);
+        }];
     }
     _showMoreView = !_showMoreView;
 }
 
 - (void)hideMoreView {
     if (_showMoreView) {
+        _tableBottomHeight.constant = BOTTOMHEIGHT;
         [UIView animateWithDuration:0.5 animations:^{
-            self.view.frame = CGRectMake(0, 0, _screenSize.width, _screenSize.height);
+            [self.view layoutIfNeeded];
             _bottomView.frame = CGRectMake(0, _screenSize.height - BOTTOMHEIGHT, _screenSize.width, BOTTOMHEIGHT);
             _moreView.frame = CGRectMake(0, _screenSize.height, _screenSize.width, MOREHEIGHT);
         }];
-    }
-}
-
-#pragma mark - kvo
--(void)observeValueForKeyPath:(NSString *)keyPath ofObject:(id)object change:(NSDictionary<NSString *,id> *)change context:(void *)context {
-    if ([keyPath isEqualToString:@"tableViewHeight"]) {
-        NSNumber *new = change[@"new"];
-        if (new.doubleValue > _screenSize.height - _keyboardHeight - 100 && new.doubleValue < _screenSize.height - 100) {
-            [UIView animateWithDuration:0.2 animations:^{
-                self.view.frame = CGRectMake(0, -1 * (_keyboardHeight + new.doubleValue - _screenSize.height + 100), _screenSize.width, _screenSize.height);
-            }];
-        }
-        if (new.doubleValue + 100 >= _screenSize.height) {
-            [UIView animateWithDuration:0.2 animations:^{
-                self.view.frame = CGRectMake(0, -_keyboardHeight, _screenSize.width, _screenSize.height);
-            }];
-            @try {
-                [self removeObserver:self forKeyPath:@"tableViewHeight"];
-            }
-            @catch (NSException *exception) {
-                
-            };
-        }
     }
 }
 

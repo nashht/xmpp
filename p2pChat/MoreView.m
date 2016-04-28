@@ -128,7 +128,7 @@
             _imageData = imageData;
         }];
     } else {//图片来自拍照
-        [_photoCenter saveImage:_image withCompletionHandler:^(NSString *identifier, NSString *thumbnailPath) {
+        [_photoCenter saveImage:_image withCompletionHandler:^(NSString *identifier) {
             _localIdentifier = identifier;
             [self sendPic];
         }];
