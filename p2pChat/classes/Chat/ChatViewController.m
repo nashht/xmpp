@@ -29,8 +29,9 @@
 #import "FunctionView.h"
 
 #define MOREHEIGHT 100
+#define ScreenSize  [UIScreen mainScreen].bounds.size
 #define BOTTOMHEIGHT 40
-#define FACEVIEWHEIGHT 250
+#define FACEVIEWHEIGHT (ScreenSize.height * 0.4)
 
 static NSString *textReuseIdentifier = @"textMessageCell";
 static NSString *audioReuseIdentifier = @"audioMessageCell";
@@ -113,6 +114,7 @@ static NSString *pictureReuseIdentifier = @"pictureMessageCell";
     tableViewGesture.numberOfTapsRequired = 1;
     tableViewGesture.cancelsTouchesInView = NO;
     [_historyTableView addGestureRecognizer:tableViewGesture];
+    [self tableViewScrollToBottom];
     
     // init face view
     self.functionView = [[FunctionView alloc] initWithFrame:CGRectMake(0,_screenSize.height, [UIScreen mainScreen].bounds.size.width, FACEVIEWHEIGHT)];
@@ -125,8 +127,6 @@ static NSString *pictureReuseIdentifier = @"pictureMessageCell";
          NSString *str = [NSString stringWithFormat:@"%@", imageName];
          NSLog(@"click---str%@",str);
      }];
-    
-    [self tableViewScrollToBottom];
 }
 
 - (void)commentTableViewTouchInSide {
@@ -295,6 +295,7 @@ static NSString *pictureReuseIdentifier = @"pictureMessageCell";
     _showMoreView = NO;
     _showFaceView = NO;
     _moreView.frame = CGRectMake(0, _screenSize.height, _screenSize.width, MOREHEIGHT);
+    _functionView.frame = CGRectMake(0, _screenSize.height, _screenSize.width, FACEVIEWHEIGHT);
     _tableBottomHeight.constant = height + BOTTOMHEIGHT - _tabBarHeight;
     [UIView animateWithDuration:0.5 animations:^{
         _bottomView.frame = CGRectMake(0, _screenSize.height - height - BOTTOMHEIGHT, _screenSize.width, BOTTOMHEIGHT);
@@ -324,12 +325,12 @@ static NSString *pictureReuseIdentifier = @"pictureMessageCell";
     } else {
         _tableBottomHeight.constant = BOTTOMHEIGHT + MOREHEIGHT -_tabBarHeight;
         [UIView animateWithDuration:0.2 animations:^{
+                    [self hideFaceView];
             [self.view layoutIfNeeded];
             [self tableViewScrollToBottom];
             _bottomView.frame = CGRectMake(0, _screenSize.height - BOTTOMHEIGHT - MOREHEIGHT, _screenSize.width, BOTTOMHEIGHT);
             _moreView.frame = CGRectMake(0, _screenSize.height - MOREHEIGHT, _screenSize.width, MOREHEIGHT);
         }];
-        
     }
     _showMoreView = !_showMoreView;
 }
@@ -350,7 +351,9 @@ static NSString *pictureReuseIdentifier = @"pictureMessageCell";
 - (void)showFaceView {
     if (_showFaceView) {
         [self hideFaceView];
+
     } else {
+        [self hideMoreView];
         _tableBottomHeight.constant = BOTTOMHEIGHT + FACEVIEWHEIGHT -_tabBarHeight;
         [UIView animateWithDuration:0.5 animations:^{
             [self.view layoutIfNeeded];
@@ -372,6 +375,7 @@ static NSString *pictureReuseIdentifier = @"pictureMessageCell";
             _functionView.frame = CGRectMake(0, _screenSize.height, _screenSize.width, FACEVIEWHEIGHT);
         }];
     }
+    _showFaceView = NO;
 }
 
 @end

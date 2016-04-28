@@ -18,13 +18,17 @@
 
 //      初始化图片
 - (instancetype)initWithFrame:(CGRect)frame{
-    frame.size.height = 36;
-    frame.size.width = 36;
-    if (self = [super initWithFrame:frame]) {
-        self.imageView = [[UIImageView alloc] initWithFrame:CGRectMake(0, 0, frame.size.width, frame.size.height)];
-        [self addSubview:self.imageView];
-     }
+    CGFloat imageWidth = frame.size.width;
+    frame.size.height = 30;
+    frame.size.width = 30;
+    CGFloat marginX = (imageWidth - 30) * 0.5;
     
+    if (self = [super initWithFrame:frame]) {
+        self.imageView = [[UIImageView alloc] init];
+        self.imageView.frame = CGRectMake(marginX, 0, frame.size.width, frame.size.height);
+        [self addSubview:self.imageView];
+
+     }
     return self;
 }
 
@@ -35,8 +39,8 @@
 - (void)setImage:(UIImage *)image imageNamed:(NSString *)imageName{
 //    显示图片
     [self.imageView setImage:image];
-    
     self.imageName = imageName;
+
 }
 
 //      点击回调

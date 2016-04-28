@@ -6,6 +6,7 @@
 //  Copyright © 2016年 xiaokun. All rights reserved.
 //
 #define ScreenSize ([UIScreen mainScreen].bounds.size)
+#define colsNum 7
 #define ImageNum 143
 
 #import "FunctionView.h"
@@ -49,19 +50,18 @@
     CGFloat scrollHeight = (self.frame).size.height - 50;
     NSLog(@"frame===%@",[NSValue valueWithCGRect:self.frame]);
     
-
+    
     
     //根据图片量来计算scrollView的Contain的宽度
-    int cols = ScreenSize.width / 56;           // 列数
-    int rows = scrollHeight / 56;                 //行数
-    NSLog(@"列数cols = %d----行数rows = %d",cols,rows);
-    
+    int cols = 7;           // 列数
+    int rows = 3;                 //行数
 
+    CGFloat imageWidth = ScreenSize.width / cols;
+    
     int groupNum = (ImageNum / (cols * rows - 1) + 1);
     CGFloat width = ScreenSize.width * groupNum;
-    CGFloat marginX = (ScreenSize.width - 56 * cols) / 2;
-    CGFloat marginY = (frame.size.height - 56 * rows) / 2;
-    NSLog(@"width---%f----%d屏",width,ImageNum / (cols * rows - 1) + 1);
+    CGFloat marginX = (ScreenSize.width - imageWidth * cols) / 2;
+    CGFloat marginY = (frame.size.height - imageWidth * rows) / 2;
     
     self.faceScrollView.contentSize = CGSizeMake(width, scrollHeight);
     self.faceScrollView.pagingEnabled = YES;
@@ -71,8 +71,8 @@
     self.pageControl = [[UIPageControl alloc] initWithFrame:CGRectMake(0, frame.size.height, ScreenSize.width, 50)];
     [self addSubview:self.pageControl];
     self.pageControl.numberOfPages = groupNum;
-    self.pageControl.currentPageIndicatorTintColor = [UIColor blackColor];
-    self.pageControl.pageIndicatorTintColor = [UIColor orangeColor];
+    self.pageControl.currentPageIndicatorTintColor = [UIColor grayColor];
+    self.pageControl.pageIndicatorTintColor = [UIColor colorWithWhite:0.814 alpha:1.000];
   
     
     //图片坐标
@@ -83,11 +83,6 @@
     
     //往scroll上贴图片
     for (int i = 0; i < ImageNum; i ++) {
-
-//        if (!((i + 1) % (rows * cols ))) {
-//            imageName = @"_143";
-//            continue;
-//        }
         
         //获取图片信息
         if (i < 10) {
@@ -100,20 +95,17 @@
     
         UIImage *image = [UIImage imageNamed:imageName];
         
-        int imageRow = i / cols;
-        int imageCol = i % cols;
+        int page = i / (cols * rows - 1);
+        int count = i % (cols * rows - 1);
+        int imageRow = count / cols;
+        int imageCol = count % cols;
+
         
         //计算图片位置
-
-        x = 56 * imageCol + marginX;
-        if (imageRow >= rows) {
+        x = ScreenSize.width * page + imageWidth * imageCol + marginX;
+        y = imageWidth * imageRow + marginY;
         
-            x = 56 * imageCol + ScreenSize.width * (imageRow / rows - 1) + marginX;
-                imageRow %= rows;
-        }
-        y = 56 * imageRow + marginY;
-        
-        FaceView *face = [[FaceView alloc] initWithFrame:CGRectMake(x, y, 56, 56)];
+        FaceView *face = [[FaceView alloc] initWithFrame:CGRectMake(x, y, imageWidth, imageWidth)];
         [face setImage:image imageNamed:imageName];
         
         //face的回调，当face点击时获取face的图片
@@ -125,11 +117,35 @@
          }];
         
         [self.faceScrollView addSubview:face];
+        
+        if (1 == (i + 1) % (rows * cols - 1)) {
+            imageName = @"_del";
+            UIImage *image = [UIImage imageNamed:imageName];
+            //计算图片位置
+            
+            x = ScreenSize.width * page + (cols - 1) * imageWidth + marginX;
+            y = imageWidth * (rows - 1) + marginY;
+            
+            FaceView *face = [[FaceView alloc] initWithFrame:CGRectMake(x, y, imageWidth, imageWidth)];
+            [face setImage:image imageNamed:imageName];
+            
+            //face的回调，当face点击时获取face的图片
+            __weak __block FunctionView *copy_self = self;
+            [face setFaceBlock:^(UIImage *image, NSString *imageName)
+             {
+                 copy_self.block(image, imageName);
+                 NSLog(@"name..click%@",imageName);
+             }];
+            
+            [self.faceScrollView addSubview:face];
+            
+        }
     }
     
     [self.faceScrollView setNeedsDisplay];
     
 }
+
 
 #pragma mark - UIScrollViewDelegate
 

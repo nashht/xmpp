@@ -29,6 +29,20 @@
     _messageTF.delegate = self;
     
     [self initRecordBtn];
+    
+    NSMutableAttributedString *str=[[NSMutableAttributedString alloc] initWithString:@"fdsahfjdsajk" attributes:nil];
+    
+    NSTextAttachment *attachment=[[NSTextAttachment alloc] initWithData:nil ofType:nil];
+    UIImage *img=[UIImage imageNamed:@"_001"];
+    attachment.image=img;
+    attachment.bounds=CGRectMake(0, 0, 30, 30);
+    NSAttributedString *text=[NSAttributedString attributedStringWithAttachment:attachment];
+    
+    
+    [str insertAttributedString:text atIndex:2];
+    self.messageTF.attributedText=str;
+
+   
 }
 
 - (void)initRecordBtn {
