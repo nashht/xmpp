@@ -49,6 +49,11 @@
     [_messageTF resignFirstResponder];
 }
 
+- (IBAction)showFaceView:(id)sender {
+    [_messageTF resignFirstResponder];
+    [_delegate showFaceView];
+}
+
 - (IBAction)showRecord:(id)sender {
     [_messageTF resignFirstResponder];
     _recordBtn.hidden = !_recordBtn.hidden;
@@ -60,6 +65,8 @@
     [_messageTF resignFirstResponder];
     [_delegate showMoreView];
 }
+
+
 
 - (void)startRecord {
     NSLog(@"start record");

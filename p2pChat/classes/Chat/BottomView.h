@@ -13,6 +13,7 @@
 @required
 - (void)showMoreView;
 - (void)hideMoreView;
+- (void)showFaceView;
 
 @end
 

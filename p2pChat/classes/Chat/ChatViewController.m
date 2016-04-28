@@ -25,9 +25,12 @@
 #import "MoreView.h"
 #import "MyXMPP.h"
 #import "FriendChatingInfoViewController.h"
+#import "FaceView.h"
+#import "FunctionView.h"
 
 #define MOREHEIGHT 100
 #define BOTTOMHEIGHT 40
+#define FACEVIEWHEIGHT 250
 
 static NSString *textReuseIdentifier = @"textMessageCell";
 static NSString *audioReuseIdentifier = @"audioMessageCell";
@@ -36,13 +39,16 @@ static NSString *pictureReuseIdentifier = @"pictureMessageCell";
 @interface ChatViewController () <UITableViewDataSource, UITableViewDelegate, UITextFieldDelegate, BottomViewDelegate> {
     NSString *_photoPath;
     BOOL _showMoreView;
+    BOOL _showFaceView;
     CGSize _screenSize;
     CGFloat _scrollOffset;//用于判断滚动的方向
+    CGFloat _tabBarHeight;
 }
 
 @property (weak, nonatomic) IBOutlet UITableView *historyTableView;
 @property (strong, nonatomic) BottomView *bottomView;
 @property (strong, nonatomic) MoreView *moreView;
+@property (nonatomic, strong) FunctionView *functionView;
 
 @property (strong, nonatomic) NSFetchedResultsController *historyController;
 @property (strong, nonatomic) MyFetchedResultsControllerDelegate *historyControllerDelegate;
@@ -58,6 +64,7 @@ static NSString *pictureReuseIdentifier = @"pictureMessageCell";
     UIBarButtonItem *back = [[UIBarButtonItem alloc]initWithTitle:@"返回" style:UIBarButtonItemStylePlain target:nil action:nil];
     self.navigationItem.backBarButtonItem = back;
     
+    _tabBarHeight = self.tabBarController.tabBar.frame.size.height;
     // init table view
     _historyTableView.dataSource = self;
     _historyTableView.delegate = self;
@@ -89,6 +96,7 @@ static NSString *pictureReuseIdentifier = @"pictureMessageCell";
     _bottomView.chatObjectString = _chatObjectString;
     _bottomView.p2pChat = [self isP2PChat];
     _bottomView.delegate = self;
+    _tableBottomHeight.constant = BOTTOMHEIGHT - _tabBarHeight;
     [self.view addSubview:_bottomView];
     
     // init more view
@@ -99,20 +107,32 @@ static NSString *pictureReuseIdentifier = @"pictureMessageCell";
 //    _moreView.p2pChat = [self isP2PChat];
     _moreView.p2pChat = YES;
     [self.view addSubview:_moreView];
-    
-    [self tableViewScrollToBottom];
-    
-    
+
     // 添加手势，使得触控tableView时候收回键盘
     UITapGestureRecognizer *tableViewGesture = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(commentTableViewTouchInSide)];
     tableViewGesture.numberOfTapsRequired = 1;
     tableViewGesture.cancelsTouchesInView = NO;
     [_historyTableView addGestureRecognizer:tableViewGesture];
+    
+    // init face view
+    self.functionView = [[FunctionView alloc] initWithFrame:CGRectMake(0,_screenSize.height, [UIScreen mainScreen].bounds.size.width, FACEVIEWHEIGHT)];
+    self.functionView.backgroundColor = [UIColor whiteColor];
+    [self.view addSubview:_functionView];
+    _showFaceView = NO;
+    //获取图片并显示
+    [self.functionView setFunctionBlock:^(UIImage *image, NSString *imageName)
+     {
+         NSString *str = [NSString stringWithFormat:@"%@", imageName];
+         NSLog(@"click---str%@",str);
+     }];
+    
+    [self tableViewScrollToBottom];
 }
 
 - (void)commentTableViewTouchInSide {
     [_bottomView resignTextfield];
     [self hideMoreView];
+    [self hideFaceView];
 }
 
 - (void)viewWillAppear:(BOOL)animated {
@@ -148,7 +168,7 @@ static NSString *pictureReuseIdentifier = @"pictureMessageCell";
             NSUInteger ii[2] = {0, rowCount - 1};
             NSIndexPath* indexPath = [NSIndexPath indexPathWithIndexes:ii length:2];
             [_historyTableView scrollToRowAtIndexPath:indexPath
-                                     atScrollPosition:UITableViewScrollPositionBottom animated:YES];
+                                     atScrollPosition:UITableViewScrollPositionBottom animated:NO];
         }
     }
 }
@@ -273,8 +293,9 @@ static NSString *pictureReuseIdentifier = @"pictureMessageCell";
 - (void)keyboardWillShow:(NSNotification *)notification {
     CGFloat height = [notification.userInfo[UIKeyboardFrameEndUserInfoKey] CGRectValue].size.height;
     _showMoreView = NO;
+    _showFaceView = NO;
     _moreView.frame = CGRectMake(0, _screenSize.height, _screenSize.width, MOREHEIGHT);
-    _tableBottomHeight.constant = height;
+    _tableBottomHeight.constant = height + BOTTOMHEIGHT - _tabBarHeight;
     [UIView animateWithDuration:0.5 animations:^{
         _bottomView.frame = CGRectMake(0, _screenSize.height - height - BOTTOMHEIGHT, _screenSize.width, BOTTOMHEIGHT);
         [self.view layoutIfNeeded];
@@ -284,7 +305,7 @@ static NSString *pictureReuseIdentifier = @"pictureMessageCell";
 }
 
 - (void)keyboardWillHidden:(NSNotification *)notification {
-    _tableBottomHeight.constant = BOTTOMHEIGHT;
+    _tableBottomHeight.constant = BOTTOMHEIGHT - _tabBarHeight;
     [UIView animateWithDuration:0.5 animations:^{
         [self.view layoutIfNeeded];
         _bottomView.frame = CGRectMake(0, _screenSize.height - BOTTOMHEIGHT, _screenSize.width, BOTTOMHEIGHT);
@@ -299,31 +320,56 @@ static NSString *pictureReuseIdentifier = @"pictureMessageCell";
 #pragma mark - bottom delegate
 - (void)showMoreView {
     if (_showMoreView) {
-        _tableBottomHeight.constant = BOTTOMHEIGHT;
-        [self tableViewScrollToBottom];
-        [UIView animateWithDuration:0.5 animations:^{
-            [self.view layoutIfNeeded];
-            _bottomView.frame = CGRectMake(0, _screenSize.height - BOTTOMHEIGHT, _screenSize.width, BOTTOMHEIGHT);
-            _moreView.frame = CGRectMake(0, _screenSize.height, _screenSize.width, MOREHEIGHT);
-        }];
+        [self hideMoreView];
     } else {
-        _tableBottomHeight.constant = BOTTOMHEIGHT + MOREHEIGHT;
-        [UIView animateWithDuration:0.5 animations:^{
+        _tableBottomHeight.constant = BOTTOMHEIGHT + MOREHEIGHT -_tabBarHeight;
+        [UIView animateWithDuration:0.2 animations:^{
             [self.view layoutIfNeeded];
+            [self tableViewScrollToBottom];
             _bottomView.frame = CGRectMake(0, _screenSize.height - BOTTOMHEIGHT - MOREHEIGHT, _screenSize.width, BOTTOMHEIGHT);
             _moreView.frame = CGRectMake(0, _screenSize.height - MOREHEIGHT, _screenSize.width, MOREHEIGHT);
         }];
+        
     }
     _showMoreView = !_showMoreView;
 }
 
 - (void)hideMoreView {
     if (_showMoreView) {
-        _tableBottomHeight.constant = BOTTOMHEIGHT;
-        [UIView animateWithDuration:0.5 animations:^{
+        _tableBottomHeight.constant = BOTTOMHEIGHT - _tabBarHeight;
+        [UIView animateWithDuration:0.2 animations:^{
             [self.view layoutIfNeeded];
+            [self tableViewScrollToBottom];
             _bottomView.frame = CGRectMake(0, _screenSize.height - BOTTOMHEIGHT, _screenSize.width, BOTTOMHEIGHT);
             _moreView.frame = CGRectMake(0, _screenSize.height, _screenSize.width, MOREHEIGHT);
+        }];
+        _showMoreView = NO;
+    }
+}
+
+- (void)showFaceView {
+    if (_showFaceView) {
+        [self hideFaceView];
+    } else {
+        _tableBottomHeight.constant = BOTTOMHEIGHT + FACEVIEWHEIGHT -_tabBarHeight;
+        [UIView animateWithDuration:0.5 animations:^{
+            [self.view layoutIfNeeded];
+            [self tableViewScrollToBottom];
+            _bottomView.frame = CGRectMake(0, _screenSize.height - BOTTOMHEIGHT - FACEVIEWHEIGHT, _screenSize.width, BOTTOMHEIGHT);
+            _functionView.frame = CGRectMake(0, _screenSize.height - FACEVIEWHEIGHT, _screenSize.width, FACEVIEWHEIGHT);
+        }];
+    }
+    _showFaceView = !_showFaceView;
+}
+
+- (void)hideFaceView {
+    if (_showFaceView) {
+        _tableBottomHeight.constant = BOTTOMHEIGHT - _tabBarHeight;
+        [UIView animateWithDuration:0.5 animations:^{
+            [self.view layoutIfNeeded];
+            [self tableViewScrollToBottom];
+            _bottomView.frame = CGRectMake(0, _screenSize.height - BOTTOMHEIGHT, _screenSize.width, BOTTOMHEIGHT);
+            _functionView.frame = CGRectMake(0, _screenSize.height, _screenSize.width, FACEVIEWHEIGHT);
         }];
     }
 }
