@@ -15,6 +15,7 @@
 #define BUTTONSIZE 35
 
 @interface BottomView()<UITextFieldDelegate>
+@property (weak, nonatomic) IBOutlet UITextView *messageTextView;
 
 @property (weak, nonatomic) IBOutlet UITextField *messageTF;
 @property (strong, nonatomic) UIButton *recordBtn;
@@ -30,9 +31,9 @@
     
     [self initRecordBtn];
     
-    NSMutableAttributedString *str=[[NSMutableAttributedString alloc] initWithString:@"fdsahfjdsajk" attributes:nil];
+    NSMutableAttributedString *str=[[NSMutableAttributedString alloc] initWithString:@"9999999" attributes:nil];
     
-    NSTextAttachment *attachment=[[NSTextAttachment alloc] initWithData:nil ofType:nil];
+    NSTextAttachment *attachment=[[NSTextAttachment alloc] init];
     UIImage *img=[UIImage imageNamed:@"_001"];
     attachment.image=img;
     attachment.bounds=CGRectMake(0, 0, 30, 30);
@@ -40,7 +41,7 @@
     
     
     [str insertAttributedString:text atIndex:2];
-    self.messageTF.attributedText=str;
+    self.messageTextView.attributedText=str;
 
    
 }

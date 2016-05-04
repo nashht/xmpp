@@ -171,6 +171,13 @@ static NSString *pictureReuseIdentifier = @"pictureMessageCell";
                                      atScrollPosition:UITableViewScrollPositionBottom animated:NO];
         }
     }
+    
+
+    if (_historyTableView.contentSize.height > _historyTableView.frame.size.height)
+    {
+        CGPoint offset = CGPointMake(0, _historyTableView.contentSize.height - _historyTableView.frame.size.height);
+        [_historyTableView setContentOffset:offset animated:YES];
+    }
 }
 
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
