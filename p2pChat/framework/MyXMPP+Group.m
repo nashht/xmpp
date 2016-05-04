@@ -150,14 +150,14 @@ static NSString *pictureType = @"[图片]";
     NSLog(@"did fetch members list");
     NSLog(@"memberlist:%@",items);
     int i= 0;
-    self.roomMembers = [NSMutableArray arrayWithCapacity:[items count]];
+    NSMutableArray *array = [NSMutableArray arrayWithCapacity:[items count]];
     for (DDXMLElement *obj  in items) {
         NSString *membername = [[obj attributeForName:@"jid"] stringValue];//获取属性为jid的值
         i++;
-        [self.roomMembers addObject:membername];
+        [array addObject:membername];
         NSLog(@"第%i个 member 成员：%@",i,membername);
     }
-    self.fetchGroupMemberBlock(self.roomMembers);
+    self.fetchGroupMemberBlock(array);
 //    NSMutableArray *array = self.roomMembers;
 //    NSLog(@"%@",array);
 }
@@ -166,11 +166,11 @@ static NSString *pictureType = @"[图片]";
     NSLog(@"did fetch ban list");
     NSLog(@"banlist:%@",items);
     int i= 0;
-    self.roomMembers = [NSMutableArray arrayWithCapacity:[items count]];
+    NSMutableArray *array = [NSMutableArray arrayWithCapacity:[items count]];
     for (DDXMLElement *obj  in items) {
         NSString *banmembername = [[obj attributeForName:@"jid"] stringValue];//获取属性为jid的值
         i++;
-        [self.roomMembers addObject:banmembername];
+        [array addObject:banmembername];
         NSLog(@"第%i个 ban 成员：%@",i,banmembername);
     }
 }

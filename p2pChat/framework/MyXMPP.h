@@ -53,7 +53,6 @@ static NSString *myDomain = @"xmpp.test";
 @property (strong, nonatomic) XMPPRoom *chatroom;
 @property (strong, nonatomic) XMPPRoomCoreDataStorage *roomStorage;
 @property (strong, nonatomic) XMPPMUC *muc;//用于处理好友邀请
-@property (strong, nonatomic) NSMutableArray *roomMembers;
 
 @property (strong, nonatomic, readonly) DataManager *dataManager;
 @property (strong, nonatomic, readonly) PhotoLibraryCenter *photoLibraryCenter;
