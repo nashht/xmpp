@@ -15,6 +15,7 @@
 #define BUTTONSIZE 35
 
 @interface BottomView()<UITextFieldDelegate>
+@property (weak, nonatomic) IBOutlet UITextView *messageTextView;
 
 @property (weak, nonatomic) IBOutlet UITextField *messageTF;
 @property (strong, nonatomic) UIButton *recordBtn;
@@ -29,6 +30,20 @@
     _messageTF.delegate = self;
     
     [self initRecordBtn];
+    
+    NSMutableAttributedString *str=[[NSMutableAttributedString alloc] initWithString:@"9999999" attributes:nil];
+    
+    NSTextAttachment *attachment=[[NSTextAttachment alloc] init];
+    UIImage *img=[UIImage imageNamed:@"_001"];
+    attachment.image=img;
+    attachment.bounds=CGRectMake(0, 0, 30, 30);
+    NSAttributedString *text=[NSAttributedString attributedStringWithAttachment:attachment];
+    
+    
+    [str insertAttributedString:text atIndex:2];
+    self.messageTextView.attributedText=str;
+
+   
 }
 
 - (void)initRecordBtn {
@@ -49,6 +64,11 @@
     [_messageTF resignFirstResponder];
 }
 
+- (IBAction)showFaceView:(id)sender {
+    [_messageTF resignFirstResponder];
+    [_delegate showFaceView];
+}
+
 - (IBAction)showRecord:(id)sender {
     [_messageTF resignFirstResponder];
     _recordBtn.hidden = !_recordBtn.hidden;
@@ -60,6 +80,8 @@
     [_messageTF resignFirstResponder];
     [_delegate showMoreView];
 }
+
+
 
 - (void)startRecord {
     NSLog(@"start record");

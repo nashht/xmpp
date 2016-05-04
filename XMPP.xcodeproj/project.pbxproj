@@ -28,6 +28,8 @@
 		900BFA101CC0EC76004F7B2C /* PopoverViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 900BFA0E1CC0EC76004F7B2C /* PopoverViewController.xib */; };
 		900BFA191CC484EC004F7B2C /* HeaderView.m in Sources */ = {isa = PBXBuildFile; fileRef = 900BFA171CC484EC004F7B2C /* HeaderView.m */; };
 		900BFA1A1CC484EC004F7B2C /* HeaderView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 900BFA181CC484EC004F7B2C /* HeaderView.xib */; };
+		903F3FDC1CD19EE500759D8F /* FaceView.m in Sources */ = {isa = PBXBuildFile; fileRef = 903F3FD71CD19EE500759D8F /* FaceView.m */; };
+		903F3FDD1CD19EE500759D8F /* FunctionView.m in Sources */ = {isa = PBXBuildFile; fileRef = 903F3FD91CD19EE500759D8F /* FunctionView.m */; };
 		904175431CA9299C005A024B /* LoginViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 904175421CA9299C005A024B /* LoginViewController.m */; };
 		904175471CA92B63005A024B /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 904175461CA92B63005A024B /* main.m */; };
 		90E3E8891C97AA840076F28C /* Snip20151210_2.png in Resources */ = {isa = PBXBuildFile; fileRef = 90E3E8881C97AA840076F28C /* Snip20151210_2.png */; };
@@ -299,6 +301,10 @@
 		900BFA161CC484EC004F7B2C /* HeaderView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HeaderView.h; sourceTree = "<group>"; };
 		900BFA171CC484EC004F7B2C /* HeaderView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HeaderView.m; sourceTree = "<group>"; };
 		900BFA181CC484EC004F7B2C /* HeaderView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = HeaderView.xib; sourceTree = "<group>"; };
+		903F3FD61CD19EE500759D8F /* FaceView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FaceView.h; sourceTree = "<group>"; };
+		903F3FD71CD19EE500759D8F /* FaceView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FaceView.m; sourceTree = "<group>"; };
+		903F3FD81CD19EE500759D8F /* FunctionView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FunctionView.h; sourceTree = "<group>"; };
+		903F3FD91CD19EE500759D8F /* FunctionView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FunctionView.m; sourceTree = "<group>"; };
 		904175411CA9299C005A024B /* LoginViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LoginViewController.h; sourceTree = "<group>"; };
 		904175421CA9299C005A024B /* LoginViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LoginViewController.m; sourceTree = "<group>"; };
 		904175461CA92B63005A024B /* main.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = main.m; path = p2pChat/classes/Main/main.m; sourceTree = SOURCE_ROOT; };
@@ -802,6 +808,7 @@
 				900122561CA91EE2005D5BFA /* RecordViewCell.m */,
 				DAAF2C081CCC66B500C51494 /* MessageBean.h */,
 				DAAF2C091CCC66B500C51494 /* MessageBean.m */,
+				903F3FD51CD19EA800759D8F /* FaceView */,
 				84F32C441CBF766C00BB9BD1 /* BottomView */,
 				DAD235061C424D0E003A93F9 /* MoreView */,
 			);
@@ -859,6 +866,17 @@
 			);
 			name = Main;
 			path = Recent/Main;
+			sourceTree = "<group>";
+		};
+		903F3FD51CD19EA800759D8F /* FaceView */ = {
+			isa = PBXGroup;
+			children = (
+				903F3FD61CD19EE500759D8F /* FaceView.h */,
+				903F3FD71CD19EE500759D8F /* FaceView.m */,
+				903F3FD81CD19EE500759D8F /* FunctionView.h */,
+				903F3FD91CD19EE500759D8F /* FunctionView.m */,
+			);
+			path = FaceView;
 			sourceTree = "<group>";
 		};
 		904175401CA9290D005A024B /* Login */ = {
@@ -2290,6 +2308,7 @@
 				DA90B1961C8989930080E037 /* XMPPElement.m in Sources */,
 				DA90B1C61C8989930080E037 /* XMPPvCardCoreDataStorage.m in Sources */,
 				DA90B1BA1C8989930080E037 /* XMPPRoomHybrid.xcdatamodeld in Sources */,
+				903F3FDD1CD19EE500759D8F /* FunctionView.m in Sources */,
 				DA90B1F61C8989930080E037 /* XMPPTime.m in Sources */,
 				DA90B1B11C8989930080E037 /* XMPPIQ+JabberRPCResonse.m in Sources */,
 				DA90B1FC1C8989930080E037 /* XMPPMessageCarbons.m in Sources */,
@@ -2325,6 +2344,7 @@
 				844988031CC8BE21009AE90E /* GroupMessage+CoreDataProperties.m in Sources */,
 				DAAA186B1CABCF6500691170 /* LastMessage+CoreDataProperties.m in Sources */,
 				DA90B1E41C8989930080E037 /* XMPPMessageArchiving.xcdatamodeld in Sources */,
+				903F3FDC1CD19EE500759D8F /* FaceView.m in Sources */,
 				DA90B18A1C8989930080E037 /* XMPPAnonymousAuthentication.m in Sources */,
 				DA968A481C891F6A00FD866C /* MyViewController.m in Sources */,
 				DA90B18F1C8989930080E037 /* XMPPSCRAMSHA1Authentication.m in Sources */,
@@ -2555,17 +2575,19 @@
 					"$(PROJECT_DIR)/p2pChat/framework/module",
 				);
 				INFOPLIST_FILE = p2pChat/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 9.3;
+				IPHONEOS_DEPLOYMENT_TARGET = 9.2;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)/p2pChat/framework/Vendor/libidn",
 					"$(PROJECT_DIR)/p2pChat/framework/VoiceConvert/lib",
 				);
+				ONLY_ACTIVE_ARCH = NO;
 				OTHER_LDFLAGS = "";
 				PRODUCT_BUNDLE_IDENTIFIER = nmrc.xmppChat;
 				PRODUCT_NAME = XMPP;
 				PROVISIONING_PROFILE = "";
+				SDKROOT = iphoneos9.2;
 				TARGETED_DEVICE_FAMILY = 1;
 			};
 			name = Debug;
@@ -2583,17 +2605,19 @@
 					"$(PROJECT_DIR)/p2pChat/framework/module",
 				);
 				INFOPLIST_FILE = p2pChat/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 9.3;
+				IPHONEOS_DEPLOYMENT_TARGET = 9.2;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)/p2pChat/framework/Vendor/libidn",
 					"$(PROJECT_DIR)/p2pChat/framework/VoiceConvert/lib",
 				);
+				ONLY_ACTIVE_ARCH = NO;
 				OTHER_LDFLAGS = "";
 				PRODUCT_BUNDLE_IDENTIFIER = nmrc.xmppChat;
 				PRODUCT_NAME = XMPP;
 				PROVISIONING_PROFILE = "";
+				SDKROOT = iphoneos9.2;
 				TARGETED_DEVICE_FAMILY = 1;
 			};
 			name = Release;

@@ -49,7 +49,6 @@
     
     _photoFrame = CGRectMake(photoX, photoY, photoW, photoH);
     
-    NSLog(@"_------more %f", [message.more doubleValue]);
     double length = [message.more doubleValue];
     
     CGFloat bodyLength = 100;
