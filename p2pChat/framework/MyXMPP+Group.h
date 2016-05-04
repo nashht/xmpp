@@ -14,7 +14,7 @@
 
 - (void)creatGroupName:(NSString *)groupName withpassword:(NSString *)rommpwd andsubject:(NSString *)subject;//只有创建者调用
 - (void)inviteFriends:(NSString *)friendname withMessage:(NSString *)text;
-- (void)fetchMembersFromGroup;
+- (void)fetchMembersFromGroupWithCompletion:(void (^)(NSArray *members))block;
 - (void)sendMessage:(NSString *)text ToGroup:(NSString *)groupname;
 //- (void)sendPicture:(NSString *)path ToGroup:(NSString *)groupname;
 - (void)sendAudio:(NSString *)path ToGroup:(NSString *)groupname withlength:(NSString *)length;
