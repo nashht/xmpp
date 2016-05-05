@@ -113,7 +113,7 @@
         [face setFaceBlock:^(UIImage *image, NSString *imageName)
          {
              copy_self.block(image, imageName);
-             NSLog(@"name..click%@",imageName);
+//             NSLog(@"name..click%@",imageName);
          }];
         
         [self.faceScrollView addSubview:face];
@@ -138,7 +138,7 @@
              }];
             
             [self.faceScrollView addSubview:face];
-            
+
         }
     }
     

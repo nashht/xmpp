@@ -13,16 +13,12 @@
             <subviews>
                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="EzJ-R6-YZ2">
                     <rect key="frame" x="560" y="3" width="34" height="34"/>
+                    <fontDescription key="fontDescription" type="system" pointSize="19"/>
                     <state key="normal" image="chat_bottom_up_nor"/>
                     <connections>
                         <action selector="showMore:" destination="iN0-l3-epB" eventType="touchUpInside" id="kQV-fv-8mY"/>
                     </connections>
                 </button>
-                <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="cbY-aP-mwc">
-                    <rect key="frame" x="39" y="5" width="481" height="30"/>
-                    <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                    <textInputTraits key="textInputTraits"/>
-                </textField>
                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="3ER-Rc-F4I">
                     <rect key="frame" x="523" y="3" width="35" height="34"/>
                     <constraints>
@@ -43,29 +39,35 @@
                         <action selector="showRecord:" destination="iN0-l3-epB" eventType="touchUpInside" id="3YE-Kz-Yl6"/>
                     </connections>
                 </button>
-                <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="7kh-eo-sdv">
-                    <rect key="frame" x="180" y="9" width="209" height="33"/>
+                <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" textAlignment="natural" translatesAutoresizingMaskIntoConstraints="NO" id="Ssl-j6-87G">
+                    <rect key="frame" x="39" y="5" width="481" height="30"/>
                     <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                    <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                    <fontDescription key="fontDescription" type="system" pointSize="20"/>
                     <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
                 </textView>
             </subviews>
             <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
             <constraints>
+                <constraint firstItem="Ssl-j6-87G" firstAttribute="top" secondItem="iN0-l3-epB" secondAttribute="top" constant="5" id="8cm-4v-XaJ"/>
                 <constraint firstItem="rZF-m1-6Sv" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" constant="1" id="8mt-q4-HTC"/>
                 <constraint firstItem="EzJ-R6-YZ2" firstAttribute="leading" secondItem="3ER-Rc-F4I" secondAttribute="trailing" constant="2" id="8yd-7P-UR8"/>
-                <constraint firstItem="cbY-aP-mwc" firstAttribute="centerY" secondItem="iN0-l3-epB" secondAttribute="centerY" id="K8f-zq-vNA"/>
-                <constraint firstItem="cbY-aP-mwc" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" constant="39" id="XOq-pV-Hs7"/>
+                <constraint firstItem="Ssl-j6-87G" firstAttribute="leading" secondItem="rZF-m1-6Sv" secondAttribute="trailing" constant="2" id="AyF-jK-cO8"/>
+                <constraint firstItem="3ER-Rc-F4I" firstAttribute="leading" secondItem="Ssl-j6-87G" secondAttribute="trailing" constant="3" id="EAh-c9-xjx"/>
                 <constraint firstItem="rZF-m1-6Sv" firstAttribute="centerY" secondItem="iN0-l3-epB" secondAttribute="centerY" id="cgS-8z-C5g"/>
-                <constraint firstAttribute="trailing" secondItem="cbY-aP-mwc" secondAttribute="trailing" constant="80" id="jmZ-ib-CDq"/>
+                <constraint firstItem="Ssl-j6-87G" firstAttribute="centerX" secondItem="iN0-l3-epB" secondAttribute="centerX" id="gIX-YI-ZR4"/>
                 <constraint firstAttribute="trailing" secondItem="EzJ-R6-YZ2" secondAttribute="trailing" constant="6" id="kXm-hg-24h"/>
+                <constraint firstItem="Ssl-j6-87G" firstAttribute="centerY" secondItem="rZF-m1-6Sv" secondAttribute="centerY" id="lLy-bZ-zVX"/>
                 <constraint firstItem="EzJ-R6-YZ2" firstAttribute="centerY" secondItem="iN0-l3-epB" secondAttribute="centerY" id="rvB-bH-NNR"/>
                 <constraint firstItem="3ER-Rc-F4I" firstAttribute="centerY" secondItem="iN0-l3-epB" secondAttribute="centerY" id="vfh-i9-0Rj"/>
             </constraints>
             <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
+            <variation key="default">
+                <mask key="constraints">
+                    <exclude reference="gIX-YI-ZR4"/>
+                </mask>
+            </variation>
             <connections>
-                <outlet property="messageTF" destination="cbY-aP-mwc" id="5vj-M1-v85"/>
-                <outlet property="messageTextView" destination="7kh-eo-sdv" id="vEa-88-Zdx"/>
+                <outlet property="messageTextView" destination="Ssl-j6-87G" id="OT2-hZ-vz6"/>
             </connections>
             <point key="canvasLocation" x="299" y="306"/>
         </view>

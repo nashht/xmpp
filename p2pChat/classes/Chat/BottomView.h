@@ -14,7 +14,6 @@
 - (void)showMoreView;
 - (void)hideMoreView;
 - (void)showFaceView;
-
 @end
 
 @interface BottomView : UIView
@@ -24,5 +23,6 @@
 @property (assign, nonatomic, getter=isP2PChat) BOOL p2pChat;
 
 - (void)resignTextfield;
+- (void)inputFaceView:(NSString *)faceName;
 
 @end

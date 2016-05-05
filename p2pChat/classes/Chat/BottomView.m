@@ -9,15 +9,14 @@
 #import "BottomView.h"
 #import "MyXMPP+P2PChat.h"
 #import "MyXMPP+Group.h"
+#import "RegularExpressionTool.h"
 #import "AudioCenter.h"
 #import "Tool.h"
 
 #define BUTTONSIZE 35
 
-@interface BottomView()<UITextFieldDelegate>
+@interface BottomView()<UITextFieldDelegate,UITextViewDelegate>
 @property (weak, nonatomic) IBOutlet UITextView *messageTextView;
-
-@property (weak, nonatomic) IBOutlet UITextField *messageTF;
 @property (strong, nonatomic) UIButton *recordBtn;
 @property (assign, nonatomic) BOOL showRecord;
 @property (copy, nonatomic) NSString *recordPath;
@@ -27,23 +26,14 @@
 @implementation BottomView
 
 - (void)awakeFromNib {
-    _messageTF.delegate = self;
+    _messageTextView.delegate = self;
+    _messageTextView.returnKeyType = UIReturnKeyDone;
+    _messageTextView.layer.borderColor = [[UIColor colorWithRed:215.0 / 255.0 green:215.0 / 255.0 blue:215.0 / 255.0 alpha:1] CGColor];
+    _messageTextView.layer.borderWidth = 0.6f;
+    _messageTextView.layer.cornerRadius = 6.0f;
+    _messageTextView.font = [UIFont systemFontOfSize:16.f];
     
     [self initRecordBtn];
-    
-    NSMutableAttributedString *str=[[NSMutableAttributedString alloc] initWithString:@"9999999" attributes:nil];
-    
-    NSTextAttachment *attachment=[[NSTextAttachment alloc] init];
-    UIImage *img=[UIImage imageNamed:@"_001"];
-    attachment.image=img;
-    attachment.bounds=CGRectMake(0, 0, 30, 30);
-    NSAttributedString *text=[NSAttributedString attributedStringWithAttachment:attachment];
-    
-    
-    [str insertAttributedString:text atIndex:2];
-    self.messageTextView.attributedText=str;
-
-   
 }
 
 - (void)initRecordBtn {
@@ -60,24 +50,42 @@
     _showRecord = NO;
 }
 
+- (void)inputFaceView:(NSString *)faceName{
+    NSLog(@"faceviewname--%@",faceName);
+    // 获得光标所在的位置
+    long location = _messageTextView.selectedRange.location;
+    // 将UITextView中的内容进行调整（主要是在光标所在的位置进行字符串截取，再拼接你需要插入的文字即可）
+    NSString *content = _messageTextView.text;
+//   e.g. [p/_002.png]
+    NSString *result = [NSString stringWithFormat:@"%@[p/%@.png]%@",[content substringToIndex:location],faceName,[content substringFromIndex:location]];
+//    _messageBody = result;
+//    NSLog(@"_messageBody%@",result);
+    
+    _messageTextView.text = result;
+//    
+//    NSAttributedString *attributedString = [RegularExpressionTool stringTranslation2FaceView:result];
+//    // 将调整后的字符串添加到UITextView上面
+//    _messageTextView.attributedText = attributedString;
+}
+
 - (void)resignTextfield {
-    [_messageTF resignFirstResponder];
+    [_messageTextView resignFirstResponder];
 }
 
 - (IBAction)showFaceView:(id)sender {
-    [_messageTF resignFirstResponder];
+    [_messageTextView resignFirstResponder];
     [_delegate showFaceView];
 }
 
 - (IBAction)showRecord:(id)sender {
-    [_messageTF resignFirstResponder];
+    [_messageTextView resignFirstResponder];
     _recordBtn.hidden = !_recordBtn.hidden;
-    _messageTF.hidden = !_messageTF.hidden;
+    _messageTextView.hidden = !_messageTextView.hidden;
     [_delegate hideMoreView];
 }
 
 - (IBAction)showMore:(id)sender {
-    [_messageTF resignFirstResponder];
+    [_messageTextView resignFirstResponder];
     [_delegate showMoreView];
 }
 
@@ -101,19 +109,26 @@
     }
 }
 
-#pragma mark - text field delegate
-- (BOOL)textFieldShouldReturn:(UITextField *)textField {
-    NSString *message = _messageTF.text;
-    if (![message isEqualToString:@""]) {
-        if ([self isP2PChat]) {
-            [[MyXMPP shareInstance]sendMessage:message ToUser:_chatObjectString];
-        } else {
-            [[MyXMPP shareInstance]sendMessage:message ToGroup:_chatObjectString];
+
+#pragma mark - text view delegate
+
+- (BOOL)textView:(UITextView *)textView shouldChangeTextInRange:(NSRange)range replacementText:(NSString *)text{
+    if ([text isEqualToString:@"\n"])
+    {
+        [textView resignFirstResponder];
+        NSString *message = _messageTextView.text;
+        if (![message isEqualToString:@""]) {
+            if ([self isP2PChat]) {
+                [[MyXMPP shareInstance]sendMessage:message ToUser:_chatObjectString];
+            } else {
+                [[MyXMPP shareInstance]sendMessage:message ToGroup:_chatObjectString];
+            }
+            
+            _messageTextView.text = @"";
+//            _messageBody = @"";
         }
-        
-        _messageTF.text = @"";
+        return NO;
     }
-    
     return YES;
 }
 @end
