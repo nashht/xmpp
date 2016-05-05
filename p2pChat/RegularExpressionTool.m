@@ -48,7 +48,7 @@
         
         //新建文字附件来存放我们的图片
         NSTextAttachment *textAttachment = [[NSTextAttachment alloc] init];
-           textAttachment.bounds=CGRectMake(0, 0, 26, 26);
+           textAttachment.bounds = CGRectMake(0, -8, 26, 26);
         //给附件添加图片
         textAttachment.image = [UIImage imageNamed:imageName];
         //把附件转换成可变字符串，用于替换掉源字符串中的表情文字

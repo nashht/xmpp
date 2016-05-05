@@ -61,9 +61,6 @@ static NSString *pictureReuseIdentifier = @"pictureMessageCell";
 - (void)viewDidLoad {
     [super viewDidLoad];
     
-    UIBarButtonItem *back = [[UIBarButtonItem alloc]initWithTitle:@"返回" style:UIBarButtonItemStylePlain target:nil action:nil];
-    self.navigationItem.backBarButtonItem = back;
-    
     _tabBarHeight = self.tabBarController.tabBar.frame.size.height;
     // init table view
     _historyTableView.dataSource = self;

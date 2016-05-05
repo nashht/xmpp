@@ -45,7 +45,7 @@
 
 + (NSString *)stringFromDate:(NSDate *)date{
     NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
-    [dateFormatter setDateFormat:@"MM-dd HH:mm:ss"];
+    [dateFormatter setDateFormat:@"MM-dd HH:mm"];
     NSString *destDateString = [dateFormatter stringFromDate:date];
     
     return destDateString;
