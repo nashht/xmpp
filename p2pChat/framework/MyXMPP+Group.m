@@ -11,6 +11,8 @@
 #import "Tool.h"
 #import "XMPPMessage+MyExtends.h"
 #import "XMPPMUC.h"
+#import "XMPPJID.h"
+#import "MyXMPP.h"
 
 
 static NSString *myRoomDomain = @"conference.xmpp.test";
@@ -36,10 +38,12 @@ static NSString *pictureType = @"[图片]";
 
 - (void)inviteFriends:(NSString *)friendname withMessage:(NSString *)text{
     [self.chatroom inviteUser:[XMPPJID jidWithString:[NSString stringWithFormat:@"%@@xmpp.test",friendname ]]withMessage:text];
+    [self.chatroom editRoomPrivileges:@[[XMPPRoom itemWithAffiliation:@"member" jid:[XMPPJID jidWithString:friendname]]]];
 }
 
-- (void)fetchMembersFromGroup{
+- (void)fetchMembersFromGroupWithCompletion:(void (^)(NSArray *members))block{
     [self.chatroom fetchMembersList];
+    self.fetchGroupMemberBlock = block;
 }
 
 - (void)sendMessageWithSubtype:(NSString *)subtype time:(double)time body:(NSString *)body more:(NSString *)more toGroup:(NSString *)groupname {
@@ -108,9 +112,13 @@ static NSString *pictureType = @"[图片]";
     
     //    [sender inviteUser:[XMPPJID jidWithString:[NSString stringWithFormat:@"%@@xmpp.test",@"cxh" ]]withMessage:@"hello!"];
     //    [sender inviteUser:[XMPPJID jidWithString:@"zxk@xmpp.test"] withMessage:@"hello!"];
-    //
-    //   [sender editRoomPrivileges:@[[XMPPRoom itemWithAffiliation:@"member" jid:self.myjid]]];
-    //    [sender fetchMembersList];
+
+    [self fetchMembersFromGroupWithCompletion:^(NSArray *members) {
+        for (NSString *s in members) {
+            NSLog(@"%@", s);
+        }
+    }];//block获取群成员列表，群成员保存在members中
+
 }
 
 - (void)xmppRoom:(XMPPRoom *)sender didFetchConfigurationForm:(NSXMLElement *)configForm {
@@ -140,7 +148,31 @@ static NSString *pictureType = @"[图片]";
 
 - (void)xmppRoom:(XMPPRoom *)sender didFetchMembersList:(NSArray *)items{
     NSLog(@"did fetch members list");
-    NSLog(@"%@",items);
+    NSLog(@"memberlist:%@",items);
+    int i= 0;
+    NSMutableArray *array = [NSMutableArray arrayWithCapacity:[items count]];
+    for (DDXMLElement *obj  in items) {
+        NSString *membername = [[obj attributeForName:@"jid"] stringValue];//获取属性为jid的值
+        i++;
+        [array addObject:membername];
+        NSLog(@"第%i个 member 成员：%@",i,membername);
+    }
+    self.fetchGroupMemberBlock(array);
+//    NSMutableArray *array = self.roomMembers;
+//    NSLog(@"%@",array);
+}
+
+- (void)xmppRoom:(XMPPRoom *)sender didFetchBanList:(NSArray *)items{
+    NSLog(@"did fetch ban list");
+    NSLog(@"banlist:%@",items);
+    int i= 0;
+    NSMutableArray *array = [NSMutableArray arrayWithCapacity:[items count]];
+    for (DDXMLElement *obj  in items) {
+        NSString *banmembername = [[obj attributeForName:@"jid"] stringValue];//获取属性为jid的值
+        i++;
+        [array addObject:banmembername];
+        NSLog(@"第%i个 ban 成员：%@",i,banmembername);
+    }
 }
 
 - (void)xmppRoom:(XMPPRoom *)sender didReceiveMessage:(XMPPMessage *)message fromOccupant:(XMPPJID *)occupantJID{
