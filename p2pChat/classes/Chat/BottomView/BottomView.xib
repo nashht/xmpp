@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="9531" systemVersion="15E65" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="9529"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <view contentMode="scaleToFill" id="iN0-l3-epB" customClass="BottomView">
+            <rect key="frame" x="0.0" y="0.0" width="600" height="40"/>
+            <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+            <subviews>
+                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="EzJ-R6-YZ2">
+                    <rect key="frame" x="560" y="3" width="34" height="34"/>
+                    <fontDescription key="fontDescription" type="system" pointSize="19"/>
+                    <state key="normal" image="chat_bottom_up_nor"/>
+                    <connections>
+                        <action selector="showMore:" destination="iN0-l3-epB" eventType="touchUpInside" id="kQV-fv-8mY"/>
+                    </connections>
+                </button>
+                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="3ER-Rc-F4I">
+                    <rect key="frame" x="523" y="3" width="35" height="34"/>
+                    <constraints>
+                        <constraint firstAttribute="width" constant="35" id="NdD-QI-tvz"/>
+                    </constraints>
+                    <state key="normal" title="Button" image="chat_bottom_smile_nor"/>
+                    <connections>
+                        <action selector="showFaceView:" destination="iN0-l3-epB" eventType="touchUpInside" id="4Du-Bm-G2v"/>
+                    </connections>
+                </button>
+                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="rZF-m1-6Sv">
+                    <rect key="frame" x="1" y="3" width="36" height="34"/>
+                    <constraints>
+                        <constraint firstAttribute="width" constant="36" id="NUU-GP-xX0"/>
+                    </constraints>
+                    <state key="normal" title="Button" image="chat_bottom_voice_nor"/>
+                    <connections>
+                        <action selector="showRecord:" destination="iN0-l3-epB" eventType="touchUpInside" id="3YE-Kz-Yl6"/>
+                    </connections>
+                </button>
+                <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" textAlignment="natural" translatesAutoresizingMaskIntoConstraints="NO" id="Ssl-j6-87G">
+                    <rect key="frame" x="39" y="5" width="481" height="30"/>
+                    <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                    <fontDescription key="fontDescription" type="system" pointSize="20"/>
+                    <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
+                </textView>
+            </subviews>
+            <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
+            <constraints>
+                <constraint firstItem="Ssl-j6-87G" firstAttribute="top" secondItem="iN0-l3-epB" secondAttribute="top" constant="5" id="8cm-4v-XaJ"/>
+                <constraint firstItem="rZF-m1-6Sv" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" constant="1" id="8mt-q4-HTC"/>
+                <constraint firstItem="EzJ-R6-YZ2" firstAttribute="leading" secondItem="3ER-Rc-F4I" secondAttribute="trailing" constant="2" id="8yd-7P-UR8"/>
+                <constraint firstItem="Ssl-j6-87G" firstAttribute="leading" secondItem="rZF-m1-6Sv" secondAttribute="trailing" constant="2" id="AyF-jK-cO8"/>
+                <constraint firstItem="3ER-Rc-F4I" firstAttribute="leading" secondItem="Ssl-j6-87G" secondAttribute="trailing" constant="3" id="EAh-c9-xjx"/>
+                <constraint firstItem="rZF-m1-6Sv" firstAttribute="centerY" secondItem="iN0-l3-epB" secondAttribute="centerY" id="cgS-8z-C5g"/>
+                <constraint firstItem="Ssl-j6-87G" firstAttribute="centerX" secondItem="iN0-l3-epB" secondAttribute="centerX" id="gIX-YI-ZR4"/>
+                <constraint firstAttribute="trailing" secondItem="EzJ-R6-YZ2" secondAttribute="trailing" constant="6" id="kXm-hg-24h"/>
+                <constraint firstItem="Ssl-j6-87G" firstAttribute="centerY" secondItem="rZF-m1-6Sv" secondAttribute="centerY" id="lLy-bZ-zVX"/>
+                <constraint firstItem="EzJ-R6-YZ2" firstAttribute="centerY" secondItem="iN0-l3-epB" secondAttribute="centerY" id="rvB-bH-NNR"/>
+                <constraint firstItem="3ER-Rc-F4I" firstAttribute="centerY" secondItem="iN0-l3-epB" secondAttribute="centerY" id="vfh-i9-0Rj"/>
+            </constraints>
+            <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
+            <variation key="default">
+                <mask key="constraints">
+                    <exclude reference="gIX-YI-ZR4"/>
+                </mask>
+            </variation>
+            <connections>
+                <outlet property="messageTextView" destination="Ssl-j6-87G" id="OT2-hZ-vz6"/>
+            </connections>
+            <point key="canvasLocation" x="299" y="306"/>
+        </view>
+    </objects>
+    <resources>
+        <image name="chat_bottom_smile_nor" width="34" height="34"/>
+        <image name="chat_bottom_up_nor" width="34" height="34"/>
+        <image name="chat_bottom_voice_nor" width="34" height="34"/>
+    </resources>
+</document>
