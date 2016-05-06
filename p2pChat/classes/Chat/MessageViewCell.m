@@ -9,6 +9,7 @@
 #define bodyPadding 20
 #import "MessageViewCell.h"
 #import "MessageFrameModel.h"
+#import "RegularExpressionTool.h"
 #import "Tool.h"
 #import "MessageBean.h"
 #import "MyXmpp+VCard.h"
@@ -73,8 +74,12 @@
     _photoImage.frame = messageFrame.photoFrame;
     [_photoImage.layer setCornerRadius:10];
     _photoImage.layer.masksToBounds = true;
+
     
-    [_bodyBtn setTitle:message.body forState:UIControlStateNormal];
+    NSAttributedString *str = [RegularExpressionTool stringTranslation2FaceView:message.body];
+
+    [_bodyBtn setAttributedTitle:str forState:UIControlStateNormal];
+    
     _bodyBtn.frame = messageFrame.bodyFrame;
     
 //    文字背景

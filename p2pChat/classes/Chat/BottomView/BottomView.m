@@ -58,14 +58,11 @@
     NSString *content = _messageTextView.text;
 //   e.g. [p/_002.png]
     NSString *result = [NSString stringWithFormat:@"%@[p/%@.png]%@",[content substringToIndex:location],faceName,[content substringFromIndex:location]];
-//    _messageBody = result;
-//    NSLog(@"_messageBody%@",result);
-    
-    _messageTextView.text = result;
-//    
-//    NSAttributedString *attributedString = [RegularExpressionTool stringTranslation2FaceView:result];
-//    // 将调整后的字符串添加到UITextView上面
-//    _messageTextView.attributedText = attributedString;
+ 
+    NSAttributedString *attributedString = [RegularExpressionTool stringTranslation2FaceView:result];
+    // 将调整后的字符串添加到UITextView上面
+    _messageTextView.attributedText = attributedString;
+//    NSLog(@" _messageTextView.text%@",_messageTextView.attributedText);
 }
 
 - (void)resignTextfield {
@@ -125,7 +122,7 @@
             }
             
             _messageTextView.text = @"";
-//            _messageBody = @"";
+
         }
         return NO;
     }

@@ -14,7 +14,6 @@
 		844988041CC8BE21009AE90E /* GroupMessage.m in Sources */ = {isa = PBXBuildFile; fileRef = 844988021CC8BE21009AE90E /* GroupMessage.m */; };
 		844988071CC8C794009AE90E /* XMPPMessage+MyExtends.m in Sources */ = {isa = PBXBuildFile; fileRef = 844988061CC8C794009AE90E /* XMPPMessage+MyExtends.m */; };
 		900122631CA91EE3005D5BFA /* ChatViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 900122461CA91EE2005D5BFA /* ChatViewController.m */; };
-		900122641CA91EE3005D5BFA /* MessageCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 900122481CA91EE2005D5BFA /* MessageCell.m */; };
 		900122651CA91EE3005D5BFA /* MessageFrameModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 9001224A1CA91EE2005D5BFA /* MessageFrameModel.m */; };
 		900122661CA91EE3005D5BFA /* MessageViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 9001224C1CA91EE2005D5BFA /* MessageViewCell.m */; };
 		900122671CA91EE3005D5BFA /* PicFrameModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 9001224E1CA91EE2005D5BFA /* PicFrameModel.m */; };
@@ -31,6 +30,7 @@
 		900BFA1A1CC484EC004F7B2C /* HeaderView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 900BFA181CC484EC004F7B2C /* HeaderView.xib */; };
 		903F3FDC1CD19EE500759D8F /* FaceView.m in Sources */ = {isa = PBXBuildFile; fileRef = 903F3FD71CD19EE500759D8F /* FaceView.m */; };
 		903F3FDD1CD19EE500759D8F /* FunctionView.m in Sources */ = {isa = PBXBuildFile; fileRef = 903F3FD91CD19EE500759D8F /* FunctionView.m */; };
+		903F40231CDA3CF300759D8F /* RegularExpressionTool.m in Sources */ = {isa = PBXBuildFile; fileRef = 903F40221CDA3CF300759D8F /* RegularExpressionTool.m */; };
 		904175431CA9299C005A024B /* LoginViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 904175421CA9299C005A024B /* LoginViewController.m */; };
 		904175471CA92B63005A024B /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 904175461CA92B63005A024B /* main.m */; };
 		90E3E8891C97AA840076F28C /* Snip20151210_2.png in Resources */ = {isa = PBXBuildFile; fileRef = 90E3E8881C97AA840076F28C /* Snip20151210_2.png */; };
@@ -276,8 +276,6 @@
 		844988061CC8C794009AE90E /* XMPPMessage+MyExtends.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "XMPPMessage+MyExtends.m"; path = "framework/XMPPMessage+MyExtends.m"; sourceTree = "<group>"; };
 		900122451CA91EE2005D5BFA /* ChatViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ChatViewController.h; sourceTree = "<group>"; };
 		900122461CA91EE2005D5BFA /* ChatViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ChatViewController.m; sourceTree = "<group>"; };
-		900122471CA91EE2005D5BFA /* MessageCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MessageCell.h; sourceTree = "<group>"; };
-		900122481CA91EE2005D5BFA /* MessageCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MessageCell.m; sourceTree = "<group>"; };
 		900122491CA91EE2005D5BFA /* MessageFrameModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MessageFrameModel.h; sourceTree = "<group>"; };
 		9001224A1CA91EE2005D5BFA /* MessageFrameModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MessageFrameModel.m; sourceTree = "<group>"; };
 		9001224B1CA91EE2005D5BFA /* MessageViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MessageViewCell.h; sourceTree = "<group>"; };
@@ -308,6 +306,8 @@
 		903F3FD71CD19EE500759D8F /* FaceView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FaceView.m; sourceTree = "<group>"; };
 		903F3FD81CD19EE500759D8F /* FunctionView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FunctionView.h; sourceTree = "<group>"; };
 		903F3FD91CD19EE500759D8F /* FunctionView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FunctionView.m; sourceTree = "<group>"; };
+		903F40211CDA3CF300759D8F /* RegularExpressionTool.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RegularExpressionTool.h; sourceTree = "<group>"; };
+		903F40221CDA3CF300759D8F /* RegularExpressionTool.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RegularExpressionTool.m; sourceTree = "<group>"; };
 		904175411CA9299C005A024B /* LoginViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LoginViewController.h; sourceTree = "<group>"; };
 		904175421CA9299C005A024B /* LoginViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LoginViewController.m; sourceTree = "<group>"; };
 		904175461CA92B63005A024B /* main.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = main.m; path = p2pChat/classes/Main/main.m; sourceTree = SOURCE_ROOT; };
@@ -805,8 +805,6 @@
 			children = (
 				900122451CA91EE2005D5BFA /* ChatViewController.h */,
 				900122461CA91EE2005D5BFA /* ChatViewController.m */,
-				900122471CA91EE2005D5BFA /* MessageCell.h */,
-				900122481CA91EE2005D5BFA /* MessageCell.m */,
 				900122491CA91EE2005D5BFA /* MessageFrameModel.h */,
 				9001224A1CA91EE2005D5BFA /* MessageFrameModel.m */,
 				9001224B1CA91EE2005D5BFA /* MessageViewCell.h */,
@@ -951,6 +949,8 @@
 				DAAC6D7A1C4CD2C8009C0859 /* Media */,
 				DA9046B11C3A51A1009E75B7 /* MyFetchedResultsControllerDelegate.h */,
 				DA9046B21C3A51A1009E75B7 /* MyFetchedResultsControllerDelegate.m */,
+				903F40211CDA3CF300759D8F /* RegularExpressionTool.h */,
+				903F40221CDA3CF300759D8F /* RegularExpressionTool.m */,
 				DA9046B31C3A51A1009E75B7 /* Tool.h */,
 				DA9046B41C3A51A1009E75B7 /* Tool.m */,
 			);
@@ -2255,7 +2255,6 @@
 			files = (
 				DA90B1FA1C8989930080E037 /* XMPPMessage+XEP_0224.m in Sources */,
 				DA90B1FD1C8989930080E037 /* NSXMLElement+XEP_0297.m in Sources */,
-				900122641CA91EE3005D5BFA /* MessageCell.m in Sources */,
 				DA90B2101C8989930080E037 /* DDDispatchQueueLogFormatter.m in Sources */,
 				900122651CA91EE3005D5BFA /* MessageFrameModel.m in Sources */,
 				DA9046B71C3A51A1009E75B7 /* MyFetchedResultsControllerDelegate.m in Sources */,
@@ -2263,6 +2262,7 @@
 				DA90B1F41C8989930080E037 /* XMPPPing.m in Sources */,
 				DA90B18E1C8989930080E037 /* XMPPPlainAuthentication.m in Sources */,
 				DA90B1F31C8989930080E037 /* XMPPAutoPing.m in Sources */,
+				903F40231CDA3CF300759D8F /* RegularExpressionTool.m in Sources */,
 				DAD235051C424D05003A93F9 /* MoreView.m in Sources */,
 				9001226F1CA91EE3005D5BFA /* FriendsViewController.m in Sources */,
 				DA90B1DD1C8989930080E037 /* XMPPTransports.m in Sources */,

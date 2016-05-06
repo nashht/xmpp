@@ -8,6 +8,7 @@
 
 #define bodyPedding 20
 #import "MessageFrameModel.h"
+#import "RegularExpressionTool.h"
 #import "MessageBean.h"
 
 @implementation MessageFrameModel
@@ -42,7 +43,9 @@
     }
     _photoFrame = CGRectMake(photoX, photoY, photoW, photoH);
     
-    CGSize bodySize =  [message.body boundingRectWithSize:CGSizeMake(screenW - photoW * 2 - padding * 2, MAXFLOAT) options:NSStringDrawingUsesLineFragmentOrigin attributes:@{NSFontAttributeName:[UIFont systemFontOfSize:15.0f]} context:nil].size;
+    NSAttributedString *body = [RegularExpressionTool stringTranslation2FaceView:message.body];
+    CGSize bodySize = [body boundingRectWithSize:CGSizeMake(screenW - photoW * 2 - padding * 2, MAXFLOAT) options:NSStringDrawingUsesLineFragmentOrigin context:nil].size;
+//    CGSize bodySize =  [message.body boundingRectWithSize:CGSizeMake(screenW - photoW * 2 - padding * 2, MAXFLOAT) options:NSStringDrawingUsesLineFragmentOrigin attributes:@{NSFontAttributeName:[UIFont systemFontOfSize:15.0f]} context:nil].size;
     
     CGSize lastBodySize = CGSizeMake(bodySize.width + bodyPedding * 2, bodySize.height + bodyPedding * 2);
     

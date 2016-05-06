@@ -10,6 +10,7 @@
 #import "DataManager.h"
 #import "MyFetchedResultsControllerDelegate.h"
 #import "MyXMPP.h"
+#import "RegularExpressionTool.h"
 #import "MyXMPP+VCard.h"
 #import "LastMessage.h"
 #import "RecentCell.h"
@@ -37,6 +38,8 @@
     [super viewDidLoad];
     
     self.navigationItem.title = @"最近联系人";
+    UIBarButtonItem *back = [[UIBarButtonItem alloc]initWithTitle:@"返回" style:UIBarButtonItemStylePlain target:nil action:nil];
+    self.navigationItem.backBarButtonItem = back;
     
     if ([[NSUserDefaults standardUserDefaults]stringForKey:@"name"] == nil) {
         [self performSegueWithIdentifier:@"login" sender:nil];
@@ -129,16 +132,17 @@
     RecentCell *cell = [tableView dequeueReusableCellWithIdentifier:recentIdentifier forIndexPath:indexPath];//在此之前需要对nib 的cell进行注册
     LastMessage *lastMessage = [_recentController objectAtIndexPath:indexPath];
     XMPPvCardTemp *vCardTemp = [[MyXMPP shareInstance]fetchFriend:[XMPPJID jidWithUser:lastMessage.username domain:myDomain resource:nil]];
+    
     cell.usernamelabel.text = lastMessage.username;
-    cell.lastmessagelabel.text = lastMessage.body;
+    cell.lastmessagelabel.attributedText = [RegularExpressionTool stringTranslation2FaceView:lastMessage.body];
     
     if (vCardTemp.photo != nil) {
         cell.userimage.image = [UIImage imageWithData:vCardTemp.photo];
     } else {
         cell.userimage.image = [UIImage imageNamed:@"1"];
     }
-    NSDate *date1 = [NSDate dateWithTimeIntervalSince1970:lastMessage.time.doubleValue];
-    cell.lastmessagetime.text = [NSString stringWithFormat:@"%@", date1];
+
+    cell.lastmessagetime.text = [Tool stringFromDate:[NSDate dateWithTimeIntervalSince1970:lastMessage.time.doubleValue]];
 
     NSNumber *num = lastMessage.unread;
     cell.nonreadmessagenum.text = [num stringValue];

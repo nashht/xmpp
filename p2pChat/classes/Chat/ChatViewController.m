@@ -18,7 +18,6 @@
 #import "GroupMessage.h"
 #import "MessageBean.h"
 #import "MyFetchedResultsControllerDelegate.h"
-#import "MessageCell.h"
 #import "AudioCenter.h"
 #import "Tool.h"
 #import "BottomView.h"
@@ -61,9 +60,6 @@ static NSString *pictureReuseIdentifier = @"pictureMessageCell";
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    
-    UIBarButtonItem *back = [[UIBarButtonItem alloc]initWithTitle:@"返回" style:UIBarButtonItemStylePlain target:nil action:nil];
-    self.navigationItem.backBarButtonItem = back;
     
     _tabBarHeight = self.tabBarController.tabBar.frame.size.height;
     // init table view
@@ -114,7 +110,6 @@ static NSString *pictureReuseIdentifier = @"pictureMessageCell";
     tableViewGesture.numberOfTapsRequired = 1;
     tableViewGesture.cancelsTouchesInView = NO;
     [_historyTableView addGestureRecognizer:tableViewGesture];
-    [self tableViewScrollToBottom];
     
     // init face view
     self.functionView = [[FunctionView alloc] initWithFrame:CGRectMake(0,_screenSize.height, [UIScreen mainScreen].bounds.size.width, FACEVIEWHEIGHT)];
@@ -122,11 +117,15 @@ static NSString *pictureReuseIdentifier = @"pictureMessageCell";
     [self.view addSubview:_functionView];
     _showFaceView = NO;
     //获取图片并显示
+    __weak typeof (self) weakSelf = self;
     [self.functionView setFunctionBlock:^(UIImage *image, NSString *imageName)
      {
          NSString *str = [NSString stringWithFormat:@"%@", imageName];
          NSLog(@"click---str%@",str);
+         [weakSelf.bottomView inputFaceView:str];
      }];
+    
+    [self tableViewScrollToBottom];
 }
 
 - (void)commentTableViewTouchInSide {
@@ -170,13 +169,6 @@ static NSString *pictureReuseIdentifier = @"pictureMessageCell";
             [_historyTableView scrollToRowAtIndexPath:indexPath
                                      atScrollPosition:UITableViewScrollPositionBottom animated:NO];
         }
-    }
-    
-
-    if (_historyTableView.contentSize.height > _historyTableView.frame.size.height)
-    {
-        CGPoint offset = CGPointMake(0, _historyTableView.contentSize.height - _historyTableView.frame.size.height);
-        [_historyTableView setContentOffset:offset animated:YES];
     }
 }
 
