@@ -9,6 +9,7 @@
 /* Begin PBXBuildFile section */
 		840104BD1CB90512005C2EBE /* MyXMPP.m in Sources */ = {isa = PBXBuildFile; fileRef = 840104BC1CB90512005C2EBE /* MyXMPP.m */; };
 		842B4C4B1CB7BC8D008665D9 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 842B4C4A1CB7BC8D008665D9 /* Images.xcassets */; };
+		842C38701CDC85DB00D76AF6 /* GroupMembersInfoTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 842C386F1CDC85DB00D76AF6 /* GroupMembersInfoTableViewController.m */; };
 		844988031CC8BE21009AE90E /* GroupMessage+CoreDataProperties.m in Sources */ = {isa = PBXBuildFile; fileRef = 844988001CC8BE21009AE90E /* GroupMessage+CoreDataProperties.m */; };
 		844988041CC8BE21009AE90E /* GroupMessage.m in Sources */ = {isa = PBXBuildFile; fileRef = 844988021CC8BE21009AE90E /* GroupMessage.m */; };
 		844988071CC8C794009AE90E /* XMPPMessage+MyExtends.m in Sources */ = {isa = PBXBuildFile; fileRef = 844988061CC8C794009AE90E /* XMPPMessage+MyExtends.m */; };
@@ -265,6 +266,8 @@
 /* Begin PBXFileReference section */
 		840104BC1CB90512005C2EBE /* MyXMPP.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MyXMPP.m; path = framework/MyXMPP.m; sourceTree = "<group>"; };
 		842B4C4A1CB7BC8D008665D9 /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
+		842C386E1CDC85DB00D76AF6 /* GroupMembersInfoTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GroupMembersInfoTableViewController.h; sourceTree = "<group>"; };
+		842C386F1CDC85DB00D76AF6 /* GroupMembersInfoTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GroupMembersInfoTableViewController.m; sourceTree = "<group>"; };
 		844987FF1CC8BE21009AE90E /* GroupMessage+CoreDataProperties.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "GroupMessage+CoreDataProperties.h"; path = "dataStorage/GroupMessage+CoreDataProperties.h"; sourceTree = "<group>"; };
 		844988001CC8BE21009AE90E /* GroupMessage+CoreDataProperties.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "GroupMessage+CoreDataProperties.m"; path = "dataStorage/GroupMessage+CoreDataProperties.m"; sourceTree = "<group>"; };
 		844988011CC8BE21009AE90E /* GroupMessage.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = GroupMessage.h; path = dataStorage/GroupMessage.h; sourceTree = "<group>"; };
@@ -762,6 +765,15 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		842C38671CDC828100D76AF6 /* GroupMembersInfo */ = {
+			isa = PBXGroup;
+			children = (
+				842C386E1CDC85DB00D76AF6 /* GroupMembersInfoTableViewController.h */,
+				842C386F1CDC85DB00D76AF6 /* GroupMembersInfoTableViewController.m */,
+			);
+			name = GroupMembersInfo;
+			sourceTree = "<group>";
+		};
 		84F32C441CBF766C00BB9BD1 /* BottomView */ = {
 			isa = PBXGroup;
 			children = (
@@ -775,6 +787,7 @@
 		900122431CA91EE2005D5BFA /* classes */ = {
 			isa = PBXGroup;
 			children = (
+				842C38671CDC828100D76AF6 /* GroupMembersInfo */,
 				90F711151CBC89FC00042A99 /* Main.storyboard */,
 				90FA06501CAE06D400851B1C /* Me */,
 				904175401CA9290D005A024B /* Login */,
@@ -2370,6 +2383,7 @@
 				DA90B1B51C8989930080E037 /* XMPPPrivacy.m in Sources */,
 				DA90B1CC1C8989930080E037 /* XMPPvCardTempBase.m in Sources */,
 				DA90B1C41C8989930080E037 /* XMPPvCard.xcdatamodeld in Sources */,
+				842C38701CDC85DB00D76AF6 /* GroupMembersInfoTableViewController.m in Sources */,
 				DA90B1E71C8989930080E037 /* XMPPMessageArchivingCoreDataStorage.m in Sources */,
 				DA90B2131C8989930080E037 /* NSString+DDXML.m in Sources */,
 				900122681CA91EE3005D5BFA /* PicViewCell.m in Sources */,
