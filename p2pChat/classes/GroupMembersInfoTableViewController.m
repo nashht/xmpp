@@ -44,17 +44,19 @@ static double LabelHigh = 20;
             for (int i=0; i<3; i++) {
                 [self addwithmembers:members count:i];
             }
-            [self addInsertMemberButtonwithlocation:4];//暂时没有实现添加加号按钮
+            [self addInsertMemberButtonwithlocation:4];
         }else{
-        for (int i=0; i<[members count]; i++) {
-            [self addwithmembers:members count:i];
+            int m = 0;
+        for (m=0; m<[members count]; m++) {
+            [self addwithmembers:members count:m];
             }
-            [self addInsertMemberButtonwithlocation:4];//暂时没有实现添加加号按钮
+            m++;
+            [self addInsertMemberButtonwithlocation:m];//暂时没有实现添加加号按钮
         }
         
         NSUInteger count = [members count];
         count++;
-        NSString *str = [NSString stringWithFormat:@"(%ld)",count];
+        NSString *str = [NSString stringWithFormat:@"(%ld)",(unsigned long)count];
         [self.groupMembersCount setText:str];
     }];
     
@@ -93,6 +95,7 @@ static double LabelHigh = 20;
     insertbtn.layer.masksToBounds = true;
     [insertbtn setBackgroundImage:[UIImage imageNamed:@"add_button.png"] forState:UIControlStateNormal];
     insertbtn.frame = CGRectMake(InitialPositionX+(PhotoWidth+LengthBetweenBtns)*i, InitialPositionY, PhotoWidth, PhotoWidth);
+//    insertbtn.layer.borderColor=[UIColor blackColor].CGColor;
     [self.MembersCell.contentView addSubview:insertbtn];
 }
 
