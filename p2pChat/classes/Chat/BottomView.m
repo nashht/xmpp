@@ -9,13 +9,15 @@
 #import "BottomView.h"
 #import "MyXMPP+P2PChat.h"
 #import "MyXMPP+Group.h"
+#import "EmojiTextAttachment.h"
 #import "RegularExpressionTool.h"
+#import "NSAttributedString+EmojiExtension.h"
 #import "AudioCenter.h"
 #import "Tool.h"
 
 #define BUTTONSIZE 35
 
-@interface BottomView()<UITextFieldDelegate,UITextViewDelegate>
+@interface BottomView()<UITextViewDelegate>
 @property (weak, nonatomic) IBOutlet UITextView *messageTextView;
 @property (strong, nonatomic) UIButton *recordBtn;
 @property (assign, nonatomic) BOOL showRecord;
@@ -51,21 +53,22 @@
 }
 
 - (void)inputFaceView:(NSString *)faceName{
-    NSLog(@"faceviewname--%@",faceName);
-    // 获得光标所在的位置
-    long location = _messageTextView.selectedRange.location;
+    if ([faceName isEqualToString:@"_del"]) {
+        [_messageTextView deleteBackward];
+        return;
+    }
     // 将UITextView中的内容进行调整（主要是在光标所在的位置进行字符串截取，再拼接你需要插入的文字即可）
-    NSString *content = _messageTextView.text;
 //   e.g. [p/_002.png]
-    NSString *result = [NSString stringWithFormat:@"%@[p/%@.png]%@",[content substringToIndex:location],faceName,[content substringFromIndex:location]];
-//    _messageBody = result;
-//    NSLog(@"_messageBody%@",result);
+    EmojiTextAttachment *attachment = [[EmojiTextAttachment alloc] init];
+    NSString *tag = [NSString stringWithFormat:@"[p/%@.png]",faceName];
+    attachment.emojiTag = tag;
+    attachment.image = [UIImage imageNamed:faceName];
     
-    _messageTextView.text = result;
-//    
-//    NSAttributedString *attributedString = [RegularExpressionTool stringTranslation2FaceView:result];
-//    // 将调整后的字符串添加到UITextView上面
-//    _messageTextView.attributedText = attributedString;
+//      将调整后的字符串添加到UITextView上面
+    [_messageTextView.textStorage insertAttributedString:[NSAttributedString attributedStringWithAttachment:attachment]
+                                          atIndex:_messageTextView.selectedRange.location];
+//    移动光标位置
+     _messageTextView.selectedRange = NSMakeRange(_messageTextView.selectedRange.location + 1, _messageTextView.selectedRange.length);
 }
 
 - (void)resignTextfield {
@@ -116,7 +119,7 @@
     if ([text isEqualToString:@"\n"])
     {
         [textView resignFirstResponder];
-        NSString *message = _messageTextView.text;
+        NSString *message = [_messageTextView.attributedText getPlainString];
         if (![message isEqualToString:@""]) {
             if ([self isP2PChat]) {
                 [[MyXMPP shareInstance]sendMessage:message ToUser:_chatObjectString];

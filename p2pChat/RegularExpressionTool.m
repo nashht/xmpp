@@ -7,6 +7,7 @@
 //
 
 #import "RegularExpressionTool.h"
+#import "EmojiTextAttachment.h"
 
 @implementation RegularExpressionTool
 
@@ -47,10 +48,13 @@
 //        NSLog(@"imageName = %@",imageName);
         
         //新建文字附件来存放我们的图片
-        NSTextAttachment *textAttachment = [[NSTextAttachment alloc] init];
+        EmojiTextAttachment *textAttachment = [[EmojiTextAttachment alloc] init];
            textAttachment.bounds = CGRectMake(0, -8, 26, 26);
         //给附件添加图片
         textAttachment.image = [UIImage imageNamed:imageName];
+        NSString *tag = [NSString stringWithFormat:@"[p/%@]",imageName];
+        textAttachment.emojiTag = tag;
+        
         //把附件转换成可变字符串，用于替换掉源字符串中的表情文字
         NSAttributedString *imageStr = [NSAttributedString attributedStringWithAttachment:textAttachment];
         //把图片和图片对应的位置存入字典中
