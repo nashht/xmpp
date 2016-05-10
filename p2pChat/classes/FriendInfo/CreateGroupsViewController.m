@@ -20,13 +20,13 @@
 
 static NSString *defaultGroupName = @"11111111";
 
-@interface CreateGroupsViewController ()<UITableViewDelegate,UITableViewDataSource,HeaderViewDelegate>
+@interface CreateGroupsViewController ()<UITableViewDelegate,UITableViewDataSource,HeaderViewDelegate,UITextFieldDelegate>
 
 @property (nonatomic, strong) NSMutableArray<FriendsGroup *> *groups;
 @property (strong, nonatomic) NSArray<XMPPGroupCoreDataStorageObject *> *groupCoreDataStorageObjects;
 @property (weak, nonatomic) IBOutlet UITableView *tableView;
 @property (nonatomic,strong) NSMutableArray *selectedFriends;
-@property (strong, nonatomic) NSString *members;
+@property (strong, nonatomic) NSString *groupName;
 
 @end
 
@@ -66,31 +66,39 @@ static NSString *defaultGroupName = @"11111111";
 }
 
 - (IBAction)selectBtnClick:(UIButton *)sender {
-    
     if (_selectedFriends.count == 0) {
         UIAlertController *alert = [UIAlertController alertControllerWithTitle:@"警告" message:@"没有选择好友，请选择好友。" preferredStyle:UIAlertControllerStyleAlert];
         UIAlertAction *okAction = [UIAlertAction actionWithTitle:@"确定" style:UIAlertActionStyleDefault handler:nil];
         [alert addAction:okAction];
         [self presentViewController:alert animated:YES completion:nil];
     }else{
-    _members = nil;
-    if (_selectedFriends.count == 1) {
-        _members = [NSString stringWithFormat:@"%@...groupchat", _selectedFriends[0]];
-    }else if(_selectedFriends.count > 1){
-        _members = [NSString stringWithFormat:@"%@,%@...groupchat",_selectedFriends[0],_selectedFriends[1]];
-    }
-    NSLog(@"群聊：%@",_members);
-    
-    [[MyXMPP shareInstance] creatGroupName:_members withpassword:nil andsubject:nil];
-    [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(invitenewfriends) name:MyXmppRoomDidConfigurationNotification object:nil];
-    NSLog(@"selected__-----------%@",_selectedFriends);
+        UIAlertController *alert = [UIAlertController alertControllerWithTitle:@"请输入群名:" message:@"" preferredStyle:UIAlertControllerStyleAlert];
+        [alert addTextFieldWithConfigurationHandler:^(UITextField * _Nonnull textField) {
+            textField.textColor = [UIColor redColor];
+            textField.placeholder = @"GroupName";
+        }];
+        
+        UIAlertAction *okAction = [UIAlertAction actionWithTitle:@"确定" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
+            _groupName = alert.textFields.firstObject.text;
+            [[MyXMPP shareInstance] creatGroupName:_groupName withpassword:nil andsubject:nil];
+        }];
+        
+        UIAlertAction *cancleAction = [UIAlertAction actionWithTitle:@"取消" style:UIAlertActionStyleCancel handler:^(UIAlertAction * _Nonnull action) {
+            
+        }];
+        
+        [alert addAction:okAction];
+        [alert addAction:cancleAction];
+        [self presentViewController:alert animated:YES completion:nil];
+        
+    [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(inviteNewFriends) name:MyXmppRoomDidConfigurationNotification object:nil];
+//    NSLog(@"selected__-----------%@",_selectedFriends);
     }
 }
 
-
-- (void)invitenewfriends{
+- (void)inviteNewFriends{
     [self dismissViewControllerAnimated:YES completion: ^{
-        NSArray *option = @[_members, @0];
+        NSArray *option = @[_groupName,  @0];
         [_fatherVC performSegueWithIdentifier:@"chat" sender:option];//进入聊天的界面
     }];
     for (NSString *users in _selectedFriends) {
@@ -221,15 +229,5 @@ static NSString *defaultGroupName = @"11111111";
     
 }
 
-
-/*
-#pragma mark - Navigation
-
-// In a storyboard-based application, you will often want to do a little preparation before navigation
-- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
-    // Get the new view controller using [segue destinationViewController].
-    // Pass the selected object to the new view controller.
-}
-*/
 
 @end
