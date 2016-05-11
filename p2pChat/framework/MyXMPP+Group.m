@@ -100,6 +100,10 @@ static NSString *pictureType = @"[图片]";
     [self.chatroom destroyRoom];
 }
 
+- (void)leaveChatRoom{
+    [self.chatroom leaveRoom];
+}
+
 #pragma mark - room delegate
 - (void)xmppRoomDidCreate:(XMPPRoom *)sender {
     NSLog(@"did creat chat room");
@@ -236,12 +240,21 @@ static NSString *pictureType = @"[图片]";
     NSLog(@"did recieve invite message :%@", message);
     NSLog(@"room jid:%@",roomJID);
     
-    self.roomStorage = [[XMPPRoomCoreDataStorage alloc]init];
+    if (self.roomStorage==nil) {
+        self.roomStorage = [[XMPPRoomCoreDataStorage alloc]init];
+    }
     self.chatroom = [[XMPPRoom alloc] initWithRoomStorage:self.roomStorage jid:roomJID];
     [self.chatroom activate:self.stream];
     [self.chatroom addDelegate:self delegateQueue:dispatch_get_main_queue()];
     NSString *joinname = [[NSUserDefaults standardUserDefaults]stringForKey:@"name"];
     [self.chatroom joinRoomUsingNickname:joinname history:nil];
+    
+    [self fetchMembersFromGroupWithCompletion:^(NSArray *members) {
+        for (NSString *s in members) {
+            NSLog(@"%@", s);
+        }
+    }];
+    
 }
 
 
