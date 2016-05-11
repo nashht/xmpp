@@ -248,13 +248,7 @@ static NSString *pictureType = @"[图片]";
     [self.chatroom addDelegate:self delegateQueue:dispatch_get_main_queue()];
     NSString *joinname = [[NSUserDefaults standardUserDefaults]stringForKey:@"name"];
     [self.chatroom joinRoomUsingNickname:joinname history:nil];
-    
-    [self fetchMembersFromGroupWithCompletion:^(NSArray *members) {
-        for (NSString *s in members) {
-            NSLog(@"%@", s);
-        }
-    }];
-    
+
 }
 
 
