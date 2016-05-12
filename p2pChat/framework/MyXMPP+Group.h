@@ -19,5 +19,6 @@
 //- (void)sendPicture:(NSString *)path ToGroup:(NSString *)groupname;
 - (void)sendAudio:(NSString *)path ToGroup:(NSString *)groupname withlength:(NSString *)length;
 - (void)destroyChatRoom;
+- (void)leaveChatRoom;
 
 @end
