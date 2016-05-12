@@ -121,7 +121,6 @@ static NSString *defaultGroupName = @"11111111";
     }
 }
 
-
 #pragma mark - Table view data source
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
@@ -132,7 +131,6 @@ static NSString *defaultGroupName = @"11111111";
     XMPPGroupCoreDataStorageObject *group = _groupCoreDataStorageObjects[section];
     return group.users.count;
 }
-
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     static NSString *ID = @"group";
@@ -228,6 +226,5 @@ static NSString *defaultGroupName = @"11111111";
     }
     
 }
-
 
 @end
