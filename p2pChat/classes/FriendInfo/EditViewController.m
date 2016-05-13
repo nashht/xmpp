@@ -8,7 +8,7 @@
 
 #import "EditViewController.h"
 
-@interface EditViewController ()
+@interface EditViewController ()<UITextFieldDelegate>
 
 @property (weak, nonatomic) IBOutlet UITextField *infoTextField;
 
@@ -22,6 +22,7 @@
     [super viewDidLoad];
     
     _myvCard = [MyXMPP shareInstance].myVCardTemp;
+    _infoTextField.delegate = self;
     
     switch (_type) {
         case MyXmppUpdateTypeMobilePhone:
@@ -29,20 +30,20 @@
             self.navigationItem.title = @"请输入新手机号";
             break;
         case MyXmppUpdateTypeAddress:
-            _infoTextField.text = _myvCard.addresses[0];
+            _infoTextField.text = _myvCard.url;
             self.navigationItem.title = @"请输入新地址";
             break;
         case MyXmppUpdateTypeEmail:
-            _infoTextField.text = _myvCard.emailAddresses[0];
+            _infoTextField.text = _myvCard.mailer;
             self.navigationItem.title = @"请输入新邮箱";
             break;
         case MyXmppUpdateTypePhone:
-            _infoTextField.text = _myvCard.telecomsAddresses[0];
+            _infoTextField.text = _myvCard.uid;
             self.navigationItem.title = @"请输入新电话";
             break;
         case MyXmppUpdateTypeTitle:
             _infoTextField.text = _myvCard.title;
-            self.navigationItem.title = @"请输入新部门（待修改）";
+            self.navigationItem.title = @"请输入新部门";
             break;
     }
     [_infoTextField becomeFirstResponder];
@@ -74,6 +75,13 @@
     }];
     [alert addAction:okAction];
     [self presentViewController:alert animated:YES completion:nil];
+}
+
+#pragma mark - UITextFieldDelegate
+- (BOOL)textFieldShouldReturn:(UITextField *)textField{
+    [textField resignFirstResponder];
+    [self save:nil];
+    return YES;
 }
 
 @end

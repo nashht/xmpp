@@ -121,7 +121,6 @@ static NSString *pictureReuseIdentifier = @"pictureMessageCell";
     [self.functionView setFunctionBlock:^(UIImage *image, NSString *imageName)
      {
          NSString *str = [NSString stringWithFormat:@"%@", imageName];
-         NSLog(@"click---str%@",str);
          [weakSelf.bottomView inputFaceView:str];
      }];
     
@@ -197,6 +196,7 @@ static NSString *pictureReuseIdentifier = @"pictureMessageCell";
         GroupMessage *groupMessage = (GroupMessage *)messageObj;
         message = [[MessageBean alloc]initWithUsername:groupMessage.username type:groupMessage.type body:groupMessage.body more:groupMessage.more time:groupMessage.time isOut:nil isP2P:NO];
     }
+    
     MessageType type = message.type.charValue;
     switch (type) {
         case MessageTypeMessage:{

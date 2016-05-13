@@ -28,7 +28,7 @@
     _dataManager.context = _managedObjectContext;
     _myXMPP = [MyXMPP shareInstance];
     
-    [_myXMPP loginWithName:@"ht_test" Password:@"123"];
+    [_myXMPP loginWithName:@"ht" Password:@"11"];
 ////    if ([[NSUserDefaults standardUserDefaults]stringForKey:@"name"] != nil) {
 ////        NSString *name = [[NSUserDefaults standardUserDefaults]stringForKey:@"name"];
 ////        NSString *password = [[NSUserDefaults standardUserDefaults]stringForKey:@"password"];

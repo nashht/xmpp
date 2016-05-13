@@ -145,7 +145,7 @@ static NSString *defaultGroupName = @"11111111";
     XMPPUserCoreDataStorageObject *obj = groupInfo.users.allObjects[indexPath.row];
     XMPPvCardTemp *vCard = [[MyXMPP shareInstance]fetchFriend:obj.jid];
     
-    if (vCard.photo != nil) {
+    if (vCard.photo) {
         cell.imageView.image = [UIImage imageWithData:vCard.photo];
     } else {
         cell.imageView.image = [UIImage imageNamed:@"0"];
@@ -164,9 +164,6 @@ static NSString *defaultGroupName = @"11111111";
  
     XMPPGroupCoreDataStorageObject *groupInfo = _groupCoreDataStorageObjects[indexPath.section];
     XMPPUserCoreDataStorageObject *obj = groupInfo.users.allObjects[indexPath.row];
-    
-    NSLog(@"name______%@",obj.jidStr);
-    NSLog(@"section,%ld,row%ld",indexPath.section,indexPath.row);
     
     if (![_selectedFriends containsObject:obj.jid.user]) {
         [_selectedFriends addObject:obj.jid.user];
@@ -187,7 +184,6 @@ static NSString *defaultGroupName = @"11111111";
 }
 
 - (UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section{
-    NSLog(@"viewForHeaderInSection");
 
     HeaderView *view =  [HeaderView headerView];
     view.delegate = self;
@@ -200,7 +196,6 @@ static NSString *defaultGroupName = @"11111111";
 
 #pragma mark - HeaderViewDelegate
 - (void)headerViewDidClicked:(HeaderView *)headerView{
-    NSLog(@"headerViewDidClicked___");
     
     NSUInteger section = headerView.section;
     NSUInteger row = [_tableView numberOfRowsInSection:section];
