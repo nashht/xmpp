@@ -104,6 +104,50 @@ static NSString *pictureType = @"[图片]";
     [self.chatroom leaveRoom];
 }
 
+- (void)setGroupSubject:(NSString *)subject{
+    [self.chatroom changeRoomSubject:subject];
+
+}
+
+//只有owner拥有删除权限
+- (void)deleteMember:(NSString *)member FromGroup:(NSString *)group{
+    
+    NSXMLElement *iq = [NSXMLElement elementWithName:@"iq"];
+    NSXMLElement *deleteMember = [NSXMLElement elementWithName:@"deleteMember"];
+//    NSXMLElement *reason = [NSXMLElement elementWithName:@"reason"];
+    
+    [iq addAttributeWithName:@"id" stringValue:@"del"];
+    [iq addAttributeWithName:@"type" stringValue:@"set"];
+    [iq addAttributeWithName:@"from" stringValue:[NSString stringWithFormat:@"%@",self.myjid]];
+    [iq addAttributeWithName:@"to" stringValue:[NSString stringWithFormat:@"%@@%@",group,myRoomDomain]];
+    
+    [deleteMember addAttributeWithName:@"xmlns" stringValue:@"jabber:iq:search"];
+    
+    NSXMLElement *reason = [NSXMLElement elementWithName:@"reason" stringValue:@"delete"];
+    
+    NSXMLElement *item = [NSXMLElement elementWithName:@"item"];
+    [item addAttributeWithName:@"role" stringValue:@"participant"];
+    [item addAttributeWithName:@"nickname" stringValue:[NSString stringWithFormat:@"%@",member]];
+    [item addChild:reason];
+    
+    
+    [deleteMember addChild:item];
+
+    [iq addChild:deleteMember];
+    
+    [self.stream sendElement:iq];
+    
+    [self.stream addDelegate:self delegateQueue:dispatch_get_main_queue()];
+    
+    NSLog(@"did use delete method!");
+}
+
+-(void)getMembersFromGroup{
+//    self.roomOccupant = [self.roomStorage occupantForJID:self.myjid stream:self.stream inContext:<#(NSManagedObjectContext *)#> ];
+//    NSLog(@"%@",self.roomOccupant.roomJIDStr);
+//    XMPPRoomOccupantMemoryStorageObject
+}
+
 #pragma mark - room delegate
 - (void)xmppRoomDidCreate:(XMPPRoom *)sender {
     NSLog(@"did creat chat room");
@@ -122,7 +166,14 @@ static NSString *pictureType = @"[图片]";
             NSLog(@"%@", s);
         }
     }];//block获取群成员列表，群成员保存在members中
-
+    
+    
+//    [self inviteFriends:@"cctest" withMessage:@"hello！"];
+//    [self inviteFriends:@"ht" withMessage:@"hello！"];
+//    [self inviteFriends:@"zxk" withMessage:@"hello！"];
+//    
+//    [self deleteMember:@"cctest" FromGroup:self.chatroom.roomJID.user];
+    
 }
 
 - (void)xmppRoom:(XMPPRoom *)sender didFetchConfigurationForm:(NSXMLElement *)configForm {
@@ -143,10 +194,15 @@ static NSString *pictureType = @"[图片]";
     
     [[NSNotificationCenter defaultCenter]postNotificationName:MyXmppRoomDidConfigurationNotification object:nil];
     
-//    [self inviteFriends:@"ht" withMessage:@"hellossss"];
-//    [self inviteFriends:@"ht" withMessage:@"hello！"];
+    NSLog(@"didFetchConfigurationForm");
+    
+  
+    
+    
+    
+    
 //    [self sendMessage:@"hello" ToGroup:@"222"];
-//    [self sendGroupMessage:@"哈哈哈哈哈哈哈"];
+
 //    [sender sendMessageWithBody:@"hehehehehehhe"];
 }
 
@@ -202,6 +258,7 @@ static NSString *pictureType = @"[图片]";
                 case 't':{//text
                     [[DataManager shareManager]saveMessageWithGroupname:occupantJID.user username:user time:timeNumber body:text];
                     [[DataManager shareManager]addRecentUsername:sender.roomJID.user time:time body:message.body isOut:NO isP2P:NO];
+                    NSLog(@"群组『%@』有来自%@的新消息：%@",sender.roomJID.user,occupantJID.resource,[message body]);
                     break;
                 }
                 case 'a':{//audio
@@ -211,6 +268,7 @@ static NSString *pictureType = @"[图片]";
                     [data writeToFile:path atomically:YES];
                     [self.dataManager saveRecordWithGroupname:occupantJID.user username:occupantJID.resource time:timeNumber path:path length:during];
                     [self.dataManager addRecentUsername:occupantJID.user time:time body:voiceType isOut:NO isP2P:NO];
+                    NSLog(@"群组『%@』有来自%@的新消息：%@",sender.roomJID.user,occupantJID.resource,@"语音消息");
                     break;
                 }
                 case 'p':{//photo
@@ -222,15 +280,28 @@ static NSString *pictureType = @"[图片]";
             }
             
         }else{
-            NSLog(@"群组『%@』有新消息：%@",sender.roomJID.user,[message body]);
+            NSLog(@"群组『%@』有来自%@的新消息：%@",sender.roomJID.user,occupantJID.resource,[message body]);
         }
    }
 
 }
 
-- (void)xmppRoom:(XMPPRoom *)sender occupantDidLeave:(XMPPJID *)occupantJID
-{
-    NSLog(@"%@离开了房间",occupantJID.user);
+- (void)xmppRoom:(XMPPRoom *)sender occupantDidJoin:(XMPPJID *)occupantJID withPresence:(XMPPPresence *)presence{
+    //sender.roomJID.user与occupantJID.user都表示room的名称
+//    NSString *str = [[NSString alloc]init];
+//    if ([presence.type isEqualToString:@"available"]) {
+//        str = @"online";
+//    }
+    NSLog(@"%@进入了%@房间",occupantJID.resource,sender.roomJID);
+
+}
+
+- (void)xmppRoom:(XMPPRoom *)sender occupantDidLeave:(XMPPJID *)occupantJID withPresence:(XMPPPresence *)presence{
+//    NSString *str = [[NSString alloc]init];
+//    if ([presence.type isEqualToString:@"unavailable"]) {
+//        str = @"offline";
+//    }
+    NSLog(@"%@离开了%@房间",occupantJID.resource,sender.roomJID);
 }
 
 #pragma mark recieve invitation delegate
@@ -248,8 +319,12 @@ static NSString *pictureType = @"[图片]";
     [self.chatroom addDelegate:self delegateQueue:dispatch_get_main_queue()];
     NSString *joinname = [[NSUserDefaults standardUserDefaults]stringForKey:@"name"];
     [self.chatroom joinRoomUsingNickname:joinname history:nil];
+    
+//    NSLog(@"XMPPMUC:%@",sender->rooms);
 
 }
+
+
 
 
 @end

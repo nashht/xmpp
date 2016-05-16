@@ -110,7 +110,9 @@ static double LabelHigh = 20;
 #warning Incomplete implementation, return the number of rows
 //    return 1;
     if(section == 2 || section == 3) return 1;
-    else return 2;
+    else if(section ==0) return 2;
+    else return 3;
+        
 }
 
 

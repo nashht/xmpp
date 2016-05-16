@@ -33,6 +33,7 @@
         NSString *name = [[NSUserDefaults standardUserDefaults]stringForKey:@"name"];
         NSString *password = [[NSUserDefaults standardUserDefaults]stringForKey:@"password"];
         [_myXMPP loginWithName:name Password:password];
+//        [_myXMPP loginWithName:@"zxk" Password:@"123"];
     }
     
     NSError *audioSessionError = nil;

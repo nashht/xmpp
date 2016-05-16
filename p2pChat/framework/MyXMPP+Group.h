@@ -18,7 +18,9 @@
 - (void)sendMessage:(NSString *)text ToGroup:(NSString *)groupname;
 //- (void)sendPicture:(NSString *)path ToGroup:(NSString *)groupname;
 - (void)sendAudio:(NSString *)path ToGroup:(NSString *)groupname withlength:(NSString *)length;
-- (void)destroyChatRoom;
-- (void)leaveChatRoom;
+- (void)destroyChatRoom;//删除聊天室
+- (void)leaveChatRoom;//退出聊天室
+- (void)setGroupSubject:(NSString *)subject;//设置群聊主题
+- (void)deleteMember:(NSString *)member FromGroup:(NSString *)group;
 
 @end

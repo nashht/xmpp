@@ -13,6 +13,7 @@
 		844988031CC8BE21009AE90E /* GroupMessage+CoreDataProperties.m in Sources */ = {isa = PBXBuildFile; fileRef = 844988001CC8BE21009AE90E /* GroupMessage+CoreDataProperties.m */; };
 		844988041CC8BE21009AE90E /* GroupMessage.m in Sources */ = {isa = PBXBuildFile; fileRef = 844988021CC8BE21009AE90E /* GroupMessage.m */; };
 		844988071CC8C794009AE90E /* XMPPMessage+MyExtends.m in Sources */ = {isa = PBXBuildFile; fileRef = 844988061CC8C794009AE90E /* XMPPMessage+MyExtends.m */; };
+		848D25FA1CE9B76300F50727 /* GroupDocumentsTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 848D25F91CE9B76300F50727 /* GroupDocumentsTableViewController.m */; };
 		900122631CA91EE3005D5BFA /* ChatViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 900122461CA91EE2005D5BFA /* ChatViewController.m */; };
 		900122651CA91EE3005D5BFA /* MessageFrameModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 9001224A1CA91EE2005D5BFA /* MessageFrameModel.m */; };
 		900122661CA91EE3005D5BFA /* MessageViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 9001224C1CA91EE2005D5BFA /* MessageViewCell.m */; };
@@ -276,6 +277,8 @@
 		844988021CC8BE21009AE90E /* GroupMessage.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = GroupMessage.m; path = dataStorage/GroupMessage.m; sourceTree = "<group>"; };
 		844988051CC8C794009AE90E /* XMPPMessage+MyExtends.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "XMPPMessage+MyExtends.h"; path = "framework/XMPPMessage+MyExtends.h"; sourceTree = "<group>"; };
 		844988061CC8C794009AE90E /* XMPPMessage+MyExtends.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "XMPPMessage+MyExtends.m"; path = "framework/XMPPMessage+MyExtends.m"; sourceTree = "<group>"; };
+		848D25F81CE9B76300F50727 /* GroupDocumentsTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GroupDocumentsTableViewController.h; sourceTree = "<group>"; };
+		848D25F91CE9B76300F50727 /* GroupDocumentsTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GroupDocumentsTableViewController.m; sourceTree = "<group>"; };
 		900122451CA91EE2005D5BFA /* ChatViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ChatViewController.h; sourceTree = "<group>"; };
 		900122461CA91EE2005D5BFA /* ChatViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ChatViewController.m; sourceTree = "<group>"; };
 		900122491CA91EE2005D5BFA /* MessageFrameModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MessageFrameModel.h; sourceTree = "<group>"; };
@@ -780,6 +783,15 @@
 			name = GroupMembersInfo;
 			sourceTree = "<group>";
 		};
+		848D25F71CE9B71D00F50727 /* GroupDocuments */ = {
+			isa = PBXGroup;
+			children = (
+				848D25F81CE9B76300F50727 /* GroupDocumentsTableViewController.h */,
+				848D25F91CE9B76300F50727 /* GroupDocumentsTableViewController.m */,
+			);
+			name = GroupDocuments;
+			sourceTree = "<group>";
+		};
 		84F32C441CBF766C00BB9BD1 /* BottomView */ = {
 			isa = PBXGroup;
 			children = (
@@ -793,6 +805,7 @@
 		900122431CA91EE2005D5BFA /* classes */ = {
 			isa = PBXGroup;
 			children = (
+				848D25F71CE9B71D00F50727 /* GroupDocuments */,
 				842C38671CDC828100D76AF6 /* GroupMembersInfo */,
 				90F711151CBC89FC00042A99 /* Main.storyboard */,
 				90FA06501CAE06D400851B1C /* Me */,
@@ -2403,6 +2416,7 @@
 				DAAA186D1CABCF6500691170 /* Message+CoreDataProperties.m in Sources */,
 				DA90B1971C8989930080E037 /* XMPPIQ.m in Sources */,
 				DA90B1E31C8989930080E037 /* XMPPCapabilities.m in Sources */,
+				848D25FA1CE9B76300F50727 /* GroupDocumentsTableViewController.m in Sources */,
 				DA90B1D91C8989930080E037 /* NSDate+XMPPDateTimeProfiles.m in Sources */,
 				DA90B19A1C8989930080E037 /* XMPPModule.m in Sources */,
 				90FA06441CACDAA600851B1C /* FriendInfoController.m in Sources */,

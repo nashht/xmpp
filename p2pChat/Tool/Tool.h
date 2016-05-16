@@ -15,5 +15,6 @@
 + (NSDate *)dateFromString:(NSString *)dateString;
 + (NSString *)getFileName:(NSString *)info extension:(NSString *)extension;
 + (NSDate *)transferDate:(NSDate *)date;
++ (NSString *)getDocumentsUrl;
 
 @end
