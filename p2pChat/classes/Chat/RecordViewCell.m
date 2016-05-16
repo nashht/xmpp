@@ -11,6 +11,7 @@
 #import "RecordFrameModel.h"
 #import "AudioCenter.h"
 #import "MessageBean.h"
+#import "MyXmpp+VCard.h"
 
 @interface RecordViewCell()
 
@@ -64,34 +65,47 @@
 
 - (void) setRecordFrame:(RecordFrameModel *)recordFrame{
     _recordFrame = recordFrame;
-    
+
     //    数据模型
-    MessageBean *msg = _recordFrame.message;
+    MessageBean *message = _recordFrame.message;
+    XMPPvCardTemp *vCard = [[MyXMPP shareInstance]fetchFriend:[XMPPJID jidWithUser:message.username domain:myDomain resource:nil]];
+    XMPPvCardTemp *myvCard = [MyXMPP shareInstance].myVCardTemp;
     
-    _timeLable.text = [Tool stringFromDate:[NSDate dateWithTimeIntervalSince1970:msg.time.doubleValue]];
+    _timeLable.text = [Tool stringFromDate:[NSDate dateWithTimeIntervalSince1970:message.time.doubleValue]];
     _timeLable.frame = _recordFrame.timeFrame;
     
-    int intLength = [msg.more intValue];
+    int intLength = [message.more intValue];
     NSString *strLength = [NSString stringWithFormat:@"%d''",intLength];
     _voiceLength.text = strLength;
     _voiceLength.frame = _recordFrame.voiceLengthFrame;
     
-    if ([msg.isOut boolValue]) {
-        _photoImage.image = [UIImage imageNamed:@"0"];
-    }else{
-        _photoImage.image = [UIImage imageNamed:@"1"];
-    }
+
     
     _photoImage.frame = _recordFrame.photoFrame;
     [_photoImage.layer setCornerRadius:10];
     _photoImage.layer.masksToBounds = true;
+    if ([message.isOut boolValue]) {
+        if (!myvCard.photo) {
+            _photoImage.image = [UIImage imageNamed:@"0"];
+        }
+        else{
+            _photoImage.image = [UIImage imageWithData:myvCard.photo];
+        }
+    }else{
+        if (!vCard.photo) {
+            _photoImage.image = [UIImage imageNamed:@"0"];
+        }
+        else{
+            _photoImage.image = [UIImage imageWithData:vCard.photo];
+        }
+    }
     
-//    [_bodyBtn setTitle:msg.body forState:UIControlStateNormal];
+//    [_bodyBtn setTitle:message.body forState:UIControlStateNormal];
     _bodyBtn.frame = _recordFrame.bodyFrame;
     [_bodyBtn addTarget:self action:@selector(btnClick) forControlEvents:UIControlEventTouchUpInside];
     
     //    背景,图片上加上播放图标
-    if ([msg.isOut boolValue]) {
+    if ([message.isOut boolValue]) {
         [_bodyBtn setBackgroundImage: [self resizeImageWithName:@"chat_send_nor"] forState:UIControlStateNormal];
     }else{
         [_bodyBtn setBackgroundImage:[self resizeImageWithName:@"chat_recive_nor"] forState:UIControlStateNormal];

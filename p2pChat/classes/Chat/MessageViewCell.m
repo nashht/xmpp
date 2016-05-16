@@ -59,7 +59,14 @@
 - (void) setMessageFrame:(MessageFrameModel *)messageFrame{
     _messageFrame = messageFrame;
     MessageBean *message = messageFrame.message;
-    XMPPvCardTemp *vCard = [[MyXMPP shareInstance]fetchFriend:[XMPPJID jidWithUser:message.username domain:myDomain resource:nil]];
+    
+    XMPPvCardTemp *vCard;
+    if ([message.isOut boolValue]) {
+        vCard = [MyXMPP shareInstance].myVCardTemp;
+    }else{
+        vCard = [[MyXMPP shareInstance]fetchFriend:[XMPPJID jidWithUser:message.username domain:myDomain resource:nil]];
+    }
+    
     //    数据模型
     
     _timeLable.text = [Tool stringFromDate:[NSDate dateWithTimeIntervalSince1970:message.time.doubleValue]];

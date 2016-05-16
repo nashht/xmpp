@@ -23,7 +23,7 @@
 
 @property (weak, nonatomic) IBOutlet UIButton *addBtn;
 @property (weak, nonatomic) IBOutlet UITableView *recentTableView;
-@property (weak, nonatomic)  UIRefreshControl *refreshControl;
+//@property (weak, nonatomic)  UIRefreshControl *refreshControl;
 
 @property (strong, nonatomic) DataManager *dataManager;
 @property (strong, nonatomic) NSFetchedResultsController *recentController;
@@ -57,22 +57,6 @@
     _recentController.delegate = _resultsControllerDelegate;
     [_recentTableView registerNib:[UINib nibWithNibName:@"RecentCell" bundle:[NSBundle mainBundle]] forCellReuseIdentifier:@"recentCell"];//注册nib
     
-    UIRefreshControl *refresh = [[UIRefreshControl alloc] init];
-    self.refreshControl = refresh;
-    [self.recentTableView addSubview:refresh];
-    
-    refresh.attributedTitle = [[NSAttributedString alloc] initWithString:@"下拉刷新"];
-    [refresh addTarget:self action:@selector(refreshTableView:) forControlEvents:UIControlEventValueChanged];
-}
-
-- (void)refreshTableView:(UIRefreshControl *)refreshControl{
-    NSLog(@"refreshTableView");
-    if ([[MyXMPP shareInstance].stream isDisconnected]) {
-        [[MyXMPP shareInstance] reconnect];
-    }
-
-    [refreshControl endRefreshing];
-
 }
 
 - (void)viewWillAppear:(BOOL)animated {
@@ -112,7 +96,6 @@
 }
 
 - (void)myXmppAuthenticateFailed {
-//    UIAlertController
     UIAlertController *alertController = [UIAlertController alertControllerWithTitle:@"登录失败" message:@"密码已修改，请重新登录。" preferredStyle:UIAlertControllerStyleAlert];
     UIAlertAction *okAction = [UIAlertAction actionWithTitle:@"确定" style:UIAlertActionStyleDefault handler:nil];
     [alertController addAction:okAction];

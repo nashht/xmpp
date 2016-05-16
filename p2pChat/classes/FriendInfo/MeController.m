@@ -33,8 +33,7 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    
-    NSLog(@"MEviewDidLoadME");
+
     self.tableView.delegate = self;
     self.tableView.dataSource = self;
 
@@ -97,8 +96,8 @@
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
     if ([segue.identifier isEqualToString:@"editInfo"]) {
         EditViewController *editVC = segue.destinationViewController;
-        NSIndexPath *indexPath = sender;
-        editVC.type = indexPath.row;
+//        NSIndexPath *indexPath = sender;
+        editVC.type = ((NSIndexPath *)sender).row;
     }
 }
 
@@ -123,7 +122,7 @@
     _photoView.image = image;
 
     [[MyXMPP shareInstance]updataeMyPhoto:UIImagePNGRepresentation(self.photoView.image)];
-    NSLog(@"didFinishPickingMediaWithInfo");
+//    NSLog(@"didFinishPickingMediaWithInfo");
     
     [self dismissViewControllerAnimated:YES completion:^{
       

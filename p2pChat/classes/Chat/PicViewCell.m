@@ -63,17 +63,18 @@
     _picFrame = picFrame;
     
     //    数据模型
-    MessageBean *msg = picFrame.message;
+    MessageBean *message = picFrame.message;
     
-    _timeLable.text = [Tool stringFromDate:msg.time];
+    _timeLable.text = [Tool stringFromDate:[NSDate dateWithTimeIntervalSince1970:message.time.doubleValue]];
     _timeLable.frame = picFrame.timeFrame;
     
     XMPPvCardTemp *vCard;
-    if ([msg.isOut boolValue]) {
+    if ([message.isOut boolValue]) {
         vCard = [MyXMPP shareInstance].myVCardTemp;
     }else{
-        vCard = [[MyXMPP shareInstance]fetchFriend:[XMPPJID jidWithUser:msg.username domain:myDomain resource:nil]];
+        vCard = [[MyXMPP shareInstance]fetchFriend:[XMPPJID jidWithUser:message.username domain:myDomain resource:nil]];
     }
+    
     if (vCard.photo != nil) {
         _photoImage.image = [UIImage imageWithData:vCard.photo];
     } else {
@@ -91,7 +92,7 @@
     _image = image;
     
     //    pic背景
-    if ([msg.isOut boolValue]) {
+    if ([message.isOut boolValue]) {
         [_bodyBtn setBackgroundImage: [self resizeImageWithName:@"chat_send_nor"] forState:UIControlStateNormal];
     }else{
         [_bodyBtn setBackgroundImage:[self resizeImageWithName:@"chat_recive_nor"] forState:UIControlStateNormal];
