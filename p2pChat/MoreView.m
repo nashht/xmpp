@@ -8,6 +8,7 @@
 
 #import "MoreView.h"
 #import "Tool.h"
+#import "AFNetworking.h"
 #import "DataManager.h"
 #import "PhotoLibraryCenter.h"
 #import "MyXMPP+P2PChat.h"
@@ -37,6 +38,7 @@
     if (_imagePickerVC == nil) {
         _imagePickerVC = [[UIImagePickerController alloc]init];
         _imagePickerVC.delegate = self;
+        _imagePickerVC.allowsEditing = YES;
     }
     _imagePickerVC.sourceType = UIImagePickerControllerSourceTypePhotoLibrary;
     UIViewController *superVC = [self viewController];
@@ -64,18 +66,18 @@
     return nil;
 }
 
-- (void)sendPic {
-    if (_previewView != nil) {
-        [_previewView removeFromSuperview];
-    }
-    [_imagePickerVC dismissViewControllerAnimated:YES completion:nil];
+//- (void)sendPic {
+//    if (_previewView != nil) {
+//        [_previewView removeFromSuperview];
+//    }
+//    [_imagePickerVC dismissViewControllerAnimated:YES completion:nil];
+//
+//    [[MyXMPP shareInstance]sendPictureIdentifier:_localIdentifier data:_imageData thumbnailPath:_thumbnailPath ToUser:_chatObjectString];
+//}
 
-    [[MyXMPP shareInstance]sendPictureIdentifier:_localIdentifier data:_imageData thumbnailPath:_thumbnailPath ToUser:_chatObjectString];
-}
-
-- (void)cancel {
-    [_previewView removeFromSuperview];
-}
+//- (void)cancel {
+//    [_previewView removeFromSuperview];
+//}
 
 - (void)sendOriginalImageInfo:(NSNotification *)notification {
 
@@ -85,54 +87,64 @@
 
 }
 
-- (void)initPreview {
-    _previewView = [[UIView alloc]initWithFrame:[UIScreen mainScreen].bounds];
-    _previewView.backgroundColor = [UIColor whiteColor];
-    _previewView.alpha = 0.98;
-    
-    CGSize size = [UIScreen mainScreen].bounds.size;
-    
-    UIButton *cancelBtn = [UIButton buttonWithType:UIButtonTypeRoundedRect];
-    cancelBtn.frame = CGRectMake(15, 20, 50, 30);
-    [cancelBtn addTarget:self action:@selector(cancel) forControlEvents:UIControlEventTouchUpInside];
-    [cancelBtn setTitle:@"cancel" forState:UIControlStateNormal];
-    [_previewView addSubview:cancelBtn];
-    
-    UIButton *sendBtn = [UIButton buttonWithType:UIButtonTypeRoundedRect];
-    sendBtn.frame = CGRectMake(size.width - 65, 20, 50, 30);
-    [sendBtn addTarget:self action:@selector(sendPic) forControlEvents:UIControlEventTouchUpInside];
-    [sendBtn setTitle:@"send" forState:UIControlStateNormal];
-    [_previewView addSubview:sendBtn];
-}
 
 #pragma mark - image picker delegate
 - (void)imagePickerController:(UIImagePickerController *)picker didFinishPickingMediaWithInfo:(nonnull NSDictionary<NSString *,id> *)info {
     _image = info[UIImagePickerControllerOriginalImage];
-    _thumbnailPath = [Tool getFileName:@"thumbnail" extension:@"png"];
-    UIImage *thumbnailImage = [_photoCenter makeThumbnail:_image WithSize:CGSizeMake(100, 100)];
-    [UIImagePNGRepresentation(thumbnailImage) writeToFile:_thumbnailPath atomically:YES];
+    
+    _thumbnailPath = [Tool getFileName:@"thumbnail" extension:@"jpeg"];
+    UIImage *thumbnailImage = [_photoCenter makeThumbnail:_image WithSize:CGSizeMake(200, 200)];
+
+    NSData *imageData = UIImagePNGRepresentation(_image);
+    NSData *thumbnailData = UIImagePNGRepresentation(thumbnailImage);
+    [thumbnailData writeToFile:_thumbnailPath atomically:YES];
     
     if (_imagePickerVC.sourceType == UIImagePickerControllerSourceTypePhotoLibrary) {//图片来自图库
-        [self initPreview];
-        
+       
         NSURL *url = info[UIImagePickerControllerReferenceURL];//这个url和identifier相差一些字符
-        _localIdentifier = [_photoCenter getLocalIdentifierFromPath:[url absoluteString] ];
-        CGSize size = [UIScreen mainScreen].bounds.size;
-        CGFloat scale = MIN(size.width / _image.size.width, size.height / _image.size.height);
-        UIImageView *imageView = [[UIImageView alloc]initWithImage:_image];
-        imageView.frame = CGRectMake((size.width - _image.size.width * scale) / 2, (size.height - _image.size.height * scale) / 2, _image.size.width * scale, _image.size.height * scale);
-        [_previewView addSubview:imageView];
-        [picker.view addSubview:_previewView];
+        _localIdentifier = [_photoCenter getLocalIdentifierFromPath:[url absoluteString]];
         
-        [_photoCenter getImageDataWithLocalIdentifier:_localIdentifier withCompletionHandler:^(NSData *imageData) {
-            _imageData = imageData;
-        }];
     } else {//图片来自拍照
         [_photoCenter saveImage:_image withCompletionHandler:^(NSString *identifier) {
             _localIdentifier = identifier;
-            [self sendPic];
         }];
     }
+    
+    NSDate *date = [NSDate date];
+    NSTimeInterval t = [date timeIntervalSince1970];
+    int time = (int)t;
+    
+    NSString *filename = [NSString stringWithFormat:@"%@_%i",_chatObjectString,time];
+    NSString *url = [NSString stringWithFormat:@"http://10.108.136.59:8080/FileServer/file?method=upload&filename=%@",filename];
+    [self sendPic:imageData toServerUrl:url];
+    
+    [[MyXMPP shareInstance] sendPictureIdentifier:_localIdentifier data:thumbnailData thumbnailPath:_thumbnailPath netUrl:url ToUser:_chatObjectString];
+    [self.viewController dismissViewControllerAnimated:YES completion:nil];
 }
 
+- (void)sendPic:(NSData *)imageData toServerUrl:(NSString *)stringUrl{
+    
+    NSLog(@"sendsendPic2Server");
+    
+    AFHTTPSessionManager *manager = [AFHTTPSessionManager manager];
+    manager.responseSerializer = [AFHTTPResponseSerializer serializer];
+    
+    // 参数para:{method:”upload”/”download”,filename:””}(filename格式：username_timestamp
+    //     访问路径
+//    NSString *stringURL = @"http://10.108.136.59:8080/FileServer/file?method=upload&filename=1123";
+    
+    [manager POST:stringUrl parameters:nil constructingBodyWithBlock:^(id<AFMultipartFormData>  _Nonnull formData) {
+        // 拼接文件参数
+        [formData appendPartWithFileData:imageData name:@"file" fileName:@"filename" mimeType:@"image/png"];
+        
+    } progress:^(NSProgress * _Nonnull uploadProgress) {
+        
+    } success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
+        id json = [NSJSONSerialization JSONObjectWithData:responseObject options:NSJSONReadingMutableContainers error:nil];
+        NSLog(@"success%@",json);
+    } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
+        NSLog(@"failed------error:   %@",error);
+    }];
+    
+}
 @end

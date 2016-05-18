@@ -8,6 +8,7 @@
 
 #import <UIKit/UIKit.h>
 #import "MyXMPP+P2PChat.h"
+#import "AFNetworking.h"
 #import "XMPPStream.h"
 #import "XMPPMessage.h"
 #import "XMPPMessage+MyExtends.h"
@@ -91,7 +92,9 @@ static NSString *pictureType = @"[图片]";
     [self.dataManager addRecentUsername:user time:ltime body:voiceType isOut:YES isP2P:YES];
 }
 
-- (void)sendPictureIdentifier:(NSString *)identifier data:(NSData *)imageData thumbnailPath:(NSString *)path ToUser:(NSString *)user {
+
+
+- (void)sendPictureIdentifier:(NSString *)identifier data:(NSData *)imageData thumbnailPath:(NSString *)path netUrl:(NSString *)url ToUser:(NSString *)user{
     NSString *picString = [imageData base64EncodedStringWithOptions:0];
     
     NSDate *date = [NSDate date];
@@ -101,7 +104,7 @@ static NSString *pictureType = @"[图片]";
     NSDate *d = [Tool transferDate:date];
     NSNumber *ltime= [NSNumber numberWithDouble:[d timeIntervalSince1970]];
     
-    [self sendMessageWithSubtype:@"picture" time:time body:picString more:nil toUser:user];
+    [self sendMessageWithSubtype:@"picture" time:time body:picString more:url toUser:user];
     [self.dataManager savePhotoWithUsername:user time:[NSNumber numberWithInt:time] path:identifier thumbnail:path isOut:YES];
     [self.dataManager addRecentUsername:user time:ltime body:pictureType isOut:YES isP2P:YES];
 }

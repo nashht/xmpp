@@ -288,7 +288,7 @@ static NSString *pictureReuseIdentifier = @"pictureMessageCell";
 //    [_bottomView resignTextfield];
 }
 
-#pragma mark -keyboard notification
+#pragma mark - keyboard notification
 - (void)keyboardWillShow:(NSNotification *)notification {
     CGFloat height = [notification.userInfo[UIKeyboardFrameEndUserInfoKey] CGRectValue].size.height;
     _showMoreView = NO;

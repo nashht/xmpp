@@ -5,7 +5,6 @@
 //  Created by xiaokun on 16/1/4.
 //  Copyright © 2016年 xiaokun. All rights reserved.
 //
-
 #import "RecentViewController.h"
 #import "DataManager.h"
 #import "MyFetchedResultsControllerDelegate.h"
@@ -171,7 +170,7 @@
     [popoverVc setCreateGroupBlock:^{//不会引起循环引用
         [self performSegueWithIdentifier:@"createGroup" sender:nil];
     } showGroupBlock:^{
-        
+//        [self sendPic2Server];
     }];
     popoverVc.preferredContentSize = CGSizeMake(100, 150);
     popoverVc.modalPresentationStyle = UIModalPresentationPopover;
@@ -188,5 +187,6 @@
 - (UIModalPresentationStyle)adaptivePresentationStyleForPresentationController:(UIPresentationController *)controller{
     return UIModalPresentationNone;
 }
+
 
 @end

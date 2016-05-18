@@ -226,8 +226,6 @@
     }
 }
 
-
-
 - (NSFetchedResultsController *)getMessageByGroupname:(NSString *)groupname {
     NSPredicate *predicatae = [NSPredicate predicateWithFormat:@"groupname = %@", groupname];
     NSError *err = nil;
