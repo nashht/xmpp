@@ -20,15 +20,20 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     
-    self.arr =[self readFile:@"test"];
+    self.arr =[self readFile];
+    
+   
     
 }
 
 #pragma mark - Table view data source
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
-
-    return _arr.count;
+    if (_arr.count==0) {
+        return 1;
+    }else{
+        return _arr.count;
+    }
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
@@ -40,20 +45,22 @@
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     UITableViewCell *cell = [[UITableViewCell alloc]initWithStyle:UITableViewCellStyleSubtitle reuseIdentifier:nil];
     
-    [cell.imageView setContentMode:UIViewContentModeScaleToFill];
-    cell.imageView.image = [UIImage imageNamed:@"word.png"];
-
-    cell.textLabel.text = _arr[indexPath.section];
-    cell.detailTextLabel.text = @"2.1M";
+    if (_arr.count==0) {
+        cell.textLabel.text = @"无群文件";
+    }else{
+        [cell.imageView setContentMode:UIViewContentModeScaleToFill];
+        cell.imageView.image = [UIImage imageNamed:@"word.png"];
+        cell.textLabel.text = _arr[indexPath.section];
+    }
     
     return cell;
 }
 
--(NSArray *)readFile:(NSString *)filename{
-    NSString *documentsPath =[Tool getDocumentsUrl];
-    NSString *testDirectory = [documentsPath stringByAppendingPathComponent:filename];
+-(NSArray *)readFile{
+    NSString *documentsPath =[Tool getDocumentsUrl];//document路径
+//    NSString *testDirectory = [documentsPath stringByAppendingPathComponent:filename];:(NSString *)filename
     NSFileManager *fileManage = [NSFileManager defaultManager];
-    NSArray *file = [fileManage subpathsOfDirectoryAtPath: testDirectory error:nil];
+    NSArray *file = [fileManage subpathsOfDirectoryAtPath: documentsPath error:nil];
     return file;
 //    NSLog(@"%@",file);
   
