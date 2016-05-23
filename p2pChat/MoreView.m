@@ -22,9 +22,9 @@
 @property (strong, nonatomic) UIImagePickerController *imagePickerVC;
 @property (strong, nonatomic) UIImage *image;
 @property (strong, nonatomic) NSData *imageData;
-@property (strong, nonatomic) NSString *localIdentifier;
-@property (strong, nonatomic) NSString *thumbnailPath;
-
+@property (copy, nonatomic) NSString *localIdentifier;
+@property (copy, nonatomic) NSString *thumbnailPath;
+@property (copy, nonatomic) NSString *thumbnailName;
 @property (strong, nonatomic) UIView *previewView;
 
 @end
@@ -66,24 +66,27 @@
     return nil;
 }
 
-//- (void)sendPic {
-//    if (_previewView != nil) {
-//        [_previewView removeFromSuperview];
-//    }
-//    [_imagePickerVC dismissViewControllerAnimated:YES completion:nil];
-//
-//    [[MyXMPP shareInstance]sendPictureIdentifier:_localIdentifier data:_imageData thumbnailPath:_thumbnailPath ToUser:_chatObjectString];
-//}
 
-//- (void)cancel {
-//    [_previewView removeFromSuperview];
-//}
 
 - (void)sendOriginalImageInfo:(NSNotification *)notification {
 
 }
 
-- (void)sendOriginalImage {
+- (void)sendPic:(NSData *)imageData thumbnailData:(NSData *)thumbnailData{
+    NSDate *date = [NSDate date];
+    NSTimeInterval t = [date timeIntervalSince1970];
+    int time = (int)t;
+    
+    NSString *filename = [NSString stringWithFormat:@"%@_%i",_chatObjectString,time];
+    NSString *downloadUrl = [NSString stringWithFormat:@"http://10.108.136.59:8080/FileServer/file?method=download&filename=%@",filename];
+    [self sendPic:imageData filename:filename];
+    
+    [[MyXMPP shareInstance] sendPictureIdentifier:_localIdentifier data:thumbnailData thumbnailName:_thumbnailName netUrl:downloadUrl ToUser:_chatObjectString];
+    NSLog(@"thumbnailPath------%@",_thumbnailPath);
+    
+    dispatch_async(dispatch_get_main_queue(), ^{
+        [self.viewController dismissViewControllerAnimated:YES completion:nil];
+    });
 
 }
 
@@ -93,6 +96,7 @@
     _image = info[UIImagePickerControllerOriginalImage];
     
     _thumbnailPath = [Tool getFileName:@"thumbnail" extension:@"jpeg"];
+    _thumbnailName = [NSString stringWithFormat:@"%@thumbnail.jpeg",[Tool stringFromDate:[NSDate date]]];
     UIImage *thumbnailImage = [_photoCenter makeThumbnail:_image WithSize:CGSizeMake(200, 200)];
 
     NSData *imageData = UIImagePNGRepresentation(_image);
@@ -103,42 +107,36 @@
        
         NSURL *url = info[UIImagePickerControllerReferenceURL];//这个url和identifier相差一些字符
         _localIdentifier = [_photoCenter getLocalIdentifierFromPath:[url absoluteString]];
+        [self sendPic:imageData thumbnailData:thumbnailData];
         
     } else {//图片来自拍照
         [_photoCenter saveImage:_image withCompletionHandler:^(NSString *identifier) {
             _localIdentifier = identifier;
+            [self sendPic:imageData thumbnailData:thumbnailData];
         }];
     }
-    
-    NSDate *date = [NSDate date];
-    NSTimeInterval t = [date timeIntervalSince1970];
-    int time = (int)t;
-    
-    NSString *filename = [NSString stringWithFormat:@"%@_%i",_chatObjectString,time];
-    NSString *url = [NSString stringWithFormat:@"http://10.108.136.59:8080/FileServer/file?method=upload&filename=%@",filename];
-    [self sendPic:imageData toServerUrl:url];
-    
-    [[MyXMPP shareInstance] sendPictureIdentifier:_localIdentifier data:thumbnailData thumbnailPath:_thumbnailPath netUrl:url ToUser:_chatObjectString];
-    [self.viewController dismissViewControllerAnimated:YES completion:nil];
 }
 
-- (void)sendPic:(NSData *)imageData toServerUrl:(NSString *)stringUrl{
+
+- (void)sendPic:(NSData *)imageData filename:(NSString *)filename{
     
     NSLog(@"sendsendPic2Server");
     
     AFHTTPSessionManager *manager = [AFHTTPSessionManager manager];
     manager.responseSerializer = [AFHTTPResponseSerializer serializer];
-    
+    NSMutableDictionary *param = [NSMutableDictionary dictionary];
+    param[@"method"] = @"upload";
+    param[@"filename"] = filename;
     // 参数para:{method:”upload”/”download”,filename:””}(filename格式：username_timestamp
     //     访问路径
 //    NSString *stringURL = @"http://10.108.136.59:8080/FileServer/file?method=upload&filename=1123";
-    
-    [manager POST:stringUrl parameters:nil constructingBodyWithBlock:^(id<AFMultipartFormData>  _Nonnull formData) {
+//    NSString *url = [NSString stringWithFormat:@"http://10.108.136.59:8080/FileServer/file?method=upload&filename=",filename];
+    [manager POST: @"http://10.108.136.59:8080/FileServer/file" parameters:param constructingBodyWithBlock:^(id<AFMultipartFormData>  _Nonnull formData) {
         // 拼接文件参数
-        [formData appendPartWithFileData:imageData name:@"file" fileName:@"filename" mimeType:@"image/png"];
+        [formData appendPartWithFileData:imageData name:@"png" fileName:filename mimeType:@"image/png"];
         
     } progress:^(NSProgress * _Nonnull uploadProgress) {
-        
+//        NSLog(@"uploadProgress%@",uploadProgress);
     } success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
         id json = [NSJSONSerialization JSONObjectWithData:responseObject options:NSJSONReadingMutableContainers error:nil];
         NSLog(@"success%@",json);

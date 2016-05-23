@@ -43,6 +43,7 @@
 		90DC39461CEC1C7E002CECCF /* AFURLRequestSerialization.m in Sources */ = {isa = PBXBuildFile; fileRef = 90DC393E1CEC1C7E002CECCF /* AFURLRequestSerialization.m */; };
 		90DC39471CEC1C7E002CECCF /* AFURLResponseSerialization.m in Sources */ = {isa = PBXBuildFile; fileRef = 90DC39401CEC1C7E002CECCF /* AFURLResponseSerialization.m */; };
 		90DC39481CEC1C7E002CECCF /* AFURLSessionManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 90DC39421CEC1C7E002CECCF /* AFURLSessionManager.m */; };
+		90DC394A1CEC644C002CECCF /* 3bae9ec7f0da95b6d94f9511020b6d62.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 90DC39491CEC644C002CECCF /* 3bae9ec7f0da95b6d94f9511020b6d62.jpg */; };
 		90E3E8891C97AA840076F28C /* Snip20151210_2.png in Resources */ = {isa = PBXBuildFile; fileRef = 90E3E8881C97AA840076F28C /* Snip20151210_2.png */; };
 		90E3E89D1C99540E0076F28C /* happy.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 90E3E89C1C99540E0076F28C /* happy.mp3 */; };
 		90E3E89F1C9955930076F28C /* AVFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 90E3E89E1C9955930076F28C /* AVFoundation.framework */; };
@@ -340,6 +341,7 @@
 		90DC39401CEC1C7E002CECCF /* AFURLResponseSerialization.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AFURLResponseSerialization.m; sourceTree = "<group>"; };
 		90DC39411CEC1C7E002CECCF /* AFURLSessionManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AFURLSessionManager.h; sourceTree = "<group>"; };
 		90DC39421CEC1C7E002CECCF /* AFURLSessionManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AFURLSessionManager.m; sourceTree = "<group>"; };
+		90DC39491CEC644C002CECCF /* 3bae9ec7f0da95b6d94f9511020b6d62.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = 3bae9ec7f0da95b6d94f9511020b6d62.jpg; sourceTree = "<group>"; };
 		90E3E8881C97AA840076F28C /* Snip20151210_2.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Snip20151210_2.png; sourceTree = "<group>"; };
 		90E3E89C1C99540E0076F28C /* happy.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = happy.mp3; sourceTree = "<group>"; };
 		90E3E89E1C9955930076F28C /* AVFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AVFoundation.framework; path = System/Library/Frameworks/AVFoundation.framework; sourceTree = SDKROOT; };
@@ -842,6 +844,7 @@
 				9001224E1CA91EE2005D5BFA /* PicFrameModel.m */,
 				9001224F1CA91EE2005D5BFA /* PicViewCell.h */,
 				900122501CA91EE2005D5BFA /* PicViewCell.m */,
+				90DC39491CEC644C002CECCF /* 3bae9ec7f0da95b6d94f9511020b6d62.jpg */,
 				900122531CA91EE2005D5BFA /* RecordFrameModel.h */,
 				900122541CA91EE2005D5BFA /* RecordFrameModel.m */,
 				900122551CA91EE2005D5BFA /* RecordViewCell.h */,
@@ -2285,6 +2288,7 @@
 				90FA064E1CAD11AC00851B1C /* bg_show_count.png in Resources */,
 				90FA065F1CAE4BDE00851B1C /* RecentCell.xib in Resources */,
 				DA90B2121C8989930080E037 /* README.txt in Resources */,
+				90DC394A1CEC644C002CECCF /* 3bae9ec7f0da95b6d94f9511020b6d62.jpg in Resources */,
 				DAD278891CBF3A78001508D0 /* libopencore-amrnb.la in Resources */,
 				90FA063E1CACD0D800851B1C /* FriendCell.xib in Resources */,
 			);

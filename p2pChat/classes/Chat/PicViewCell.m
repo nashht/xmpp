@@ -6,7 +6,7 @@
 //  Copyright © 2016年 xiaokun. All rights reserved.
 //
 
-#define bodyPadding 20
+#define bodyPadding 15
 #import "MessageViewCell.h"
 #import "PicFrameModel.h"
 #import "Tool.h"
@@ -17,13 +17,14 @@
 
 @interface PicViewCell()
 
-@property(nonatomic,weak)UILabel *timeLable;
-@property(nonatomic,weak)UIImageView *photoImage;
-@property(nonatomic,weak)UIButton *bodyBtn;
-@property(nonatomic,weak)UIScrollView *bodyScroll;
-@property(nonatomic,weak)UIImageView *aImageView;
-@property(nonatomic,weak)UIImage *image;
-@property(nonatomic,weak)UIView *v;
+@property (nonatomic, weak) UILabel *timeLable;
+@property (nonatomic, weak) UIImageView *photoImage;
+@property (nonatomic, weak) UIButton *bodyBtn;
+@property (nonatomic, weak) UIScrollView *bodyScroll;
+@property (nonatomic, weak) UIImageView *aImageView;
+@property (nonatomic, weak) UIImage *image;
+@property (nonatomic, weak) UIView *cover;
+@property (nonatomic, assign) CGRect lastFrame;
 
 @end
 
@@ -59,7 +60,7 @@
 }
 
 
-- (void) setPicFrame:(PicFrameModel *)picFrame{
+- (void)setPicFrame:(PicFrameModel *)picFrame{
     _picFrame = picFrame;
     
     //    数据模型
@@ -88,7 +89,8 @@
     UIImage *image = picFrame.image;
     [_bodyBtn setImage:image forState:UIControlStateNormal];
     _bodyBtn.frame = picFrame.bodyFrame;
-    [_bodyBtn addTarget:self action:@selector(picBtnClick) forControlEvents:UIControlEventTouchUpInside];
+//    _lastFrame = _bodyBtn.frame;
+    [_bodyBtn addTarget:self action:@selector(picBtnClick:) forControlEvents:UIControlEventTouchUpInside];
     _image = image;
     
     //    pic背景
@@ -116,41 +118,60 @@
     // Configure the view for the selected state
 }
 
-- (void)picBtnClick{
-    UIView *v = [[UIView alloc]initWithFrame:[UIScreen mainScreen].bounds];
-    v.backgroundColor = [UIColor blackColor];
-    [[UIApplication sharedApplication].keyWindow addSubview:v];
-    _v = v;
+- (void)picBtnClick:(UIButton *)button{
+//    添加一个遮盖
+    UIView *cover = [[UIView alloc]initWithFrame:[UIScreen mainScreen].bounds];
+    cover.backgroundColor = [UIColor blackColor];
+    [[UIApplication sharedApplication].keyWindow addSubview:cover];
+    _cover = cover;
+    UIImageView *imageView = [[UIImageView alloc]init];
+    _aImageView = imageView;
+    imageView.contentMode = UIViewContentModeScaleAspectFit;
+    
     if (_picFrame.message.isOut) {//发送出去的图片原图在图库里
         [[[PhotoLibraryCenter alloc]init]getImageWithLocalIdentifier:_picFrame.message.body withCompletionHandler:^(UIImage *image) {
-            UIImageView *imageView = [[UIImageView alloc]initWithFrame:[UIScreen mainScreen].bounds];
-            imageView.contentMode = UIViewContentModeScaleAspectFit;
             imageView.image = image;
             
-            [v addSubview:imageView];
+            [cover addSubview:imageView];
         }];
     } else {
         UIImage *image = [UIImage imageWithContentsOfFile:_picFrame.message.body];
-        UIImageView *imageView = [[UIImageView alloc]initWithFrame:[UIScreen mainScreen].bounds];
-        imageView.contentMode = UIViewContentModeScaleAspectFit;
+
         imageView.image = image;
         
-        [v addSubview:imageView];
+        [cover addSubview:imageView];
     }
     
+    imageView.frame = [cover convertRect:button.imageView.frame fromView:cover];
+     _lastFrame = imageView.frame;
+    
+    [UIView animateWithDuration:2.0 animations:^{
+        CGFloat w = cover.frame.size.width;
+        CGFloat h = w * (cover.frame.size.height / imageView.frame.size.height);
+        CGFloat x = 0;
+        CGFloat y = (cover.frame.size.height - h) * 0.5;
+        CGRect frame = CGRectMake(x, y, w, h);
+        imageView.frame = frame;
+    }];
+    
     UITapGestureRecognizer *tap=[[UITapGestureRecognizer alloc]initWithTarget:self action:@selector(hideImage:)];
-    [_v addGestureRecognizer: tap];
+    [cover addGestureRecognizer: tap];
 }
+
+//- (NSString *)getImageWithUrl:(NSString *)url{
+//    NSString *image = [NSString stringWithFormat:<#(nonnull NSString *), ...#>]
+//}
 
 - (UIView *)viewForZoomingInScrollView:(UIScrollView *)scrollView{
     return _aImageView;
 }
 
 - (void)hideImage:(UITapGestureRecognizer*)tap{
-    [UIView animateWithDuration:0.3 animations:^{
-        [_v removeFromSuperview];
+    [UIView animateWithDuration:0.2 animations:^{
+//        _cover.backgroundColor = [UIColor clearColor];
+//        _aImageView.frame = _lastFrame;
     } completion:^(BOOL finished) {
-        
+        [tap.view removeFromSuperview];
     }];
 }
 

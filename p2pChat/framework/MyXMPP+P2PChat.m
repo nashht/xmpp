@@ -94,7 +94,7 @@ static NSString *pictureType = @"[图片]";
 
 
 
-- (void)sendPictureIdentifier:(NSString *)identifier data:(NSData *)imageData thumbnailPath:(NSString *)path netUrl:(NSString *)url ToUser:(NSString *)user{
+- (void)sendPictureIdentifier:(NSString *)identifier data:(NSData *)imageData thumbnailName:(NSString *)thumbnailName netUrl:(NSString *)url ToUser:(NSString *)user{
     NSString *picString = [imageData base64EncodedStringWithOptions:0];
     
     NSDate *date = [NSDate date];
@@ -105,7 +105,7 @@ static NSString *pictureType = @"[图片]";
     NSNumber *ltime= [NSNumber numberWithDouble:[d timeIntervalSince1970]];
     
     [self sendMessageWithSubtype:@"picture" time:time body:picString more:url toUser:user];
-    [self.dataManager savePhotoWithUsername:user time:[NSNumber numberWithInt:time] path:identifier thumbnail:path isOut:YES];
+    [self.dataManager savePhotoWithUsername:user time:[NSNumber numberWithInt:time] path:identifier thumbnail:thumbnailName isOut:YES];
     [self.dataManager addRecentUsername:user time:ltime body:pictureType isOut:YES isP2P:YES];
 }
 

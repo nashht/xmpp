@@ -49,7 +49,7 @@
         _bodyBtn = btn;
             
         
-        self.backgroundColor = [UIColor clearColor];
+        self.backgroundColor = [UIColor grayColor];
     }
     
     return self;
