@@ -6,7 +6,7 @@
 //  Copyright © 2016年 xiaokun. All rights reserved.
 //
 
-#define bodyPedding 20
+#define bodyPedding 5
 #import "PicFrameModel.h"
 #import "MessageFrameModel.h"
 #import "MessageBean.h"
@@ -41,8 +41,11 @@
     }
     
     _photoFrame = CGRectMake(photoX, photoY, photoW, photoH);
-    
-    UIImage *image = [UIImage imageWithContentsOfFile:message.more];
+
+    NSString *name = message.more;
+    NSString *path = [[NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES) lastObject] stringByAppendingPathComponent:name];
+    NSLog(@"more.....%@",message.more);
+    UIImage *image = [UIImage imageWithContentsOfFile:path];
     _image = image;
 
     CGSize bodySize =  image.size;

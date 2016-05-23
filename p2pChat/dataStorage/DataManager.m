@@ -103,9 +103,9 @@
     }
 }
 
-- (void)savePhotoWithUsername:(NSString *)username time:(NSNumber *)time path:(NSString *)path thumbnail:(NSString *)thumbnailPath isOut:(BOOL)isOut{
+- (void)savePhotoWithUsername:(NSString *)username time:(NSNumber *)time path:(NSString *)path thumbnail:(NSString *)thumbnailName isOut:(BOOL)isOut{
     NSError *err = nil;
-    [self saveMessageWithUsername:username time:time type:@2 body:path more:thumbnailPath error:&err isOut:isOut];
+    [self saveMessageWithUsername:username time:time type:@2 body:path more:thumbnailName error:&err isOut:isOut];
     if (err) {
         NSLog(@"DataManager save message failed: %@", err);
     }
@@ -225,8 +225,6 @@
         NSLog(@"DataManager clear group history message failed: %@", err);
     }
 }
-
-
 
 - (NSFetchedResultsController *)getMessageByGroupname:(NSString *)groupname {
     NSPredicate *predicatae = [NSPredicate predicateWithFormat:@"groupname = %@", groupname];

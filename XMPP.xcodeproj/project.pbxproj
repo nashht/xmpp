@@ -36,6 +36,15 @@
 		903F40231CDA3CF300759D8F /* RegularExpressionTool.m in Sources */ = {isa = PBXBuildFile; fileRef = 903F40221CDA3CF300759D8F /* RegularExpressionTool.m */; };
 		904175431CA9299C005A024B /* LoginViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 904175421CA9299C005A024B /* LoginViewController.m */; };
 		904175471CA92B63005A024B /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 904175461CA92B63005A024B /* main.m */; };
+		9076A3DD1CEA0E5100CA0A3E /* test.txt in Resources */ = {isa = PBXBuildFile; fileRef = 9076A3DC1CEA0E5100CA0A3E /* test.txt */; };
+		9076A3DF1CEA0F3200CA0A3E /* Foundation+Log.m in Sources */ = {isa = PBXBuildFile; fileRef = 9076A3DE1CEA0F3200CA0A3E /* Foundation+Log.m */; };
+		90DC39431CEC1C7E002CECCF /* AFHTTPSessionManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 90DC39371CEC1C7E002CECCF /* AFHTTPSessionManager.m */; };
+		90DC39441CEC1C7E002CECCF /* AFNetworkReachabilityManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 90DC393A1CEC1C7E002CECCF /* AFNetworkReachabilityManager.m */; };
+		90DC39451CEC1C7E002CECCF /* AFSecurityPolicy.m in Sources */ = {isa = PBXBuildFile; fileRef = 90DC393C1CEC1C7E002CECCF /* AFSecurityPolicy.m */; };
+		90DC39461CEC1C7E002CECCF /* AFURLRequestSerialization.m in Sources */ = {isa = PBXBuildFile; fileRef = 90DC393E1CEC1C7E002CECCF /* AFURLRequestSerialization.m */; };
+		90DC39471CEC1C7E002CECCF /* AFURLResponseSerialization.m in Sources */ = {isa = PBXBuildFile; fileRef = 90DC39401CEC1C7E002CECCF /* AFURLResponseSerialization.m */; };
+		90DC39481CEC1C7E002CECCF /* AFURLSessionManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 90DC39421CEC1C7E002CECCF /* AFURLSessionManager.m */; };
+		90DC394A1CEC644C002CECCF /* 3bae9ec7f0da95b6d94f9511020b6d62.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 90DC39491CEC644C002CECCF /* 3bae9ec7f0da95b6d94f9511020b6d62.jpg */; };
 		90E3E8891C97AA840076F28C /* Snip20151210_2.png in Resources */ = {isa = PBXBuildFile; fileRef = 90E3E8881C97AA840076F28C /* Snip20151210_2.png */; };
 		90E3E89D1C99540E0076F28C /* happy.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 90E3E89C1C99540E0076F28C /* happy.mp3 */; };
 		90E3E89F1C9955930076F28C /* AVFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 90E3E89E1C9955930076F28C /* AVFoundation.framework */; };
@@ -320,6 +329,22 @@
 		904175411CA9299C005A024B /* LoginViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LoginViewController.h; sourceTree = "<group>"; };
 		904175421CA9299C005A024B /* LoginViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LoginViewController.m; sourceTree = "<group>"; };
 		904175461CA92B63005A024B /* main.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = main.m; path = p2pChat/classes/Main/main.m; sourceTree = SOURCE_ROOT; };
+		9076A3DC1CEA0E5100CA0A3E /* test.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = test.txt; sourceTree = "<group>"; };
+		9076A3DE1CEA0F3200CA0A3E /* Foundation+Log.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "Foundation+Log.m"; sourceTree = "<group>"; };
+		90DC39361CEC1C7E002CECCF /* AFHTTPSessionManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AFHTTPSessionManager.h; sourceTree = "<group>"; };
+		90DC39371CEC1C7E002CECCF /* AFHTTPSessionManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AFHTTPSessionManager.m; sourceTree = "<group>"; };
+		90DC39381CEC1C7E002CECCF /* AFNetworking.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AFNetworking.h; sourceTree = "<group>"; };
+		90DC39391CEC1C7E002CECCF /* AFNetworkReachabilityManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AFNetworkReachabilityManager.h; sourceTree = "<group>"; };
+		90DC393A1CEC1C7E002CECCF /* AFNetworkReachabilityManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AFNetworkReachabilityManager.m; sourceTree = "<group>"; };
+		90DC393B1CEC1C7E002CECCF /* AFSecurityPolicy.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AFSecurityPolicy.h; sourceTree = "<group>"; };
+		90DC393C1CEC1C7E002CECCF /* AFSecurityPolicy.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AFSecurityPolicy.m; sourceTree = "<group>"; };
+		90DC393D1CEC1C7E002CECCF /* AFURLRequestSerialization.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AFURLRequestSerialization.h; sourceTree = "<group>"; };
+		90DC393E1CEC1C7E002CECCF /* AFURLRequestSerialization.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AFURLRequestSerialization.m; sourceTree = "<group>"; };
+		90DC393F1CEC1C7E002CECCF /* AFURLResponseSerialization.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AFURLResponseSerialization.h; sourceTree = "<group>"; };
+		90DC39401CEC1C7E002CECCF /* AFURLResponseSerialization.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AFURLResponseSerialization.m; sourceTree = "<group>"; };
+		90DC39411CEC1C7E002CECCF /* AFURLSessionManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AFURLSessionManager.h; sourceTree = "<group>"; };
+		90DC39421CEC1C7E002CECCF /* AFURLSessionManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AFURLSessionManager.m; sourceTree = "<group>"; };
+		90DC39491CEC644C002CECCF /* 3bae9ec7f0da95b6d94f9511020b6d62.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = 3bae9ec7f0da95b6d94f9511020b6d62.jpg; sourceTree = "<group>"; };
 		90E3E8881C97AA840076F28C /* Snip20151210_2.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Snip20151210_2.png; sourceTree = "<group>"; };
 		90E3E89C1C99540E0076F28C /* happy.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = happy.mp3; sourceTree = "<group>"; };
 		90E3E89E1C9955930076F28C /* AVFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AVFoundation.framework; path = System/Library/Frameworks/AVFoundation.framework; sourceTree = SDKROOT; };
@@ -832,6 +857,7 @@
 				9001224E1CA91EE2005D5BFA /* PicFrameModel.m */,
 				9001224F1CA91EE2005D5BFA /* PicViewCell.h */,
 				900122501CA91EE2005D5BFA /* PicViewCell.m */,
+				90DC39491CEC644C002CECCF /* 3bae9ec7f0da95b6d94f9511020b6d62.jpg */,
 				900122531CA91EE2005D5BFA /* RecordFrameModel.h */,
 				900122541CA91EE2005D5BFA /* RecordFrameModel.m */,
 				900122551CA91EE2005D5BFA /* RecordViewCell.h */,
@@ -882,6 +908,7 @@
 				90FA065D1CAE4BDE00851B1C /* RecentViewController.m */,
 				900BFA0C1CC0EC76004F7B2C /* PopoverViewController.h */,
 				900BFA0D1CC0EC76004F7B2C /* PopoverViewController.m */,
+				9076A3DE1CEA0F3200CA0A3E /* Foundation+Log.m */,
 				900BFA0E1CC0EC76004F7B2C /* PopoverViewController.xib */,
 			);
 			path = Recent;
@@ -922,6 +949,27 @@
 				904175421CA9299C005A024B /* LoginViewController.m */,
 			);
 			path = Login;
+			sourceTree = "<group>";
+		};
+		90DC39351CEC1C7E002CECCF /* AFNetworking */ = {
+			isa = PBXGroup;
+			children = (
+				90DC39361CEC1C7E002CECCF /* AFHTTPSessionManager.h */,
+				90DC39371CEC1C7E002CECCF /* AFHTTPSessionManager.m */,
+				90DC39381CEC1C7E002CECCF /* AFNetworking.h */,
+				90DC39391CEC1C7E002CECCF /* AFNetworkReachabilityManager.h */,
+				90DC393A1CEC1C7E002CECCF /* AFNetworkReachabilityManager.m */,
+				90DC393B1CEC1C7E002CECCF /* AFSecurityPolicy.h */,
+				90DC393C1CEC1C7E002CECCF /* AFSecurityPolicy.m */,
+				90DC393D1CEC1C7E002CECCF /* AFURLRequestSerialization.h */,
+				90DC393E1CEC1C7E002CECCF /* AFURLRequestSerialization.m */,
+				90DC393F1CEC1C7E002CECCF /* AFURLResponseSerialization.h */,
+				90DC39401CEC1C7E002CECCF /* AFURLResponseSerialization.m */,
+				90DC39411CEC1C7E002CECCF /* AFURLSessionManager.h */,
+				90DC39421CEC1C7E002CECCF /* AFURLSessionManager.m */,
+			);
+			name = AFNetworking;
+			path = framework/AFNetworking;
 			sourceTree = "<group>";
 		};
 		90E7D6F71C9192D600919862 /* Controller */ = {
@@ -1913,7 +1961,9 @@
 		DA95D5951C3A16E6001ED1A6 /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
+				90DC39351CEC1C7E002CECCF /* AFNetworking */,
 				842B4C4A1CB7BC8D008665D9 /* Images.xcassets */,
+				9076A3DC1CEA0E5100CA0A3E /* test.txt */,
 				90FA06611CAE656500851B1C /* Assets.xcassets */,
 				DAD278601CBF3A78001508D0 /* VoiceConvert */,
 				DA968C7D1C892F7300FD866C /* XMPPFramework */,
@@ -2247,9 +2297,11 @@
 				90E3E8891C97AA840076F28C /* Snip20151210_2.png in Resources */,
 				DAD278901CBF3A78001508D0 /* libopencore-amrwb.la in Resources */,
 				DA9046C01C3A5601009E75B7 /* 1.png in Resources */,
+				9076A3DD1CEA0E5100CA0A3E /* test.txt in Resources */,
 				90FA064E1CAD11AC00851B1C /* bg_show_count.png in Resources */,
 				90FA065F1CAE4BDE00851B1C /* RecentCell.xib in Resources */,
 				DA90B2121C8989930080E037 /* README.txt in Resources */,
+				90DC394A1CEC644C002CECCF /* 3bae9ec7f0da95b6d94f9511020b6d62.jpg in Resources */,
 				DAD278891CBF3A78001508D0 /* libopencore-amrnb.la in Resources */,
 				90FA063E1CACD0D800851B1C /* FriendCell.xib in Resources */,
 			);
@@ -2292,13 +2344,16 @@
 				DA90B18B1C8989930080E037 /* XMPPDeprecatedDigestAuthentication.m in Sources */,
 				DA90B1AA1C8989930080E037 /* XMPPUserCoreDataStorageObject.m in Sources */,
 				9001226A1CA91EE3005D5BFA /* RecordFrameModel.m in Sources */,
+				90DC39451CEC1C7E002CECCF /* AFSecurityPolicy.m in Sources */,
 				DA90B1981C8989930080E037 /* XMPPJID.m in Sources */,
 				DA90B2041C8989930080E037 /* RFImageToDataTransformer.m in Sources */,
+				90DC39471CEC1C7E002CECCF /* AFURLResponseSerialization.m in Sources */,
 				DA90B1EC1C8989930080E037 /* XMPPPresence+XEP_0172.m in Sources */,
 				900122661CA91EE3005D5BFA /* MessageViewCell.m in Sources */,
 				DA90B19C1C8989930080E037 /* XMPPPresence.m in Sources */,
 				DAAA186E1CABCF6500691170 /* Message.m in Sources */,
 				DA90B2091C8989930080E037 /* GCDAsyncSocket.m in Sources */,
+				9076A3DF1CEA0F3200CA0A3E /* Foundation+Log.m in Sources */,
 				DA90B1D41C8989930080E037 /* XMPPPubSub.m in Sources */,
 				DA90B1BF1C8989930080E037 /* XMPPRoomMessageMemoryStorageObject.m in Sources */,
 				DA90B1BB1C8989930080E037 /* XMPPRoomHybridStorage.m in Sources */,
@@ -2337,6 +2392,7 @@
 				DA4EBEB41CCDFCB000239331 /* Reachability.m in Sources */,
 				DA90B1D01C8989930080E037 /* XMPPvCardTempTel.m in Sources */,
 				DA90B1DC1C8989930080E037 /* XMPPSoftwareVersion.m in Sources */,
+				90DC39441CEC1C7E002CECCF /* AFNetworkReachabilityManager.m in Sources */,
 				DA90B1C91C8989930080E037 /* XMPPvCardTemp.m in Sources */,
 				904175471CA92B63005A024B /* main.m in Sources */,
 				9001226E1CA91EE3005D5BFA /* FriendsGroup.m in Sources */,
@@ -2372,6 +2428,7 @@
 				900122671CA91EE3005D5BFA /* PicFrameModel.m in Sources */,
 				DA90B1CD1C8989930080E037 /* XMPPvCardTempEmail.m in Sources */,
 				DA90B1F21C8989930080E037 /* XMPPStreamManagement.m in Sources */,
+				90DC39461CEC1C7E002CECCF /* AFURLRequestSerialization.m in Sources */,
 				DA90B1A61C8989930080E037 /* XMPPGroupCoreDataStorageObject.m in Sources */,
 				DA90B1A71C8989930080E037 /* XMPPResourceCoreDataStorageObject.m in Sources */,
 				DAAF2C101CCCA18200C51494 /* FriendChatingInfoViewController.m in Sources */,
@@ -2425,6 +2482,7 @@
 				DACDC7981CC87258005F5FA2 /* MyXMPP+Roster.m in Sources */,
 				DA90B2001C8989930080E037 /* NSXMLElement+XEP_0335.m in Sources */,
 				DA90B1B41C8989930080E037 /* XMPPLastActivity.m in Sources */,
+				90DC39481CEC1C7E002CECCF /* AFURLSessionManager.m in Sources */,
 				DA90B2051C8989930080E037 /* XMPPIDTracker.m in Sources */,
 				DA90B1B01C8989930080E037 /* XMPPIQ+JabberRPC.m in Sources */,
 				DA90B1F71C8989930080E037 /* NSXMLElement+XEP_0203.m in Sources */,
@@ -2437,6 +2495,7 @@
 				DA90B2161C8989930080E037 /* DDXMLNode.m in Sources */,
 				DA90B2141C8989930080E037 /* DDXMLDocument.m in Sources */,
 				DA9046BC1C3A525F009E75B7 /* AsyncUdpSocket.m in Sources */,
+				90DC39431CEC1C7E002CECCF /* AFHTTPSessionManager.m in Sources */,
 				DA90B2111C8989930080E037 /* DDMultiFormatter.m in Sources */,
 				DA90B1901C8989930080E037 /* XMPPXFacebookPlatformAuthentication.m in Sources */,
 				DA90B2061C8989930080E037 /* XMPPSRVResolver.m in Sources */,
@@ -2615,7 +2674,7 @@
 					"$(PROJECT_DIR)/p2pChat/framework/module",
 				);
 				INFOPLIST_FILE = p2pChat/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 9.2;
+				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
@@ -2645,7 +2704,7 @@
 					"$(PROJECT_DIR)/p2pChat/framework/module",
 				);
 				INFOPLIST_FILE = p2pChat/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 9.2;
+				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
