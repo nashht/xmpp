@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="10116" systemVersion="15E65" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="XfM-Wq-Nn4">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="10116" systemVersion="15F34" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="XfM-Wq-Nn4">
     <dependencies>
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="10085"/>
@@ -160,7 +160,7 @@
         <!--Create Groups View Controller-->
         <scene sceneID="m66-U6-jZ5">
             <objects>
-                <viewController storyboardIdentifier="CreateGroupsViewController" id="iNX-e8-fE5" customClass="CreateGroupsViewController" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="creatGroup" id="iNX-e8-fE5" customClass="CreateGroupsViewController" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="IRf-L6-vyK"/>
                         <viewControllerLayoutGuide type="bottom" id="fXp-1f-FMN"/>
@@ -200,7 +200,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="cXC-u5-Eol" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1165" y="-2148"/>
+            <point key="canvasLocation" x="1147" y="-2260"/>
         </scene>
         <!--Chat View Controller-->
         <scene sceneID="R9W-yo-fUV">
@@ -970,7 +970,7 @@
         <!--Navigation Controller-->
         <scene sceneID="NNK-og-bnE">
             <objects>
-                <navigationController automaticallyAdjustsScrollViewInsets="NO" id="iN0-q8-L3G" sceneMemberID="viewController">
+                <navigationController storyboardIdentifier="creatGroupNav" automaticallyAdjustsScrollViewInsets="NO" id="iN0-q8-L3G" sceneMemberID="viewController">
                     <toolbarItems/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" id="c54-lb-5px">
                         <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>

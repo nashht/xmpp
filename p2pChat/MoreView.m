@@ -81,7 +81,9 @@
     NSString *downloadUrl = [NSString stringWithFormat:@"http://10.108.136.59:8080/FileServer/file?method=download&filename=%@",filename];
     [self sendPic:imageData filename:filename];
     
-    [[MyXMPP shareInstance] sendPictureIdentifier:_localIdentifier data:thumbnailData thumbnailName:_thumbnailName netUrl:downloadUrl ToUser:_chatObjectString];
+    NSLog(@"download : %@",downloadUrl);
+    
+    [[MyXMPP shareInstance] sendPictureIdentifier:_localIdentifier data:thumbnailData thumbnailName:_thumbnailName filename:filename ToUser:_chatObjectString];
     NSLog(@"thumbnailPath------%@",_thumbnailPath);
     
     dispatch_async(dispatch_get_main_queue(), ^{
@@ -127,7 +129,7 @@
     NSMutableDictionary *param = [NSMutableDictionary dictionary];
     param[@"method"] = @"upload";
     param[@"filename"] = filename;
-    // 参数para:{method:”upload”/”download”,filename:””}(filename格式：username_timestamp
+    // 参数para:{method:"upload"/"download",filename:"xxx"}(filename格式：username_timestamp
     //     访问路径
 //    NSString *stringURL = @"http://10.108.136.59:8080/FileServer/file?method=upload&filename=1123";
 //    NSString *url = [NSString stringWithFormat:@"http://10.108.136.59:8080/FileServer/file?method=upload&filename=",filename];
@@ -136,7 +138,7 @@
         [formData appendPartWithFileData:imageData name:@"png" fileName:filename mimeType:@"image/png"];
         
     } progress:^(NSProgress * _Nonnull uploadProgress) {
-//        NSLog(@"uploadProgress%@",uploadProgress);
+        NSLog(@"uploadProgress%@",uploadProgress);
     } success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
         id json = [NSJSONSerialization JSONObjectWithData:responseObject options:NSJSONReadingMutableContainers error:nil];
         NSLog(@"success%@",json);

@@ -94,7 +94,7 @@ static NSString *pictureType = @"[图片]";
 
 
 
-- (void)sendPictureIdentifier:(NSString *)identifier data:(NSData *)imageData thumbnailName:(NSString *)thumbnailName netUrl:(NSString *)url ToUser:(NSString *)user{
+- (void)sendPictureIdentifier:(NSString *)identifier data:(NSData *)imageData thumbnailName:(NSString *)thumbnailName filename:(NSString *)filename ToUser:(NSString *)user{
     NSString *picString = [imageData base64EncodedStringWithOptions:0];
     
     NSDate *date = [NSDate date];
@@ -104,8 +104,8 @@ static NSString *pictureType = @"[图片]";
     NSDate *d = [Tool transferDate:date];
     NSNumber *ltime= [NSNumber numberWithDouble:[d timeIntervalSince1970]];
     
-    [self sendMessageWithSubtype:@"picture" time:time body:picString more:url toUser:user];
-    [self.dataManager savePhotoWithUsername:user time:[NSNumber numberWithInt:time] path:identifier thumbnail:thumbnailName isOut:YES];
+    [self sendMessageWithSubtype:@"picture" time:time body:picString more:filename toUser:user];
+    [self.dataManager savePhotoWithUsername:user time:[NSNumber numberWithInt:time] filename:identifier thumbnail:thumbnailName isOut:YES];
     [self.dataManager addRecentUsername:user time:ltime body:pictureType isOut:YES isP2P:YES];
 }
 
@@ -119,7 +119,7 @@ static NSString *pictureType = @"[图片]";
         
         NSDate *d = [Tool transferDate:date];
         NSNumber *ltime= [NSNumber numberWithDouble:[d timeIntervalSince1970]];//最后一条消息的时间
-        NSLog(@"recieve time:%@",d);
+        NSLog(@"xmppStream recieve time:%@",d);
         
         NSString *messageBody = [[message elementForName:@"body"] stringValue];
         XMPPJID *fromJid = message.from;
@@ -147,17 +147,16 @@ static NSString *pictureType = @"[图片]";
                 localNotification.alertBody = [NSString stringWithFormat:@"%@:%@", bareJidStr, voiceType];
                 break;
             }
-            case 'p':{
+            case 'p':{//pic
                 NSData *data = [[NSData alloc]initWithBase64EncodedString:messageBody options:0];
-                NSString *path = [Tool getFileName:@"receive" extension:@"png"];
-                dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
-                    [data writeToFile:path atomically:YES];
-                });
-                UIImage *thumbnail = [self.photoLibraryCenter makeThumbnail:[UIImage imageWithData:data] WithSize:thumbnailSize];
-                NSString *thumbnailPath = [Tool getFileName:@"receive_thumbnail" extension:@"png"];
-                [UIImagePNGRepresentation(thumbnail) writeToFile:thumbnailPath atomically:YES];
-                [self.dataManager savePhotoWithUsername:bareJidStr time:timeNumber path:path thumbnail:thumbnailPath isOut:NO];
-                [self.dataManager addRecentUsername:bareJidStr time:ltime body:pictureType isOut:NO isP2P:NO];
+                NSString *path = [Tool getFileName:@"receive" extension:@"jpeg"];
+                NSString *filename = [message getMore];
+                [data writeToFile:path atomically:YES];
+                
+                NSString  *thumbnailName = [NSString stringWithFormat:@"%@receive.jpeg",[Tool stringFromDate:[NSDate date]]];
+                
+                [self.dataManager savePhotoWithUsername:bareJidStr time:timeNumber filename:filename thumbnail:thumbnailName isOut:NO];
+                [self.dataManager addRecentUsername:bareJidStr time:ltime body:pictureType isOut:NO isP2P:YES];
                 break;
             }
                 

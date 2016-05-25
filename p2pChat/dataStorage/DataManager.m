@@ -103,9 +103,9 @@
     }
 }
 
-- (void)savePhotoWithUsername:(NSString *)username time:(NSNumber *)time path:(NSString *)path thumbnail:(NSString *)thumbnailName isOut:(BOOL)isOut{
+- (void)savePhotoWithUsername:(NSString *)username time:(NSNumber *)time filename:(NSString *)filename thumbnail:(NSString *)thumbnailName isOut:(BOOL)isOut{
     NSError *err = nil;
-    [self saveMessageWithUsername:username time:time type:@2 body:path more:thumbnailName error:&err isOut:isOut];
+    [self saveMessageWithUsername:username time:time type:@2 body:filename more:thumbnailName error:&err isOut:isOut];
     if (err) {
         NSLog(@"DataManager save message failed: %@", err);
     }

@@ -7,7 +7,10 @@
 //
 
 #define bodyPadding 15
+#define CachePath(a) ([NSSearchPathForDirectoriesInDomains(NSCachesDirectory, NSUserDomainMask, YES)[0] stringByAppendingPathComponent:(a)])
+
 #import "MessageViewCell.h"
+#import "AFNetworking.h"
 #import "PicFrameModel.h"
 #import "Tool.h"
 #import "PicViewCell.h"
@@ -88,6 +91,7 @@
     
     UIImage *image = picFrame.image;
     [_bodyBtn setImage:image forState:UIControlStateNormal];
+    
     _bodyBtn.frame = picFrame.bodyFrame;
 //    _lastFrame = _bodyBtn.frame;
     [_bodyBtn addTarget:self action:@selector(picBtnClick:) forControlEvents:UIControlEventTouchUpInside];
@@ -128,24 +132,32 @@
     _aImageView = imageView;
     imageView.contentMode = UIViewContentModeScaleAspectFit;
     
-    if (_picFrame.message.isOut) {//发送出去的图片原图在图库里
+    if ([_picFrame.message.isOut boolValue]) {//发送出去的图片原图在图库里
         [[[PhotoLibraryCenter alloc]init]getImageWithLocalIdentifier:_picFrame.message.body withCompletionHandler:^(UIImage *image) {
             imageView.image = image;
             
             [cover addSubview:imageView];
         }];
     } else {
-        UIImage *image = [UIImage imageWithContentsOfFile:_picFrame.message.body];
-
-        imageView.image = image;
-        
-        [cover addSubview:imageView];
+        NSFileManager *fileManager = [NSFileManager defaultManager];
+        if ([fileManager fileExistsAtPath:CachePath(_picFrame.message.body)]) {
+//            NSLog(@"已经存在");
+            UIImage *image = [UIImage imageWithContentsOfFile:CachePath(_picFrame.message.body)];
+            _aImageView.image = image;
+            [cover addSubview:imageView];
+        }else{
+//            NSLog(@"需要下载");
+            [self downloadImageWithFilename:_picFrame.message.body withCompletionHandler:^(UIImage *image) {
+                _aImageView.image = image;
+                [cover addSubview:imageView];
+            }];
+        }
     }
     
     imageView.frame = [cover convertRect:button.imageView.frame fromView:cover];
      _lastFrame = imageView.frame;
     
-    [UIView animateWithDuration:2.0 animations:^{
+    [UIView animateWithDuration:0.2 animations:^{
         CGFloat w = cover.frame.size.width;
         CGFloat h = w * (cover.frame.size.height / imageView.frame.size.height);
         CGFloat x = 0;
@@ -158,9 +170,6 @@
     [cover addGestureRecognizer: tap];
 }
 
-//- (NSString *)getImageWithUrl:(NSString *)url{
-//    NSString *image = [NSString stringWithFormat:<#(nonnull NSString *), ...#>]
-//}
 
 - (UIView *)viewForZoomingInScrollView:(UIScrollView *)scrollView{
     return _aImageView;
@@ -173,6 +182,31 @@
     } completion:^(BOOL finished) {
         [tap.view removeFromSuperview];
     }];
+}
+
+- (void)downloadImageWithFilename:(NSString *)filename withCompletionHandler:(void(^)(UIImage *image))completionHandler{
+    NSString *url =  [NSString stringWithFormat:@"http://10.108.136.59:8080/FileServer/file?method=download&filename=%@",filename];
+//    url = @"http://10.108.136.59:8080/FileServer/file?method=download&filename=ht_test_1464095341";
+    AFURLSessionManager *sessionManager = [[AFURLSessionManager alloc] initWithSessionConfiguration:[NSURLSessionConfiguration defaultSessionConfiguration]];
+    sessionManager.responseSerializer = [AFHTTPResponseSerializer serializer];
+    
+    NSURLSessionDownloadTask *task = [sessionManager downloadTaskWithRequest:[NSURLRequest requestWithURL:[NSURL URLWithString:url]] progress:^(NSProgress * _Nonnull downloadProgress) {
+        NSLog(@"downloadProgress---------- : %@",downloadProgress);
+    } destination:^NSURL * _Nonnull(NSURL * _Nonnull targetPath, NSURLResponse * _Nonnull response) {
+        // 将下载文件保存在缓存路径中
+        // URLWithString返回的是网络的URL,如果使用本地URL,需要注意
+        //        NSURL *fileURL1 = [NSURL URLWithString:path];
+        NSURL *fileURL = [NSURL fileURLWithPath:CachePath(filename)];
+        return fileURL;
+    } completionHandler:^(NSURLResponse * _Nonnull response, NSURL * _Nullable filePath, NSError * _Nullable error) {
+        NSLog(@"-----filePath -----  %@",filePath);
+        
+        NSData *data = [NSData dataWithContentsOfURL:filePath];
+        UIImage *image = [UIImage imageWithData:data];
+        completionHandler(image);
+    }];
+    
+    [task resume];
 }
 
 @end
