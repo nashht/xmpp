@@ -11,6 +11,7 @@
 #import "MyXMPP+VCard.h"
 #import "XMPPvCardTemp.h"
 #import "MyXMPP+Group.h"
+#import "CreateGroupsViewController.h"
 
 
 static double InitialPositionX = 15;
@@ -91,12 +92,20 @@ static double LabelHigh = 20;
 
 - (void)addInsertMemberButtonwithlocation:(int)i{
     UIButton *insertbtn = [[UIButton alloc]init];
+    [insertbtn addTarget:self action:@selector(insertMemberAction) forControlEvents:UIControlEventTouchUpInside];
     insertbtn.layer.cornerRadius = 10;
     insertbtn.layer.masksToBounds = true;
     [insertbtn setBackgroundImage:[UIImage imageNamed:@"add_button.png"] forState:UIControlStateNormal];
     insertbtn.frame = CGRectMake(InitialPositionX+(PhotoWidth+LengthBetweenBtns)*i, InitialPositionY, PhotoWidth, PhotoWidth);
 //    insertbtn.layer.borderColor=[UIColor blackColor].CGColor;
     [self.MembersCell.contentView addSubview:insertbtn];
+}
+
+-(void)insertMemberAction{
+    CreateGroupsViewController *creatgroup =[[CreateGroupsViewController alloc]init];
+    creatgroup.modalTransitionStyle = UIModalTransitionStyleCrossDissolve;
+//    [self presentViewController:creatgroup animated:YES completion:nil];
+    [self.navigationController pushViewController:creatgroup animated:YES];
 }
 
 #pragma mark - Table view data source
@@ -110,7 +119,9 @@ static double LabelHigh = 20;
 #warning Incomplete implementation, return the number of rows
 //    return 1;
     if(section == 2 || section == 3) return 1;
-    else return 2;
+    else if(section ==0) return 2;
+    else return 3;
+        
 }
 
 

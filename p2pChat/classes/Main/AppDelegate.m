@@ -28,11 +28,12 @@
     _dataManager.context = _managedObjectContext;
     _myXMPP = [MyXMPP shareInstance];
     
-//    [_myXMPP loginWithName:@"ht" Password:@"11"];
+//    [_myXMPP loginWithName:@"赵晓昆" Password:@"123"];
     if ([[NSUserDefaults standardUserDefaults]stringForKey:@"name"] != nil) {
         NSString *name = [[NSUserDefaults standardUserDefaults]stringForKey:@"name"];
         NSString *password = [[NSUserDefaults standardUserDefaults]stringForKey:@"password"];
         [_myXMPP loginWithName:name Password:password];
+//        [_myXMPP loginWithName:@"zxk" Password:@"123"];
     }
     
     NSError *audioSessionError = nil;
