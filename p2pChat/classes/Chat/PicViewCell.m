@@ -123,41 +123,55 @@
 }
 
 - (void)picBtnClick:(UIButton *)button{
-//    添加一个遮盖
-    UIView *cover = [[UIView alloc]initWithFrame:[UIScreen mainScreen].bounds];
-    cover.backgroundColor = [UIColor blackColor];
-    [[UIApplication sharedApplication].keyWindow addSubview:cover];
-    _cover = cover;
-    UIImageView *imageView = [[UIImageView alloc]init];
-    _aImageView = imageView;
-    imageView.contentMode = UIViewContentModeScaleAspectFit;
-    
+
+
+ 
     if ([_picFrame.message.isOut boolValue]) {//发送出去的图片原图在图库里
         [[[PhotoLibraryCenter alloc]init]getImageWithLocalIdentifier:_picFrame.message.body withCompletionHandler:^(UIImage *image) {
-            imageView.image = image;
-            
-            [cover addSubview:imageView];
+            [self addCoverWithImage:image];
         }];
     } else {
         NSFileManager *fileManager = [NSFileManager defaultManager];
-        if ([fileManager fileExistsAtPath:CachePath(_picFrame.message.body)]) {
-//            NSLog(@"已经存在");
-            UIImage *image = [UIImage imageWithContentsOfFile:CachePath(_picFrame.message.body)];
-            _aImageView.image = image;
-            [cover addSubview:imageView];
-        }else{
-//            NSLog(@"需要下载");
+        if ([fileManager fileExistsAtPath:CachePath(_picFrame.message.body)]){
+
+        if([UIImage imageWithContentsOfFile:CachePath(_picFrame.message.body)] == nil) {
+            NSLog(@"已经存在，但是为空,   删除 + 下载");
+            if ([fileManager removeItemAtPath:CachePath(_picFrame.message.body) error:NULL]!=YES)
+                NSLog(@"Unable to delete file");
             [self downloadImageWithFilename:_picFrame.message.body withCompletionHandler:^(UIImage *image) {
-                _aImageView.image = image;
-                [cover addSubview:imageView];
+                [self addCoverWithImage:image];
+            }];
+            
+        }else{
+            NSLog(@"已经存在,不为空");
+            UIImage *image = [UIImage imageWithContentsOfFile:CachePath(_picFrame.message.body)];
+            [self addCoverWithImage:image];
+        }
+        }else{
+            NSLog(@"需要下载");
+            [self downloadImageWithFilename:_picFrame.message.body withCompletionHandler:^(UIImage *image) {
+                [self addCoverWithImage:image];
             }];
         }
     }
     
-    imageView.frame = [cover convertRect:button.imageView.frame fromView:cover];
-     _lastFrame = imageView.frame;
+
+}
+
+- (void)addCoverWithImage:(UIImage *)image{
+    //    添加一个遮盖
+    UIView *cover = [[UIView alloc]initWithFrame:[UIScreen mainScreen].bounds];
+    cover.backgroundColor = [UIColor blackColor];
+    [[UIApplication sharedApplication].keyWindow addSubview:cover];
     
-    [UIView animateWithDuration:0.2 animations:^{
+    UIImageView *imageView = [[UIImageView alloc]init];
+    _aImageView = imageView;
+    imageView.contentMode = UIViewContentModeScaleAspectFit;
+    imageView.frame = [self convertRect:_bodyBtn.frame toView:cover];
+    _lastFrame = imageView.frame;
+    [cover addSubview:imageView];
+    
+    [UIView animateWithDuration:1.0 animations:^{
         CGFloat w = cover.frame.size.width;
         CGFloat h = w * (cover.frame.size.height / imageView.frame.size.height);
         CGFloat x = 0;
@@ -168,6 +182,7 @@
     
     UITapGestureRecognizer *tap=[[UITapGestureRecognizer alloc]initWithTarget:self action:@selector(hideImage:)];
     [cover addGestureRecognizer: tap];
+
 }
 
 
@@ -177,8 +192,8 @@
 
 - (void)hideImage:(UITapGestureRecognizer*)tap{
     [UIView animateWithDuration:0.2 animations:^{
-//        _cover.backgroundColor = [UIColor clearColor];
-//        _aImageView.frame = _lastFrame;
+        _cover.backgroundColor = [UIColor clearColor];
+        _aImageView.frame = _lastFrame;
     } completion:^(BOOL finished) {
         [tap.view removeFromSuperview];
     }];

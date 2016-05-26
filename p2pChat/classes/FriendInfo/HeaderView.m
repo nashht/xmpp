@@ -48,7 +48,7 @@
         [self.delegate headerViewDidClicked:self];
     }
 //    self.nameLabel.text = @"click";
-    NSLog(@"section:%ld",self.section);
+    NSLog(@"section:%ld",(unsigned long)self.section);
 }
 
 @end

@@ -70,7 +70,7 @@
 - (void)setGroup:(FriendsGroup *)group{
     _group = group;
     [self.nameView setTitle:group.name forState:UIControlStateNormal];
-    self.countView.text = [NSString stringWithFormat:@"%d/%ld",group.online,group.friends.count];
+    self.countView.text = [NSString stringWithFormat:@"%d/%ld",group.online,(unsigned long)group.friends.count];
     
 //    NSLog(@"set");
     if (!self.group.opened) {

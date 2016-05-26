@@ -2295,12 +2295,12 @@
 		DA95D58A1C3A16E6001ED1A6 /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
-				LastUpgradeCheck = 0720;
+				LastUpgradeCheck = 0730;
 				ORGANIZATIONNAME = xiaokun;
 				TargetAttributes = {
 					DA95D5911C3A16E6001ED1A6 = {
 						CreatedOnToolsVersion = 7.2;
-						DevelopmentTeam = 62MA2C9T39;
+						DevelopmentTeam = H9BMMLH46C;
 					};
 					DA95D5AD1C3A16E6001ED1A6 = {
 						CreatedOnToolsVersion = 7.2;
@@ -2750,10 +2750,10 @@
 				);
 				ONLY_ACTIVE_ARCH = NO;
 				OTHER_LDFLAGS = "";
-				PRODUCT_BUNDLE_IDENTIFIER = zxk.xmppChat;
+				PRODUCT_BUNDLE_IDENTIFIER = abc.xmppChat;
 				PRODUCT_NAME = XMPP;
 				PROVISIONING_PROFILE = "";
-				SDKROOT = iphoneos9.2;
+				SDKROOT = iphoneos;
 				TARGETED_DEVICE_FAMILY = 1;
 			};
 			name = Debug;
@@ -2780,10 +2780,10 @@
 				);
 				ONLY_ACTIVE_ARCH = NO;
 				OTHER_LDFLAGS = "";
-				PRODUCT_BUNDLE_IDENTIFIER = zxk.xmppChat;
+				PRODUCT_BUNDLE_IDENTIFIER = abc.xmppChat;
 				PRODUCT_NAME = XMPP;
 				PROVISIONING_PROFILE = "";
-				SDKROOT = iphoneos9.2;
+				SDKROOT = iphoneos;
 				TARGETED_DEVICE_FAMILY = 1;
 			};
 			name = Release;
@@ -2846,7 +2846,7 @@
 				DA95D5C11C3A16E6001ED1A6 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
-			defaultConfigurationName = Release;
+			defaultConfigurationName = Debug;
 		};
 		DA95D5C21C3A16E6001ED1A6 /* Build configuration list for PBXNativeTarget "XMPP" */ = {
 			isa = XCConfigurationList;
@@ -2855,7 +2855,7 @@
 				DA95D5C41C3A16E6001ED1A6 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
-			defaultConfigurationName = Release;
+			defaultConfigurationName = Debug;
 		};
 		DA95D5C51C3A16E6001ED1A6 /* Build configuration list for PBXNativeTarget "XMPPTests" */ = {
 			isa = XCConfigurationList;
@@ -2864,7 +2864,7 @@
 				DA95D5C71C3A16E6001ED1A6 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
-			defaultConfigurationName = Release;
+			defaultConfigurationName = Debug;
 		};
 		DA95D5C81C3A16E6001ED1A6 /* Build configuration list for PBXNativeTarget "XMPPUITests" */ = {
 			isa = XCConfigurationList;
@@ -2873,7 +2873,7 @@
 				DA95D5CA1C3A16E6001ED1A6 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
-			defaultConfigurationName = Release;
+			defaultConfigurationName = Debug;
 		};
 /* End XCConfigurationList section */
 
