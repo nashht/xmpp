@@ -57,12 +57,14 @@
     return [dateFormatter dateFromString:dateString];
 }
 
-+ (NSString *)getFileName:(NSString *)info extension:(NSString *)extension {
++ (NSString *)getFileName:(NSString *)name extension:(NSString *)extension {
     NSString *fileName = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES).lastObject;
-    NSString *name = [Tool stringFromDate:[NSDate date]];
-    if (info != nil) {
-        name = [name stringByAppendingString:info];
-    }
+//    NSTimeInterval t = [[NSDate date] timeIntervalSince1970];
+//    int time = (int)t;
+//    NSString *name = [NSString stringWithFormat:@"%@_%i",info,time];
+//    if (info != nil) {
+//        name = [name stringByAppendingString:info];
+//    }
     name = [name stringByAppendingPathExtension:extension];
     fileName = [fileName stringByAppendingPathComponent:name];
     

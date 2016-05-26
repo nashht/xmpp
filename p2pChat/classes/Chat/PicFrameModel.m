@@ -43,8 +43,9 @@
     _photoFrame = CGRectMake(photoX, photoY, photoW, photoH);
 
 //      本地数据库的more存的是图片的name,根据name可以得到path
-    NSString *name = message.more;
-    NSString *path = [[NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES) lastObject] stringByAppendingPathComponent:name];
+    NSString *imageName = message.more;
+    NSString *path = [[NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES) lastObject] stringByAppendingPathComponent:imageName];
+    path = [path stringByAppendingPathExtension:@"jpeg"];
     UIImage *image = [UIImage imageWithContentsOfFile:path];
     _image = image;
 

@@ -79,6 +79,7 @@
         vCard = [[MyXMPP shareInstance]fetchFriend:[XMPPJID jidWithUser:message.username domain:myDomain resource:nil]];
     }
     
+//    头像
     if (vCard.photo != nil) {
         _photoImage.image = [UIImage imageWithData:vCard.photo];
     } else {
@@ -89,15 +90,15 @@
     [_photoImage.layer setCornerRadius:10];
     _photoImage.layer.masksToBounds = true;
     
+//    图片
     UIImage *image = picFrame.image;
     [_bodyBtn setImage:image forState:UIControlStateNormal];
     
     _bodyBtn.frame = picFrame.bodyFrame;
-//    _lastFrame = _bodyBtn.frame;
     [_bodyBtn addTarget:self action:@selector(picBtnClick:) forControlEvents:UIControlEventTouchUpInside];
     _image = image;
     
-    //    pic背景
+//    pic背景
     if ([message.isOut boolValue]) {
         [_bodyBtn setBackgroundImage: [self resizeImageWithName:@"chat_send_nor"] forState:UIControlStateNormal];
     }else{
@@ -124,64 +125,69 @@
 
 - (void)picBtnClick:(UIButton *)button{
 
-
- 
     if ([_picFrame.message.isOut boolValue]) {//发送出去的图片原图在图库里
+        [self addBlackCover];
         [[[PhotoLibraryCenter alloc]init]getImageWithLocalIdentifier:_picFrame.message.body withCompletionHandler:^(UIImage *image) {
-            [self addCoverWithImage:image];
+            [self addCoverImage:image];
         }];
     } else {
         NSFileManager *fileManager = [NSFileManager defaultManager];
         if ([fileManager fileExistsAtPath:CachePath(_picFrame.message.body)]){
 
-        if([UIImage imageWithContentsOfFile:CachePath(_picFrame.message.body)] == nil) {
-            NSLog(@"已经存在，但是为空,   删除 + 下载");
-            if ([fileManager removeItemAtPath:CachePath(_picFrame.message.body) error:NULL]!=YES)
-                NSLog(@"Unable to delete file");
-            [self downloadImageWithFilename:_picFrame.message.body withCompletionHandler:^(UIImage *image) {
-                [self addCoverWithImage:image];
-            }];
-            
-        }else{
+//        if([UIImage imageWithContentsOfFile:CachePath(_picFrame.message.body)] == nil) {
+//            NSLog(@"已经存在，但是为空,   删除 + 下载");
+//            [self addBlackCover];
+//            if ([fileManager removeItemAtPath:CachePath(_picFrame.message.body) error:NULL]!=YES)
+//                NSLog(@"Unable to delete file");
+//            [self downloadImageWithFilename:_picFrame.message.body withCompletionHandler:^(UIImage *image) {
+//                [self addCoverImage:image];
+//            }];
+//            
+//        }else{
             NSLog(@"已经存在,不为空");
+            [self addBlackCover];
             UIImage *image = [UIImage imageWithContentsOfFile:CachePath(_picFrame.message.body)];
-            [self addCoverWithImage:image];
-        }
+            [self addCoverImage:image];
+//        }
         }else{
             NSLog(@"需要下载");
+            [self addBlackCover];
             [self downloadImageWithFilename:_picFrame.message.body withCompletionHandler:^(UIImage *image) {
-                [self addCoverWithImage:image];
+            [self addCoverImage:image];
             }];
         }
     }
-    
-
 }
 
-- (void)addCoverWithImage:(UIImage *)image{
+- (void)addBlackCover{
     //    添加一个遮盖
     UIView *cover = [[UIView alloc]initWithFrame:[UIScreen mainScreen].bounds];
     cover.backgroundColor = [UIColor blackColor];
     [[UIApplication sharedApplication].keyWindow addSubview:cover];
-    
+    _cover = cover;
+}
+
+- (void)addCoverImage:(UIImage *)image{
+
     UIImageView *imageView = [[UIImageView alloc]init];
     _aImageView = imageView;
     imageView.contentMode = UIViewContentModeScaleAspectFit;
-    imageView.frame = [self convertRect:_bodyBtn.frame toView:cover];
+    imageView.frame = [self convertRect:_bodyBtn.frame toView:_cover];
     _lastFrame = imageView.frame;
-    [cover addSubview:imageView];
+    imageView.image = image;
+    [_cover addSubview:imageView];
     
-    [UIView animateWithDuration:1.0 animations:^{
-        CGFloat w = cover.frame.size.width;
-        CGFloat h = w * (cover.frame.size.height / imageView.frame.size.height);
+    [UIView animateWithDuration:0.2 animations:^{
+        CGFloat w = _cover.frame.size.width;
+        CGFloat h = w * (_cover.frame.size.height / imageView.frame.size.height);
         CGFloat x = 0;
-        CGFloat y = (cover.frame.size.height - h) * 0.5;
+        CGFloat y = (_cover.frame.size.height - h) * 0.5;
         CGRect frame = CGRectMake(x, y, w, h);
         imageView.frame = frame;
     }];
     
     UITapGestureRecognizer *tap=[[UITapGestureRecognizer alloc]initWithTarget:self action:@selector(hideImage:)];
-    [cover addGestureRecognizer: tap];
+    [_cover addGestureRecognizer: tap];
 
 }
 

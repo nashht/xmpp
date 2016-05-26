@@ -149,11 +149,11 @@ static NSString *pictureType = @"[图片]";
             }
             case 'p':{//pic
                 NSData *data = [[NSData alloc]initWithBase64EncodedString:messageBody options:0];
-                NSString *path = [Tool getFileName:@"receive" extension:@"jpeg"];
                 NSString *filename = [message getMore];
+                NSString *thumbnailName = [NSString stringWithFormat:@"%@_receiveThumbnail",filename];
+                NSString *path = [Tool getFileName:thumbnailName extension:@"jpeg"];
                 [data writeToFile:path atomically:YES];
-                
-                NSString  *thumbnailName = [NSString stringWithFormat:@"%@receive.jpeg",[Tool stringFromDate:[NSDate date]]];
+
                 
                 [self.dataManager savePhotoWithUsername:bareJidStr time:timeNumber filename:filename thumbnail:thumbnailName isOut:NO];
                 [self.dataManager addRecentUsername:bareJidStr time:ltime body:pictureType isOut:NO isP2P:YES];

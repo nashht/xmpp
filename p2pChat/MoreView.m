@@ -25,6 +25,7 @@
 @property (copy, nonatomic) NSString *localIdentifier;
 @property (copy, nonatomic) NSString *thumbnailPath;
 @property (copy, nonatomic) NSString *thumbnailName;
+@property (copy, nonatomic) NSString *filename;
 @property (strong, nonatomic) UIView *previewView;
 
 @end
@@ -73,17 +74,14 @@
 }
 
 - (void)sendPic:(NSData *)imageData thumbnailData:(NSData *)thumbnailData{
-    NSDate *date = [NSDate date];
-    NSTimeInterval t = [date timeIntervalSince1970];
-    int time = (int)t;
     
-    NSString *filename = [NSString stringWithFormat:@"%@_%i",_chatObjectString,time];
-    NSString *downloadUrl = [NSString stringWithFormat:@"http://10.108.136.59:8080/FileServer/file?method=download&filename=%@",filename];
-    [self sendPic:imageData filename:filename];
+    NSString *downloadUrl = [NSString stringWithFormat:@"http://10.108.136.59:8080/FileServer/file?method=download&filename=%@",_filename];
+    
+    [self sendPic:imageData filename:_filename];
     
     NSLog(@"download : %@",downloadUrl);
     
-    [[MyXMPP shareInstance] sendPictureIdentifier:_localIdentifier data:thumbnailData thumbnailName:_thumbnailName filename:filename ToUser:_chatObjectString];
+    [[MyXMPP shareInstance] sendPictureIdentifier:_localIdentifier data:thumbnailData thumbnailName:_thumbnailName filename:_filename ToUser:_chatObjectString];
     NSLog(@"thumbnailPath------%@",_thumbnailPath);
     
     dispatch_async(dispatch_get_main_queue(), ^{
@@ -97,8 +95,16 @@
 - (void)imagePickerController:(UIImagePickerController *)picker didFinishPickingMediaWithInfo:(nonnull NSDictionary<NSString *,id> *)info {
     _image = info[UIImagePickerControllerOriginalImage];
     
-    _thumbnailPath = [Tool getFileName:@"thumbnail" extension:@"jpeg"];
-    _thumbnailName = [NSString stringWithFormat:@"%@thumbnail.jpeg",[Tool stringFromDate:[NSDate date]]];
+    NSTimeInterval t = [[NSDate date] timeIntervalSince1970];
+    int time = (int)t;
+    
+    NSString *filename = [NSString stringWithFormat:@"%@_%i",_chatObjectString,time];
+    NSString *name = [NSString stringWithFormat:@"%@_thumbnail",filename];
+  
+    _filename = filename;
+    _thumbnailName = name;
+    _thumbnailPath = [Tool getFileName:name extension:@"jpeg"];
+    
     UIImage *thumbnailImage = [_photoCenter makeThumbnail:_image WithSize:CGSizeMake(200, 200)];
 
     NSData *imageData = UIImagePNGRepresentation(_image);
