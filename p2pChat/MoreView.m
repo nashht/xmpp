@@ -153,4 +153,33 @@
     }];
     
 }
+
+
+- (void)sendFile:(NSData *)fileData filename:(NSString *)filename{
+    
+    NSLog(@"send file 2 Server");
+    
+    AFHTTPSessionManager *manager = [AFHTTPSessionManager manager];
+    manager.responseSerializer = [AFHTTPResponseSerializer serializer];
+    NSMutableDictionary *param = [NSMutableDictionary dictionary];
+    param[@"method"] = @"upload";
+    param[@"filename"] = filename;
+    // 参数para:{method:"upload"/"download",filename:"xxx"}(filename格式：username_timestamp
+    //     访问路径
+    //    NSString *stringURL = @"http://10.108.136.59:8080/FileServer/file?method=upload&filename=1123";
+    //    NSString *url = [NSString stringWithFormat:@"http://10.108.136.59:8080/FileServer/file?method=upload&filename=",filename];
+    [manager POST: @"http://10.108.136.59:8080/FileServer/file" parameters:param constructingBodyWithBlock:^(id<AFMultipartFormData>  _Nonnull formData) {
+        // 拼接文件参数
+        [formData appendPartWithFileData:fileData name:@"png" fileName:filename mimeType:@"image/png"];
+        
+    } progress:^(NSProgress * _Nonnull uploadProgress) {
+        NSLog(@"uploadProgress%@",uploadProgress);
+    } success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
+        id json = [NSJSONSerialization JSONObjectWithData:responseObject options:NSJSONReadingMutableContainers error:nil];
+        NSLog(@"success%@",json);
+    } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
+        NSLog(@"failed------error:   %@",error);
+    }];
+    
+}
 @end
