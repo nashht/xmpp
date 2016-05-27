@@ -2674,7 +2674,7 @@
 					"$(PROJECT_DIR)/p2pChat/framework/module",
 				);
 				INFOPLIST_FILE = p2pChat/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 9.3;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
@@ -2704,7 +2704,7 @@
 					"$(PROJECT_DIR)/p2pChat/framework/module",
 				);
 				INFOPLIST_FILE = p2pChat/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 9.3;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
