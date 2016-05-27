@@ -162,7 +162,7 @@
 - (void)addBlackCover{
     //    添加一个遮盖
     UIView *cover = [[UIView alloc]initWithFrame:[UIScreen mainScreen].bounds];
-    cover.backgroundColor = [UIColor blackColor];
+    cover.backgroundColor = [UIColor clearColor];
     [[UIApplication sharedApplication].keyWindow addSubview:cover];
     _cover = cover;
 }
@@ -184,6 +184,7 @@
         CGFloat y = (_cover.frame.size.height - h) * 0.5;
         CGRect frame = CGRectMake(x, y, w, h);
         imageView.frame = frame;
+        _cover.backgroundColor = [UIColor blackColor];
     }];
     
     UITapGestureRecognizer *tap=[[UITapGestureRecognizer alloc]initWithTarget:self action:@selector(hideImage:)];
