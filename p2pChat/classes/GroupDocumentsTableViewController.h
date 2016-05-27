@@ -9,5 +9,5 @@
 #import <UIKit/UIKit.h>
 
 @interface GroupDocumentsTableViewController : UITableViewController
-
+@property (nonatomic, weak) NSString *chatObjectString;;
 @end

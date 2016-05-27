@@ -5,11 +5,15 @@
 //  Created by admin on 16/5/16.
 //  Copyright © 2016年 xiaokun. All rights reserved.
 //
+#define CachePath(a) ([NSSearchPathForDirectoriesInDomains(NSCachesDirectory, NSUserDomainMask, YES)[0] stringByAppendingPathComponent:(a)])
 
 #import "GroupDocumentsTableViewController.h"
+#import "AFNetworking.h"
+#import "MyXMPP.h"
+#import "MyXMPP+P2PChat.h"
 #import "Tool.h"
 
-@interface GroupDocumentsTableViewController ()
+@interface GroupDocumentsTableViewController ()<UITableViewDelegate,UITableViewDataSource>
 
 @property (strong, nonatomic)NSArray *arr;
 
@@ -66,49 +70,76 @@
   
 }
 
-
-/*
-// Override to support conditional editing of the table view.
-- (BOOL)tableView:(UITableView *)tableView canEditRowAtIndexPath:(NSIndexPath *)indexPath {
-    // Return NO if you do not want the specified item to be editable.
-    return YES;
+- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
+    UITableViewCell *cell = [tableView cellForRowAtIndexPath:indexPath];
+    NSLog(@"cell.textLabel.text :  %@",cell.textLabel.text);
+    
+    NSString *path = [NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES) lastObject];
+    NSString *filepath = [path stringByAppendingPathComponent:cell.textLabel.text];
+    NSLog( @" path = %@",filepath);
+    NSData *fileData = [NSData dataWithContentsOfFile:filepath];
+    NSString *filename = [@"file_" stringByAppendingString:cell.textLabel.text];
+    
+    [self sendFile:fileData filename:filename];
 }
-*/
 
-/*
-// Override to support editing the table view.
-- (void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath {
-    if (editingStyle == UITableViewCellEditingStyleDelete) {
-        // Delete the row from the data source
-        [tableView deleteRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationFade];
-    } else if (editingStyle == UITableViewCellEditingStyleInsert) {
-        // Create a new instance of the appropriate class, insert it into the array, and add a new row to the table view
-    }   
+- (void)sendFile:(NSData *)fileData filename:(NSString *)filename{
+    [[MyXMPP shareInstance] sendFile:filename ToUser:_chatObjectString filename:filename];
+    [self uploadFile:fileData filename:filename];
+    
 }
-*/
 
-/*
-// Override to support rearranging the table view.
-- (void)tableView:(UITableView *)tableView moveRowAtIndexPath:(NSIndexPath *)fromIndexPath toIndexPath:(NSIndexPath *)toIndexPath {
+- (void)uploadFile:(NSData *)fileData filename:(NSString *)filename{
+    NSLog(@"send file 2 Server");
+    
+    AFHTTPSessionManager *manager = [AFHTTPSessionManager manager];
+    manager.responseSerializer = [AFHTTPResponseSerializer serializer];
+    NSMutableDictionary *param = [NSMutableDictionary dictionary];
+    param[@"method"] = @"upload";
+    param[@"filename"] = filename;
+    
+    // 参数para:{method:"upload"/"download",filename:"xxx"}(filename格式：username_timestamp
+    [manager POST: @"http://10.108.136.59:8080/FileServer/file" parameters:param constructingBodyWithBlock:^(id<AFMultipartFormData>  _Nonnull formData) {
+        // 拼接文件参数
+        [formData appendPartWithFileData:fileData name:@"file" fileName:filename mimeType:@"application/octet-stream"];
+        
+    } progress:^(NSProgress * _Nonnull uploadProgress) {
+//        NSLog(@"uploadProgress%@",uploadProgress);
+    } success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
+        id json = [NSJSONSerialization JSONObjectWithData:responseObject options:NSJSONReadingMutableContainers error:nil];
+        NSLog(@"success%@",json);
+        
+        [self downloadFileWithFilename:filename withCompletionHandler:^(NSData *fileData) {
+            NSLog(@"file down success");
+        }];
+    } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
+        NSLog(@"failed------error:   %@",error);
+    }];
+    
 }
-*/
 
-/*
-// Override to support conditional rearranging of the table view.
-- (BOOL)tableView:(UITableView *)tableView canMoveRowAtIndexPath:(NSIndexPath *)indexPath {
-    // Return NO if you do not want the item to be re-orderable.
-    return YES;
+
+- (void)downloadFileWithFilename:(NSString *)filename withCompletionHandler:(void(^)(NSData *fileData))completionHandler{
+    NSString *url =  [NSString stringWithFormat:@"http://10.108.136.59:8080/FileServer/file?method=download&filename=%@",filename];
+
+    AFURLSessionManager *sessionManager = [[AFURLSessionManager alloc] initWithSessionConfiguration:[NSURLSessionConfiguration defaultSessionConfiguration]];
+    sessionManager.responseSerializer = [AFHTTPResponseSerializer serializer];
+
+    NSURLSessionDownloadTask *task = [sessionManager downloadTaskWithRequest:[NSURLRequest requestWithURL:[NSURL URLWithString:url]] progress:^(NSProgress * _Nonnull downloadProgress) {
+        NSLog(@"downloadProgress---------- : %@",downloadProgress);
+    } destination:^NSURL * _Nonnull(NSURL * _Nonnull targetPath, NSURLResponse * _Nonnull response) {
+        // 将下载文件保存在缓存路径中
+        // URLWithString返回的是网络的URL,如果使用本地URL,需要注意
+        //        NSURL *fileURL1 = [NSURL URLWithString:path];
+        NSURL *fileURL = [NSURL fileURLWithPath:CachePath(filename)];
+        return fileURL;
+    } completionHandler:^(NSURLResponse * _Nonnull response, NSURL * _Nullable filePath, NSError * _Nullable error) {
+        NSLog(@"-----filePath -----  %@",filePath);
+
+    }];
+
+    [task resume];
 }
-*/
 
-/*
-#pragma mark - Navigation
-
-// In a storyboard-based application, you will often want to do a little preparation before navigation
-- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
-    // Get the new view controller using [segue destinationViewController].
-    // Pass the selected object to the new view controller.
-}
-*/
 
 @end

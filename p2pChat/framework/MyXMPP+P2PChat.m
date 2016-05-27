@@ -22,6 +22,7 @@
 
 static NSString *voiceType = @"[语音]";
 static NSString *pictureType = @"[图片]";
+static NSString *fileType = @"[文件]";
 
 @interface MyXMPP () 
 
@@ -60,8 +61,6 @@ static NSString *pictureType = @"[图片]";
     NSTimeInterval t = [date timeIntervalSince1970];
     int time = (int)t;
     
-    NSDate *d = [Tool transferDate:date];
-    NSNumber *ltime= [NSNumber numberWithDouble:[d timeIntervalSince1970]];
 //    NSNumber *lasttime= [NSNumber numberWithInt:time];
 //    NSDate *d2 = [NSDate dateWithTimeIntervalSince1970:[t intValue]];
 //    NSDate *d1 = [Tool transferDate:d];
@@ -70,7 +69,7 @@ static NSString *pictureType = @"[图片]";
     [self sendMessageWithSubtype:@"text" time:time body:text more:nil toUser:user];
     
     [self.dataManager saveMessageWithUsername:user time:[NSNumber numberWithDouble:time]  body:text isOut:YES];
-    [self.dataManager addRecentUsername:user time:ltime body:text isOut:YES isP2P:YES];
+    [self.dataManager addRecentUsername:user time:[NSNumber numberWithInt:time] body:text isOut:YES isP2P:YES];
 }
 
 - (void)sendAudio:(NSString *)path ToUser:(NSString *)user length:(NSString *)length{
@@ -83,15 +82,22 @@ static NSString *pictureType = @"[图片]";
     NSTimeInterval t = [date timeIntervalSince1970];
     int time = (int)t;
     
-    NSDate *d = [Tool transferDate:date];
-    NSNumber *ltime= [NSNumber numberWithDouble:[d timeIntervalSince1970]];
-    
     [self sendMessageWithSubtype:@"audio" time:time body:audiomsg more:length toUser:user];
     
     [self.dataManager saveRecordWithUsername:user time:[NSNumber numberWithInt:time] path:path length:length isOut:YES];
-    [self.dataManager addRecentUsername:user time:ltime body:voiceType isOut:YES isP2P:YES];
+    [self.dataManager addRecentUsername:user time:[NSNumber numberWithInt:time] body:voiceType isOut:YES isP2P:YES];
 }
 
+- (void)sendFile:(NSString *)path ToUser:(NSString *)user filename:(NSString *)filename{
+    NSDate *date = [NSDate date];
+    NSTimeInterval t = [date timeIntervalSince1970];
+    int time = (int)t;
+    
+    [self sendMessageWithSubtype:@"file" time:time body:path more:filename toUser:user];
+    [self.dataManager saveFileWithUsername:user time:[NSNumber numberWithInt:time] path:path fileName:filename isOut:YES];
+ 
+    [self.dataManager addRecentUsername:user time:[NSNumber numberWithInt:time] body:fileType isOut:YES isP2P:YES];
+}
 
 
 - (void)sendPictureIdentifier:(NSString *)identifier data:(NSData *)imageData thumbnailName:(NSString *)thumbnailName filename:(NSString *)filename ToUser:(NSString *)user{
@@ -101,12 +107,9 @@ static NSString *pictureType = @"[图片]";
     NSTimeInterval t = [date timeIntervalSince1970];
     int time = (int)t;
     
-    NSDate *d = [Tool transferDate:date];
-    NSNumber *ltime= [NSNumber numberWithDouble:[d timeIntervalSince1970]];
-    
     [self sendMessageWithSubtype:@"picture" time:time body:picString more:filename toUser:user];
     [self.dataManager savePhotoWithUsername:user time:[NSNumber numberWithInt:time] filename:identifier thumbnail:thumbnailName isOut:YES];
-    [self.dataManager addRecentUsername:user time:ltime body:pictureType isOut:YES isP2P:YES];
+    [self.dataManager addRecentUsername:user time:[NSNumber numberWithInt:time] body:pictureType isOut:YES isP2P:YES];
 }
 
 #pragma mark - receivemessage delegate
@@ -153,10 +156,19 @@ static NSString *pictureType = @"[图片]";
                 NSString *thumbnailName = [NSString stringWithFormat:@"%@_receiveThumbnail",filename];
                 NSString *path = [Tool getFileName:thumbnailName extension:@"jpeg"];
                 [data writeToFile:path atomically:YES];
-
                 
                 [self.dataManager savePhotoWithUsername:bareJidStr time:timeNumber filename:filename thumbnail:thumbnailName isOut:NO];
                 [self.dataManager addRecentUsername:bareJidStr time:ltime body:pictureType isOut:NO isP2P:YES];
+                break;
+            }
+            
+            case 'f':{
+//#error 未完
+                [self.dataManager saveMessageWithUsername:bareJidStr time:timeNumber body:messageBody isOut:NO];
+                NSString *filename = [message getMore];
+//                [self.dataManager saveFileWithUsername:bareJidStr time:timeNumber path:<#(NSString *)#> fileName:filename isOut:NO];
+                [self.dataManager addRecentUsername:bareJidStr time:ltime body:messageBody isOut:NO isP2P:YES];
+                localNotification.alertBody = [NSString stringWithFormat:@"%@:%@", bareJidStr, messageBody];
                 break;
             }
                 

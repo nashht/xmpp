@@ -28,6 +28,9 @@
                         <constraint firstAttribute="width" secondItem="xiR-mU-rlq" secondAttribute="height" multiplier="1:1" id="v4V-r1-w9f"/>
                     </constraints>
                     <state key="normal" image="add_take_phone_n"/>
+                    <connections>
+                        <action selector="pickFile:" destination="iN0-l3-epB" eventType="touchUpInside" id="U4L-Hp-ayN"/>
+                    </connections>
                 </button>
                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="e2j-Ca-1dj">
                     <rect key="frame" x="433" y="8" width="129" height="130"/>

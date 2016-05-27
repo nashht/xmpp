@@ -171,7 +171,6 @@
     [popoverVc setCreateGroupBlock:^{//不会引起循环引用
         [self performSegueWithIdentifier:@"createGroup" sender:nil];
     } showGroupBlock:^{
-        [self downloadImage];
         
 
     }];
@@ -191,49 +190,5 @@
     return UIModalPresentationNone;
 }
 
-- (void)downloadImage{
-//    UIImageView *imageView = [[UIImageView alloc] init];
-//    NSString *url = _picFrame.message.more;
-    NSString *url =  @"http://10.108.136.59:8080/FileServer/file?method=download&filename=111.txt";
-    AFURLSessionManager *sessionManager = [[AFURLSessionManager alloc] initWithSessionConfiguration:[NSURLSessionConfiguration defaultSessionConfiguration]];
-    sessionManager.responseSerializer = [AFHTTPResponseSerializer serializer];
-    
-    NSURLSessionDownloadTask *task = [sessionManager downloadTaskWithRequest:[NSURLRequest requestWithURL:[NSURL URLWithString:url]] progress:^(NSProgress * _Nonnull downloadProgress) {
-        NSLog(@"downloadProgress---------- : %@",downloadProgress);
-    } destination:^NSURL * _Nonnull(NSURL * _Nonnull targetPath, NSURLResponse * _Nonnull response) {
-//        NSFileManager *manager = [NSFileManager defaultManager];
-//        NSURL *url = [[manager URLsForDirectory:NSDocumentDirectory inDomains:NSUserDomainMask] firstObject];
-//        NSURL *documentUrl = [url URLByAppendingPathComponent:@"aaa.png"];
-////        NSURL *uuu = [NSURL fileURLWithPath: @"/Users/nashht/Desktop/aaa.jpeg"];
-//        return documentUrl;
-//        
-//        NSURL *downloadURL = [[NSFileManager defaultManager] URLForDirectory:NSDocumentDirectory inDomain:NSUserDomainMask appropriateForURL:nil create:NO error:nil];
-//        return [downloadURL URLByAppendingPathComponent:[response suggestedFilename]];
-        // 指定下载文件保存的路径
-        //        NSLog(@"%@ %@", targetPath, response.suggestedFilename);
-        // 将下载文件保存在缓存路径中
-        NSString *cacheDir = NSSearchPathForDirectoriesInDomains(NSCachesDirectory, NSUserDomainMask, YES)[0];
-        NSString *path = [cacheDir stringByAppendingPathComponent:response.suggestedFilename];
-        
-        // URLWithString返回的是网络的URL,如果使用本地URL,需要注意
-        //        NSURL *fileURL1 = [NSURL URLWithString:path];
-        NSURL *fileURL = [NSURL fileURLWithPath:path];
-        
-//                NSLog(@"== %@ |||| %@", fileURL1, fileURL);
-
-        
-        return fileURL;
-    } completionHandler:^(NSURLResponse * _Nonnull response, NSURL * _Nullable filePath, NSError * _Nullable error) {
-        NSLog(@"-----filePath -----  %@",filePath);
-//        UIImageView *imageView = [[UIImageView alloc] initWithFrame:CGRectMake(0, 70, 300, 300)];
-//        imageView.image = [UIImage imageWithContentsOfFile:[filePath absoluteString]];
-//        [self.view addSubview: imageView];
-        
-        NSString *txt = [NSString stringWithContentsOfFile:[filePath absoluteString] encoding:NSUTF8StringEncoding error:&error];
-        NSLog(@"txt--- %@",txt);
-    }];
-    
-    [task resume];
-}
 
 @end
