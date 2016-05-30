@@ -66,8 +66,6 @@
     NSFileManager *fileManage = [NSFileManager defaultManager];
     NSArray *file = [fileManage subpathsOfDirectoryAtPath: documentsPath error:nil];
     return file;
-//    NSLog(@"%@",file);
-  
 }
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
@@ -80,11 +78,23 @@
     NSData *fileData = [NSData dataWithContentsOfFile:filepath];
     NSString *filename = [@"file_" stringByAppendingString:cell.textLabel.text];
     
-    [self sendFile:fileData filename:filename];
+    NSFileManager * filemanager = [[NSFileManager alloc]init];
+    if([filemanager fileExistsAtPath:filepath]){
+        
+        NSDictionary * attributes = [filemanager attributesOfItemAtPath:filepath error:nil];
+        
+        // file size
+        NSNumber *theFileSize;
+        NSString *size;
+        if ((theFileSize = [attributes objectForKey:NSFileSize])){
+            size = [NSString stringWithFormat:@"%i kb",[theFileSize intValue]];
+        }
+            [self sendFile:fileData filename:filename fileSize:size];
+    }
 }
 
-- (void)sendFile:(NSData *)fileData filename:(NSString *)filename{
-    [[MyXMPP shareInstance] sendFile:filename ToUser:_chatObjectString filename:filename];
+- (void)sendFile:(NSData *)fileData filename:(NSString *)filename fileSize:(NSString *)fileSize{
+    [[MyXMPP shareInstance] sendFile:filename ToUser:_chatObjectString fileSize:fileSize];
     [self uploadFile:fileData filename:filename];
     
 }
@@ -108,37 +118,10 @@
     } success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
         id json = [NSJSONSerialization JSONObjectWithData:responseObject options:NSJSONReadingMutableContainers error:nil];
         NSLog(@"success%@",json);
-        
-        [self downloadFileWithFilename:filename withCompletionHandler:^(NSData *fileData) {
-            NSLog(@"file down success");
-        }];
+       
     } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
         NSLog(@"failed------error:   %@",error);
     }];
-    
-}
-
-
-- (void)downloadFileWithFilename:(NSString *)filename withCompletionHandler:(void(^)(NSData *fileData))completionHandler{
-    NSString *url =  [NSString stringWithFormat:@"http://10.108.136.59:8080/FileServer/file?method=download&filename=%@",filename];
-
-    AFURLSessionManager *sessionManager = [[AFURLSessionManager alloc] initWithSessionConfiguration:[NSURLSessionConfiguration defaultSessionConfiguration]];
-    sessionManager.responseSerializer = [AFHTTPResponseSerializer serializer];
-
-    NSURLSessionDownloadTask *task = [sessionManager downloadTaskWithRequest:[NSURLRequest requestWithURL:[NSURL URLWithString:url]] progress:^(NSProgress * _Nonnull downloadProgress) {
-        NSLog(@"downloadProgress---------- : %@",downloadProgress);
-    } destination:^NSURL * _Nonnull(NSURL * _Nonnull targetPath, NSURLResponse * _Nonnull response) {
-        // 将下载文件保存在缓存路径中
-        // URLWithString返回的是网络的URL,如果使用本地URL,需要注意
-        //        NSURL *fileURL1 = [NSURL URLWithString:path];
-        NSURL *fileURL = [NSURL fileURLWithPath:CachePath(filename)];
-        return fileURL;
-    } completionHandler:^(NSURLResponse * _Nonnull response, NSURL * _Nullable filePath, NSError * _Nullable error) {
-        NSLog(@"-----filePath -----  %@",filePath);
-
-    }];
-
-    [task resume];
 }
 
 

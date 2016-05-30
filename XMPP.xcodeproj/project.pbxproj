@@ -36,6 +36,9 @@
 		903F40231CDA3CF300759D8F /* RegularExpressionTool.m in Sources */ = {isa = PBXBuildFile; fileRef = 903F40221CDA3CF300759D8F /* RegularExpressionTool.m */; };
 		904175431CA9299C005A024B /* LoginViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 904175421CA9299C005A024B /* LoginViewController.m */; };
 		904175471CA92B63005A024B /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 904175461CA92B63005A024B /* main.m */; };
+		905AE6F91CF851F900531E6F /* FileCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 905AE6F81CF851F900531E6F /* FileCell.m */; };
+		905AE6FC1CF8521F00531E6F /* FileFrameModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 905AE6FB1CF8521F00531E6F /* FileFrameModel.m */; };
+		905AE6FF1CFBF32600531E6F /* UIImage+Category.m in Sources */ = {isa = PBXBuildFile; fileRef = 905AE6FE1CFBF32600531E6F /* UIImage+Category.m */; };
 		9076A3DD1CEA0E5100CA0A3E /* test.txt in Resources */ = {isa = PBXBuildFile; fileRef = 9076A3DC1CEA0E5100CA0A3E /* test.txt */; };
 		9076A3DF1CEA0F3200CA0A3E /* Foundation+Log.m in Sources */ = {isa = PBXBuildFile; fileRef = 9076A3DE1CEA0F3200CA0A3E /* Foundation+Log.m */; };
 		90DC39431CEC1C7E002CECCF /* AFHTTPSessionManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 90DC39371CEC1C7E002CECCF /* AFHTTPSessionManager.m */; };
@@ -338,6 +341,12 @@
 		904175411CA9299C005A024B /* LoginViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LoginViewController.h; sourceTree = "<group>"; };
 		904175421CA9299C005A024B /* LoginViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LoginViewController.m; sourceTree = "<group>"; };
 		904175461CA92B63005A024B /* main.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = main.m; path = p2pChat/classes/Main/main.m; sourceTree = SOURCE_ROOT; };
+		905AE6F71CF851F900531E6F /* FileCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FileCell.h; sourceTree = "<group>"; };
+		905AE6F81CF851F900531E6F /* FileCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FileCell.m; sourceTree = "<group>"; };
+		905AE6FA1CF8521F00531E6F /* FileFrameModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FileFrameModel.h; sourceTree = "<group>"; };
+		905AE6FB1CF8521F00531E6F /* FileFrameModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FileFrameModel.m; sourceTree = "<group>"; };
+		905AE6FD1CFBF32600531E6F /* UIImage+Category.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIImage+Category.h"; sourceTree = "<group>"; };
+		905AE6FE1CFBF32600531E6F /* UIImage+Category.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIImage+Category.m"; sourceTree = "<group>"; };
 		9076A3DC1CEA0E5100CA0A3E /* test.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = test.txt; sourceTree = "<group>"; };
 		9076A3DE1CEA0F3200CA0A3E /* Foundation+Log.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "Foundation+Log.m"; sourceTree = "<group>"; };
 		90DC39361CEC1C7E002CECCF /* AFHTTPSessionManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AFHTTPSessionManager.h; sourceTree = "<group>"; };
@@ -882,6 +891,12 @@
 				9001224A1CA91EE2005D5BFA /* MessageFrameModel.m */,
 				9001224B1CA91EE2005D5BFA /* MessageViewCell.h */,
 				9001224C1CA91EE2005D5BFA /* MessageViewCell.m */,
+				905AE6F71CF851F900531E6F /* FileCell.h */,
+				905AE6F81CF851F900531E6F /* FileCell.m */,
+				905AE6FD1CFBF32600531E6F /* UIImage+Category.h */,
+				905AE6FE1CFBF32600531E6F /* UIImage+Category.m */,
+				905AE6FA1CF8521F00531E6F /* FileFrameModel.h */,
+				905AE6FB1CF8521F00531E6F /* FileFrameModel.m */,
 				9001224D1CA91EE2005D5BFA /* PicFrameModel.h */,
 				9001224E1CA91EE2005D5BFA /* PicFrameModel.m */,
 				9001224F1CA91EE2005D5BFA /* PicViewCell.h */,
@@ -2409,6 +2424,7 @@
 				90DC39471CEC1C7E002CECCF /* AFURLResponseSerialization.m in Sources */,
 				DA90B1EC1C8989930080E037 /* XMPPPresence+XEP_0172.m in Sources */,
 				900122661CA91EE3005D5BFA /* MessageViewCell.m in Sources */,
+				905AE6FF1CFBF32600531E6F /* UIImage+Category.m in Sources */,
 				DA90B19C1C8989930080E037 /* XMPPPresence.m in Sources */,
 				DAAA186E1CABCF6500691170 /* Message.m in Sources */,
 				DA90B2091C8989930080E037 /* GCDAsyncSocket.m in Sources */,
@@ -2571,6 +2587,7 @@
 				DA90B1A41C8989930080E037 /* XMPPProcessOne.m in Sources */,
 				DA90B2071C8989930080E037 /* XMPPStringPrep.m in Sources */,
 				DA90B1B91C8989930080E037 /* XMPPRoomOccupantCoreDataStorageObject.m in Sources */,
+				905AE6F91CF851F900531E6F /* FileCell.m in Sources */,
 				DAAF2C131CCCA87700C51494 /* EditViewController.m in Sources */,
 				90DC399D1CF4735F002CECCF /* UIButton+AFNetworking.m in Sources */,
 				DA90B1D61C8989930080E037 /* XMPPIQ+XEP_0066.m in Sources */,
@@ -2600,6 +2617,7 @@
 				DA57261C1CBF40830045CEF2 /* BottomView.m in Sources */,
 				DA90B20F1C8989930080E037 /* DDContextFilterLogFormatter.m in Sources */,
 				DA9046B81C3A51A1009E75B7 /* Tool.m in Sources */,
+				905AE6FC1CF8521F00531E6F /* FileFrameModel.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

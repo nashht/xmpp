@@ -18,6 +18,7 @@
                         <constraint firstAttribute="width" secondItem="C3X-sd-Egy" secondAttribute="height" multiplier="1:1" id="oLv-rI-Ecz"/>
                     </constraints>
                     <state key="normal" image="add_take_phone_n"/>
+                    <state key="highlighted" image="add_take_phone_f"/>
                     <connections>
                         <action selector="pickPhoto:" destination="iN0-l3-epB" eventType="touchUpInside" id="iXl-q6-Aci"/>
                     </connections>
@@ -27,7 +28,8 @@
                     <constraints>
                         <constraint firstAttribute="width" secondItem="xiR-mU-rlq" secondAttribute="height" multiplier="1:1" id="v4V-r1-w9f"/>
                     </constraints>
-                    <state key="normal" image="add_take_phone_n"/>
+                    <state key="normal" image="add_file_n"/>
+                    <state key="highlighted" image="add_file_f"/>
                     <connections>
                         <action selector="pickFile:" destination="iN0-l3-epB" eventType="touchUpInside" id="U4L-Hp-ayN"/>
                     </connections>
@@ -37,7 +39,8 @@
                     <constraints>
                         <constraint firstAttribute="width" secondItem="e2j-Ca-1dj" secondAttribute="height" multiplier="1:1" id="lcY-GS-jdj"/>
                     </constraints>
-                    <state key="normal" image="add_take_phone_n"/>
+                    <state key="normal" image="add_sign_n"/>
+                    <state key="highlighted" image="add_sign_f"/>
                 </button>
                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="图片" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="bvR-bA-883">
                     <rect key="frame" x="20" y="147" width="130" height="18"/>
@@ -112,6 +115,11 @@
         </view>
     </objects>
     <resources>
+        <image name="add_file_f" width="90" height="90"/>
+        <image name="add_file_n" width="90" height="90"/>
+        <image name="add_sign_f" width="90" height="90"/>
+        <image name="add_sign_n" width="90" height="90"/>
+        <image name="add_take_phone_f" width="90" height="90"/>
         <image name="add_take_phone_n" width="90" height="90"/>
         <image name="filemax_pic" width="301" height="301"/>
     </resources>

@@ -11,6 +11,8 @@
 #import "RecordFrameModel.h"
 #import "RecordViewCell.h"
 #import "PicFrameModel.h"
+#import "FileFrameModel.h"
+#import "FileCell.h"
 #import "PicViewCell.h"
 #import "MessageViewCell.h"
 #import "DataManager.h"
@@ -35,6 +37,7 @@
 static NSString *textReuseIdentifier = @"textMessageCell";
 static NSString *audioReuseIdentifier = @"audioMessageCell";
 static NSString *pictureReuseIdentifier = @"pictureMessageCell";
+static NSString *fileReuseIdentifier = @"fileMessageCell";
 
 @interface ChatViewController () <UITableViewDataSource, UITableViewDelegate, UITextFieldDelegate, BottomViewDelegate> {
     NSString *_photoPath;
@@ -235,6 +238,18 @@ static NSString *pictureReuseIdentifier = @"pictureMessageCell";
             cell.picFrame = messageFrameModel;
             return cell;
         }
+        case MessageTypeFile:{
+            FileCell *cell = [_historyTableView dequeueReusableCellWithIdentifier:fileReuseIdentifier];
+            
+            if (cell == nil) {
+                cell = [[FileCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:fileReuseIdentifier];
+            }
+            
+            FileFrameModel *fileFrameMode = [[FileFrameModel alloc] init];
+            fileFrameMode.message = message;
+            cell.fileFrame = fileFrameMode;
+            return cell;
+        }
         
         default:
             break;
@@ -274,6 +289,11 @@ static NSString *pictureReuseIdentifier = @"pictureMessageCell";
             return recordFrameMode.cellHeight + 1;
         }
             break;
+        case MessageTypeFile:{
+            FileFrameModel *fileFrameModel = [[FileFrameModel alloc] init];
+            fileFrameModel.message = message;
+            return fileFrameModel.cellHeight + 1;
+        }
          default:
             break;
     }

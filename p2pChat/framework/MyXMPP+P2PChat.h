@@ -13,6 +13,6 @@
 - (void)sendMessage:(NSString *)text ToUser:(NSString *) user;
 - (void)sendAudio:(NSString *)path ToUser:(NSString *)user length:(NSString *)length;
 - (void)sendPictureIdentifier:(NSString *)identifier data:(NSData *)imageData thumbnailName:(NSString *)thumbnailName filename:(NSString *)filename ToUser:(NSString *)user;//发送的是缩略后的图
-- (void)sendFile:(NSString *)path ToUser:(NSString *)user filename:(NSString *)filename;
+- (void)sendFile:(NSString *)filename ToUser:(NSString *)user fileSize:(NSString *)fileSize;
 
 @end

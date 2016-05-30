@@ -111,9 +111,9 @@
     }
 }
 
-- (void)saveFileWithUsername:(NSString *)username time:(NSNumber *)time path:(NSString *)path fileName:(NSString *)name isOut:(BOOL)isOut {
+- (void)saveFileWithUsername:(NSString *)username time:(NSNumber *)time filename:(NSString *)filename fileSize:(NSString *)size isOut:(BOOL)isOut {
     NSError *err = nil;
-    [self saveMessageWithUsername:username time:time type:@3 body:path more:name error:&err isOut:isOut];
+    [self saveMessageWithUsername:username time:time type:@3 body:filename more:size error:&err isOut:isOut];
     if (err) {
         NSLog(@"DataManager save message failed: %@", err);
     }

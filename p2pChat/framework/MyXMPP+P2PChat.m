@@ -88,14 +88,13 @@ static NSString *fileType = @"[文件]";
     [self.dataManager addRecentUsername:user time:[NSNumber numberWithInt:time] body:voiceType isOut:YES isP2P:YES];
 }
 
-- (void)sendFile:(NSString *)path ToUser:(NSString *)user filename:(NSString *)filename{
+- (void)sendFile:(NSString *)filename ToUser:(NSString *)user fileSize:(NSString *)fileSize{
     NSDate *date = [NSDate date];
     NSTimeInterval t = [date timeIntervalSince1970];
     int time = (int)t;
-    
-    [self sendMessageWithSubtype:@"file" time:time body:path more:filename toUser:user];
-    [self.dataManager saveFileWithUsername:user time:[NSNumber numberWithInt:time] path:path fileName:filename isOut:YES];
- 
+//    path 和 filename 存的是一样的
+    [self sendMessageWithSubtype:@"file" time:time body:filename more:fileSize toUser:user];
+    [self.dataManager saveFileWithUsername:user time:[NSNumber numberWithInt:time] filename:filename fileSize:fileSize isOut:YES];
     [self.dataManager addRecentUsername:user time:[NSNumber numberWithInt:time] body:fileType isOut:YES isP2P:YES];
 }
 
@@ -164,10 +163,10 @@ static NSString *fileType = @"[文件]";
             
             case 'f':{
 //#error 未完
-                [self.dataManager saveMessageWithUsername:bareJidStr time:timeNumber body:messageBody isOut:NO];
-                NSString *filename = [message getMore];
-//                [self.dataManager saveFileWithUsername:bareJidStr time:timeNumber path:<#(NSString *)#> fileName:filename isOut:NO];
-                [self.dataManager addRecentUsername:bareJidStr time:ltime body:messageBody isOut:NO isP2P:YES];
+                NSString *filename = message.body;
+                NSString *fileSize = [message getMore];
+                [self.dataManager saveFileWithUsername:bareJidStr time:timeNumber filename:filename fileSize:fileSize isOut:NO];
+                 [self.dataManager addRecentUsername:bareJidStr time:ltime body:messageBody isOut:NO isP2P:YES];
                 localNotification.alertBody = [NSString stringWithFormat:@"%@:%@", bareJidStr, messageBody];
                 break;
             }
