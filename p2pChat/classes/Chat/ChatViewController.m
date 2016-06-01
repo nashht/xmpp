@@ -29,7 +29,7 @@
 #import "FaceView.h"
 #import "FunctionView.h"
 
-#define MOREHEIGHT 100
+#define MOREHEIGHT 150
 #define ScreenSize  [UIScreen mainScreen].bounds.size
 #define BOTTOMHEIGHT 40
 #define FACEVIEWHEIGHT (ScreenSize.height * 0.4)
@@ -150,6 +150,7 @@ static NSString *fileReuseIdentifier = @"fileMessageCell";
     [_bottomView removeFromSuperview];
     [[DataManager shareManager]updateUsername:_chatObjectString];
 }
+
 - (IBAction)showChatingInfo:(id)sender {
     if (self.isP2PChat) {
         [self performSegueWithIdentifier:@"showFriendInfo" sender:nil];
@@ -350,8 +351,8 @@ static NSString *fileReuseIdentifier = @"fileMessageCell";
             _bottomView.frame = CGRectMake(0, _screenSize.height - BOTTOMHEIGHT - MOREHEIGHT, _screenSize.width, BOTTOMHEIGHT);
             _moreView.frame = CGRectMake(0, _screenSize.height - MOREHEIGHT, _screenSize.width, MOREHEIGHT);
         }];
+        _showMoreView = YES;
     }
-    _showMoreView = !_showMoreView;
 }
 
 - (void)hideMoreView {
@@ -370,31 +371,30 @@ static NSString *fileReuseIdentifier = @"fileMessageCell";
 - (void)showFaceView {
     if (_showFaceView) {
         [self hideFaceView];
-
     } else {
         [self hideMoreView];
         _tableBottomHeight.constant = BOTTOMHEIGHT + FACEVIEWHEIGHT -_tabBarHeight;
-        [UIView animateWithDuration:0.5 animations:^{
+        [UIView animateWithDuration:0.2 animations:^{
             [self.view layoutIfNeeded];
             [self tableViewScrollToBottom];
             _bottomView.frame = CGRectMake(0, _screenSize.height - BOTTOMHEIGHT - FACEVIEWHEIGHT, _screenSize.width, BOTTOMHEIGHT);
             _functionView.frame = CGRectMake(0, _screenSize.height - FACEVIEWHEIGHT, _screenSize.width, FACEVIEWHEIGHT);
         }];
+        _showFaceView = YES;
     }
-    _showFaceView = !_showFaceView;
 }
 
 - (void)hideFaceView {
     if (_showFaceView) {
         _tableBottomHeight.constant = BOTTOMHEIGHT - _tabBarHeight;
-        [UIView animateWithDuration:0.5 animations:^{
+        [UIView animateWithDuration:0.2 animations:^{
             [self.view layoutIfNeeded];
             [self tableViewScrollToBottom];
             _bottomView.frame = CGRectMake(0, _screenSize.height - BOTTOMHEIGHT, _screenSize.width, BOTTOMHEIGHT);
             _functionView.frame = CGRectMake(0, _screenSize.height, _screenSize.width, FACEVIEWHEIGHT);
         }];
-    }
     _showFaceView = NO;
+    }
 }
 
 @end

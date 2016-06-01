@@ -36,10 +36,8 @@
     if ([message.isOut boolValue]) {
         //        自己发送的消息，头像在右边
         photoX = screenW - padding - photoW;
-        //          NSLog(@"icon in right");
     }else{
         photoX = padding;
-        //            NSLog(@"icon in left");
     }
     _photoFrame = CGRectMake(photoX, photoY, photoW, photoH);
     

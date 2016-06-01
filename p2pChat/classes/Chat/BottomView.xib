@@ -67,6 +67,7 @@
                 </mask>
             </variation>
             <connections>
+                <outlet property="addButton" destination="EzJ-R6-YZ2" id="Sat-YB-nBr"/>
                 <outlet property="messageTextView" destination="Ssl-j6-87G" id="OT2-hZ-vz6"/>
             </connections>
             <point key="canvasLocation" x="299" y="306"/>

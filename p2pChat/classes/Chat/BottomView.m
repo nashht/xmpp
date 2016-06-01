@@ -17,11 +17,13 @@
 
 #define BUTTONSIZE 35
 
-@interface BottomView()<UITextViewDelegate>
-@property (weak, nonatomic) IBOutlet UITextView *messageTextView;
+@interface BottomView()<UITextViewDelegate,NSTextStorageDelegate>
+
 @property (strong, nonatomic) UIButton *recordBtn;
 @property (assign, nonatomic) BOOL showRecord;
 @property (copy, nonatomic) NSString *recordPath;
+@property (weak, nonatomic) IBOutlet UIButton *addButton;
+@property (assign, nonatomic) int messageLength;
 
 @end
 
@@ -34,7 +36,7 @@
     _messageTextView.layer.borderWidth = 0.6f;
     _messageTextView.layer.cornerRadius = 6.0f;
     _messageTextView.font = [UIFont systemFontOfSize:16.f];
-    
+
     [self initRecordBtn];
 }
 
@@ -92,6 +94,11 @@
     [_delegate showMoreView];
 }
 
+//- (void)textViewDidChange:(UITextView *)textView{
+//    NSLog(@"length:     %lu",(unsigned long)_messageTextView.textStorage.length);
+//    NSLog(@"text: %@",_messageTextView.text);
+//}
+
 
 
 - (void)startRecord {
@@ -128,7 +135,6 @@
             }
             
             _messageTextView.text = @"";
-//            _messageBody = @"";
         }
         return NO;
     }

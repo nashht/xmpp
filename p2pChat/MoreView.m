@@ -83,11 +83,10 @@
     
     NSString *downloadUrl = [NSString stringWithFormat:@"http://10.108.136.59:8080/FileServer/file?method=download&filename=%@",_filename];
     
-    [self sendPic:imageData filename:_filename];
+    [self sendPic:imageData filename:_filename thumbnailData:thumbnailData];
     
     NSLog(@"download : %@",downloadUrl);
-    
-    [[MyXMPP shareInstance] sendPictureIdentifier:_localIdentifier data:thumbnailData thumbnailName:_thumbnailName filename:_filename ToUser:_chatObjectString];
+
     NSLog(@"thumbnailPath------%@",_thumbnailPath);
     
     dispatch_async(dispatch_get_main_queue(), ^{
@@ -132,7 +131,7 @@
 }
 
 
-- (void)sendPic:(NSData *)imageData filename:(NSString *)filename{
+- (void)sendPic:(NSData *)imageData filename:(NSString *)filename thumbnailData:(NSData *)thumbnailData{
     
     NSLog(@"sendsendPic2Server");
     
@@ -154,6 +153,9 @@
     } success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
         id json = [NSJSONSerialization JSONObjectWithData:responseObject options:NSJSONReadingMutableContainers error:nil];
         NSLog(@"success%@",json);
+        
+        [[MyXMPP shareInstance] sendPictureIdentifier:_localIdentifier data:thumbnailData thumbnailName:_thumbnailName filename:_filename ToUser:_chatObjectString];
+        
     } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
         NSLog(@"failed------error:   %@",error);
     }];

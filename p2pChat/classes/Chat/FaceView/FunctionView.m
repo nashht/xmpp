@@ -48,10 +48,8 @@
     [self addSubview:self.faceScrollView];
   
     CGFloat scrollHeight = (self.frame).size.height - 50;
-    NSLog(@"frame===%@",[NSValue valueWithCGRect:self.frame]);
-    
-    
-    
+//    NSLog(@"frame===%@",[NSValue valueWithCGRect:self.frame]);
+   
     //根据图片量来计算scrollView的Contain的宽度
     int cols = 7;           // 列数
     int rows = 3;                 //行数

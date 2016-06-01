@@ -18,6 +18,7 @@
 #import "PopoverViewController.h"
 #import "AFNetworking.h"
 #import "CreateGroupsViewController.h"
+#import "MyProgressView.h"
 
 @interface RecentViewController ()<UITableViewDataSource, UITableViewDelegate,UIPopoverPresentationControllerDelegate>
 
@@ -30,6 +31,7 @@
 @property (strong, nonatomic) PopoverViewController *popoverVc;
 @property (strong, nonatomic) MyFetchedResultsControllerDelegate *resultsControllerDelegate;
 
+@property (weak, nonatomic) MyProgressView *progressView;
 @end
 
 @implementation RecentViewController
@@ -172,6 +174,17 @@
         [self performSegueWithIdentifier:@"createGroup" sender:nil];
     } showGroupBlock:^{
         
+        MyProgressView *progressView = [MyProgressView progressView];
+        progressView.frame = CGRectMake(150, 250, 100, 100);
+        
+        [NSTimer scheduledTimerWithTimeInterval:0.05 target:self selector:@selector(progressSimulation) userInfo:self repeats:YES];
+        
+        [self.view addSubview:progressView];
+        _progressView = progressView;
+        
+        
+        
+
 
     }];
     popoverVc.preferredContentSize = CGSizeMake(100, 150);
@@ -184,6 +197,19 @@
     pop.delegate = self;
 
     [self presentViewController:popoverVc animated:YES completion:nil];
+}
+
+- (void)progressSimulation{
+    static CGFloat progress = 0;
+    if (progress < 1.0) {
+        progress += 0.01;
+        
+        // 循环
+        if (progress >= 1.0) progress = 0;
+        
+        
+        _progressView.progress = progress;
+    }
 }
 
 - (UIModalPresentationStyle)adaptivePresentationStyleForPresentationController:(UIPresentationController *)controller{

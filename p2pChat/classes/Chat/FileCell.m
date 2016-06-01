@@ -56,7 +56,7 @@
         _bodyBtn = btn;
         [btn addTarget:self action:@selector(downloadFile) forControlEvents:UIControlEventTouchUpInside];
 
-        self.backgroundColor = [UIColor grayColor];
+        self.backgroundColor = [UIColor clearColor];
     }
     
     return self;
@@ -99,7 +99,6 @@
     }else{
         [_bodyBtn setBackgroundImage:[self resizeImageWithName:@"chat_recive_nor"] forState:UIControlStateNormal];
     }
-    
 }
 
 - (void)downloadFile{
@@ -112,7 +111,6 @@
         }];
     }
 }
-
 
 - (UIImage *)resizeImageWithName:(NSString *)name
 {
@@ -151,6 +149,5 @@
     
     [task resume];
 }
-
 
 @end

@@ -104,7 +104,6 @@
     }else{
         [_bodyBtn setBackgroundImage:[self resizeImageWithName:@"chat_recive_nor"] forState:UIControlStateNormal];
     }
- 
 }
 
 - (UIImage *)resizeImageWithName:(NSString *)name
@@ -124,7 +123,6 @@
 }
 
 - (void)picBtnClick:(UIButton *)button{
-
     if ([_picFrame.message.isOut boolValue]) {//发送出去的图片原图在图库里
         [self addBlackCover];
         [[[PhotoLibraryCenter alloc]init]getImageWithLocalIdentifier:_picFrame.message.body withCompletionHandler:^(UIImage *image) {

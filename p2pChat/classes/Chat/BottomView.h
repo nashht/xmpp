@@ -19,6 +19,7 @@
 @interface BottomView : UIView
 
 @property (copy, nonatomic) NSString *chatObjectString;
+@property (weak, nonatomic) IBOutlet UITextView *messageTextView;
 @property (weak, nonatomic) id<BottomViewDelegate> delegate;
 @property (assign, nonatomic, getter=isP2PChat) BOOL p2pChat;
 

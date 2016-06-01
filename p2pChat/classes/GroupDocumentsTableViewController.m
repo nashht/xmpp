@@ -91,6 +91,8 @@
         }
             [self sendFile:fileData filename:filename fileSize:size];
     }
+    
+    [self.navigationController popViewControllerAnimated:YES];
 }
 
 - (void)sendFile:(NSData *)fileData filename:(NSString *)filename fileSize:(NSString *)fileSize{

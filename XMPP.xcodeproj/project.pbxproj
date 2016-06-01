@@ -39,6 +39,7 @@
 		905AE6F91CF851F900531E6F /* FileCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 905AE6F81CF851F900531E6F /* FileCell.m */; };
 		905AE6FC1CF8521F00531E6F /* FileFrameModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 905AE6FB1CF8521F00531E6F /* FileFrameModel.m */; };
 		905AE6FF1CFBF32600531E6F /* UIImage+Category.m in Sources */ = {isa = PBXBuildFile; fileRef = 905AE6FE1CFBF32600531E6F /* UIImage+Category.m */; };
+		905AE7021CFD2A0D00531E6F /* MyProgressView.m in Sources */ = {isa = PBXBuildFile; fileRef = 905AE7011CFD2A0D00531E6F /* MyProgressView.m */; };
 		9076A3DD1CEA0E5100CA0A3E /* test.txt in Resources */ = {isa = PBXBuildFile; fileRef = 9076A3DC1CEA0E5100CA0A3E /* test.txt */; };
 		9076A3DF1CEA0F3200CA0A3E /* Foundation+Log.m in Sources */ = {isa = PBXBuildFile; fileRef = 9076A3DE1CEA0F3200CA0A3E /* Foundation+Log.m */; };
 		90DC39431CEC1C7E002CECCF /* AFHTTPSessionManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 90DC39371CEC1C7E002CECCF /* AFHTTPSessionManager.m */; };
@@ -347,6 +348,8 @@
 		905AE6FB1CF8521F00531E6F /* FileFrameModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FileFrameModel.m; sourceTree = "<group>"; };
 		905AE6FD1CFBF32600531E6F /* UIImage+Category.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIImage+Category.h"; sourceTree = "<group>"; };
 		905AE6FE1CFBF32600531E6F /* UIImage+Category.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIImage+Category.m"; sourceTree = "<group>"; };
+		905AE7001CFD2A0D00531E6F /* MyProgressView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MyProgressView.h; path = classes/Chat/MyProgressView.h; sourceTree = "<group>"; };
+		905AE7011CFD2A0D00531E6F /* MyProgressView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MyProgressView.m; path = classes/Chat/MyProgressView.m; sourceTree = "<group>"; };
 		9076A3DC1CEA0E5100CA0A3E /* test.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = test.txt; sourceTree = "<group>"; };
 		9076A3DE1CEA0F3200CA0A3E /* Foundation+Log.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "Foundation+Log.m"; sourceTree = "<group>"; };
 		90DC39361CEC1C7E002CECCF /* AFHTTPSessionManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AFHTTPSessionManager.h; sourceTree = "<group>"; };
@@ -2161,6 +2164,8 @@
 				DAD235011C424CEE003A93F9 /* MoreView.xib */,
 				DAD235031C424D05003A93F9 /* MoreView.h */,
 				DAD235041C424D05003A93F9 /* MoreView.m */,
+				905AE7001CFD2A0D00531E6F /* MyProgressView.h */,
+				905AE7011CFD2A0D00531E6F /* MyProgressView.m */,
 			);
 			name = MoreView;
 			path = ../..;
@@ -2612,6 +2617,7 @@
 				DA90B1EB1C8989930080E037 /* XMPPMessage+XEP_0172.m in Sources */,
 				DA90B1F51C8989930080E037 /* XMPPAutoTime.m in Sources */,
 				DA90B1FB1C8989930080E037 /* XMPPMessage+XEP_0280.m in Sources */,
+				905AE7021CFD2A0D00531E6F /* MyProgressView.m in Sources */,
 				DA9046B51C3A51A1009E75B7 /* AudioCenter.m in Sources */,
 				DA90B1FE1C8989930080E037 /* XMPPMessage+XEP_0308.m in Sources */,
 				DA57261C1CBF40830045CEF2 /* BottomView.m in Sources */,
