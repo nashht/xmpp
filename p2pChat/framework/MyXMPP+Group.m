@@ -148,6 +148,10 @@ static NSString *pictureType = @"[图片]";
 //    XMPPRoomOccupantMemoryStorageObject
 }
 
+- (void)getJoinedRooms{
+    
+}
+
 #pragma mark - room delegate
 - (void)xmppRoomDidCreate:(XMPPRoom *)sender {
     NSLog(@"did creat chat room");

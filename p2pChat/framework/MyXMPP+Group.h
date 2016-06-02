@@ -22,5 +22,6 @@
 - (void)leaveChatRoom;//退出聊天室
 - (void)setGroupSubject:(NSString *)subject;//设置群聊主题
 - (void)deleteMember:(NSString *)member FromGroup:(NSString *)group;
+- (void)getJoinedRooms;
 
 @end
