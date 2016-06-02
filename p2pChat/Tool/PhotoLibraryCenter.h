@@ -22,7 +22,7 @@ extern CGSize thumbnailSize;
 
 - (void)saveImage:(UIImage *)image withCompletionHandler:(void (^)(NSString *identifier))completionHandler;
 - (void)getImageDataWithLocalIdentifier:(NSString *)identifier withCompletionHandler:(void (^)(NSData *imageData))completionHandler;
-- (void)getImageWithLocalIdentifier:(NSString *)identifier withCompletionHandler:(void (^)(UIImage *image))completionHandler;;
+- (void)getImageWithLocalIdentifier:(NSString *)identifier withCompletionHandler:(void (^)(UIImage *image))completionHandler;
 
 - (UIImage *)makeThumbnail:(UIImage *)originalImage WithSize:(CGSize)size;
 - (NSString *)getLocalIdentifierFromPath:(NSString *)path;

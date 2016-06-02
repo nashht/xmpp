@@ -11,6 +11,8 @@
 #import "RecordFrameModel.h"
 #import "RecordViewCell.h"
 #import "PicFrameModel.h"
+#import "FileFrameModel.h"
+#import "FileCell.h"
 #import "PicViewCell.h"
 #import "MessageViewCell.h"
 #import "DataManager.h"
@@ -27,7 +29,7 @@
 #import "FaceView.h"
 #import "FunctionView.h"
 
-#define MOREHEIGHT 100
+#define MOREHEIGHT 150
 #define ScreenSize  [UIScreen mainScreen].bounds.size
 #define BOTTOMHEIGHT 40
 #define FACEVIEWHEIGHT (ScreenSize.height * 0.4)
@@ -35,6 +37,7 @@
 static NSString *textReuseIdentifier = @"textMessageCell";
 static NSString *audioReuseIdentifier = @"audioMessageCell";
 static NSString *pictureReuseIdentifier = @"pictureMessageCell";
+static NSString *fileReuseIdentifier = @"fileMessageCell";
 
 @interface ChatViewController () <UITableViewDataSource, UITableViewDelegate, UITextFieldDelegate, BottomViewDelegate> {
     NSString *_photoPath;
@@ -147,6 +150,7 @@ static NSString *pictureReuseIdentifier = @"pictureMessageCell";
     [_bottomView removeFromSuperview];
     [[DataManager shareManager]updateUsername:_chatObjectString];
 }
+
 - (IBAction)showChatingInfo:(id)sender {
     if (self.isP2PChat) {
         [self performSegueWithIdentifier:@"showFriendInfo" sender:nil];
@@ -235,6 +239,18 @@ static NSString *pictureReuseIdentifier = @"pictureMessageCell";
             cell.picFrame = messageFrameModel;
             return cell;
         }
+        case MessageTypeFile:{
+            FileCell *cell = [_historyTableView dequeueReusableCellWithIdentifier:fileReuseIdentifier];
+            
+            if (cell == nil) {
+                cell = [[FileCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:fileReuseIdentifier];
+            }
+            
+            FileFrameModel *fileFrameMode = [[FileFrameModel alloc] init];
+            fileFrameMode.message = message;
+            cell.fileFrame = fileFrameMode;
+            return cell;
+        }
         
         default:
             break;
@@ -274,6 +290,11 @@ static NSString *pictureReuseIdentifier = @"pictureMessageCell";
             return recordFrameMode.cellHeight + 1;
         }
             break;
+        case MessageTypeFile:{
+            FileFrameModel *fileFrameModel = [[FileFrameModel alloc] init];
+            fileFrameModel.message = message;
+            return fileFrameModel.cellHeight + 1;
+        }
          default:
             break;
     }
@@ -330,8 +351,8 @@ static NSString *pictureReuseIdentifier = @"pictureMessageCell";
             _bottomView.frame = CGRectMake(0, _screenSize.height - BOTTOMHEIGHT - MOREHEIGHT, _screenSize.width, BOTTOMHEIGHT);
             _moreView.frame = CGRectMake(0, _screenSize.height - MOREHEIGHT, _screenSize.width, MOREHEIGHT);
         }];
+        _showMoreView = YES;
     }
-    _showMoreView = !_showMoreView;
 }
 
 - (void)hideMoreView {
@@ -350,31 +371,30 @@ static NSString *pictureReuseIdentifier = @"pictureMessageCell";
 - (void)showFaceView {
     if (_showFaceView) {
         [self hideFaceView];
-
     } else {
         [self hideMoreView];
         _tableBottomHeight.constant = BOTTOMHEIGHT + FACEVIEWHEIGHT -_tabBarHeight;
-        [UIView animateWithDuration:0.5 animations:^{
+        [UIView animateWithDuration:0.2 animations:^{
             [self.view layoutIfNeeded];
             [self tableViewScrollToBottom];
             _bottomView.frame = CGRectMake(0, _screenSize.height - BOTTOMHEIGHT - FACEVIEWHEIGHT, _screenSize.width, BOTTOMHEIGHT);
             _functionView.frame = CGRectMake(0, _screenSize.height - FACEVIEWHEIGHT, _screenSize.width, FACEVIEWHEIGHT);
         }];
+        _showFaceView = YES;
     }
-    _showFaceView = !_showFaceView;
 }
 
 - (void)hideFaceView {
     if (_showFaceView) {
         _tableBottomHeight.constant = BOTTOMHEIGHT - _tabBarHeight;
-        [UIView animateWithDuration:0.5 animations:^{
+        [UIView animateWithDuration:0.2 animations:^{
             [self.view layoutIfNeeded];
             [self tableViewScrollToBottom];
             _bottomView.frame = CGRectMake(0, _screenSize.height - BOTTOMHEIGHT, _screenSize.width, BOTTOMHEIGHT);
             _functionView.frame = CGRectMake(0, _screenSize.height, _screenSize.width, FACEVIEWHEIGHT);
         }];
-    }
     _showFaceView = NO;
+    }
 }
 
 @end
