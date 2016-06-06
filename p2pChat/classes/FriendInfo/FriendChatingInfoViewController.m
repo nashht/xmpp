@@ -8,6 +8,7 @@
 
 #import "FriendChatingInfoViewController.h"
 #import "MyXMPP+VCard.h"
+#import "CreateGroupsViewController.h"
 
 @interface FriendChatingInfoViewController ()<UITableViewDataSource, UITableViewDelegate>
 
@@ -32,8 +33,14 @@
     _friendNameLabel.text = _friendName;
 }
 
+- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
+    UINavigationController *navigationController = segue.destinationViewController;
+    CreateGroupsViewController *destinationVC = navigationController.viewControllers[0];
+    destinationVC.didSelectedUsers = @[_friendName];
+}
+
 - (IBAction)createGroup:(id)sender {
-    
+    [self performSegueWithIdentifier:@"createGroup" sender:nil];
 }
 
 @end

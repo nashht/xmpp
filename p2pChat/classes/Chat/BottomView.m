@@ -125,7 +125,7 @@
 - (BOOL)textView:(UITextView *)textView shouldChangeTextInRange:(NSRange)range replacementText:(NSString *)text{
     if ([text isEqualToString:@"\n"])
     {
-        [textView resignFirstResponder];
+//        [textView resignFirstResponder];
         NSString *message = [_messageTextView.attributedText getPlainString];
         if (![message isEqualToString:@""]) {
             if ([self isP2PChat]) {
