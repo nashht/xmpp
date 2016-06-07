@@ -16,6 +16,12 @@
 #import "Reachability.h"
 #import "PhotoLibraryCenter.h"
 
+const NSString *MyXmppDidLoginNotification = @"MyXmppDidLoginNotification";
+const NSString *MyXmppConnectFailedNotification = @"MyXmppConnectFailedNotification";
+const NSString *MyXmppAuthenticateFailedNotification = @"MyXmppAuthenticateFailedNotification";
+const NSString *MyXmppUserStatusChangedNotification = @"MyXmppUserStatusChangedNotification";
+const NSString *MyXmppRoomDidConfigurationNotification = @"MyXmppRoomDidConfigurationNotification";
+
 @interface MyXMPP () <XMPPStreamDelegate> {
     BOOL _hasInit;
     BOOL _timerIsRunning;
