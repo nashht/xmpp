@@ -192,6 +192,13 @@ static NSString *serverHost = @"10.108.136.59";
         //muc初始化，用于接受群邀请
         [self initmuc];
         
+        //获取已经加入的群
+        [self fetchMyRoomsWithCompletion:^(NSArray *members) {
+            for (NSString *room in members) {
+                [self creatGroupName:room withpassword:nil andsubject:nil];
+            }
+        }];
+        
         _hasInit = YES;
     }
     
