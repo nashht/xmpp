@@ -139,7 +139,6 @@ static NSString *defaultGroupName = @"11111111";
     if (cell == nil) {
         cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleSubtitle reuseIdentifier:ID];
     }
-    cell.selected = NO;
     
     XMPPGroupCoreDataStorageObject *groupInfo = _groupCoreDataStorageObjects[indexPath.section];
     XMPPUserCoreDataStorageObject *obj = groupInfo.users.allObjects[indexPath.row];
@@ -151,6 +150,8 @@ static NSString *defaultGroupName = @"11111111";
         cell.imageView.image = [UIImage imageNamed:@"0"];
     }
     cell.textLabel.text = obj.jid.user;
+    cell.selected = [_didSelectedUsers containsObject:obj.jid.user];
+    cell.userInteractionEnabled = ![_didSelectedUsers containsObject:obj.jid.user];
     return cell;
 }
 

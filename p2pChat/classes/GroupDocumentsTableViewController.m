@@ -25,23 +25,15 @@
     [super viewDidLoad];
     
     self.arr =[self readFile];
-    
-   
-    
 }
 
 #pragma mark - Table view data source
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
-    if (_arr.count==0) {
-        return 1;
-    }else{
-        return _arr.count;
-    }
+    return _arr.count ?: 1;
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
-
     return 1;
 }
 
@@ -50,7 +42,7 @@
     UITableViewCell *cell = [[UITableViewCell alloc]initWithStyle:UITableViewCellStyleSubtitle reuseIdentifier:nil];
     
     if (_arr.count==0) {
-        cell.textLabel.text = @"无群文件";
+        cell.textLabel.text = @"暂无文件";
     }else{
         [cell.imageView setContentMode:UIViewContentModeScaleToFill];
         cell.imageView.image = [UIImage imageNamed:@"word.png"];
@@ -69,14 +61,13 @@
 }
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
-    UITableViewCell *cell = [tableView cellForRowAtIndexPath:indexPath];
-    NSLog(@"cell.textLabel.text :  %@",cell.textLabel.text);
+    NSString *docName = _arr[indexPath.section];
     
     NSString *path = [NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES) lastObject];
-    NSString *filepath = [path stringByAppendingPathComponent:cell.textLabel.text];
+    NSString *filepath = [path stringByAppendingPathComponent:docName];
     NSLog( @" path = %@",filepath);
     NSData *fileData = [NSData dataWithContentsOfFile:filepath];
-    NSString *filename = [@"file_" stringByAppendingString:cell.textLabel.text];
+//    NSString *filename = [@"file_" stringByAppendingString:docName];
     
     NSFileManager * filemanager = [[NSFileManager alloc]init];
     if([filemanager fileExistsAtPath:filepath]){

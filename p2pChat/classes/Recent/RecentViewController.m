@@ -8,9 +8,9 @@
 #import "RecentViewController.h"
 #import "DataManager.h"
 #import "MyFetchedResultsControllerDelegate.h"
-#import "MyXMPP.h"
 #import "RegularExpressionTool.h"
 #import "MyXMPP+VCard.h"
+#import "MyXMPP+Group.h"
 #import "LastMessage.h"
 #import "RecentCell.h"
 #import "ChatViewController.h"
@@ -173,16 +173,17 @@
     [popoverVc setCreateGroupBlock:^{//不会引起循环引用
         [self performSegueWithIdentifier:@"createGroup" sender:nil];
     } showGroupBlock:^{
+//        MyProgressView *progressView = [MyProgressView progressView];
+//        progressView.frame = CGRectMake(150, 250, 100, 100);
+//        
+//        [NSTimer scheduledTimerWithTimeInterval:0.05 target:self selector:@selector(progressSimulation) userInfo:self repeats:YES];
+//        
+//        [self.view addSubview:progressView];
+//        _progressView = progressView;
         
-        MyProgressView *progressView = [MyProgressView progressView];
-        progressView.frame = CGRectMake(150, 250, 100, 100);
-        
-        [NSTimer scheduledTimerWithTimeInterval:0.05 target:self selector:@selector(progressSimulation) userInfo:self repeats:YES];
-        
-        [self.view addSubview:progressView];
-        _progressView = progressView;
-        
-        
+        [[MyXMPP shareInstance]fetchMyRoomsWithCompletion:^(NSArray *members) {
+            NSLog(@"%@", members);
+        }];
         
 
 
