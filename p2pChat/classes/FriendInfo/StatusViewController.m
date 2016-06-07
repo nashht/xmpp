@@ -61,7 +61,6 @@
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     [tableView deselectRowAtIndexPath:indexPath animated:NO];
     NSInteger section = indexPath.section;
-    DataManager *dataManager = [DataManager shareManager];
     switch (section) {
         case 0://状态
             switch (indexPath.row) {
@@ -97,11 +96,22 @@
             }
             break;
         case 1:
-            
+            [self showAlert];
             break;
         default:
             break;
     }
+}
+
+- (void)showAlert {
+    UIAlertController *alert = [UIAlertController alertControllerWithTitle:@"警告" message:@"所有本地消息将被删除" preferredStyle:UIAlertControllerStyleAlert];
+    UIAlertAction *okAction = [UIAlertAction actionWithTitle:@"OK" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
+        [[DataManager shareManager]clearAll];
+    }];
+    UIAlertAction *cancelAction = [UIAlertAction actionWithTitle:@"cancel" style:UIAlertActionStyleCancel handler:nil];
+    [alert addAction:okAction];
+    [alert addAction:cancelAction];
+    [self presentViewController:alert animated:YES completion:nil];
 }
 
 @end

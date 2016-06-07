@@ -22,14 +22,6 @@
 @class PhotoLibraryCenter;
 @class XMPPRoomOccupantCoreDataStorageObject;
 
-#define MyXmppDidLoginNotification @"MyXmppDidLoginNotification"
-#define MyXmppConnectFailedNotification @"MyXmppConnectFailedNotification"
-#define MyXmppAuthenticateFailedNotification @"MyXmppAuthenticateFailedNotification"
-#define MyXmppUserStatusChangedNotification @"MyXmppUserStatusChangedNotification"
-
-#define MyXmppRoomDidConfigurationNotification @"MyXmppRoomDidConfigurationNotification"
-
-
 typedef NS_ENUM (char, MessageType) {
     MessageTypeMessage = 0,
     MessageTypeRecord,
@@ -46,6 +38,12 @@ typedef NS_ENUM(int, MyXMPPStatus) {
 };
 
 static NSString *myDomain = @"xmpp.test";
+
+extern NSString *MyXmppDidLoginNotification;
+extern NSString *MyXmppConnectFailedNotification;
+extern NSString *MyXmppAuthenticateFailedNotification;
+extern NSString *MyXmppUserStatusChangedNotification;
+extern NSString *MyXmppRoomDidConfigurationNotification;
 
 @interface MyXMPP : NSObject
 

@@ -16,6 +16,12 @@
 #import "Reachability.h"
 #import "PhotoLibraryCenter.h"
 
+const NSString *MyXmppDidLoginNotification = @"MyXmppDidLoginNotification";
+const NSString *MyXmppConnectFailedNotification = @"MyXmppConnectFailedNotification";
+const NSString *MyXmppAuthenticateFailedNotification = @"MyXmppAuthenticateFailedNotification";
+const NSString *MyXmppUserStatusChangedNotification = @"MyXmppUserStatusChangedNotification";
+const NSString *MyXmppRoomDidConfigurationNotification = @"MyXmppRoomDidConfigurationNotification";
+
 @interface MyXMPP () <XMPPStreamDelegate> {
     BOOL _hasInit;
     BOOL _timerIsRunning;
@@ -80,9 +86,7 @@ static NSString *serverHost = @"10.108.136.59";
 };
 
 - (void)online {
-    XMPPPresence *presence = [XMPPPresence presenceWithType:@"available"];
-    [_stream sendElement:presence];
-    _myStatus = MyXMPPStatusOnline;
+    [self reconnect];
 }
 
 - (void)busy {

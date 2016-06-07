@@ -36,8 +36,6 @@
 
     self.tableView.delegate = self;
     self.tableView.dataSource = self;
-
-    
 }
 
 - (void)loadvCard{    
@@ -52,7 +50,6 @@
     _titleLabel.text = _myvCard.title;
     _phoneLabel.text = _myvCard.note;
     _emailLabel.text = _myvCard.emailAddresses[0];
-    
     
     _titleLabel.text = _myvCard.title ? : @"未设置";
     _phoneLabel.text = _myvCard.note ? : @"未设置";
@@ -88,9 +85,12 @@
 
 - (void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
-    self.tabBarController.tabBar.hidden = NO;
 
     [self loadvCard];
+}
+
+- (void)viewDidAppear:(BOOL)animated {
+    self.tabBarController.tabBar.hidden = NO;
 }
 
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
