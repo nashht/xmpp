@@ -26,6 +26,7 @@
 #import "MoreView.h"
 #import "MyXMPP.h"
 #import "FriendChatingInfoViewController.h"
+#import "GroupMembersInfoTableViewController.h"
 #import "FaceView.h"
 #import "FunctionView.h"
 
@@ -180,7 +181,8 @@ static NSString *fileReuseIdentifier = @"fileMessageCell";
         FriendChatingInfoViewController *infoVC = segue.destinationViewController;
         infoVC.friendName = _chatObjectString;
     } else if ([segue.identifier isEqualToString:@"showGroupInfo"]) {
-        
+        GroupMembersInfoTableViewController *infoVC = segue.destinationViewController;
+        infoVC.groupName = _chatObjectString;
     }
 }
 

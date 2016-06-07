@@ -25,7 +25,7 @@ static double LabelHigh = 15;
 @property (weak, nonatomic) IBOutlet UIStackView *membersNameStack;
 
 @property (weak, nonatomic) IBOutlet UILabel *groupMembersCount;
-@property (weak, nonatomic) IBOutlet UILabel *groupName;
+@property (weak, nonatomic) IBOutlet UILabel *groupNameLabel;
 
 @end
 
@@ -34,6 +34,8 @@ static double LabelHigh = 15;
 - (void)viewDidLoad {
     [super viewDidLoad];
     
+    _groupNameLabel.text = _groupName;
+    
     XMPPJID *myjid = [[MyXMPP shareInstance]myjid];
     XMPPvCardTemp *friendVCard = [[MyXMPP shareInstance]fetchFriend:myjid];
     [self addmemberwithphoto:friendVCard.photo];
@@ -41,7 +43,7 @@ static double LabelHigh = 15;
 //    [self addmemberwithphoto:friendVCard.photo x:InitialPositionX y:InitialPositionY];
 //    [self addmemberwithname:myjid.user x:InitialPositionX y:LabelPositionY];
     
-    [[MyXMPP shareInstance] fetchMembersFromGroupWithCompletion:^(NSArray *members) {
+    [[MyXMPP shareInstance] fetchMembersFromGroup:_groupName withCompletion:^(NSArray *members) {
         
         if ([members count]>1) {
             for (int i=0; i<2; i++) {

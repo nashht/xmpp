@@ -10,15 +10,12 @@
 #import "DataManager.h"
 #import "Tool.h"
 #import "XMPPMessage+MyExtends.h"
-#import "XMPPMUC.h"
-#import "XMPPJID.h"
 #import "MyXMPP.h"
-
+#import "AFNetworking/AFHTTPSessionManager.h"
 
 static NSString *myRoomDomain = @"conference.xmpp.test";
 static NSString *voiceType = @"[语音]";
 static NSString *pictureType = @"[图片]";
-
 
 @implementation MyXMPP (Group)
 
@@ -41,9 +38,30 @@ static NSString *pictureType = @"[图片]";
     [self.chatroom editRoomPrivileges:@[[XMPPRoom itemWithAffiliation:@"member" jid:[XMPPJID jidWithString:friendname]]]];
 }
 
-- (void)fetchMembersFromGroupWithCompletion:(void (^)(NSArray *members))block{
-    [self.chatroom fetchMembersList];
-    self.fetchGroupMemberBlock = block;
+- (void)fetchWithParameters:(NSDictionary *)parameters withCompletionBlock:(fetchedBlock) block {
+    AFHTTPSessionManager *httpManager = [AFHTTPSessionManager manager];
+    httpManager.responseSerializer.acceptableContentTypes = [NSSet setWithObject:@"text/plain"];
+    [httpManager GET:@"http://10.108.136.59:8080/FileServer/room" parameters:parameters progress:^(NSProgress * _Nonnull downloadProgress) {
+        
+    } success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
+        NSArray *resultArr = responseObject;
+        block(resultArr);
+    } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
+        NSLog(@"XMPPGroup http get fail: %@", error);
+    }];
+}
+
+- (void)fetchAllRoomsWithCompletion:(fetchedBlock) block {
+    [self fetchWithParameters:@{@"methed":@"allroom"} withCompletionBlock:block];
+}
+
+- (void)fetchMembersFromGroup:(NSString *)groupName withCompletion:(fetchedBlock) block {
+    [self fetchWithParameters:@{@"methed":@"getmember", @"roomname":groupName} withCompletionBlock:block];
+}
+
+- (void)fetchMyRoomsWithCompletion:(fetchedBlock) block {
+    NSString *myName = [[NSUserDefaults standardUserDefaults]stringForKey:@"name"];
+    [self fetchWithParameters:@{@"methed":@"getroom", @"membername":myName} withCompletionBlock:block];
 }
 
 - (void)sendMessageWithSubtype:(NSString *)subtype time:(double)time body:(NSString *)body more:(NSString *)more toGroup:(NSString *)groupname {
@@ -161,23 +179,6 @@ static NSString *pictureType = @"[图片]";
 - (void)xmppRoomDidJoin:(XMPPRoom *)sender{
     NSLog(@"did join chat room");
     [sender fetchConfigurationForm];
-    
-    //    [sender inviteUser:[XMPPJID jidWithString:[NSString stringWithFormat:@"%@@xmpp.test",@"cxh" ]]withMessage:@"hello!"];
-    //    [sender inviteUser:[XMPPJID jidWithString:@"zxk@xmpp.test"] withMessage:@"hello!"];
-
-    [self fetchMembersFromGroupWithCompletion:^(NSArray *members) {
-        for (NSString *s in members) {
-            NSLog(@"%@", s);
-        }
-    }];//block获取群成员列表，群成员保存在members中
-    
-    
-//    [self inviteFriends:@"cctest" withMessage:@"hello！"];
-//    [self inviteFriends:@"ht" withMessage:@"hello！"];
-//    [self inviteFriends:@"zxk" withMessage:@"hello！"];
-//    
-//    [self deleteMember:@"cctest" FromGroup:self.chatroom.roomJID.user];
-    
 }
 
 - (void)xmppRoom:(XMPPRoom *)sender didFetchConfigurationForm:(NSXMLElement *)configForm {
