@@ -67,7 +67,7 @@
     NSString *filepath = [path stringByAppendingPathComponent:docName];
     NSLog( @" path = %@",filepath);
     NSData *fileData = [NSData dataWithContentsOfFile:filepath];
-//    NSString *filename = [@"file_" stringByAppendingString:docName];
+    NSString *filename = [@"file_" stringByAppendingString:docName];
     
     NSFileManager * filemanager = [[NSFileManager alloc]init];
     if([filemanager fileExistsAtPath:filepath]){

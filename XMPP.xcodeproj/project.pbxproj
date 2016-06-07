@@ -41,7 +41,8 @@
 		905AE6FF1CFBF32600531E6F /* UIImage+Category.m in Sources */ = {isa = PBXBuildFile; fileRef = 905AE6FE1CFBF32600531E6F /* UIImage+Category.m */; };
 		905AE7021CFD2A0D00531E6F /* MyProgressView.m in Sources */ = {isa = PBXBuildFile; fileRef = 905AE7011CFD2A0D00531E6F /* MyProgressView.m */; };
 		9076A3DD1CEA0E5100CA0A3E /* test.txt in Resources */ = {isa = PBXBuildFile; fileRef = 9076A3DC1CEA0E5100CA0A3E /* test.txt */; };
-		9076A3DF1CEA0F3200CA0A3E /* Foundation+Log.m in Sources */ = {isa = PBXBuildFile; fileRef = 9076A3DE1CEA0F3200CA0A3E /* Foundation+Log.m */; };
+		907911131D066EE300FE212D /* CheckMyGroupViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 907911121D066EE300FE212D /* CheckMyGroupViewController.m */; };
+		907911161D0674AA00FE212D /* CheckAllGroupViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 907911151D0674AA00FE212D /* CheckAllGroupViewController.m */; };
 		90DC39431CEC1C7E002CECCF /* AFHTTPSessionManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 90DC39371CEC1C7E002CECCF /* AFHTTPSessionManager.m */; };
 		90DC39441CEC1C7E002CECCF /* AFNetworkReachabilityManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 90DC393A1CEC1C7E002CECCF /* AFNetworkReachabilityManager.m */; };
 		90DC39451CEC1C7E002CECCF /* AFSecurityPolicy.m in Sources */ = {isa = PBXBuildFile; fileRef = 90DC393C1CEC1C7E002CECCF /* AFSecurityPolicy.m */; };
@@ -351,7 +352,10 @@
 		905AE7001CFD2A0D00531E6F /* MyProgressView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MyProgressView.h; path = classes/Chat/MyProgressView.h; sourceTree = "<group>"; };
 		905AE7011CFD2A0D00531E6F /* MyProgressView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MyProgressView.m; path = classes/Chat/MyProgressView.m; sourceTree = "<group>"; };
 		9076A3DC1CEA0E5100CA0A3E /* test.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = test.txt; sourceTree = "<group>"; };
-		9076A3DE1CEA0F3200CA0A3E /* Foundation+Log.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "Foundation+Log.m"; sourceTree = "<group>"; };
+		907911111D066EE300FE212D /* CheckMyGroupViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CheckMyGroupViewController.h; path = ../../../CheckMyGroupViewController.h; sourceTree = "<group>"; };
+		907911121D066EE300FE212D /* CheckMyGroupViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = CheckMyGroupViewController.m; path = ../../../CheckMyGroupViewController.m; sourceTree = "<group>"; };
+		907911141D0674AA00FE212D /* CheckAllGroupViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CheckAllGroupViewController.h; sourceTree = "<group>"; };
+		907911151D0674AA00FE212D /* CheckAllGroupViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CheckAllGroupViewController.m; sourceTree = "<group>"; };
 		90DC39361CEC1C7E002CECCF /* AFHTTPSessionManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AFHTTPSessionManager.h; sourceTree = "<group>"; };
 		90DC39371CEC1C7E002CECCF /* AFHTTPSessionManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AFHTTPSessionManager.m; sourceTree = "<group>"; };
 		90DC39381CEC1C7E002CECCF /* AFNetworking.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AFNetworking.h; sourceTree = "<group>"; };
@@ -955,7 +959,10 @@
 				90FA065D1CAE4BDE00851B1C /* RecentViewController.m */,
 				900BFA0C1CC0EC76004F7B2C /* PopoverViewController.h */,
 				900BFA0D1CC0EC76004F7B2C /* PopoverViewController.m */,
-				9076A3DE1CEA0F3200CA0A3E /* Foundation+Log.m */,
+				907911111D066EE300FE212D /* CheckMyGroupViewController.h */,
+				907911121D066EE300FE212D /* CheckMyGroupViewController.m */,
+				907911141D0674AA00FE212D /* CheckAllGroupViewController.h */,
+				907911151D0674AA00FE212D /* CheckAllGroupViewController.m */,
 				900BFA0E1CC0EC76004F7B2C /* PopoverViewController.xib */,
 			);
 			path = Recent;
@@ -2433,7 +2440,6 @@
 				DA90B19C1C8989930080E037 /* XMPPPresence.m in Sources */,
 				DAAA186E1CABCF6500691170 /* Message.m in Sources */,
 				DA90B2091C8989930080E037 /* GCDAsyncSocket.m in Sources */,
-				9076A3DF1CEA0F3200CA0A3E /* Foundation+Log.m in Sources */,
 				DA90B1D41C8989930080E037 /* XMPPPubSub.m in Sources */,
 				DA90B1BF1C8989930080E037 /* XMPPRoomMessageMemoryStorageObject.m in Sources */,
 				DA90B1BB1C8989930080E037 /* XMPPRoomHybridStorage.m in Sources */,
@@ -2460,6 +2466,7 @@
 				DA90B1D21C8989930080E037 /* XMPPResultSet.m in Sources */,
 				DA90B1DF1C8989930080E037 /* XMPPCapabilities.xcdatamodel in Sources */,
 				DA90B1AF1C8989930080E037 /* XMPPSystemInputActivityMonitor.m in Sources */,
+				907911131D066EE300FE212D /* CheckMyGroupViewController.m in Sources */,
 				90DC39991CF4735F002CECCF /* AFAutoPurgingImageCache.m in Sources */,
 				DACDC79B1CC879F9005F5FA2 /* MyXMPP+VCard.m in Sources */,
 				DA90B1991C8989930080E037 /* XMPPMessage.m in Sources */,
@@ -2587,6 +2594,7 @@
 				DA90B1901C8989930080E037 /* XMPPXFacebookPlatformAuthentication.m in Sources */,
 				DA90B2061C8989930080E037 /* XMPPSRVResolver.m in Sources */,
 				DA90B1E01C8989930080E037 /* XMPPCapabilitiesCoreDataStorage.m in Sources */,
+				907911161D0674AA00FE212D /* CheckAllGroupViewController.m in Sources */,
 				DA90B1B81C8989930080E037 /* XMPPRoomMessageCoreDataStorageObject.m in Sources */,
 				DA90B1BE1C8989930080E037 /* XMPPRoomMemoryStorage.m in Sources */,
 				DA90B1A41C8989930080E037 /* XMPPProcessOne.m in Sources */,

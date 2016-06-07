@@ -65,6 +65,7 @@ static NSString *fileReuseIdentifier = @"fileMessageCell";
 - (void)viewDidLoad {
     [super viewDidLoad];
     
+    self.title = _chatObjectString;
     _tabBarHeight = self.tabBarController.tabBar.frame.size.height;
     // init table view
     _historyTableView.dataSource = self;

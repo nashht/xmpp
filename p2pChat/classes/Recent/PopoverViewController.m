@@ -16,7 +16,8 @@
 @property (strong, nonatomic) RecentViewController *baseVC;
 
 @property (strong, nonatomic) void (^createGroupBlock)(void);
-@property (strong, nonatomic) void (^showGroupsBlock)(void);
+@property (strong, nonatomic) void (^showMyGroupsBlock)(void);
+@property (strong, nonatomic) void (^showAllGroupsBlock)(void);
 
 @end
 
@@ -26,9 +27,10 @@
     [super viewDidLoad];
 }
 
-- (void)setCreateGroupBlock:(void (^)(void))createGroup showGroupBlock:(void (^)(void))showGroups {
+- (void)setCreateGroupBlock:(void (^)(void))createGroup showMyGroupBlock:(void (^)(void))showMyGroups showAllGroupBlock:(void (^)(void))showAllGroups{
     _createGroupBlock = createGroup;
-    _showGroupsBlock = showGroups;
+    _showMyGroupsBlock = showMyGroups;
+    _showAllGroupsBlock = showAllGroups;
 }
 
 - (IBAction)creatGroup:(id)sender {
@@ -36,8 +38,14 @@
     _createGroupBlock();
 }
 
-- (IBAction)showGroups:(id)sender {
+- (IBAction)showMyGroups:(id)sender {
     [self dismissViewControllerAnimated:NO completion:nil];
-    _showGroupsBlock();
+    _showMyGroupsBlock();
 }
+
+- (IBAction)showAllGroups:(id)sender {
+    [self dismissViewControllerAnimated:NO completion:nil];
+    _showAllGroupsBlock();
+}
+
 @end

@@ -18,6 +18,8 @@
 #import "PopoverViewController.h"
 #import "AFNetworking.h"
 #import "CreateGroupsViewController.h"
+#import "CheckMyGroupViewController.h"
+#import "CheckAllGroupViewController.h"
 #import "MyProgressView.h"
 
 @interface RecentViewController ()<UITableViewDataSource, UITableViewDelegate,UIPopoverPresentationControllerDelegate>
@@ -172,21 +174,14 @@
     PopoverViewController *popoverVc = [[PopoverViewController alloc] init];
     [popoverVc setCreateGroupBlock:^{//不会引起循环引用
         [self performSegueWithIdentifier:@"createGroup" sender:nil];
-    } showGroupBlock:^{
-//        MyProgressView *progressView = [MyProgressView progressView];
-//        progressView.frame = CGRectMake(150, 250, 100, 100);
-//        
-//        [NSTimer scheduledTimerWithTimeInterval:0.05 target:self selector:@selector(progressSimulation) userInfo:self repeats:YES];
-//        
-//        [self.view addSubview:progressView];
-//        _progressView = progressView;
-        
-        [[MyXMPP shareInstance]fetchMyRoomsWithCompletion:^(NSArray *members) {
-            NSLog(@"%@", members);
-        }];
-        
+    } showMyGroupBlock:^{
+            
+        CheckMyGroupViewController *myGroup = [[CheckMyGroupViewController alloc] init];
+        [self.navigationController showViewController:myGroup sender:nil];
 
-
+    } showAllGroupBlock:^{
+        CheckAllGroupViewController *allGroup = [[CheckAllGroupViewController alloc] init];
+        [self.navigationController showViewController:allGroup sender:nil];
     }];
     popoverVc.preferredContentSize = CGSizeMake(100, 150);
     popoverVc.modalPresentationStyle = UIModalPresentationPopover;
@@ -200,18 +195,7 @@
     [self presentViewController:popoverVc animated:YES completion:nil];
 }
 
-- (void)progressSimulation{
-    static CGFloat progress = 0;
-    if (progress < 1.0) {
-        progress += 0.01;
-        
-        // 循环
-        if (progress >= 1.0) progress = 0;
-        
-        
-        _progressView.progress = progress;
-    }
-}
+
 
 - (UIModalPresentationStyle)adaptivePresentationStyleForPresentationController:(UIPresentationController *)controller{
     return UIModalPresentationNone;
