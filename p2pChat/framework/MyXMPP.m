@@ -80,9 +80,7 @@ static NSString *serverHost = @"10.108.136.59";
 };
 
 - (void)online {
-    XMPPPresence *presence = [XMPPPresence presenceWithType:@"available"];
-    [_stream sendElement:presence];
-    _myStatus = MyXMPPStatusOnline;
+    [self reconnect];
 }
 
 - (void)busy {

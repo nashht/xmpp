@@ -16,6 +16,7 @@
 @property (assign, nonatomic) NSInteger totalUnreadNumber;
 
 + (instancetype)shareManager;
+- (void)clearAll;//删除最近联系人、所有聊天记录、群聊天记录
 
 @end
 

@@ -57,6 +57,28 @@
     [_context save:err];
 }
 
+- (void)deleteDataByEntityName:(NSString *)name {
+    NSFetchRequest *request = [[NSFetchRequest alloc]init];
+    NSError *err = nil;
+    NSEntityDescription *entity = [NSEntityDescription entityForName:name inManagedObjectContext:_context];
+    request.entity = entity;
+    NSArray *array = [_context executeFetchRequest:request error:&err];
+    if (err == nil && array.count > 0) {
+        for (NSManagedObject *obj in array) {
+            [_context deleteObject:obj];
+        }
+    }
+    if (![_context save:&err]) {
+        NSLog(@"DataManager clear failed: %@", err);
+    }
+}
+
+- (void)clearAll {
+    [self deleteDataByEntityName:@"Message"];
+    [self deleteDataByEntityName:@"LastMessage"];
+    [self deleteDataByEntityName:@"GroupMessage"];
+}
+
 #pragma mark - message
 - (NSFetchedResultsController *)getMessageByUsername:(NSString *)username {
     NSPredicate *predicate = [NSPredicate predicateWithFormat:@"username = %@", username];
