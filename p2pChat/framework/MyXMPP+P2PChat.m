@@ -99,16 +99,49 @@ static NSString *fileType = @"[文件]";
 }
 
 
-- (void)sendPictureIdentifier:(NSString *)identifier data:(NSData *)imageData thumbnailName:(NSString *)thumbnailName filename:(NSString *)filename ToUser:(NSString *)user{
-    NSString *picString = [imageData base64EncodedStringWithOptions:0];
+- (void)sendPictureIdentifier:(NSString *)identifier data:(NSData *)imageData thumbnailData:(NSData *)thumbnailData thumbnailName:(NSString *)thumbnailName filename:(NSString *)filename ToUser:(NSString *)user{
     
     NSDate *date = [NSDate date];
     NSTimeInterval t = [date timeIntervalSince1970];
     int time = (int)t;
     
-    [self sendMessageWithSubtype:@"picture" time:time body:picString more:filename toUser:user];
     [self.dataManager savePhotoWithUsername:user time:[NSNumber numberWithInt:time] filename:identifier thumbnail:thumbnailName isOut:YES];
     [self.dataManager addRecentUsername:user time:[NSNumber numberWithInt:time] body:pictureType isOut:YES isP2P:YES];
+}
+
+- (void)uploadPic:(NSData *)imageData thumbnailData:(NSData *)thumbnailData filename:(NSString *)filename toUser:(NSString *)user{
+    NSLog(@"uploadPic2Server");
+    
+    AFHTTPSessionManager *manager = [AFHTTPSessionManager manager];
+    manager.responseSerializer = [AFHTTPResponseSerializer serializer];
+    NSMutableDictionary *param = [NSMutableDictionary dictionary];
+    param[@"method"] = @"upload";
+    param[@"filename"] = filename;
+    // 参数para:{method:"upload"/"download",filename:"xxx"}(filename格式：username_timestamp
+    //     访问路径
+    //    NSString *stringURL = @"http://10.108.136.59:8080/FileServer/file?method=upload&filename=1123";
+    //    NSString *url = [NSString stringWithFormat:@"http://10.108.136.59:8080/FileServer/file?method=upload&filename=",filename];
+    [manager POST: @"http://10.108.136.59:8080/FileServer/file" parameters:param constructingBodyWithBlock:^(id<AFMultipartFormData>  _Nonnull formData) {
+        // 拼接文件参数
+        [formData appendPartWithFileData:imageData name:@"file" fileName:filename mimeType:@"application/octet-stream"];
+        
+    } progress:^(NSProgress * _Nonnull uploadProgress) {
+        NSLog(@"uploadProgress ---  %@",uploadProgress);
+    } success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
+        id json = [NSJSONSerialization JSONObjectWithData:responseObject options:NSJSONReadingMutableContainers error:nil];
+        NSLog(@"success%@",json);
+        
+        NSString *picString = [thumbnailData base64EncodedStringWithOptions:0];
+        NSDate *date = [NSDate date];
+        NSTimeInterval t = [date timeIntervalSince1970];
+        int time = (int)t;
+        
+        [self sendMessageWithSubtype:@"picture" time:time body:picString more:filename toUser:user];
+        
+    } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
+        NSLog(@"failed------error:   %@",error);
+    }];
+    
 }
 
 #pragma mark - receivemessage delegate
@@ -162,7 +195,6 @@ static NSString *fileType = @"[文件]";
             }
             
             case 'f':{
-//#error 未完
                 NSString *filename = message.body;
                 NSString *fileSize = [message getMore];
                 [self.dataManager saveFileWithUsername:bareJidStr time:timeNumber filename:filename fileSize:fileSize isOut:NO];

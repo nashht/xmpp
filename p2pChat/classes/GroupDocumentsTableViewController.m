@@ -89,7 +89,8 @@
         if ((theFileSize = [attributes objectForKey:NSFileSize])){
             size = [NSString stringWithFormat:@"%i kb",[theFileSize intValue]];
         }
-            [self sendFile:fileData filename:filename fileSize:size];
+        
+        [self sendFile:fileData filename:filename fileSize:size];
     }
     
     [self.navigationController popViewControllerAnimated:YES];

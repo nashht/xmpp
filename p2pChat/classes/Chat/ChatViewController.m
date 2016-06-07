@@ -32,7 +32,7 @@
 #define MOREHEIGHT 150
 #define ScreenSize  [UIScreen mainScreen].bounds.size
 #define BOTTOMHEIGHT 40
-#define FACEVIEWHEIGHT (ScreenSize.height * 0.4)
+#define FACEVIEWHEIGHT (ScreenSize.height * 0.353)
 
 static NSString *textReuseIdentifier = @"textMessageCell";
 static NSString *audioReuseIdentifier = @"audioMessageCell";
@@ -306,7 +306,7 @@ static NSString *fileReuseIdentifier = @"fileMessageCell";
  */
 - (void)scrollViewWillBeginDragging:(UIScrollView *)scrollView
 {
-//    [_bottomView resignTextfield];
+    [_bottomView resignTextfield];
 }
 
 #pragma mark - keyboard notification
