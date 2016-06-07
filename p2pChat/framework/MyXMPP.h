@@ -39,6 +39,12 @@ typedef NS_ENUM (char, MessageType) {
     MessageTypeVideo,
 };
 
+typedef NS_ENUM(int, MyXMPPStatus) {
+    MyXMPPStatusOnline = 0,
+    MyXMPPStatusBusy,
+    MyXMPPStatusOffline
+};
+
 static NSString *myDomain = @"xmpp.test";
 
 @interface MyXMPP : NSObject
@@ -55,6 +61,7 @@ static NSString *myDomain = @"xmpp.test";
 @property (strong, nonatomic) XMPPRoomCoreDataStorage *roomStorage;
 @property (strong, nonatomic) XMPPMUC *muc;//用于处理好友邀请
 @property (strong, nonatomic) XMPPRoomOccupantCoreDataStorageObject *roomOccupant;
+@property (assign, nonatomic, readonly) MyXMPPStatus myStatus;
 
 @property (strong, nonatomic, readonly) DataManager *dataManager;
 @property (strong, nonatomic, readonly) PhotoLibraryCenter *photoLibraryCenter;
@@ -64,5 +71,9 @@ static NSString *myDomain = @"xmpp.test";
 - (void)loginWithName:(NSString *)user Password:(NSString *)password;
 - (void)loginout;
 - (void)reconnect;
+
+- (void)online;
+- (void)busy;
+- (void)offline;
 
 @end
