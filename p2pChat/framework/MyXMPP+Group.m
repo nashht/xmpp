@@ -199,20 +199,11 @@ static NSString *pictureType = @"[图片]";
     [[NSNotificationCenter defaultCenter]postNotificationName:MyXmppRoomDidConfigurationNotification object:nil];
     
     NSLog(@"didFetchConfigurationForm");
-    
-  
-    
-    
-    
-    
-//    [self sendMessage:@"hello" ToGroup:@"222"];
-
-//    [sender sendMessageWithBody:@"hehehehehehhe"];
 }
 
 - (void)xmppRoom:(XMPPRoom *)sender didFetchMembersList:(NSArray *)items{
     NSLog(@"did fetch members list");
-    NSLog(@"memberlist:%@",items);
+//    NSLog(@"memberlist:%@",items);
     int i= 0;
     NSMutableArray *array = [NSMutableArray arrayWithCapacity:[items count]];
     for (DDXMLElement *obj  in items) {

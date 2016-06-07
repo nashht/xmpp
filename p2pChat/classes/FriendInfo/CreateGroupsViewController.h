@@ -12,4 +12,6 @@
 
 @property (nonatomic, weak) UIViewController *fatherVC;
 
+@property (nonatomic, copy) NSArray *didSelectedUsers;
+
 @end

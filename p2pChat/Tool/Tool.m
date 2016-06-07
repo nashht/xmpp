@@ -81,7 +81,7 @@
 + (NSString *)getDocumentsUrl{
     //[NSHomeDirectory() stringByAppendingPathComponent:@"Documents"];
     NSArray *paths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
-    NSString *documentsDirectory = [paths objectAtIndex:0];
+    NSString *documentsDirectory = [[paths objectAtIndex:0] stringByAppendingString:@"docs"];;
     NSLog(@"document路径: %@",documentsDirectory);
     return documentsDirectory;
 }
