@@ -24,6 +24,7 @@ static double LabelHigh = 15;
 @property (weak, nonatomic) IBOutlet UIStackView *membersPhotoStack;
 @property (weak, nonatomic) IBOutlet UIStackView *membersNameStack;
 
+@property (nonatomic,strong) NSString *membercountstr;
 @property (weak, nonatomic) IBOutlet UILabel *groupMembersCount;
 @property (weak, nonatomic) IBOutlet UILabel *groupNameLabel;
 
@@ -34,9 +35,9 @@ static double LabelHigh = 15;
 - (void)viewDidLoad {
     [super viewDidLoad];
     
-    _groupNameLabel.text = _groupName;
     
-    XMPPJID *myjid = [[MyXMPP shareInstance]myjid];
+    
+    XMPPJID *myjid = [[MyXMPP shareInstance]myjid];//获取自己的名片
     XMPPvCardTemp *friendVCard = [[MyXMPP shareInstance]fetchFriend:myjid];
     [self addmemberwithphoto:friendVCard.photo];
     [self addmemberwithname:myjid.user];
@@ -63,19 +64,38 @@ static double LabelHigh = 15;
             [self addBlankLabel];
         }
         
-        NSUInteger count = [members count];
+        NSInteger count = [members count];
         count++;
+        _membercountstr = [NSString stringWithFormat:@"%ld",(long)count];
+        
         NSString *str = [NSString stringWithFormat:@"(%ld)",(unsigned long)count];
         [self.groupMembersCount setText:str];
         
-        XMPPRoom *room = [[MyXMPP shareInstance]chatroom];
-        [self.groupName setText:room.roomJID.user];
+        [self.groupNameLabel setText:_groupName];
+        
     }];
     
     
-    
-
 }
+
+- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender{
+    if([segue.identifier isEqualToString:@"groupmemberlist"]){
+        id theSegue = segue.destinationViewController;
+        [theSegue setValue:_groupName forKey:@"laterGroupName"];
+        [theSegue setValue:_membercountstr forKey:@"count"];
+    }
+}
+
+- (IBAction)wipeChatRecord:(UIButton *)sender {
+    
+}
+
+- (IBAction)deleteRoomAndLeave:(UIButton *)sender {
+    [[MyXMPP shareInstance]leaveChatRoom];
+    [[MyXMPP shareInstance]destroyChatRoom];
+}
+
+#pragma mark-addmembers
 
 - (void)addwithmembers:(NSArray *)members count:(int)i{
     

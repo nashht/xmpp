@@ -10,11 +10,13 @@
 #import "MyXMPP.h"
 #import "MyXMPP+Group.h"
 #import "MyXMPP+VCard.h"
+#import "GroupMembersInfoTableViewController.h"
 
 @interface GroupMembersListTableViewController ()
 
-@property (nonatomic,assign) NSInteger *count;
+@property (nonatomic,assign) NSString *count;
 @property (nonatomic,strong) NSMutableArray *array;
+@property (strong, nonatomic) IBOutlet UITableView *tableview;
 
 @end
 
@@ -23,19 +25,25 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     
-//    XMPPJID *myjid = [[MyXMPP shareInstance]myjid];
-//    [[MyXMPP shareInstance] fetchMembersFromGroupWithCompletion:^(NSArray *members) {
-//          NSInteger *m = members.count+1;
-//          _array = [[NSMutableArray alloc]initWithCapacity:m];
-//          for (int i = 0; i<[members count]; i++) {
-//              [_array insertObject:[members objectAtIndex:i] atIndex:i];
-//          }
-//         [_array insertObject:myjid.user atIndex:[members count]];
-//
-//    }];
-   
+    XMPPJID *myjid = [[MyXMPP shareInstance]myjid];
+    NSInteger m = [_count intValue];
+    m++;
+    [[MyXMPP shareInstance] fetchMembersFromGroup:_laterGroupName withCompletion:^(NSArray *members) {
+        _array = [[NSMutableArray alloc]initWithCapacity:m];
+        for (int i = 0; i<[members count]; i++) {
+            [_array insertObject:[members objectAtIndex:i] atIndex:i];
+        }
+        [_array insertObject:myjid.user atIndex:[members count]];
+     _tableview = [[UITableView alloc]init];
+    [self.tableView reloadData];
+    }];
+    
     
 }
+
+//- (void)handler:(NSNotification *) notification{
+//    _laterGroupName = [notification object];
+//}
 
 #pragma mark - Table view data source
 
@@ -45,18 +53,10 @@
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
-    XMPPJID *myjid = [[MyXMPP shareInstance]myjid];
-    [[MyXMPP shareInstance] fetchMembersFromGroupWithCompletion:^(NSArray *members) {
-        NSInteger *m = members.count+1;
-        _array = [[NSMutableArray alloc]initWithCapacity:m];
-        for (int i = 0; i<[members count]; i++) {
-            [_array insertObject:[members objectAtIndex:i] atIndex:i];
-        }
-        [_array insertObject:myjid.user atIndex:[members count]];
-        _count = [members count];
-        _count++;
-    }];
-    return _count;
+
+    NSInteger m = [_count intValue];
+    return m;
+    
  
 //      return _array.count;
 

@@ -1071,7 +1071,7 @@
                                             </constraints>
                                         </tableViewCellContentView>
                                         <connections>
-                                            <segue destination="7FA-GL-ceE" kind="push" id="73k-hs-8l6"/>
+                                            <segue destination="7FA-GL-ceE" kind="push" identifier="groupmemberlist" id="73k-hs-8l6"/>
                                         </connections>
                                     </tableViewCell>
                                 </cells>
@@ -1144,6 +1144,9 @@
                                                 <button opaque="NO" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="szj-lW-dPc">
                                                     <rect key="frame" x="256" y="7" width="90" height="30"/>
                                                     <state key="normal" title="清空聊天记录"/>
+                                                    <connections>
+                                                        <action selector="wipeChatRecord:" destination="Kmu-aZ-Y29" eventType="touchUpInside" id="RQ3-Vz-Jpm"/>
+                                                    </connections>
                                                 </button>
                                             </subviews>
                                             <constraints>
@@ -1166,6 +1169,9 @@
                                                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="fXv-jR-dbF">
                                                     <rect key="frame" x="263" y="7" width="75" height="30"/>
                                                     <state key="normal" title="删除并退出"/>
+                                                    <connections>
+                                                        <action selector="deleteRoomAndLeave:" destination="Kmu-aZ-Y29" eventType="touchUpInside" id="48O-17-PUb"/>
+                                                    </connections>
                                                 </button>
                                             </subviews>
                                             <constraints>
@@ -1184,7 +1190,7 @@
                     <connections>
                         <outlet property="MembersCell" destination="5E4-Yw-RkJ" id="yvu-kE-Xal"/>
                         <outlet property="groupMembersCount" destination="HaI-hh-7Mc" id="HRS-nx-EYT"/>
-                        <outlet property="groupName" destination="VNT-ew-fvk" id="ZS9-aW-afQ"/>
+                        <outlet property="groupNameLabel" destination="VNT-ew-fvk" id="tpa-qh-mqL"/>
                         <outlet property="membersNameStack" destination="Ows-iP-MiM" id="137-zw-gzy"/>
                         <outlet property="membersPhotoStack" destination="mil-hn-zms" id="gPx-ip-dGf"/>
                     </connections>
@@ -1216,6 +1222,9 @@
                             <outlet property="delegate" destination="7FA-GL-ceE" id="4qp-XN-yHW"/>
                         </connections>
                     </tableView>
+                    <connections>
+                        <outlet property="tableview" destination="MVa-R3-mLh" id="48G-5N-h5q"/>
+                    </connections>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="xst-h5-OKl" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>

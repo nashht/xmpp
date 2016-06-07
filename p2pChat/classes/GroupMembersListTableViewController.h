@@ -10,4 +10,6 @@
 
 @interface GroupMembersListTableViewController : UITableViewController
 
+@property (nonatomic, copy) NSString *laterGroupName;
+
 @end
