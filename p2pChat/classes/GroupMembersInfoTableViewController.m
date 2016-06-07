@@ -48,6 +48,7 @@ static double LabelHigh = 15;
                 [self addwithmembers:members count:i];
             }
             [self addInsertMemberButton];
+            [self addBlankLabel];
         }else{
             int m = 0;
         for (m=0; m<[members count]; m++) {
@@ -55,13 +56,18 @@ static double LabelHigh = 15;
             }
             m++;
             [self addInsertMemberButton];//暂时没有实现添加加号按钮
+            [self addBlankLabel];
         }
         
         NSUInteger count = [members count];
         count++;
         NSString *str = [NSString stringWithFormat:@"(%ld)",(unsigned long)count];
         [self.groupMembersCount setText:str];
+        
+        XMPPRoom *room = [[MyXMPP shareInstance]chatroom];
+        [self.groupName setText:room.roomJID.user];
     }];
+    
     
     
 
@@ -104,7 +110,7 @@ static double LabelHigh = 15;
     [insertbtn addTarget:self action:@selector(insertMemberAction) forControlEvents:UIControlEventTouchUpInside];
     insertbtn.layer.cornerRadius = 10;
     insertbtn.layer.masksToBounds = true;
-    [insertbtn setBackgroundImage:[UIImage imageNamed:@"ic_add_bg_n.png"] forState:UIControlStateNormal];
+    [insertbtn setBackgroundImage:[UIImage imageNamed:@"nav_add.png"] forState:UIControlStateNormal];
     CGRect temp = insertbtn.frame;
     temp.size = CGSizeMake(Width, PhotoHigh);
     insertbtn.frame = temp;
@@ -121,19 +127,29 @@ static double LabelHigh = 15;
     [self.navigationController pushViewController:creatgroup animated:YES];
 }
 
+-(void)addBlankLabel{
+    UILabel *membername = [[UILabel alloc]init];
+    membername.text = @"    ";
+    membername.adjustsFontSizeToFitWidth = YES;
+    [self.membersNameStack addArrangedSubview:membername];
+    CGRect temp = membername.frame;
+    temp.size = CGSizeMake(Width, LabelHigh);
+    membername.frame = temp;
+
+}
+
 #pragma mark - Table view data source
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
-#warning Incomplete implementation, return the number of sections
     return 4;
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
-#warning Incomplete implementation, return the number of rows
 //    return 1;
-    if(section == 2 || section == 3) return 1;
-    else if(section ==0) return 2;
-    else return 3;
+    if(section == 2 || section == 3) {
+        return 1;}
+    else {
+            return 2;}
         
 }
 
