@@ -28,6 +28,8 @@ static double LabelHigh = 15;
 @property (weak, nonatomic) IBOutlet UILabel *groupMembersCount;
 @property (weak, nonatomic) IBOutlet UILabel *groupNameLabel;
 
+@property (nonatomic,strong) NSMutableArray *memberarray;
+
 @end
 
 @implementation GroupMembersInfoTableViewController
@@ -37,35 +39,37 @@ static double LabelHigh = 15;
     
     
     
-    XMPPJID *myjid = [[MyXMPP shareInstance]myjid];//获取自己的名片
-    XMPPvCardTemp *friendVCard = [[MyXMPP shareInstance]fetchFriend:myjid];
-    [self addmemberwithphoto:friendVCard.photo];
-    [self addmemberwithname:myjid.user];
-//    [self addmemberwithphoto:friendVCard.photo x:InitialPositionX y:InitialPositionY];
-//    [self addmemberwithname:myjid.user x:InitialPositionX y:LabelPositionY];
+
+    
     
     [[MyXMPP shareInstance] fetchMembersFromGroup:_groupName withCompletion:^(NSArray *members) {
         
-        if ([members count]>1) {
-            for (int i=0; i<2; i++) {
-                [self addwithmembers:members count:i];
+        NSInteger count = [members count];
+        count++;
+        _memberarray = [[NSMutableArray alloc]initWithCapacity:count];
+        for (int i=0; i<[members count];i++) {
+            [_memberarray insertObject:[members objectAtIndex:i] atIndex:i];
+        }
+        XMPPJID *myjid = [[MyXMPP shareInstance]myjid];//获取自己的名片
+        [_memberarray insertObject:myjid.user atIndex:[members count]];
+        
+        if ([_memberarray count]>2 ) {
+            for (int i=0; i<3; i++) {
+                [self addwithmembersarray:_memberarray count:i];
             }
             [self addInsertMemberButton];
             [self addBlankLabel];
         }else{
-            int m = 0;
-        for (m=0; m<[members count]; m++) {
-            [self addwithmembers:members count:m];
+            for (int j=0; j<[_memberarray count];j++) {
+                [self addwithmembersarray:_memberarray count:j];
             }
-            m++;
             [self addInsertMemberButton];//暂时没有实现添加加号按钮
             [self addBlankButton];
             [self addBlankLabel];
             [self addBlankLabel];
         }
         
-        NSInteger count = [members count];
-        count++;
+        
         _membercountstr = [NSString stringWithFormat:@"%ld",(long)count];
         
         NSString *str = [NSString stringWithFormat:@"(%ld)",(unsigned long)count];
@@ -73,8 +77,8 @@ static double LabelHigh = 15;
         
         [self.groupNameLabel setText:_groupName];
         
+        
     }];
-    
     
 }
 
@@ -97,14 +101,12 @@ static double LabelHigh = 15;
 
 #pragma mark-addmembers
 
-- (void)addwithmembers:(NSArray *)members count:(int)i{
+- (void)addwithmembersarray:(NSArray *)members count:(int)i{
     
     XMPPJID *memberjid = [XMPPJID jidWithUser:[members objectAtIndex:i] domain:myDomain resource:@"iphone"];
     XMPPvCardTemp *friendVCard = [[MyXMPP shareInstance]fetchFriend:memberjid];
     [self addmemberwithphoto:friendVCard.photo];
     [self addmemberwithname:[members objectAtIndex:i]];
-//    [self addmemberwithphoto:friendVCard.photo x:InitialPositionX+(PhotoWidth+LengthBetweenBtns)*(i+1) y:InitialPositionY];
-//    [self addmemberwithname:[members objectAtIndex:i] x:InitialPositionX+(PhotoWidth+LengthBetweenBtns)*(i+1) y:LabelPositionY];
 }
 
 - (void)addmemberwithphoto:(NSData *)imagedata{
@@ -138,15 +140,13 @@ static double LabelHigh = 15;
     CGRect temp = insertbtn.frame;
     temp.size = CGSizeMake(Width, PhotoHigh);
     insertbtn.frame = temp;
-    
-//    insertbtn.frame = CGRectMake(InitialPositionX+(PhotoWidth+LengthBetweenBtns)*i, InitialPositionY, PhotoWidth, PhotoWidth);withlocation:(int)i
+
     [self.membersPhotoStack addArrangedSubview:insertbtn];
 }
 
 -(void)insertMemberAction{
     CreateGroupsViewController *creatgroup =[[CreateGroupsViewController alloc]init];
     creatgroup.modalTransitionStyle = UIModalTransitionStyleCrossDissolve;
-//    [self presentViewController:creatgroup animated:YES completion:nil];
     UINavigationController *nvi = [[UINavigationController alloc]init];
     [self.navigationController pushViewController:creatgroup animated:YES];
 }
@@ -178,11 +178,10 @@ static double LabelHigh = 15;
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
-//    return 1;
     if(section == 2 || section == 3) {
         return 1;}
     else {
-            return 2;}
+        return 2;}
         
 }
 

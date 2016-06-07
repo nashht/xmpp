@@ -25,25 +25,25 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     
-    XMPPJID *myjid = [[MyXMPP shareInstance]myjid];
-    NSInteger m = [_count intValue];
-    m++;
+    
     [[MyXMPP shareInstance] fetchMembersFromGroup:_laterGroupName withCompletion:^(NSArray *members) {
+        
+        XMPPJID *myjid = [[MyXMPP shareInstance]myjid];
+        NSInteger m = [_count intValue];
+        m++;
         _array = [[NSMutableArray alloc]initWithCapacity:m];
         for (int i = 0; i<[members count]; i++) {
             [_array insertObject:[members objectAtIndex:i] atIndex:i];
         }
         [_array insertObject:myjid.user atIndex:[members count]];
-     _tableview = [[UITableView alloc]init];
-    [self.tableView reloadData];
+        
+        _tableview = [[UITableView alloc]init];
+        [self.tableView reloadData];
     }];
     
     
 }
 
-//- (void)handler:(NSNotification *) notification{
-//    _laterGroupName = [notification object];
-//}
 
 #pragma mark - Table view data source
 

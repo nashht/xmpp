@@ -160,15 +160,6 @@ static NSString *pictureType = @"[图片]";
     NSLog(@"did use delete method!");
 }
 
--(void)getMembersFromGroup{
-//    self.roomOccupant = [self.roomStorage occupantForJID:self.myjid stream:self.stream inContext:<#(NSManagedObjectContext *)#> ];
-//    NSLog(@"%@",self.roomOccupant.roomJIDStr);
-//    XMPPRoomOccupantMemoryStorageObject
-}
-
-- (void)getJoinedRooms{
-    
-}
 
 #pragma mark - room delegate
 - (void)xmppRoomDidCreate:(XMPPRoom *)sender {
