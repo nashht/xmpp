@@ -19,6 +19,7 @@
 @interface MyXMPP () <XMPPStreamDelegate> {
     BOOL _hasInit;
     BOOL _timerIsRunning;
+    BOOL _shouldDisconnect;
 }
 
 @property (strong, nonatomic) NSString *password;
@@ -46,6 +47,7 @@ static NSString *serverHost = @"10.108.136.59";
 - (void)loginWithName:(NSString *)user Password:(NSString *)password {
     self.password = password;
     if ([self.stream isConnected]) {
+        _shouldDisconnect = YES;
         [self disconnected];
     }
     _myjid = [XMPPJID jidWithUser:user domain:myDomain resource:@"iphone"];
@@ -56,9 +58,11 @@ static NSString *serverHost = @"10.108.136.59";
     if (![self.stream connectWithTimeout:XMPPStreamTimeoutNone error:&error ]) {
         NSLog(@"Connect Error: %@", [[error userInfo] description]);
     }
+    _shouldDisconnect = NO;
 }
 
 - (void)loginout {
+    _shouldDisconnect = YES;
     [self disconnected];
 }
 
@@ -74,6 +78,23 @@ static NSString *serverHost = @"10.108.136.59";
     [_stream sendElement:presence];
     [_stream disconnect];
 };
+
+- (void)online {
+    XMPPPresence *presence = [XMPPPresence presenceWithType:@"available"];
+    [_stream sendElement:presence];
+    _myStatus = MyXMPPStatusOnline;
+}
+
+- (void)busy {
+    XMPPPresence *presence = [XMPPPresence presenceWithType:@"away"];
+    [_stream sendElement:presence];
+    _myStatus = MyXMPPStatusBusy;
+}
+
+- (void)offline {
+    [self disconnected];
+    _shouldDisconnect = YES;
+}
 
 #pragma mark - private method
 - (id)init {
@@ -152,6 +173,7 @@ static NSString *serverHost = @"10.108.136.59";
 - (void)xmppStreamDidAuthenticate:(XMPPStream *)sender {
     XMPPPresence *presence = [XMPPPresence presenceWithType:@"available"];
     [self.stream sendElement:presence];
+    _myStatus = MyXMPPStatusOnline;
     NSLog(@"登录成功");
     
     [[NSNotificationCenter defaultCenter]postNotificationName:MyXmppDidLoginNotification object:nil];
@@ -208,8 +230,9 @@ static NSString *serverHost = @"10.108.136.59";
 - (void)xmppStreamDidDisconnect:(XMPPStream *)sender withError:(NSError *)error {
     NSLog(@"DidDisconnect");
     NSLog(@"disconnet error:%@",error);
+    _myStatus = MyXMPPStatusOffline;
     [[NSNotificationCenter defaultCenter]postNotificationName:MyXmppConnectFailedNotification object:nil];
-    if (!_timerIsRunning) {
+    if (!_shouldDisconnect && !_timerIsRunning) {
         [_reconnectTimer setFireDate:[NSDate date]];
         _timerIsRunning = YES;
     }

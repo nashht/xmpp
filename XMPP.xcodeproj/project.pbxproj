@@ -78,6 +78,7 @@
 		DA4EBEB41CCDFCB000239331 /* Reachability.m in Sources */ = {isa = PBXBuildFile; fileRef = DA4EBEB31CCDFCB000239331 /* Reachability.m */; };
 		DA57261C1CBF40830045CEF2 /* BottomView.m in Sources */ = {isa = PBXBuildFile; fileRef = DA57261B1CBF40830045CEF2 /* BottomView.m */; };
 		DA57261E1CBF409D0045CEF2 /* BottomView.xib in Resources */ = {isa = PBXBuildFile; fileRef = DA57261D1CBF409D0045CEF2 /* BottomView.xib */; };
+		DA6C2CF51D06761000164C9B /* StatusViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = DA6C2CF41D06761000164C9B /* StatusViewController.m */; };
 		DA9046AA1C3A49EB009E75B7 /* DataManager.m in Sources */ = {isa = PBXBuildFile; fileRef = DA9046A91C3A49EB009E75B7 /* DataManager.m */; };
 		DA9046B51C3A51A1009E75B7 /* AudioCenter.m in Sources */ = {isa = PBXBuildFile; fileRef = DA9046AE1C3A51A1009E75B7 /* AudioCenter.m */; };
 		DA9046B71C3A51A1009E75B7 /* MyFetchedResultsControllerDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = DA9046B21C3A51A1009E75B7 /* MyFetchedResultsControllerDelegate.m */; };
@@ -417,6 +418,8 @@
 		DA57261A1CBF40830045CEF2 /* BottomView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BottomView.h; sourceTree = "<group>"; };
 		DA57261B1CBF40830045CEF2 /* BottomView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BottomView.m; sourceTree = "<group>"; };
 		DA57261D1CBF409D0045CEF2 /* BottomView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = BottomView.xib; sourceTree = "<group>"; };
+		DA6C2CF31D06761000164C9B /* StatusViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = StatusViewController.h; sourceTree = "<group>"; };
+		DA6C2CF41D06761000164C9B /* StatusViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = StatusViewController.m; sourceTree = "<group>"; };
 		DA9046A81C3A49EB009E75B7 /* DataManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = DataManager.h; path = dataStorage/DataManager.h; sourceTree = "<group>"; };
 		DA9046A91C3A49EB009E75B7 /* DataManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = DataManager.m; path = dataStorage/DataManager.m; sourceTree = "<group>"; };
 		DA9046AD1C3A51A1009E75B7 /* AudioCenter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = AudioCenter.h; path = Tool/AudioCenter.h; sourceTree = "<group>"; };
@@ -1087,6 +1090,8 @@
 			children = (
 				90FA06511CAE094600851B1C /* MeController.h */,
 				90FA06521CAE094600851B1C /* MeController.m */,
+				DA6C2CF31D06761000164C9B /* StatusViewController.h */,
+				DA6C2CF41D06761000164C9B /* StatusViewController.m */,
 				DAAF2C111CCCA87700C51494 /* EditViewController.h */,
 				DAAF2C121CCCA87700C51494 /* EditViewController.m */,
 			);
@@ -2607,6 +2612,7 @@
 				DA90B2071C8989930080E037 /* XMPPStringPrep.m in Sources */,
 				DA90B1B91C8989930080E037 /* XMPPRoomOccupantCoreDataStorageObject.m in Sources */,
 				905AE6F91CF851F900531E6F /* FileCell.m in Sources */,
+				DA6C2CF51D06761000164C9B /* StatusViewController.m in Sources */,
 				DAAF2C131CCCA87700C51494 /* EditViewController.m in Sources */,
 				90DC399D1CF4735F002CECCF /* UIButton+AFNetworking.m in Sources */,
 				DA90B1D61C8989930080E037 /* XMPPIQ+XEP_0066.m in Sources */,
