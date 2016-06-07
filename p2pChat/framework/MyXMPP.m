@@ -79,6 +79,23 @@ static NSString *serverHost = @"10.108.136.59";
     [_stream disconnect];
 };
 
+- (void)online {
+    XMPPPresence *presence = [XMPPPresence presenceWithType:@"available"];
+    [_stream sendElement:presence];
+    _myStatus = MyXMPPStatusOnline;
+}
+
+- (void)busy {
+    XMPPPresence *presence = [XMPPPresence presenceWithType:@"away"];
+    [_stream sendElement:presence];
+    _myStatus = MyXMPPStatusBusy;
+}
+
+- (void)offline {
+    [self disconnected];
+    _shouldDisconnect = YES;
+}
+
 #pragma mark - private method
 - (id)init {
     self = [super init];
@@ -156,6 +173,7 @@ static NSString *serverHost = @"10.108.136.59";
 - (void)xmppStreamDidAuthenticate:(XMPPStream *)sender {
     XMPPPresence *presence = [XMPPPresence presenceWithType:@"available"];
     [self.stream sendElement:presence];
+    _myStatus = MyXMPPStatusOnline;
     NSLog(@"登录成功");
     
     [[NSNotificationCenter defaultCenter]postNotificationName:MyXmppDidLoginNotification object:nil];
@@ -212,6 +230,7 @@ static NSString *serverHost = @"10.108.136.59";
 - (void)xmppStreamDidDisconnect:(XMPPStream *)sender withError:(NSError *)error {
     NSLog(@"DidDisconnect");
     NSLog(@"disconnet error:%@",error);
+    _myStatus = MyXMPPStatusOffline;
     [[NSNotificationCenter defaultCenter]postNotificationName:MyXmppConnectFailedNotification object:nil];
     if (!_shouldDisconnect && !_timerIsRunning) {
         [_reconnectTimer setFireDate:[NSDate date]];
