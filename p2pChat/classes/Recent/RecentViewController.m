@@ -170,23 +170,23 @@
 #pragma mark - popover view
 - (IBAction)PopoverBtnClick:(UIButton *)sender {
     PopoverViewController *popoverVc = [[PopoverViewController alloc] init];
-    [popoverVc setCreateGroupBlock:^{//不会引起循环引用
+
+    [popoverVc setCreateGroupBlock:^{
         [self performSegueWithIdentifier:@"createGroup" sender:nil];
     } showGroupBlock:^{
 //        MyProgressView *progressView = [MyProgressView progressView];
 //        progressView.frame = CGRectMake(150, 250, 100, 100);
-//        
+//
 //        [NSTimer scheduledTimerWithTimeInterval:0.05 target:self selector:@selector(progressSimulation) userInfo:self repeats:YES];
-//        
+//
 //        [self.view addSubview:progressView];
 //        _progressView = progressView;
         
         [[MyXMPP shareInstance]fetchMyRoomsWithCompletion:^(NSArray *members) {
             NSLog(@"%@", members);
         }];
-        
-
-
+    } showAllGroupsBlock:^{
+        NSLog(@"show all groups");
     }];
     popoverVc.preferredContentSize = CGSizeMake(100, 150);
     popoverVc.modalPresentationStyle = UIModalPresentationPopover;

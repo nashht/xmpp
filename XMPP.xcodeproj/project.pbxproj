@@ -958,8 +958,8 @@
 				90FA065D1CAE4BDE00851B1C /* RecentViewController.m */,
 				900BFA0C1CC0EC76004F7B2C /* PopoverViewController.h */,
 				900BFA0D1CC0EC76004F7B2C /* PopoverViewController.m */,
-				9076A3DE1CEA0F3200CA0A3E /* Foundation+Log.m */,
 				900BFA0E1CC0EC76004F7B2C /* PopoverViewController.xib */,
+				9076A3DE1CEA0F3200CA0A3E /* Foundation+Log.m */,
 			);
 			path = Recent;
 			sourceTree = "<group>";
