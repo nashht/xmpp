@@ -2,7 +2,7 @@
 <document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="10117" systemVersion="15C50" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="XfM-Wq-Nn4">
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="9529"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="10085"/>
         <capability name="Aspect ratio constraints" minToolsVersion="5.1"/>
         <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
     </dependencies>
@@ -1022,10 +1022,10 @@
                                             <rect key="frame" x="0.0" y="0.0" width="600" height="124"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
-                                                <stackView opaque="NO" contentMode="scaleToFill" ambiguous="YES" misplaced="YES" distribution="fillProportionally" alignment="center" spacing="15" baselineRelativeArrangement="YES" translatesAutoresizingMaskIntoConstraints="NO" id="mil-hn-zms">
+                                                <stackView opaque="NO" contentMode="scaleToFill" ambiguous="YES" misplaced="YES" distribution="fillEqually" alignment="center" spacing="15" baselineRelativeArrangement="YES" translatesAutoresizingMaskIntoConstraints="NO" id="mil-hn-zms">
                                                     <rect key="frame" x="8" y="8" width="584" height="66"/>
                                                 </stackView>
-                                                <stackView opaque="NO" contentMode="scaleToFill" ambiguous="YES" misplaced="YES" distribution="fillProportionally" alignment="center" spacing="15" baselineRelativeArrangement="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Ows-iP-MiM">
+                                                <stackView opaque="NO" contentMode="scaleToFill" ambiguous="YES" misplaced="YES" distribution="fillEqually" alignment="center" spacing="15" baselineRelativeArrangement="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Ows-iP-MiM">
                                                     <rect key="frame" x="8" y="82" width="584" height="34"/>
                                                 </stackView>
                                             </subviews>
@@ -1054,7 +1054,7 @@
                                                     <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
-                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="(0)" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="HaI-hh-7Mc">
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="(0)" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="HaI-hh-7Mc">
                                                     <rect key="frame" x="123" y="11" width="68" height="21"/>
                                                     <fontDescription key="fontDescription" type="system" weight="medium" pointSize="15"/>
                                                     <color key="textColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
@@ -1062,6 +1062,8 @@
                                                 </label>
                                             </subviews>
                                             <constraints>
+                                                <constraint firstItem="HaI-hh-7Mc" firstAttribute="leading" secondItem="uQt-pI-qsz" secondAttribute="trailing" constant="3" id="FJn-PF-zbo"/>
+                                                <constraint firstItem="HaI-hh-7Mc" firstAttribute="leading" secondItem="uQt-pI-qsz" secondAttribute="trailing" constant="3" id="brh-to-KHn"/>
                                                 <constraint firstItem="uQt-pI-qsz" firstAttribute="centerY" secondItem="exh-08-ufJ" secondAttribute="centerY" id="hxd-P6-pkm"/>
                                                 <constraint firstItem="uQt-pI-qsz" firstAttribute="leading" secondItem="exh-08-ufJ" secondAttribute="leadingMargin" constant="25" id="rUn-9x-3YO"/>
                                                 <constraint firstItem="HaI-hh-7Mc" firstAttribute="leading" secondItem="uQt-pI-qsz" secondAttribute="trailing" constant="35" id="uli-z6-GeB"/>
@@ -1069,9 +1071,7 @@
                                             </constraints>
                                         </tableViewCellContentView>
                                         <connections>
-                                            <segue destination="7FA-GL-ceE" kind="popover" popoverAnchorView="Vpp-gR-5ZL" id="73k-hs-8l6">
-                                                <popoverArrowDirection key="popoverArrowDirection" up="YES" down="YES" left="YES" right="YES"/>
-                                            </segue>
+                                            <segue destination="7FA-GL-ceE" kind="push" id="73k-hs-8l6"/>
                                         </connections>
                                     </tableViewCell>
                                 </cells>
@@ -1091,18 +1091,19 @@
                                                     <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
-                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="显示群聊名称" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="VNT-ew-fvk">
-                                                    <rect key="frame" x="151" y="13" width="90" height="18"/>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="显示群聊名称" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="VNT-ew-fvk">
+                                                    <rect key="frame" x="341" y="13" width="90" height="18"/>
                                                     <fontDescription key="fontDescription" type="system" pointSize="15"/>
                                                     <color key="textColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
                                             </subviews>
                                             <constraints>
-                                                <constraint firstItem="VNT-ew-fvk" firstAttribute="leading" secondItem="gWn-fu-swS" secondAttribute="trailing" constant="50" id="3BY-GT-4Fz"/>
                                                 <constraint firstItem="gWn-fu-swS" firstAttribute="leading" secondItem="E6Y-ve-tOl" secondAttribute="leadingMargin" constant="25" id="6Hc-4b-hd6"/>
                                                 <constraint firstItem="gWn-fu-swS" firstAttribute="centerY" secondItem="E6Y-ve-tOl" secondAttribute="centerY" id="KxB-8R-K1Y"/>
+                                                <constraint firstItem="VNT-ew-fvk" firstAttribute="leading" secondItem="gWn-fu-swS" secondAttribute="trailing" constant="190" id="eap-Oe-0cb"/>
                                                 <constraint firstItem="VNT-ew-fvk" firstAttribute="centerY" secondItem="E6Y-ve-tOl" secondAttribute="centerY" id="jru-qj-vxD"/>
+                                                <constraint firstItem="VNT-ew-fvk" firstAttribute="leading" secondItem="gWn-fu-swS" secondAttribute="trailing" constant="190" id="x61-Cb-DGb"/>
                                             </constraints>
                                         </tableViewCellContentView>
                                     </tableViewCell>

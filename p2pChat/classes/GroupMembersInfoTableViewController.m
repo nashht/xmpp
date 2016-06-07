@@ -43,8 +43,8 @@ static double LabelHigh = 15;
     
     [[MyXMPP shareInstance] fetchMembersFromGroupWithCompletion:^(NSArray *members) {
         
-        if ([members count]>3) {
-            for (int i=0; i<3; i++) {
+        if ([members count]>1) {
+            for (int i=0; i<2; i++) {
                 [self addwithmembers:members count:i];
             }
             [self addInsertMemberButton];
@@ -56,6 +56,8 @@ static double LabelHigh = 15;
             }
             m++;
             [self addInsertMemberButton];//暂时没有实现添加加号按钮
+            [self addBlankButton];
+            [self addBlankLabel];
             [self addBlankLabel];
         }
         
@@ -110,7 +112,7 @@ static double LabelHigh = 15;
     [insertbtn addTarget:self action:@selector(insertMemberAction) forControlEvents:UIControlEventTouchUpInside];
     insertbtn.layer.cornerRadius = 10;
     insertbtn.layer.masksToBounds = true;
-    [insertbtn setBackgroundImage:[UIImage imageNamed:@"nav_add.png"] forState:UIControlStateNormal];
+    [insertbtn setBackgroundImage:[UIImage imageNamed:@"ic_add_bg_n.png"] forState:UIControlStateNormal];
     CGRect temp = insertbtn.frame;
     temp.size = CGSizeMake(Width, PhotoHigh);
     insertbtn.frame = temp;
@@ -136,6 +138,15 @@ static double LabelHigh = 15;
     temp.size = CGSizeMake(Width, LabelHigh);
     membername.frame = temp;
 
+}
+
+-(void)addBlankButton{
+    UIButton *blankbtn = [[UIButton alloc]init];
+    CGRect temp = blankbtn.frame;
+    temp.size = CGSizeMake(Width, PhotoHigh);
+    blankbtn.frame = temp;
+    [blankbtn setBackgroundImage:[UIImage imageNamed:@"blank.png"] forState:UIControlStateNormal];
+    [self.membersPhotoStack addArrangedSubview:blankbtn];
 }
 
 #pragma mark - Table view data source
