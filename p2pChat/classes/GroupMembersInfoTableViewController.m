@@ -37,8 +37,9 @@ static double LabelHigh = 15;
 - (void)viewDidLoad {
     [super viewDidLoad];
     
-    
-    
+    MyXMPP *myxmpp = [MyXMPP shareInstance];
+    NSString *str = myxmpp.roomOccupant.roomJIDStr;
+    NSLog(@"我的jid：%@",str);
 
     
     

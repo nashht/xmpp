@@ -124,7 +124,21 @@ static NSString *pictureType = @"[图片]";
 
 - (void)setGroupSubject:(NSString *)subject{
     [self.chatroom changeRoomSubject:subject];
+}
 
+- (void)joinRoom:(NSString *)groupname withpassword:(NSString *)password{
+    if (self.roomStorage==nil) {
+        NSLog(@"nil");
+        self.roomStorage = [[XMPPRoomCoreDataStorage alloc]init];
+    }
+    NSString* roomID = [NSString stringWithFormat:@"%@@%@",groupname,myRoomDomain];
+    XMPPJID * roomJID = [XMPPJID jidWithString:roomID];
+    self.chatroom = [[XMPPRoom alloc] initWithRoomStorage:self.roomStorage jid:roomJID dispatchQueue:dispatch_get_main_queue()];
+    [self.chatroom activate:self.stream];
+    [self.chatroom addDelegate:self delegateQueue:dispatch_get_main_queue()];
+//    NSString
+    [self.chatroom joinRoomUsingNickname:self.stream.myJID.user history:nil password:password];//创建聊天室必须将自己加入聊天室，否则不会创建成功！
+    
 }
 
 //只有owner拥有删除权限

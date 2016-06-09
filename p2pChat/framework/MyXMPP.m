@@ -195,7 +195,7 @@ static NSString *serverHost = @"10.108.136.59";
         //获取已经加入的群
         [self fetchMyRoomsWithCompletion:^(NSArray *members) {
             for (NSString *room in members) {
-                [self creatGroupName:room withpassword:nil andsubject:nil];
+                [self joinRoom:room withpassword:nil];
             }
         }];
         
