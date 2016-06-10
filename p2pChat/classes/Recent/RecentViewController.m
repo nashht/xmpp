@@ -120,11 +120,14 @@
     
     cell.usernamelabel.text = lastMessage.username;
     cell.lastmessagelabel.attributedText = [RegularExpressionTool stringTranslation2FaceView:lastMessage.body];
-    
-    if (vCardTemp.photo != nil) {
-        cell.userimage.image = [UIImage imageWithData:vCardTemp.photo];
+    if (lastMessage.isP2P.boolValue) {
+        if (vCardTemp.photo != nil) {
+            cell.userimage.image = [UIImage imageWithData:vCardTemp.photo];
+        } else {
+            cell.userimage.image = [UIImage imageNamed:@"1"];
+        }
     } else {
-        cell.userimage.image = [UIImage imageNamed:@"1"];
+        cell.userimage.image = [UIImage imageNamed:@"group_default"];
     }
 
     cell.lastmessagetime.text = [Tool stringFromDate:[NSDate dateWithTimeIntervalSince1970:lastMessage.time.doubleValue]];

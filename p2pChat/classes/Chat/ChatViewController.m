@@ -99,15 +99,6 @@ static NSString *fileReuseIdentifier = @"fileMessageCell";
     _bottomView.delegate = self;
     _tableBottomHeight.constant = BOTTOMHEIGHT - _tabBarHeight;
     [self.view addSubview:_bottomView];
-    
-    // init more view
-    _showMoreView = NO;
-    _moreView = [[NSBundle mainBundle]loadNibNamed:@"MoreView" owner:self options:nil].lastObject;
-    _moreView.frame = CGRectMake(0, _screenSize.height, _screenSize.width, MOREHEIGHT);
-    _moreView.chatObjectString = _chatObjectString;
-//    _moreView.p2pChat = [self isP2PChat];
-    _moreView.p2pChat = YES;
-    [self.view addSubview:_moreView];
 
     // 添加手势，使得触控tableView时候收回键盘
     UITapGestureRecognizer *tableViewGesture = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(commentTableViewTouchInSide)];
@@ -115,18 +106,30 @@ static NSString *fileReuseIdentifier = @"fileMessageCell";
     tableViewGesture.cancelsTouchesInView = NO;
     [_historyTableView addGestureRecognizer:tableViewGesture];
     
-    // init face view
-    self.functionView = [[FunctionView alloc] initWithFrame:CGRectMake(0,_screenSize.height, [UIScreen mainScreen].bounds.size.width, FACEVIEWHEIGHT)];
-    self.functionView.backgroundColor = [UIColor whiteColor];
-    [self.view addSubview:_functionView];
-    _showFaceView = NO;
-    //获取图片并显示
-    __weak typeof (self) weakSelf = self;
-    [self.functionView setFunctionBlock:^(UIImage *image, NSString *imageName)
-     {
-         NSString *str = [NSString stringWithFormat:@"%@", imageName];
-         [weakSelf.bottomView inputFaceView:str];
-     }];
+    dispatch_async(dispatch_get_main_queue(), ^{
+        // init more view
+        _showMoreView = NO;
+        _moreView = [[NSBundle mainBundle]loadNibNamed:@"MoreView" owner:self options:nil].lastObject;
+        _moreView.frame = CGRectMake(0, _screenSize.height, _screenSize.width, MOREHEIGHT);
+        _moreView.chatObjectString = _chatObjectString;
+        //    _moreView.p2pChat = [self isP2PChat];
+        _moreView.p2pChat = YES;
+        [self.view addSubview:_moreView];
+        
+        // init face view
+        self.functionView = [[FunctionView alloc] initWithFrame:CGRectMake(0,_screenSize.height, [UIScreen mainScreen].bounds.size.width, FACEVIEWHEIGHT)];
+        self.functionView.backgroundColor = [UIColor whiteColor];
+        [self.view addSubview:_functionView];
+        _showFaceView = NO;
+        //获取图片并显示
+        __weak typeof (self) weakSelf = self;
+        [self.functionView setFunctionBlock:^(UIImage *image, NSString *imageName)
+         {
+             NSString *str = [NSString stringWithFormat:@"%@", imageName];
+             [weakSelf.bottomView inputFaceView:str];
+         }];
+    });
+    
     
     [self tableViewScrollToBottom];
 }
