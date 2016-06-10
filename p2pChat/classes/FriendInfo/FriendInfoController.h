@@ -11,6 +11,7 @@
 
 @interface FriendInfoController : UITableViewController
 
-@property (strong,  nonatomic) XMPPUserCoreDataStorageObject *userObj;
+@property (strong, nonatomic) XMPPUserCoreDataStorageObject *userObj;
+@property (assign, nonatomic) BOOL canSendMessage;
 
 @end

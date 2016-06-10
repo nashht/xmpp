@@ -8,7 +8,9 @@
 
 #import "FriendChatingInfoViewController.h"
 #import "MyXMPP+VCard.h"
+#import "MyXMPP+Roster.h"
 #import "CreateGroupsViewController.h"
+#import "FriendInfoController.h"
 
 @interface FriendChatingInfoViewController ()<UITableViewDataSource, UITableViewDelegate>
 
@@ -41,6 +43,16 @@
 
 - (IBAction)createGroup:(id)sender {
     [self performSegueWithIdentifier:@"createGroup" sender:nil];
+}
+
+- (IBAction)showFriendInfo:(id)sender {
+    UIStoryboard *storyBoard = [UIStoryboard storyboardWithName:@"Main" bundle:nil];
+    FriendInfoController *vc = (FriendInfoController *)[storyBoard instantiateViewControllerWithIdentifier:@"friendsInfo"];
+    vc.title = @"个人资料";
+    XMPPUserCoreDataStorageObject *userObj = [[MyXMPP shareInstance]fetchUserWithUsername:_friendName];
+    vc.userObj = userObj;
+    vc.canSendMessage = NO;
+    [self.navigationController pushViewController:vc animated:YES];
 }
 
 @end

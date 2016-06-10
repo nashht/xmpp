@@ -272,6 +272,9 @@
                                                         <constraint firstAttribute="width" constant="65" id="yCu-bK-PPL"/>
                                                     </constraints>
                                                     <state key="normal" image="ic_launcher"/>
+                                                    <connections>
+                                                        <action selector="showFriendInfo:" destination="hiD-gm-DEB" eventType="touchUpInside" id="Ziw-6w-5Pg"/>
+                                                    </connections>
                                                 </button>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="akoa" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="d9Q-Vc-b9f">
                                                     <rect key="frame" x="60" y="83" width="37" height="21"/>
@@ -590,6 +593,7 @@
                         <outlet property="phoneLabel" destination="qkC-Hb-vnu" id="uSr-ak-qD6"/>
                         <outlet property="photoImageView" destination="As1-uf-ib4" id="If7-IF-rFK"/>
                         <outlet property="position" destination="bmv-nT-TzM" id="hZF-ln-5PG"/>
+                        <outlet property="sendButton" destination="OIM-MJ-grG" id="bOP-VJ-xvb"/>
                         <outlet property="telephone" destination="p4E-bS-LrW" id="tsW-nJ-yx5"/>
                     </connections>
                 </tableViewController>
@@ -1256,6 +1260,9 @@
                                                 <button opaque="NO" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="szj-lW-dPc">
                                                     <rect key="frame" x="256" y="7" width="90" height="30"/>
                                                     <state key="normal" title="清空聊天记录"/>
+                                                    <connections>
+                                                        <action selector="clearHistory:" destination="Kmu-aZ-Y29" eventType="touchUpInside" id="a5Q-OV-PwD"/>
+                                                    </connections>
                                                 </button>
                                             </subviews>
                                             <constraints>
@@ -1278,6 +1285,9 @@
                                                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="fXv-jR-dbF">
                                                     <rect key="frame" x="263" y="7" width="75" height="30"/>
                                                     <state key="normal" title="删除并退出"/>
+                                                    <connections>
+                                                        <action selector="quitGroup:" destination="Kmu-aZ-Y29" eventType="touchUpInside" id="Tcf-4O-Pmy"/>
+                                                    </connections>
                                                 </button>
                                             </subviews>
                                             <constraints>

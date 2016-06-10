@@ -100,7 +100,7 @@
     if (vCard.photo != nil) {//设置好友默认头像
         [cell setIcon:[UIImage imageWithData:vCard.photo]];
     } else {
-        [cell setIcon:[UIImage imageNamed:@"0"]];
+        [cell setIcon:[UIImage imageNamed:@"1"]];
     }
     
     if (vCard.title == nil || [vCard.title isEqualToString:@""]) {//设置好友职务
@@ -145,6 +145,7 @@
     UIStoryboard *storyBoard = [UIStoryboard storyboardWithName:@"Main" bundle:nil];
     FriendInfoController *vc = (FriendInfoController *)[storyBoard instantiateViewControllerWithIdentifier:@"friendsInfo"];
     vc.title = @"个人资料";
+    vc.canSendMessage = YES;
     XMPPGroupCoreDataStorageObject *group = _groupCoreDataStorageObjects[indexPath.section];
     NSSortDescriptor *sortKey = [NSSortDescriptor sortDescriptorWithKey:@"section" ascending:YES];
     NSArray *users = [group.users sortedArrayUsingDescriptors:@[sortKey]];

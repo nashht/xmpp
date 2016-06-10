@@ -12,7 +12,7 @@
 #import "XMPPvCardTemp.h"
 #import "MyXMPP+Group.h"
 #import "CreateGroupsViewController.h"
-
+#import "DataManager.h"
 
 static double InitialPositionX = 15;
 static double InitialPositionY = 12;
@@ -62,9 +62,15 @@ static double LabelHigh = 20;
         NSString *str = [NSString stringWithFormat:@"(%ld)",(unsigned long)count];
         [self.groupMembersCount setText:str];
     }];
-    
-    
+}
+- (IBAction)clearHistory:(id)sender {
+    [[DataManager shareManager]clearMessageByUsername:_groupName];
+}
 
+- (IBAction)quitGroup:(id)sender {
+    [[DataManager shareManager]clearMessageByUsername:_groupName];
+#warning 这里的逻辑感觉不对
+    [[MyXMPP shareInstance]leaveChatRoom];
 }
 
 - (void)addwithmembers:(NSArray *)members count:(int)i{
@@ -111,7 +117,6 @@ static double LabelHigh = 20;
 }
 
 #pragma mark - Table view data source
-
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
     return 4;
 }
@@ -124,5 +129,9 @@ static double LabelHigh = 20;
         
 }
 
+#pragma mark - TableView Delegate
+- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
+    [tableView deselectRowAtIndexPath:indexPath animated:NO];
+}
 
 @end
