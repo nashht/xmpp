@@ -29,16 +29,12 @@
 #import "GroupMembersInfoTableViewController.h"
 #import "FaceView.h"
 #import "FunctionView.h"
+#import "UITableView+GenerateMyXMPPCell.h"
 
 #define MOREHEIGHT 150
 #define ScreenSize  [UIScreen mainScreen].bounds.size
 #define BOTTOMHEIGHT 40
 #define FACEVIEWHEIGHT (ScreenSize.height * 0.4)
-
-static NSString *textReuseIdentifier = @"textMessageCell";
-static NSString *audioReuseIdentifier = @"audioMessageCell";
-static NSString *pictureReuseIdentifier = @"pictureMessageCell";
-static NSString *fileReuseIdentifier = @"fileMessageCell";
 
 @interface ChatViewController () <UITableViewDataSource, UITableViewDelegate, UITextFieldDelegate, BottomViewDelegate> {
     NSString *_photoPath;
@@ -206,62 +202,7 @@ static NSString *fileReuseIdentifier = @"fileMessageCell";
         message = [[MessageBean alloc]initWithUsername:groupMessage.username type:groupMessage.type body:groupMessage.body more:groupMessage.more time:groupMessage.time isOut:nil isP2P:NO];
     }
     
-    MessageType type = message.type.charValue;
-    switch (type) {
-        case MessageTypeMessage:{
-            MessageViewCell *cell = [_historyTableView dequeueReusableCellWithIdentifier:textReuseIdentifier];
-            
-            if (cell == nil) {
-                cell = [[MessageViewCell alloc] initWithStyle:UITableViewCellStyleSubtitle reuseIdentifier:textReuseIdentifier];
-            }
-            MessageFrameModel *messageFrameModel = [[MessageFrameModel alloc] init];
-            messageFrameModel.message = message;
-            cell.messageFrame = messageFrameModel;
-            return cell;
-        }
-            
-        case MessageTypeRecord:{
-            RecordViewCell *cell = [_historyTableView dequeueReusableCellWithIdentifier:audioReuseIdentifier];
-            
-            if (cell == nil) {
-                cell = [[RecordViewCell alloc] initWithStyle:UITableViewCellStyleSubtitle reuseIdentifier:audioReuseIdentifier];
-            }
-            RecordFrameModel *recordFrameMode = [[RecordFrameModel alloc] init];
-            recordFrameMode.message = message;
-            cell.recordFrame = recordFrameMode;
-            return cell;
-        }
-            
-        case MessageTypePicture:{
-            PicViewCell *cell = [_historyTableView dequeueReusableCellWithIdentifier:pictureReuseIdentifier];
-            
-            if (cell == nil) {
-                cell = [[PicViewCell alloc] initWithStyle:UITableViewCellStyleSubtitle reuseIdentifier:pictureReuseIdentifier];
-            }
-            
-            PicFrameModel *messageFrameModel = [[PicFrameModel alloc] init];
-            messageFrameModel.message = message;
-            cell.picFrame = messageFrameModel;
-            return cell;
-        }
-        case MessageTypeFile:{
-            FileCell *cell = [_historyTableView dequeueReusableCellWithIdentifier:fileReuseIdentifier];
-            
-            if (cell == nil) {
-                cell = [[FileCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:fileReuseIdentifier];
-            }
-            
-            FileFrameModel *fileFrameMode = [[FileFrameModel alloc] init];
-            fileFrameMode.message = message;
-            cell.fileFrame = fileFrameMode;
-            return cell;
-        }
-        
-        default:
-            break;
-    }
-    
-    return nil;
+    return [tableView dequeueMyXMPPCellFromMessage:message];
 }
 
 #pragma mark - table view delegate

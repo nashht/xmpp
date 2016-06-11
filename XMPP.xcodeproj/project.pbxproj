@@ -77,6 +77,7 @@
 		DA4EBEB41CCDFCB000239331 /* Reachability.m in Sources */ = {isa = PBXBuildFile; fileRef = DA4EBEB31CCDFCB000239331 /* Reachability.m */; };
 		DA57261C1CBF40830045CEF2 /* BottomView.m in Sources */ = {isa = PBXBuildFile; fileRef = DA57261B1CBF40830045CEF2 /* BottomView.m */; };
 		DA57261E1CBF409D0045CEF2 /* BottomView.xib in Resources */ = {isa = PBXBuildFile; fileRef = DA57261D1CBF409D0045CEF2 /* BottomView.xib */; };
+		DA6406401D0C28CB006DBC9E /* UITableView+GenerateMyXMPPCell.m in Sources */ = {isa = PBXBuildFile; fileRef = DA64063F1D0C28CB006DBC9E /* UITableView+GenerateMyXMPPCell.m */; };
 		DA6C2CF51D06761000164C9B /* StatusViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = DA6C2CF41D06761000164C9B /* StatusViewController.m */; };
 		DA9046AA1C3A49EB009E75B7 /* DataManager.m in Sources */ = {isa = PBXBuildFile; fileRef = DA9046A91C3A49EB009E75B7 /* DataManager.m */; };
 		DA9046B51C3A51A1009E75B7 /* AudioCenter.m in Sources */ = {isa = PBXBuildFile; fileRef = DA9046AE1C3A51A1009E75B7 /* AudioCenter.m */; };
@@ -415,6 +416,8 @@
 		DA57261A1CBF40830045CEF2 /* BottomView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BottomView.h; sourceTree = "<group>"; };
 		DA57261B1CBF40830045CEF2 /* BottomView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BottomView.m; sourceTree = "<group>"; };
 		DA57261D1CBF409D0045CEF2 /* BottomView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = BottomView.xib; sourceTree = "<group>"; };
+		DA64063E1D0C28CB006DBC9E /* UITableView+GenerateMyXMPPCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UITableView+GenerateMyXMPPCell.h"; sourceTree = "<group>"; };
+		DA64063F1D0C28CB006DBC9E /* UITableView+GenerateMyXMPPCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UITableView+GenerateMyXMPPCell.m"; sourceTree = "<group>"; };
 		DA6C2CF31D06761000164C9B /* StatusViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = StatusViewController.h; sourceTree = "<group>"; };
 		DA6C2CF41D06761000164C9B /* StatusViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = StatusViewController.m; sourceTree = "<group>"; };
 		DA9046A81C3A49EB009E75B7 /* DataManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = DataManager.h; path = dataStorage/DataManager.h; sourceTree = "<group>"; };
@@ -891,29 +894,15 @@
 		900122441CA91EE2005D5BFA /* Chat */ = {
 			isa = PBXGroup;
 			children = (
+				DA64063A1D0C2390006DBC9E /* MessageModel */,
+				DA6406391D0C2347006DBC9E /* MessageCell */,
 				900122451CA91EE2005D5BFA /* ChatViewController.h */,
 				900122461CA91EE2005D5BFA /* ChatViewController.m */,
 				900122491CA91EE2005D5BFA /* MessageFrameModel.h */,
 				9001224A1CA91EE2005D5BFA /* MessageFrameModel.m */,
-				9001224B1CA91EE2005D5BFA /* MessageViewCell.h */,
-				9001224C1CA91EE2005D5BFA /* MessageViewCell.m */,
-				905AE6F71CF851F900531E6F /* FileCell.h */,
-				905AE6F81CF851F900531E6F /* FileCell.m */,
 				905AE6FD1CFBF32600531E6F /* UIImage+Category.h */,
 				905AE6FE1CFBF32600531E6F /* UIImage+Category.m */,
-				905AE6FA1CF8521F00531E6F /* FileFrameModel.h */,
-				905AE6FB1CF8521F00531E6F /* FileFrameModel.m */,
-				9001224D1CA91EE2005D5BFA /* PicFrameModel.h */,
-				9001224E1CA91EE2005D5BFA /* PicFrameModel.m */,
-				9001224F1CA91EE2005D5BFA /* PicViewCell.h */,
-				900122501CA91EE2005D5BFA /* PicViewCell.m */,
 				90DC39491CEC644C002CECCF /* nana.jpg */,
-				900122531CA91EE2005D5BFA /* RecordFrameModel.h */,
-				900122541CA91EE2005D5BFA /* RecordFrameModel.m */,
-				900122551CA91EE2005D5BFA /* RecordViewCell.h */,
-				900122561CA91EE2005D5BFA /* RecordViewCell.m */,
-				DAAF2C081CCC66B500C51494 /* MessageBean.h */,
-				DAAF2C091CCC66B500C51494 /* MessageBean.m */,
 				903F3FD51CD19EA800759D8F /* FaceView */,
 				84F32C441CBF766C00BB9BD1 /* BottomView */,
 				DAD235061C424D0E003A93F9 /* MoreView */,
@@ -1093,6 +1082,38 @@
 				DA4EBEB31CCDFCB000239331 /* Reachability.m */,
 			);
 			name = Reachive;
+			sourceTree = "<group>";
+		};
+		DA6406391D0C2347006DBC9E /* MessageCell */ = {
+			isa = PBXGroup;
+			children = (
+				DA64063E1D0C28CB006DBC9E /* UITableView+GenerateMyXMPPCell.h */,
+				DA64063F1D0C28CB006DBC9E /* UITableView+GenerateMyXMPPCell.m */,
+				9001224B1CA91EE2005D5BFA /* MessageViewCell.h */,
+				9001224C1CA91EE2005D5BFA /* MessageViewCell.m */,
+				905AE6F71CF851F900531E6F /* FileCell.h */,
+				905AE6F81CF851F900531E6F /* FileCell.m */,
+				9001224F1CA91EE2005D5BFA /* PicViewCell.h */,
+				900122501CA91EE2005D5BFA /* PicViewCell.m */,
+				900122551CA91EE2005D5BFA /* RecordViewCell.h */,
+				900122561CA91EE2005D5BFA /* RecordViewCell.m */,
+			);
+			name = MessageCell;
+			sourceTree = "<group>";
+		};
+		DA64063A1D0C2390006DBC9E /* MessageModel */ = {
+			isa = PBXGroup;
+			children = (
+				905AE6FA1CF8521F00531E6F /* FileFrameModel.h */,
+				905AE6FB1CF8521F00531E6F /* FileFrameModel.m */,
+				9001224D1CA91EE2005D5BFA /* PicFrameModel.h */,
+				9001224E1CA91EE2005D5BFA /* PicFrameModel.m */,
+				900122531CA91EE2005D5BFA /* RecordFrameModel.h */,
+				900122541CA91EE2005D5BFA /* RecordFrameModel.m */,
+				DAAF2C081CCC66B500C51494 /* MessageBean.h */,
+				DAAF2C091CCC66B500C51494 /* MessageBean.m */,
+			);
+			name = MessageModel;
 			sourceTree = "<group>";
 		};
 		DA9046B91C3A51A8009E75B7 /* Tools */ = {
@@ -2466,6 +2487,7 @@
 				DA90B1DF1C8989930080E037 /* XMPPCapabilities.xcdatamodel in Sources */,
 				DA90B1AF1C8989930080E037 /* XMPPSystemInputActivityMonitor.m in Sources */,
 				90DC39991CF4735F002CECCF /* AFAutoPurgingImageCache.m in Sources */,
+				DA6406401D0C28CB006DBC9E /* UITableView+GenerateMyXMPPCell.m in Sources */,
 				DACDC79B1CC879F9005F5FA2 /* MyXMPP+VCard.m in Sources */,
 				DA90B1991C8989930080E037 /* XMPPMessage.m in Sources */,
 				DA90B1B21C8989930080E037 /* XMPPJabberRPCModule.m in Sources */,

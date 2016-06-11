@@ -36,9 +36,11 @@
 }
 
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
-    UINavigationController *navigationController = segue.destinationViewController;
-    CreateGroupsViewController *destinationVC = navigationController.viewControllers[0];
-    destinationVC.didSelectedUsers = @[_friendName];
+    if ([segue.identifier isEqualToString:@"createGroup"]) {
+        UINavigationController *navigationController = segue.destinationViewController;
+        CreateGroupsViewController *destinationVC = navigationController.viewControllers[0];
+        destinationVC.didSelectedUsers = @[_friendName];
+    }
 }
 
 - (IBAction)createGroup:(id)sender {
@@ -55,4 +57,7 @@
     [self.navigationController pushViewController:vc animated:YES];
 }
 
+- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
+    [tableView deselectRowAtIndexPath:indexPath animated:NO];
+}
 @end
