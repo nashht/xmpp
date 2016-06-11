@@ -114,10 +114,10 @@
             [cell setStatus:@"[在线]"];
             break;
         case 1:
-            [cell setStatus:@"[离开]"];
+            [cell setStatus:@"[忙碌]"];
             break;
         case 2:
-            [cell setStatus:@"[离线]"];
+            [cell setStatus:@"[离开]"];
             break;
         default:
             break;

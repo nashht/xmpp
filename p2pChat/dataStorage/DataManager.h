@@ -48,5 +48,6 @@
 - (NSFetchedResultsController *)getMessageByGroupname:(NSString *)groupname;
 - (void)saveMessageWithGroupname:(NSString *)groupname username:(NSString *)username time:(NSNumber *)time body:(NSString *)body;
 - (void)saveRecordWithGroupname:(NSString *)groupname username:(NSString *)username time:(NSNumber *)time path:(NSString *)path length:(NSString *)length;
+- (void)clearMessageByGroupname:(NSString *)groupname;
 
 @end

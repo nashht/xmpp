@@ -7,14 +7,6 @@
 //
 
 #import "ChatViewController.h"
-#import "MessageFrameModel.h"
-#import "RecordFrameModel.h"
-#import "RecordViewCell.h"
-#import "PicFrameModel.h"
-#import "FileFrameModel.h"
-#import "FileCell.h"
-#import "PicViewCell.h"
-#import "MessageViewCell.h"
 #import "DataManager.h"
 #import "Message.h"
 #import "GroupMessage.h"
@@ -138,7 +130,6 @@
 
 - (void)viewWillAppear:(BOOL)animated {
     self.tabBarController.tabBar.hidden = YES;
-    [[UIApplication sharedApplication].windows[0] addSubview:_bottomView];//bottom放在window上
     [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(keyboardWillShow:) name:UIKeyboardWillShowNotification object:nil];
     [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(keyboardWillHidden:) name:UIKeyboardWillHideNotification object:nil];
     [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(applicationEnteredBackground) name:UIApplicationDidEnterBackgroundNotification object:nil];
@@ -146,8 +137,6 @@
 
 - (void)viewWillDisappear:(BOOL)animated {
     [[NSNotificationCenter defaultCenter]removeObserver:self name:nil object:nil];
-    [_bottomView resignFirstResponder];
-    [_bottomView removeFromSuperview];
     [[DataManager shareManager]updateUsername:_chatObjectString];
 }
 
@@ -185,6 +174,18 @@
     }
 }
 
+- (MessageBean *)messageFromManagedObject:(NSManagedObject *)messageObj {
+    MessageBean *message = nil;
+    if (self.isP2PChat) {
+        Message *p2pMessage = (Message *)messageObj;
+        message = [[MessageBean alloc]initWithUsername:p2pMessage.username type:p2pMessage.type body:p2pMessage.body more:p2pMessage.more time:p2pMessage.time isOut:p2pMessage.isOut isP2P:YES];
+    } else {
+        GroupMessage *groupMessage = (GroupMessage *)messageObj;
+        message = [[MessageBean alloc]initWithUsername:groupMessage.username type:groupMessage.type body:groupMessage.body more:groupMessage.more time:groupMessage.time isOut:nil isP2P:NO];
+    }
+    return message;
+}
+
 #pragma mark -table view data source
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
     id<NSFetchedResultsSectionInfo> sectionInfo = _historyController.sections[section];
@@ -193,14 +194,7 @@
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     NSManagedObject *messageObj = [_historyController objectAtIndexPath:indexPath];
-    MessageBean *message = nil;
-    if (self.isP2PChat) {
-        Message *p2pMessage = (Message *)messageObj;
-        message = [[MessageBean alloc]initWithUsername:p2pMessage.username type:p2pMessage.type body:p2pMessage.body more:p2pMessage.more time:p2pMessage.time isOut:p2pMessage.isOut isP2P:YES];
-    } else {
-        GroupMessage *groupMessage = (GroupMessage *)messageObj;
-        message = [[MessageBean alloc]initWithUsername:groupMessage.username type:groupMessage.type body:groupMessage.body more:groupMessage.more time:groupMessage.time isOut:nil isP2P:NO];
-    }
+    MessageBean *message = [self messageFromManagedObject:messageObj];
     
     return [tableView dequeueMyXMPPCellFromMessage:message];
 }
@@ -208,43 +202,9 @@
 #pragma mark - table view delegate
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
     NSManagedObject *messageObj = [_historyController objectAtIndexPath:indexPath];
-    MessageBean *message = nil;
-    if (self.isP2PChat) {
-        Message *p2pMessage = (Message *)messageObj;
-        message = [[MessageBean alloc]initWithUsername:p2pMessage.username type:p2pMessage.type body:p2pMessage.body more:p2pMessage.more time:p2pMessage.time isOut:p2pMessage.isOut isP2P:YES];
-    } else {
-        GroupMessage *groupMessage = (GroupMessage *)messageObj;
-        message = [[MessageBean alloc]initWithUsername:groupMessage.username type:groupMessage.type body:groupMessage.body more:groupMessage.more time:groupMessage.time isOut:nil isP2P:NO];
-    }
-    MessageType type = message.type.charValue;
-    switch (type) {
-        case MessageTypeMessage:{
-            MessageFrameModel *messageFrameModel = [[MessageFrameModel alloc] init];
-            messageFrameModel.message = message;
-            return messageFrameModel.cellHeight + 1;
-        }
-            break;
-        case MessageTypePicture:{
-            PicFrameModel *picFrameModel = [[PicFrameModel alloc] init];
-            picFrameModel.message = message;
-            return picFrameModel.cellHeight + 1;
-        }
-            break;
-        case MessageTypeRecord:{
-            RecordFrameModel *recordFrameMode = [[RecordFrameModel alloc] init];
-            recordFrameMode.message = message;
-            return recordFrameMode.cellHeight + 1;
-        }
-            break;
-        case MessageTypeFile:{
-            FileFrameModel *fileFrameModel = [[FileFrameModel alloc] init];
-            fileFrameModel.message = message;
-            return fileFrameModel.cellHeight + 1;
-        }
-         default:
-            break;
-    }
-    return 0;
+    MessageBean *message = [self messageFromManagedObject:messageObj];
+
+    return [tableView heightOfMessage:message];
 }
 
 /**

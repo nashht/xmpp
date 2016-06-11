@@ -190,7 +190,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="cXC-u5-Eol" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1147" y="-2260"/>
+            <point key="canvasLocation" x="1185" y="-2260"/>
         </scene>
         <!--Chat View Controller-->
         <scene sceneID="R9W-yo-fUV">
@@ -316,6 +316,9 @@
                                                 <constraint firstItem="dNF-YW-Av1" firstAttribute="centerY" secondItem="fVP-8Q-LOg" secondAttribute="centerY" id="WBP-OX-7ZA"/>
                                             </constraints>
                                         </tableViewCellContentView>
+                                        <connections>
+                                            <segue destination="Dd4-Ej-fx2" kind="show" identifier="showHistory" id="YiZ-2u-6Wu"/>
+                                        </connections>
                                     </tableViewCell>
                                 </cells>
                             </tableViewSection>
@@ -329,7 +332,40 @@
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="6pj-dJ-ua3" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1147" y="-1554"/>
+            <point key="canvasLocation" x="1185" y="-1554"/>
+        </scene>
+        <!--History Message View Controller-->
+        <scene sceneID="U0n-85-bBX">
+            <objects>
+                <viewController id="Dd4-Ej-fx2" customClass="HistoryMessageViewController" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="6HM-jD-ARE"/>
+                        <viewControllerLayoutGuide type="bottom" id="yRR-EK-Yue"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="u5O-sq-j3s">
+                        <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="uFd-Ct-CoV">
+                                <rect key="frame" x="0.0" y="0.0" width="600" height="556"/>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                            </tableView>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstItem="uFd-Ct-CoV" firstAttribute="bottom" secondItem="yRR-EK-Yue" secondAttribute="top" id="2gJ-y2-GUm"/>
+                            <constraint firstItem="uFd-Ct-CoV" firstAttribute="leading" secondItem="u5O-sq-j3s" secondAttribute="leading" id="WXg-eU-AD8"/>
+                            <constraint firstAttribute="trailing" secondItem="uFd-Ct-CoV" secondAttribute="trailing" id="fOx-Ae-Hf8"/>
+                            <constraint firstItem="uFd-Ct-CoV" firstAttribute="top" secondItem="u5O-sq-j3s" secondAttribute="top" id="glH-dT-F9v"/>
+                        </constraints>
+                    </view>
+                    <connections>
+                        <outlet property="historyTableView" destination="uFd-Ct-CoV" id="xKm-MH-4ar"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="5Xe-wt-dXL" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="1949" y="-1188"/>
         </scene>
         <!--Friend Info Controller-->
         <scene sceneID="tio-SA-mD8">
@@ -1188,6 +1224,9 @@
                                                 <constraint firstItem="znH-Sa-ls2" firstAttribute="centerY" secondItem="wJX-Qe-Mr2" secondAttribute="centerY" id="Eet-N6-EvW"/>
                                             </constraints>
                                         </tableViewCellContentView>
+                                        <connections>
+                                            <segue destination="Dd4-Ej-fx2" kind="show" identifier="showHistory" id="Zkw-Uz-Sb5"/>
+                                        </connections>
                                     </tableViewCell>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="blue" accessoryType="disclosureIndicator" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" id="9pa-fb-qmB">
                                         <rect key="frame" x="0.0" y="380" width="600" height="44"/>
@@ -1320,8 +1359,9 @@
         <image name="tabbar_mine_n" width="30" height="30"/>
     </resources>
     <inferredMetricsTieBreakers>
-        <segue reference="IP3-As-ZAr"/>
         <segue reference="FZk-rq-Hm8"/>
         <segue reference="q2g-zp-6cV"/>
+        <segue reference="PQd-WW-1SH"/>
+        <segue reference="Zkw-Uz-Sb5"/>
     </inferredMetricsTieBreakers>
 </document>

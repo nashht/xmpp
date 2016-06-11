@@ -13,6 +13,7 @@
 #import "MyXMPP+Group.h"
 #import "CreateGroupsViewController.h"
 #import "DataManager.h"
+#import "HistoryMessageViewController.h"
 
 static double InitialPositionX = 15;
 static double InitialPositionY = 12;
@@ -114,6 +115,14 @@ static double LabelHigh = 20;
     creatgroup.modalTransitionStyle = UIModalTransitionStyleCrossDissolve;
 //    [self presentViewController:creatgroup animated:YES completion:nil];
     [self.navigationController pushViewController:creatgroup animated:YES];
+}
+
+- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
+    if ([segue.identifier isEqualToString:@"showHistory"]) {
+        HistoryMessageViewController *destinationVC = segue.destinationViewController;
+        destinationVC.isP2P = NO;
+        destinationVC.chatObjName = _groupName;
+    }
 }
 
 #pragma mark - Table view data source

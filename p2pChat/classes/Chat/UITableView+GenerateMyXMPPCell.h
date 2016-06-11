@@ -8,6 +8,14 @@
 
 #import <UIKit/UIKit.h>
 @class MessageBean;
+#import "MessageFrameModel.h"
+#import "MessageViewCell.h"
+#import "RecordFrameModel.h"
+#import "RecordViewCell.h"
+#import "PicFrameModel.h"
+#import "PicViewCell.h"
+#import "FileFrameModel.h"
+#import "FileCell.h"
 
 extern NSString *textReuseIdentifier;
 extern NSString *audioReuseIdentifier;
@@ -17,5 +25,6 @@ extern NSString *fileReuseIdentifier;
 @interface UITableView (GenerateMyXMPPCell)
 
 - (UITableViewCell *)dequeueMyXMPPCellFromMessage:(MessageBean *)message;
+- (CGFloat)heightOfMessage:(MessageBean *)message;
 
 @end

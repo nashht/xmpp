@@ -11,6 +11,7 @@
 #import "MyXMPP+Roster.h"
 #import "CreateGroupsViewController.h"
 #import "FriendInfoController.h"
+#import "HistoryMessageViewController.h"
 
 @interface FriendChatingInfoViewController ()<UITableViewDataSource, UITableViewDelegate>
 
@@ -40,6 +41,10 @@
         UINavigationController *navigationController = segue.destinationViewController;
         CreateGroupsViewController *destinationVC = navigationController.viewControllers[0];
         destinationVC.didSelectedUsers = @[_friendName];
+    } else if ([segue.identifier isEqualToString:@"showHistory"]) {
+        HistoryMessageViewController *destinationVC = segue.destinationViewController;
+        destinationVC.isP2P = YES;
+        destinationVC.chatObjName = _friendName;
     }
 }
 
