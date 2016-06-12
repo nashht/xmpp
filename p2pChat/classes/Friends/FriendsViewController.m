@@ -107,7 +107,7 @@
     }
     
     if (vCard.title == nil || [vCard.title isEqualToString:@""]) {//设置好友职务
-        [cell setDepartment:@"职务未填写"];
+        [cell setDepartment:@"职位未填写"];
     }else{
         [cell setDepartment:vCard.title];
     }

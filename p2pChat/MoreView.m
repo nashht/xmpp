@@ -15,6 +15,7 @@
 #import "MyXMPP+P2PChat.h"
 #import "GroupDocumentsTableViewController.h"
 #import "MyXMPP+Group.h"
+#import "GroupDocumentsTableViewController.h"
 
 @interface MoreView ()
 
@@ -56,6 +57,12 @@
     _imagePickerVC.cameraFlashMode = UIImagePickerControllerCameraFlashModeAuto;
     UIViewController *superVC = [self viewController];
     [superVC presentViewController:_imagePickerVC animated:YES completion:nil];
+}
+
+- (IBAction)pickDocument:(id)sender {
+   
+   
+    
 }
 
 - (UIViewController *)viewController {

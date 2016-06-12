@@ -2,11 +2,11 @@
   "images" : [
     {
       "idiom" : "universal",
+      "filename" : "redbutton.png",
       "scale" : "1x"
     },
     {
       "idiom" : "universal",
-      "filename" : "ic_add_bg_n.png",
       "scale" : "2x"
     },
     {

@@ -26,6 +26,6 @@ typedef void (^fetchedBlock) (NSArray *members);
 - (void)destroyChatRoom;//删除聊天室
 - (void)leaveChatRoom;//退出聊天室
 - (void)setGroupSubject:(NSString *)subject;//设置群聊主题
+- (void)joinRoom:(NSString *)groupname withpassword:(NSString *)password;//加入已经创建好的房间
 - (void)deleteMember:(NSString *)member FromGroup:(NSString *)group;
-
 @end

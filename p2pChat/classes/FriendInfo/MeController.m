@@ -12,19 +12,24 @@
 #import "MyXMPP+Roster.h"
 #import "PhotoLibraryCenter.h"
 #import "EditViewController.h"
+#import "MyXMPP.h"
 
 @interface MeController ()<UIImagePickerControllerDelegate,UITableViewDataSource,UITableViewDelegate,UINavigationControllerDelegate>
 
 @property (weak, nonatomic) IBOutlet UIImageView *photoView;
+@property (weak, nonatomic) IBOutlet UILabel *statusLabel;
 
 @property (weak, nonatomic) IBOutlet UILabel *nameLabel;
-@property (weak, nonatomic) IBOutlet UILabel *groupLabel;
+//@property (weak, nonatomic) IBOutlet UILabel *groupLabel;
 @property (weak, nonatomic) IBOutlet UILabel *phoneLabel;
 @property (weak, nonatomic) IBOutlet UILabel *emailLabel;
 @property (weak, nonatomic) IBOutlet UILabel *titleLabel;
 @property (weak, nonatomic) IBOutlet UILabel *addressLabel;
 @property (weak, nonatomic) XMPPvCardTemp *myvCard;
 @property (weak, nonatomic) IBOutlet UILabel *zuojiLabel;
+
+@property (strong, nonatomic) MyXMPP *xmpp;
+@property (assign, nonatomic) MyXMPPStatus status;
 
 @end
 
@@ -56,7 +61,22 @@
     NSString *myName = [[NSUserDefaults standardUserDefaults]stringForKey:@"name"];
     _nameLabel.text = myName;
     XMPPUserCoreDataStorageObject *user = [[MyXMPP shareInstance]fetchUserWithUsername:myName];
-    _groupLabel.text = user.groups.allObjects[0];
+    
+    _xmpp = [MyXMPP shareInstance];
+    _status = [_xmpp myStatus];
+    switch (_status) {
+        case MyXMPPStatusOnline:
+            _statusLabel.text = @"在线";
+            break;
+        case MyXMPPStatusBusy:
+            _statusLabel.text = @"忙碌";
+            break;
+        case MyXMPPStatusOffline:
+            _statusLabel.text = @"离开";
+            break;
+    }
+
+//    _groupLabel.text = user.groups.allObjects[0];
     _titleLabel.text = _myvCard.title;
     _phoneLabel.text = _myvCard.note;
     _emailLabel.text = _myvCard.emailAddresses[0];

@@ -14,6 +14,7 @@
 		844988041CC8BE21009AE90E /* GroupMessage.m in Sources */ = {isa = PBXBuildFile; fileRef = 844988021CC8BE21009AE90E /* GroupMessage.m */; };
 		844988071CC8C794009AE90E /* XMPPMessage+MyExtends.m in Sources */ = {isa = PBXBuildFile; fileRef = 844988061CC8C794009AE90E /* XMPPMessage+MyExtends.m */; };
 		848D25FA1CE9B76300F50727 /* GroupDocumentsTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 848D25F91CE9B76300F50727 /* GroupDocumentsTableViewController.m */; };
+		84F893671D039E8C00BCED69 /* GroupMembersListTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 84F893661D039E8C00BCED69 /* GroupMembersListTableViewController.m */; };
 		900122631CA91EE3005D5BFA /* ChatViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 900122461CA91EE2005D5BFA /* ChatViewController.m */; };
 		900122651CA91EE3005D5BFA /* MessageFrameModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 9001224A1CA91EE2005D5BFA /* MessageFrameModel.m */; };
 		900122661CA91EE3005D5BFA /* MessageViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 9001224C1CA91EE2005D5BFA /* MessageViewCell.m */; };
@@ -299,6 +300,8 @@
 		844988061CC8C794009AE90E /* XMPPMessage+MyExtends.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "XMPPMessage+MyExtends.m"; path = "framework/XMPPMessage+MyExtends.m"; sourceTree = "<group>"; };
 		848D25F81CE9B76300F50727 /* GroupDocumentsTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GroupDocumentsTableViewController.h; sourceTree = "<group>"; };
 		848D25F91CE9B76300F50727 /* GroupDocumentsTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GroupDocumentsTableViewController.m; sourceTree = "<group>"; };
+		84F893651D039E8C00BCED69 /* GroupMembersListTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GroupMembersListTableViewController.h; sourceTree = "<group>"; };
+		84F893661D039E8C00BCED69 /* GroupMembersListTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GroupMembersListTableViewController.m; sourceTree = "<group>"; };
 		900122451CA91EE2005D5BFA /* ChatViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ChatViewController.h; sourceTree = "<group>"; };
 		900122461CA91EE2005D5BFA /* ChatViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ChatViewController.m; sourceTree = "<group>"; };
 		900122491CA91EE2005D5BFA /* MessageFrameModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MessageFrameModel.h; sourceTree = "<group>"; };
@@ -870,9 +873,19 @@
 			name = BottomView;
 			sourceTree = "<group>";
 		};
+		84F893641D039E4500BCED69 /* GroupMembersList */ = {
+			isa = PBXGroup;
+			children = (
+				84F893651D039E8C00BCED69 /* GroupMembersListTableViewController.h */,
+				84F893661D039E8C00BCED69 /* GroupMembersListTableViewController.m */,
+			);
+			name = GroupMembersList;
+			sourceTree = "<group>";
+		};
 		900122431CA91EE2005D5BFA /* classes */ = {
 			isa = PBXGroup;
 			children = (
+				84F893641D039E4500BCED69 /* GroupMembersList */,
 				848D25F71CE9B71D00F50727 /* GroupDocuments */,
 				842C38671CDC828100D76AF6 /* GroupMembersInfo */,
 				90F711151CBC89FC00042A99 /* Main.storyboard */,
@@ -2342,7 +2355,7 @@
 				TargetAttributes = {
 					DA95D5911C3A16E6001ED1A6 = {
 						CreatedOnToolsVersion = 7.2;
-						DevelopmentTeam = H9BMMLH46C;
+						DevelopmentTeam = 62MA2C9T39;
 					};
 					DA95D5AD1C3A16E6001ED1A6 = {
 						CreatedOnToolsVersion = 7.2;
@@ -2491,6 +2504,7 @@
 				DA90B1EF1C8989930080E037 /* XMPPBlocking.m in Sources */,
 				DA90B1AD1C8989930080E037 /* XMPPUserMemoryStorageObject.m in Sources */,
 				DA4EBEB41CCDFCB000239331 /* Reachability.m in Sources */,
+				84F893671D039E8C00BCED69 /* GroupMembersListTableViewController.m in Sources */,
 				DA90B1D01C8989930080E037 /* XMPPvCardTempTel.m in Sources */,
 				DA90B1DC1C8989930080E037 /* XMPPSoftwareVersion.m in Sources */,
 				90DC39441CEC1C7E002CECCF /* AFNetworkReachabilityManager.m in Sources */,
@@ -2774,7 +2788,7 @@
 					"$(PROJECT_DIR)/p2pChat/framework/module",
 				);
 				INFOPLIST_FILE = p2pChat/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 9.3;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
@@ -2783,7 +2797,7 @@
 				);
 				ONLY_ACTIVE_ARCH = NO;
 				OTHER_LDFLAGS = "";
-				PRODUCT_BUNDLE_IDENTIFIER = abc.xmppChat;
+				PRODUCT_BUNDLE_IDENTIFIER = zxk.xmppChat;
 				PRODUCT_NAME = XMPP;
 				PROVISIONING_PROFILE = "";
 				SDKROOT = iphoneos;
@@ -2804,7 +2818,7 @@
 					"$(PROJECT_DIR)/p2pChat/framework/module",
 				);
 				INFOPLIST_FILE = p2pChat/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 9.3;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
@@ -2813,7 +2827,7 @@
 				);
 				ONLY_ACTIVE_ARCH = NO;
 				OTHER_LDFLAGS = "";
-				PRODUCT_BUNDLE_IDENTIFIER = abc.xmppChat;
+				PRODUCT_BUNDLE_IDENTIFIER = zxk.xmppChat;
 				PRODUCT_NAME = XMPP;
 				PROVISIONING_PROFILE = "";
 				SDKROOT = iphoneos;

@@ -15,18 +15,21 @@
 #import "DataManager.h"
 #import "HistoryMessageViewController.h"
 
-static double InitialPositionX = 15;
-static double InitialPositionY = 12;
-static double LabelPositionY = 83;
-static double LengthBetweenBtns = 20;
-static double PhotoWidth = 55;
-static double LabelHigh = 20;
+
+static double PhotoHigh = 25;
+static double Width = 25;
+static double LabelHigh = 15;
 
 @interface GroupMembersInfoTableViewController ()
 @property (weak, nonatomic) IBOutlet UITableViewCell *MembersCell;
+@property (weak, nonatomic) IBOutlet UIStackView *membersPhotoStack;
+@property (weak, nonatomic) IBOutlet UIStackView *membersNameStack;
 
+@property (nonatomic,strong) NSString *membercountstr;
 @property (weak, nonatomic) IBOutlet UILabel *groupMembersCount;
 @property (weak, nonatomic) IBOutlet UILabel *groupNameLabel;
+
+@property (nonatomic,strong) NSMutableArray *memberarray;
 
 @end
 
@@ -35,95 +38,142 @@ static double LabelHigh = 20;
 - (void)viewDidLoad {
     [super viewDidLoad];
     
-    _groupNameLabel.text = _groupName;
+    MyXMPP *myxmpp = [MyXMPP shareInstance];
+    NSString *str = myxmpp.roomOccupant.roomJIDStr;
+    NSLog(@"我的jid：%@",str);
+
     
-    XMPPJID *myjid = [[MyXMPP shareInstance]myjid];
-    XMPPvCardTemp *friendVCard = [[MyXMPP shareInstance]fetchFriend:myjid];
-    [self addmemberwithphoto:friendVCard.photo x:InitialPositionX y:InitialPositionY];
-    [self addmemberwithname:myjid.user x:InitialPositionX y:LabelPositionY];
     
     [[MyXMPP shareInstance] fetchMembersFromGroup:_groupName withCompletion:^(NSArray *members) {
         
-        if ([members count]>3) {
+        NSInteger count = [members count];
+        count++;
+        _memberarray = [[NSMutableArray alloc]initWithCapacity:count];
+        for (int i=0; i<[members count];i++) {
+            [_memberarray insertObject:[members objectAtIndex:i] atIndex:i];
+        }
+        XMPPJID *myjid = [[MyXMPP shareInstance]myjid];//获取自己的名片
+        [_memberarray insertObject:myjid.user atIndex:[members count]];
+        
+        if ([_memberarray count]>2 ) {
             for (int i=0; i<3; i++) {
-                [self addwithmembers:members count:i];
+                [self addwithmembersarray:_memberarray count:i];
             }
-            [self addInsertMemberButtonwithlocation:4];
+            [self addInsertMemberButton];
+            [self addBlankLabel];
         }else{
-            int m = 0;
-        for (m=0; m<[members count]; m++) {
-            [self addwithmembers:members count:m];
+            for (int j=0; j<[_memberarray count];j++) {
+                [self addwithmembersarray:_memberarray count:j];
             }
-            m++;
-            [self addInsertMemberButtonwithlocation:m];//暂时没有实现添加加号按钮
+            [self addInsertMemberButton];//暂时没有实现添加加号按钮
+            [self addBlankButton];
+            [self addBlankLabel];
+            [self addBlankLabel];
         }
         
-        NSUInteger count = [members count];
-        count++;
+        
+        _membercountstr = [NSString stringWithFormat:@"%ld",(long)count];
+        
         NSString *str = [NSString stringWithFormat:@"(%ld)",(unsigned long)count];
         [self.groupMembersCount setText:str];
+        
+        [self.groupNameLabel setText:_groupName];
+        
+        
     }];
-}
-- (IBAction)clearHistory:(id)sender {
-    [[DataManager shareManager]clearMessageByUsername:_groupName];
+    
 }
 
-- (IBAction)quitGroup:(id)sender {
-    [[DataManager shareManager]clearMessageByUsername:_groupName];
-#warning 这里的逻辑感觉不对
+- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender{
+    if([segue.identifier isEqualToString:@"groupmemberlist"]){
+        id theSegue = segue.destinationViewController;
+        [theSegue setValue:_groupName forKey:@"laterGroupName"];
+        [theSegue setValue:_membercountstr forKey:@"count"];
+    }
+}
+
+- (IBAction)wipeChatRecord:(UIButton *)sender {
+    
+}
+
+- (IBAction)deleteRoomAndLeave:(UIButton *)sender {
     [[MyXMPP shareInstance]leaveChatRoom];
+    [[MyXMPP shareInstance]destroyChatRoom];
 }
 
-- (void)addwithmembers:(NSArray *)members count:(int)i{
+#pragma mark-addmembers
+
+- (void)addwithmembersarray:(NSArray *)members count:(int)i{
     
     XMPPJID *memberjid = [XMPPJID jidWithUser:[members objectAtIndex:i] domain:myDomain resource:@"iphone"];
     XMPPvCardTemp *friendVCard = [[MyXMPP shareInstance]fetchFriend:memberjid];
-    [self addmemberwithphoto:friendVCard.photo x:InitialPositionX+(PhotoWidth+LengthBetweenBtns)*(i+1) y:InitialPositionY];
-    [self addmemberwithname:[members objectAtIndex:i] x:InitialPositionX+(PhotoWidth+LengthBetweenBtns)*(i+1) y:LabelPositionY];
+    [self addmemberwithphoto:friendVCard.photo];
+    [self addmemberwithname:[members objectAtIndex:i]];
 }
 
-- (void)addmemberwithphoto:(NSData *)imagedata x:(CGFloat)x y:(CGFloat)y{
+- (void)addmemberwithphoto:(NSData *)imagedata{
     UIButton *memberphoto = [[UIButton alloc]init];
     memberphoto.layer.cornerRadius = 10;
-    memberphoto.layer.masksToBounds = true;
+    memberphoto.layer.masksToBounds = true;//为button添加圆角
     [memberphoto setBackgroundImage:[UIImage imageWithData:imagedata] forState:UIControlStateNormal];
-    memberphoto.frame = CGRectMake(x, y, PhotoWidth, PhotoWidth);
-    [self.MembersCell.contentView addSubview:memberphoto];
+    [self.membersPhotoStack addArrangedSubview:memberphoto];
+    CGRect temp = memberphoto.frame;
+    temp.size = CGSizeMake(Width, PhotoHigh);
+    memberphoto.frame = temp;
 }
 
-- (void)addmemberwithname:(NSString *)name x:(CGFloat)x y:(CGFloat)y{
+- (void)addmemberwithname:(NSString *)name {
     UILabel *membername = [[UILabel alloc]init];
     membername.text = name;
-    membername.frame = CGRectMake(x, y, PhotoWidth, LabelHigh);
+    membername.adjustsFontSizeToFitWidth = YES;
     membername.textAlignment = NSTextAlignmentCenter;
-    [self.MembersCell.contentView addSubview:membername];
+    [self.membersNameStack addArrangedSubview:membername];
+    CGRect temp = membername.frame;
+    temp.size = CGSizeMake(Width, LabelHigh);
+    membername.frame = temp;
 }
 
-- (void)addInsertMemberButtonwithlocation:(int)i{
+- (void)addInsertMemberButton{
     UIButton *insertbtn = [[UIButton alloc]init];
     [insertbtn addTarget:self action:@selector(insertMemberAction) forControlEvents:UIControlEventTouchUpInside];
     insertbtn.layer.cornerRadius = 10;
     insertbtn.layer.masksToBounds = true;
-    [insertbtn setBackgroundImage:[UIImage imageNamed:@"add_button.png"] forState:UIControlStateNormal];
-    insertbtn.frame = CGRectMake(InitialPositionX+(PhotoWidth+LengthBetweenBtns)*i, InitialPositionY, PhotoWidth, PhotoWidth);
-//    insertbtn.layer.borderColor=[UIColor blackColor].CGColor;
-    [self.MembersCell.contentView addSubview:insertbtn];
+    [insertbtn setBackgroundImage:[UIImage imageNamed:@"ic_add_bg_n.png"] forState:UIControlStateNormal];
+    CGRect temp = insertbtn.frame;
+    temp.size = CGSizeMake(Width, PhotoHigh);
+    insertbtn.frame = temp;
+
+    [self.membersPhotoStack addArrangedSubview:insertbtn];
 }
 
 -(void)insertMemberAction{
     CreateGroupsViewController *creatgroup =[[CreateGroupsViewController alloc]init];
     creatgroup.modalTransitionStyle = UIModalTransitionStyleCrossDissolve;
-//    [self presentViewController:creatgroup animated:YES completion:nil];
+    UINavigationController *nvi = [[UINavigationController alloc]init];
     [self.navigationController pushViewController:creatgroup animated:YES];
 }
 
-- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
-    if ([segue.identifier isEqualToString:@"showHistory"]) {
-        HistoryMessageViewController *destinationVC = segue.destinationViewController;
-        destinationVC.isP2P = NO;
-        destinationVC.chatObjName = _groupName;
-    }
+-(void)addBlankLabel{
+    UILabel *membername = [[UILabel alloc]init];
+    membername.text = @"    ";
+    membername.adjustsFontSizeToFitWidth = YES;
+    [self.membersNameStack addArrangedSubview:membername];
+    CGRect temp = membername.frame;
+    temp.size = CGSizeMake(Width, LabelHigh);
+    membername.frame = temp;
+
 }
+
+-(void)addBlankButton{
+    UIButton *blankbtn = [[UIButton alloc]init];
+    CGRect temp = blankbtn.frame;
+    temp.size = CGSizeMake(Width, PhotoHigh);
+    blankbtn.frame = temp;
+    [blankbtn setBackgroundImage:[UIImage imageNamed:@"blank.png"] forState:UIControlStateNormal];
+    [self.membersPhotoStack addArrangedSubview:blankbtn];
+}
+
+#pragma mark - Table view data source
 
 #pragma mark - Table view data source
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
@@ -131,10 +181,10 @@ static double LabelHigh = 20;
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
-//    return 1;
-    if(section == 2 || section == 3) return 1;
-    else if(section ==0) return 2;
-    else return 3;
+    if(section == 2 || section == 3) {
+        return 1;}
+    else {
+        return 2;}
         
 }
 
