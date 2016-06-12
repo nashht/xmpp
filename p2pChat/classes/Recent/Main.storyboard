@@ -938,7 +938,7 @@
                                             <rect key="frame" x="0.0" y="0.0" width="567" height="49.5"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
-                                                <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" text="职务" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="t3P-1g-9Dr">
+                                                <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" text="职位" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="t3P-1g-9Dr">
                                                     <rect key="frame" x="15" y="15" width="32" height="19.5"/>
                                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                                     <fontDescription key="fontDescription" type="system" pointSize="16"/>
@@ -987,11 +987,11 @@
                                         <rect key="frame" x="0.0" y="510" width="600" height="44"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="Exo-VH-5sD" id="VNZ-hW-lv7">
-                                            <rect key="frame" x="0.0" y="0.0" width="600" height="43.5"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="600" height="44"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
-                                                <button opaque="NO" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="RFU-hW-gE9">
-                                                    <rect key="frame" x="8" y="0.0" width="584" height="38"/>
+                                                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="RFU-hW-gE9">
+                                                    <rect key="frame" x="8" y="0.0" width="584" height="30"/>
                                                     <state key="normal" title="修改密码"/>
                                                     <connections>
                                                         <action selector="updatePassword:" destination="Fca-zl-Yxj" eventType="touchUpInside" id="B39-sJ-RFc"/>
@@ -1000,34 +1000,40 @@
                                                 </button>
                                             </subviews>
                                             <constraints>
-                                                <constraint firstAttribute="topMargin" secondItem="RFU-hW-gE9" secondAttribute="top" id="ef1-dJ-M3O"/>
+                                                <constraint firstItem="RFU-hW-gE9" firstAttribute="top" secondItem="VNZ-hW-lv7" secondAttribute="top" id="Rii-pj-HSo"/>
                                                 <constraint firstItem="RFU-hW-gE9" firstAttribute="leading" secondItem="VNZ-hW-lv7" secondAttribute="leadingMargin" id="ilV-1L-2yp"/>
                                                 <constraint firstAttribute="trailingMargin" secondItem="RFU-hW-gE9" secondAttribute="trailing" id="yDv-mv-xOR"/>
                                             </constraints>
                                         </tableViewCellContentView>
                                     </tableViewCell>
-                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" id="VVt-tR-yIx">
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" id="UKa-6o-Nfs">
                                         <rect key="frame" x="0.0" y="554" width="600" height="44"/>
                                         <autoresizingMask key="autoresizingMask"/>
-                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="VVt-tR-yIx" id="HIp-DI-C3i">
-                                            <rect key="frame" x="0.0" y="0.0" width="600" height="43.5"/>
+                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="UKa-6o-Nfs" id="rqp-RL-TUq">
+                                            <rect key="frame" x="0.0" y="0.0" width="600" height="44"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
-                                                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="aMN-ls-Erc">
-                                                    <rect key="frame" x="8" y="8" width="584" height="30"/>
-                                                    <state key="normal" title="注销登录">
-                                                        <color key="titleColor" red="1" green="0.13327468240000001" blue="0.18949462659999999" alpha="1" colorSpace="calibratedRGB"/>
+                                                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Fpw-GM-azY">
+                                                    <rect key="frame" x="8" y="0.0" width="584" height="38"/>
+                                                    <color key="backgroundColor" red="1" green="0.14240481961365026" blue="0.15794219072013904" alpha="1" colorSpace="calibratedRGB"/>
+                                                    <state key="normal" title="注销登陆">
+                                                        <color key="titleColor" red="0.99234473954919467" green="0.99717805839504836" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                                                     </state>
+                                                    <userDefinedRuntimeAttributes>
+                                                        <userDefinedRuntimeAttribute type="number" keyPath="keyPath">
+                                                            <integer key="value" value="10"/>
+                                                        </userDefinedRuntimeAttribute>
+                                                    </userDefinedRuntimeAttributes>
                                                     <connections>
-                                                        <action selector="loginOut:" destination="Fca-zl-Yxj" eventType="touchUpInside" id="3iG-SN-f1a"/>
-                                                        <segue destination="WgI-dm-LF5" kind="presentation" id="JYE-tC-VZD"/>
+                                                        <action selector="updatePassword:" destination="Fca-zl-Yxj" eventType="touchUpInside" id="dhj-ui-XKE"/>
                                                     </connections>
                                                 </button>
                                             </subviews>
                                             <constraints>
-                                                <constraint firstAttribute="trailingMargin" secondItem="aMN-ls-Erc" secondAttribute="trailing" id="Mya-Sp-EJ7"/>
-                                                <constraint firstAttribute="topMargin" secondItem="aMN-ls-Erc" secondAttribute="top" id="Xol-iF-qU1"/>
-                                                <constraint firstItem="aMN-ls-Erc" firstAttribute="leading" secondItem="HIp-DI-C3i" secondAttribute="leadingMargin" id="nRd-iB-JdU"/>
+                                                <constraint firstItem="Fpw-GM-azY" firstAttribute="top" secondItem="rqp-RL-TUq" secondAttribute="top" id="6Fl-BR-sbE"/>
+                                                <constraint firstAttribute="trailingMargin" secondItem="Fpw-GM-azY" secondAttribute="trailing" id="9em-ZI-fhR"/>
+                                                <constraint firstAttribute="bottomMargin" secondItem="Fpw-GM-azY" secondAttribute="bottom" constant="-2.5" id="oFH-6T-tyb"/>
+                                                <constraint firstItem="Fpw-GM-azY" firstAttribute="leading" secondItem="rqp-RL-TUq" secondAttribute="leadingMargin" id="t4q-Rl-G5T"/>
                                             </constraints>
                                         </tableViewCellContentView>
                                     </tableViewCell>
@@ -1384,8 +1390,7 @@
     </resources>
     <inferredMetricsTieBreakers>
         <segue reference="FZk-rq-Hm8"/>
-        <segue reference="q2g-zp-6cV"/>
-        <segue reference="PQd-WW-1SH"/>
         <segue reference="Zkw-Uz-Sb5"/>
+        <segue reference="PQd-WW-1SH"/>
     </inferredMetricsTieBreakers>
 </document>
