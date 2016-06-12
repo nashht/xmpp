@@ -20,7 +20,8 @@
 @property (weak, nonatomic) IBOutlet UILabel *statusLabel;
 
 @property (weak, nonatomic) IBOutlet UILabel *nameLabel;
-//@property (weak, nonatomic) IBOutlet UILabel *groupLabel;
+@property (weak, nonatomic) IBOutlet UILabel *groupLabel;
+
 @property (weak, nonatomic) IBOutlet UILabel *phoneLabel;
 @property (weak, nonatomic) IBOutlet UILabel *emailLabel;
 @property (weak, nonatomic) IBOutlet UILabel *titleLabel;
@@ -46,8 +47,7 @@
 
 - (void)setNavigationBar{
     self.navigationItem.title = @"我";
-    self.navigationController.navigationBar.barTintColor = [UIColor colorWithRed:28.0/155 green:162.0/255 blue:230.0/255 alpha:1.0];
-    [self.navigationController.navigationBar setTitleTextAttributes:@{NSForegroundColorAttributeName:[UIColor whiteColor]}];
+    
     UIBarButtonItem *backbutton = [[UIBarButtonItem alloc]init];
     backbutton.title = @"返回";
     self.navigationItem.backBarButtonItem = backbutton;
