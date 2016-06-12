@@ -12,6 +12,6 @@ typedef void (^ popViewBlock)();
 
 @interface PopoverViewController : UIViewController
 
-- (void)setCreateGroupBlock:(popViewBlock)createGroup showGroupBlock:(popViewBlock)showGroups showAllGroupsBlock:(popViewBlock)showAllGroups;
+- (void)setCreateGroupBlock:(void (^)(void))createGroup showMyGroupBlock:(void (^)(void))showMyGroups showAllGroupBlock:(void (^)(void))showAllGroups;
 
 @end

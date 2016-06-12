@@ -67,7 +67,7 @@
     NSString *filepath = [path stringByAppendingPathComponent:docName];
     NSLog( @" path = %@",filepath);
     NSData *fileData = [NSData dataWithContentsOfFile:filepath];
-//    NSString *filename = [@"file_" stringByAppendingString:docName];
+    NSString *filename = [@"file_" stringByAppendingString:docName];
     
     NSFileManager * filemanager = [[NSFileManager alloc]init];
     if([filemanager fileExistsAtPath:filepath]){
@@ -80,7 +80,8 @@
         if ((theFileSize = [attributes objectForKey:NSFileSize])){
             size = [NSString stringWithFormat:@"%i kb",[theFileSize intValue]];
         }
-            [self sendFile:fileData filename:docName fileSize:size];
+        
+        [self sendFile:fileData filename:filename fileSize:size];
     }
     
     [self.navigationController popViewControllerAnimated:YES];

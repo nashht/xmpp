@@ -18,6 +18,8 @@
 #import "PopoverViewController.h"
 #import "AFNetworking.h"
 #import "CreateGroupsViewController.h"
+#import "CheckMyGroupViewController.h"
+#import "CheckAllGroupViewController.h"
 #import "MyProgressView.h"
 
 @interface RecentViewController ()<UITableViewDataSource, UITableViewDelegate,UIPopoverPresentationControllerDelegate>
@@ -40,6 +42,9 @@
     [super viewDidLoad];
     
     self.navigationItem.title = @"消息";
+    self.navigationController.navigationBar.barTintColor = [UIColor colorWithRed:28.0/155 green:162.0/255 blue:230.0/255 alpha:1.0];
+    [self.navigationController.navigationBar setTitleTextAttributes:@{NSForegroundColorAttributeName:[UIColor whiteColor]}];
+    
     UIBarButtonItem *back = [[UIBarButtonItem alloc]initWithTitle:@"返回" style:UIBarButtonItemStylePlain target:nil action:nil];
     self.navigationItem.backBarButtonItem = back;
     
@@ -176,20 +181,14 @@
 
     [popoverVc setCreateGroupBlock:^{
         [self performSegueWithIdentifier:@"createGroup" sender:nil];
-    } showGroupBlock:^{
-//        MyProgressView *progressView = [MyProgressView progressView];
-//        progressView.frame = CGRectMake(150, 250, 100, 100);
-//
-//        [NSTimer scheduledTimerWithTimeInterval:0.05 target:self selector:@selector(progressSimulation) userInfo:self repeats:YES];
-//
-//        [self.view addSubview:progressView];
-//        _progressView = progressView;
-        
-        [[MyXMPP shareInstance]fetchMyRoomsWithCompletion:^(NSArray *members) {
-            NSLog(@"%@", members);
-        }];
-    } showAllGroupsBlock:^{
-        NSLog(@"show all groups");
+    } showMyGroupBlock:^{
+            
+        CheckMyGroupViewController *myGroup = [[CheckMyGroupViewController alloc] init];
+        [self.navigationController showViewController:myGroup sender:nil];
+
+    } showAllGroupBlock:^{
+        CheckAllGroupViewController *allGroup = [[CheckAllGroupViewController alloc] init];
+        [self.navigationController showViewController:allGroup sender:nil];
     }];
     popoverVc.preferredContentSize = CGSizeMake(100, 150);
     popoverVc.modalPresentationStyle = UIModalPresentationPopover;
@@ -203,18 +202,7 @@
     [self presentViewController:popoverVc animated:YES completion:nil];
 }
 
-- (void)progressSimulation{
-    static CGFloat progress = 0;
-    if (progress < 1.0) {
-        progress += 0.01;
-        
-        // 循环
-        if (progress >= 1.0) progress = 0;
-        
-        
-        _progressView.progress = progress;
-    }
-}
+
 
 - (UIModalPresentationStyle)adaptivePresentationStyleForPresentationController:(UIPresentationController *)controller{
     return UIModalPresentationNone;

@@ -13,7 +13,6 @@
 
 #import <UIKit/UIKit.h>
 
-
 @interface MyProgressView : UIView
 
 @property (nonatomic, assign) CGFloat progress;

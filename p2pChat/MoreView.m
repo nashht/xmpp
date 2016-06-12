@@ -89,11 +89,12 @@
     
     NSString *downloadUrl = [NSString stringWithFormat:@"http://10.108.136.59:8080/FileServer/file?method=download&filename=%@",_filename];
     
-    [self sendPic:imageData filename:_filename thumbnailData:thumbnailData];
-    
     NSLog(@"download : %@",downloadUrl);
 
     NSLog(@"thumbnailPath------%@",_thumbnailPath);
+    
+    [[MyXMPP shareInstance] sendPictureIdentifier:_localIdentifier data:imageData thumbnailData:thumbnailData thumbnailName:_thumbnailName filename:_filename ToUser:_chatObjectString];
+    [[MyXMPP shareInstance] uploadPic:imageData thumbnailData:thumbnailData filename:_filename  toUser:_chatObjectString];
     
     dispatch_async(dispatch_get_main_queue(), ^{
         [self.viewController dismissViewControllerAnimated:YES completion:nil];
@@ -134,41 +135,6 @@
             [self sendPic:imageData thumbnailData:thumbnailData];
         }];
     }
-}
-
-
-- (void)sendPic:(NSData *)imageData filename:(NSString *)filename thumbnailData:(NSData *)thumbnailData{
-    
-    NSLog(@"sendsendPic2Server");
-    
-    AFHTTPSessionManager *manager = [AFHTTPSessionManager manager];
-    manager.responseSerializer = [AFHTTPResponseSerializer serializer];
-    NSMutableDictionary *param = [NSMutableDictionary dictionary];
-    param[@"method"] = @"upload";
-    param[@"filename"] = filename;
-    // 参数para:{method:"upload"/"download",filename:"xxx"}(filename格式：username_timestamp
-    //     访问路径
-//    NSString *stringURL = @"http://10.108.136.59:8080/FileServer/file?method=upload&filename=1123";
-//    NSString *url = [NSString stringWithFormat:@"http://10.108.136.59:8080/FileServer/file?method=upload&filename=",filename];
-    [manager POST: @"http://10.108.136.59:8080/FileServer/file" parameters:param constructingBodyWithBlock:^(id<AFMultipartFormData>  _Nonnull formData) {
-        // 拼接文件参数
-        [formData appendPartWithFileData:imageData name:@"file" fileName:filename mimeType:@"application/octet-stream"];
-        
-    } progress:^(NSProgress * _Nonnull uploadProgress) {
-        NSLog(@"uploadProgress%@",uploadProgress);
-    } success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
-        id json = [NSJSONSerialization JSONObjectWithData:responseObject options:NSJSONReadingMutableContainers error:nil];
-        NSLog(@"success%@",json);
-        if (self.isP2PChat) {
-            [[MyXMPP shareInstance] sendPictureIdentifier:_localIdentifier data:thumbnailData thumbnailName:_thumbnailName filename:_filename ToUser:_chatObjectString];
-        } else {
-            [[MyXMPP shareInstance]sendPictureIdentifier:_localIdentifier data:thumbnailData thumbnailName:_thumbnailName filename:_filename ToGroup:_chatObjectString];
-        }
-        
-    } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
-        NSLog(@"failed------error:   %@",error);
-    }];
-    
 }
 
 

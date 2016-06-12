@@ -26,7 +26,7 @@
 #define MOREHEIGHT 150
 #define ScreenSize  [UIScreen mainScreen].bounds.size
 #define BOTTOMHEIGHT 40
-#define FACEVIEWHEIGHT (ScreenSize.height * 0.4)
+#define FACEVIEWHEIGHT (ScreenSize.height * 0.353)
 
 @interface ChatViewController () <UITableViewDataSource, UITableViewDelegate, UITextFieldDelegate, BottomViewDelegate> {
     NSString *_photoPath;
@@ -53,6 +53,7 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     
+    self.title = _chatObjectString;
     _tabBarHeight = self.tabBarController.tabBar.frame.size.height;
     // init table view
     _historyTableView.dataSource = self;
@@ -212,7 +213,7 @@
  */
 - (void)scrollViewWillBeginDragging:(UIScrollView *)scrollView
 {
-//    [_bottomView resignTextfield];
+    [_bottomView resignTextfield];
 }
 
 #pragma mark - keyboard notification

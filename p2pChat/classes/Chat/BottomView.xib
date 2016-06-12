@@ -11,7 +11,7 @@
             <rect key="frame" x="0.0" y="0.0" width="600" height="40"/>
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
-                <button opaque="NO" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="EzJ-R6-YZ2">
+                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="EzJ-R6-YZ2">
                     <rect key="frame" x="560" y="3" width="34" height="34"/>
                     <fontDescription key="fontDescription" type="system" pointSize="19"/>
                     <state key="normal" image="chat_bottom_up_nor"/>
@@ -19,7 +19,7 @@
                         <action selector="showMore:" destination="iN0-l3-epB" eventType="touchUpInside" id="kQV-fv-8mY"/>
                     </connections>
                 </button>
-                <button opaque="NO" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="3ER-Rc-F4I">
+                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="3ER-Rc-F4I">
                     <rect key="frame" x="523" y="3" width="35" height="34"/>
                     <constraints>
                         <constraint firstAttribute="width" constant="35" id="NdD-QI-tvz"/>
@@ -39,7 +39,7 @@
                         <action selector="showRecord:" destination="iN0-l3-epB" eventType="touchUpInside" id="3YE-Kz-Yl6"/>
                     </connections>
                 </button>
-                <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" misplaced="YES" textAlignment="natural" translatesAutoresizingMaskIntoConstraints="NO" id="Ssl-j6-87G">
+                <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" textAlignment="natural" translatesAutoresizingMaskIntoConstraints="NO" id="Ssl-j6-87G">
                     <rect key="frame" x="39" y="5" width="481" height="30"/>
                     <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                     <fontDescription key="fontDescription" type="system" pointSize="20"/>

@@ -43,9 +43,18 @@
     self.tableView.dataSource = self;
 }
 
+- (void)setNavigationBar{
+    self.navigationController.navigationBar.barTintColor = [UIColor colorWithRed:28.0/155 green:162.0/255 blue:230.0/255 alpha:1.0];
+    [self.navigationController.navigationBar setTitleTextAttributes:@{NSForegroundColorAttributeName:[UIColor whiteColor]}];
+    self.navigationItem.title = @"我";
+    UIBarButtonItem *backbutton = [[UIBarButtonItem alloc]init];
+    backbutton.title = @"返回";
+    self.navigationItem.backBarButtonItem = backbutton;
+}
+
 - (void)loadvCard{    
     _myvCard = [MyXMPP shareInstance].myVCardTemp;
-    self.navigationItem.title = @"我";
+
     _photoView.layer.cornerRadius = 10;
     _photoView.layer.masksToBounds = true;
     NSString *myName = [[NSUserDefaults standardUserDefaults]stringForKey:@"name"];
