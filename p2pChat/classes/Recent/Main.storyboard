@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="10116" systemVersion="15F34" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="XfM-Wq-Nn4">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="10117" systemVersion="15F34" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="XfM-Wq-Nn4">
     <dependencies>
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="10085"/>
@@ -898,7 +898,7 @@
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="blue" accessoryType="disclosureIndicator" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" detailTextLabel="R30-oO-PfA" rowHeight="50" style="IBUITableViewCellStyleValue1" id="t9l-w6-dDm">
                                         <rect key="frame" x="0.0" y="224" width="600" height="50"/>
                                         <autoresizingMask key="autoresizingMask"/>
-                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="AaK-fB-GZS" id="8Wj-Wy-e0S">
+                                        <tableViewCellContentView key="contentView" autoresizesSubviews="NO" opaque="NO" multipleTouchEnabled="YES" contentMode="center" tableViewCell="AaK-fB-GZS" id="8Wj-Wy-e0S">
                                             <rect key="frame" x="0.0" y="0.0" width="567" height="49.5"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
@@ -1046,7 +1046,7 @@
                                         <rect key="frame" x="0.0" y="554" width="600" height="44"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="VVt-tR-yIx" id="HIp-DI-C3i">
-                                            <rect key="frame" x="0.0" y="0.0" width="600" height="44"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="600" height="43.5"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="aMN-ls-Erc">
@@ -1059,7 +1059,7 @@
                                                         <color key="titleColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                                                     </state>
                                                     <connections>
-                                                        <action selector="loginOut:" destination="Fca-zl-Yxj" eventType="touchUpInside" id="3iG-SN-f1a"/>
+                                                        <action selector="logOut:" destination="Fca-zl-Yxj" eventType="touchUpInside" id="Reg-1Y-1bq"/>
                                                         <segue destination="WgI-dm-LF5" kind="presentation" id="JYE-tC-VZD"/>
                                                     </connections>
                                                 </button>
@@ -1083,6 +1083,7 @@
                     <connections>
                         <outlet property="addressLabel" destination="oxu-A2-a26" id="P1N-Ai-YcF"/>
                         <outlet property="emailLabel" destination="ndK-xO-Lxs" id="LIa-xh-wDJ"/>
+                        <outlet property="groupLabel" destination="VMy-zg-kgY" id="gpP-rA-GLe"/>
                         <outlet property="nameLabel" destination="Mvt-9V-52h" id="WkM-lo-rSu"/>
                         <outlet property="phoneLabel" destination="xOz-eS-uTd" id="fXz-5q-Jal"/>
                         <outlet property="photoView" destination="JuM-KQ-elb" id="3CP-c9-QTd"/>
