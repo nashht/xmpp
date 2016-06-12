@@ -8,7 +8,10 @@
 
 #import "FriendChatingInfoViewController.h"
 #import "MyXMPP+VCard.h"
+#import "MyXMPP+Roster.h"
 #import "CreateGroupsViewController.h"
+#import "FriendInfoController.h"
+#import "HistoryMessageViewController.h"
 
 @interface FriendChatingInfoViewController ()<UITableViewDataSource, UITableViewDelegate>
 
@@ -34,13 +37,32 @@
 }
 
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
-    UINavigationController *navigationController = segue.destinationViewController;
-    CreateGroupsViewController *destinationVC = navigationController.viewControllers[0];
-    destinationVC.didSelectedUsers = @[_friendName];
+    if ([segue.identifier isEqualToString:@"createGroup"]) {
+        UINavigationController *navigationController = segue.destinationViewController;
+        CreateGroupsViewController *destinationVC = navigationController.viewControllers[0];
+        destinationVC.didSelectedUsers = @[_friendName];
+    } else if ([segue.identifier isEqualToString:@"showHistory"]) {
+        HistoryMessageViewController *destinationVC = segue.destinationViewController;
+        destinationVC.isP2P = YES;
+        destinationVC.chatObjName = _friendName;
+    }
 }
 
 - (IBAction)createGroup:(id)sender {
     [self performSegueWithIdentifier:@"createGroup" sender:nil];
 }
 
+- (IBAction)showFriendInfo:(id)sender {
+    UIStoryboard *storyBoard = [UIStoryboard storyboardWithName:@"Main" bundle:nil];
+    FriendInfoController *vc = (FriendInfoController *)[storyBoard instantiateViewControllerWithIdentifier:@"friendsInfo"];
+    vc.title = @"个人资料";
+    XMPPUserCoreDataStorageObject *userObj = [[MyXMPP shareInstance]fetchUserWithUsername:_friendName];
+    vc.userObj = userObj;
+    vc.canSendMessage = NO;
+    [self.navigationController pushViewController:vc animated:YES];
+}
+
+- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
+    [tableView deselectRowAtIndexPath:indexPath animated:NO];
+}
 @end

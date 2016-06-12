@@ -28,7 +28,7 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     
-    self.navigationItem.title = @"通讯录";
+    self.navigationItem.title = @"联系人";
     
     [self.tableView registerNib:[UINib nibWithNibName:@"FriendCell" bundle:nil] forCellReuseIdentifier:@"friendCell"];
     
@@ -100,7 +100,7 @@
     if (vCard.photo != nil) {//设置好友默认头像
         [cell setIcon:[UIImage imageWithData:vCard.photo]];
     } else {
-        [cell setIcon:[UIImage imageNamed:@"0"]];
+        [cell setIcon:[UIImage imageNamed:@"1"]];
     }
     
     if (vCard.title == nil || [vCard.title isEqualToString:@""]) {//设置好友职务
@@ -114,10 +114,10 @@
             [cell setStatus:@"[在线]"];
             break;
         case 1:
-            [cell setStatus:@"[离开]"];
+            [cell setStatus:@"[忙碌]"];
             break;
         case 2:
-            [cell setStatus:@"[离线]"];
+            [cell setStatus:@"[离开]"];
             break;
         default:
             break;
@@ -145,6 +145,7 @@
     UIStoryboard *storyBoard = [UIStoryboard storyboardWithName:@"Main" bundle:nil];
     FriendInfoController *vc = (FriendInfoController *)[storyBoard instantiateViewControllerWithIdentifier:@"friendsInfo"];
     vc.title = @"个人资料";
+    vc.canSendMessage = YES;
     XMPPGroupCoreDataStorageObject *group = _groupCoreDataStorageObjects[indexPath.section];
     NSSortDescriptor *sortKey = [NSSortDescriptor sortDescriptorWithKey:@"section" ascending:YES];
     NSArray *users = [group.users sortedArrayUsingDescriptors:@[sortKey]];

@@ -86,14 +86,14 @@
     _photoImage.layer.masksToBounds = true;
     if ([message.isOut boolValue]) {
         if (!myvCard.photo) {
-            _photoImage.image = [UIImage imageNamed:@"0"];
+            _photoImage.image = [UIImage imageNamed:@"1"];
         }
         else{
             _photoImage.image = [UIImage imageWithData:myvCard.photo];
         }
     }else{
         if (!vCard.photo) {
-            _photoImage.image = [UIImage imageNamed:@"0"];
+            _photoImage.image = [UIImage imageNamed:@"1"];
         }
         else{
             _photoImage.image = [UIImage imageWithData:vCard.photo];

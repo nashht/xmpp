@@ -27,10 +27,10 @@
     
     //认证密码失败
     [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(myXmppDidNotAuthenticate) name:MyXmppAuthenticateFailedNotification object:nil];
-    
-    [_login.layer setCornerRadius:CGRectGetHeight([_login bounds])/4];
+    CGFloat radius = CGRectGetHeight([_nameTF bounds])/8;
+    [_login.layer setCornerRadius:radius];
     _login.layer.masksToBounds = true;
-    _login.frame = CGRectMake(199, 269, 400, 32);    
+ 
 }
 
 - (IBAction)login:(id)sender {

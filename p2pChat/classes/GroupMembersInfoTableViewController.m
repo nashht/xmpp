@@ -12,7 +12,8 @@
 #import "XMPPvCardTemp.h"
 #import "MyXMPP+Group.h"
 #import "CreateGroupsViewController.h"
-
+#import "DataManager.h"
+#import "HistoryMessageViewController.h"
 
 
 static double PhotoHigh = 25;
@@ -174,6 +175,7 @@ static double LabelHigh = 15;
 
 #pragma mark - Table view data source
 
+#pragma mark - Table view data source
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
     return 4;
 }
@@ -186,5 +188,9 @@ static double LabelHigh = 15;
         
 }
 
+#pragma mark - TableView Delegate
+- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
+    [tableView deselectRowAtIndexPath:indexPath animated:NO];
+}
 
 @end

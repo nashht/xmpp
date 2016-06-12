@@ -17,9 +17,8 @@
 #import "MyXMPP+Group.h"
 #import "GroupDocumentsTableViewController.h"
 
-@interface MoreView () {
-    int imagePiecesNum;
-}
+@interface MoreView ()
+
 @property (strong, nonatomic) PhotoLibraryCenter *photoCenter;
 
 @property (strong, nonatomic) UIImagePickerController *imagePickerVC;
@@ -160,8 +159,11 @@
     } success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
         id json = [NSJSONSerialization JSONObjectWithData:responseObject options:NSJSONReadingMutableContainers error:nil];
         NSLog(@"success%@",json);
-        
-        [[MyXMPP shareInstance] sendPictureIdentifier:_localIdentifier data:thumbnailData thumbnailName:_thumbnailName filename:_filename ToUser:_chatObjectString];
+        if (self.isP2PChat) {
+            [[MyXMPP shareInstance] sendPictureIdentifier:_localIdentifier data:thumbnailData thumbnailName:_thumbnailName filename:_filename ToUser:_chatObjectString];
+        } else {
+            [[MyXMPP shareInstance]sendPictureIdentifier:_localIdentifier data:thumbnailData thumbnailName:_thumbnailName filename:_filename ToGroup:_chatObjectString];
+        }
         
     } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
         NSLog(@"failed------error:   %@",error);

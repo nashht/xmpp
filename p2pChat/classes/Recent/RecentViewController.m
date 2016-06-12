@@ -39,7 +39,7 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     
-    self.navigationItem.title = @"最近联系人";
+    self.navigationItem.title = @"消息";
     UIBarButtonItem *back = [[UIBarButtonItem alloc]initWithTitle:@"返回" style:UIBarButtonItemStylePlain target:nil action:nil];
     self.navigationItem.backBarButtonItem = back;
     
@@ -120,11 +120,14 @@
     
     cell.usernamelabel.text = lastMessage.username;
     cell.lastmessagelabel.attributedText = [RegularExpressionTool stringTranslation2FaceView:lastMessage.body];
-    
-    if (vCardTemp.photo != nil) {
-        cell.userimage.image = [UIImage imageWithData:vCardTemp.photo];
+    if (lastMessage.isP2P.boolValue) {
+        if (vCardTemp.photo != nil) {
+            cell.userimage.image = [UIImage imageWithData:vCardTemp.photo];
+        } else {
+            cell.userimage.image = [UIImage imageNamed:@"1"];
+        }
     } else {
-        cell.userimage.image = [UIImage imageNamed:@"1"];
+        cell.userimage.image = [UIImage imageNamed:@"group_default"];
     }
 
     cell.lastmessagetime.text = [Tool stringFromDate:[NSDate dateWithTimeIntervalSince1970:lastMessage.time.doubleValue]];
@@ -170,23 +173,23 @@
 #pragma mark - popover view
 - (IBAction)PopoverBtnClick:(UIButton *)sender {
     PopoverViewController *popoverVc = [[PopoverViewController alloc] init];
-    [popoverVc setCreateGroupBlock:^{//不会引起循环引用
+
+    [popoverVc setCreateGroupBlock:^{
         [self performSegueWithIdentifier:@"createGroup" sender:nil];
     } showGroupBlock:^{
 //        MyProgressView *progressView = [MyProgressView progressView];
 //        progressView.frame = CGRectMake(150, 250, 100, 100);
-//        
+//
 //        [NSTimer scheduledTimerWithTimeInterval:0.05 target:self selector:@selector(progressSimulation) userInfo:self repeats:YES];
-//        
+//
 //        [self.view addSubview:progressView];
 //        _progressView = progressView;
         
         [[MyXMPP shareInstance]fetchMyRoomsWithCompletion:^(NSArray *members) {
             NSLog(@"%@", members);
         }];
-        
-
-
+    } showAllGroupsBlock:^{
+        NSLog(@"show all groups");
     }];
     popoverVc.preferredContentSize = CGSizeMake(100, 150);
     popoverVc.modalPresentationStyle = UIModalPresentationPopover;

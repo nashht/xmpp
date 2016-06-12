@@ -20,7 +20,7 @@ typedef void (^fetchedBlock) (NSArray *members);
 - (void)fetchMyRoomsWithCompletion:(fetchedBlock) block;
 
 - (void)sendMessage:(NSString *)text ToGroup:(NSString *)groupname;
-//- (void)sendPicture:(NSString *)path ToGroup:(NSString *)groupname;
+- (void)sendPictureIdentifier:(NSString *)identifier data:(NSData *)imageData thumbnailName:(NSString *)thumbnailName filename:(NSString *)filename ToGroup:(NSString *)groupname;
 - (void)sendAudio:(NSString *)path ToGroup:(NSString *)groupname withlength:(NSString *)length;
 
 - (void)destroyChatRoom;//删除聊天室

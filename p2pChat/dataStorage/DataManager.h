@@ -28,6 +28,7 @@
 - (void)saveRecordWithUsername:(NSString *)username time:(NSNumber *)time path:(NSString *)path length:(NSString *)length isOut:(BOOL)isOut;
 - (void)savePhotoWithUsername:(NSString *)username time:(NSNumber *)time filename:(NSString *)filename thumbnail:(NSString *)thumbnailPath isOut:(BOOL)isOut;
 - (void)saveFileWithUsername:(NSString *)username time:(NSNumber *)time filename:(NSString *)filename fileSize:(NSString *)fileSize isOut:(BOOL)isOut;
+- (void)clearMessageByUsername:(NSString *)username;
 
 @end
 
@@ -47,5 +48,6 @@
 - (NSFetchedResultsController *)getMessageByGroupname:(NSString *)groupname;
 - (void)saveMessageWithGroupname:(NSString *)groupname username:(NSString *)username time:(NSNumber *)time body:(NSString *)body;
 - (void)saveRecordWithGroupname:(NSString *)groupname username:(NSString *)username time:(NSNumber *)time path:(NSString *)path length:(NSString *)length;
+- (void)clearMessageByGroupname:(NSString *)groupname;
 
 @end
