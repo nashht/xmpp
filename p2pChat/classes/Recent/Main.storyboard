@@ -1023,11 +1023,11 @@
                                         <rect key="frame" x="0.0" y="510" width="600" height="44"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="Exo-VH-5sD" id="VNZ-hW-lv7">
-                                            <rect key="frame" x="0.0" y="0.0" width="600" height="43.5"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="600" height="44"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
-                                                <button opaque="NO" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="RFU-hW-gE9">
-                                                    <rect key="frame" x="8" y="0.0" width="584" height="38"/>
+                                                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="RFU-hW-gE9">
+                                                    <rect key="frame" x="8" y="0.0" width="584" height="30"/>
                                                     <state key="normal" title="修改密码"/>
                                                     <connections>
                                                         <action selector="updatePassword:" destination="Fca-zl-Yxj" eventType="touchUpInside" id="B39-sJ-RFc"/>
@@ -1036,17 +1036,17 @@
                                                 </button>
                                             </subviews>
                                             <constraints>
-                                                <constraint firstAttribute="topMargin" secondItem="RFU-hW-gE9" secondAttribute="top" id="ef1-dJ-M3O"/>
+                                                <constraint firstItem="RFU-hW-gE9" firstAttribute="top" secondItem="VNZ-hW-lv7" secondAttribute="top" id="Rii-pj-HSo"/>
                                                 <constraint firstItem="RFU-hW-gE9" firstAttribute="leading" secondItem="VNZ-hW-lv7" secondAttribute="leadingMargin" id="ilV-1L-2yp"/>
                                                 <constraint firstAttribute="trailingMargin" secondItem="RFU-hW-gE9" secondAttribute="trailing" id="yDv-mv-xOR"/>
                                             </constraints>
                                         </tableViewCellContentView>
                                     </tableViewCell>
-                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" id="VVt-tR-yIx">
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" id="UKa-6o-Nfs">
                                         <rect key="frame" x="0.0" y="554" width="600" height="44"/>
                                         <autoresizingMask key="autoresizingMask"/>
-                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="VVt-tR-yIx" id="HIp-DI-C3i">
-                                            <rect key="frame" x="0.0" y="0.0" width="600" height="43.5"/>
+                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="UKa-6o-Nfs" id="rqp-RL-TUq">
+                                            <rect key="frame" x="0.0" y="0.0" width="600" height="44"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <button opaque="NO" contentMode="scaleToFill" ambiguous="YES" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="aMN-ls-Erc">
@@ -1058,9 +1058,13 @@
                                                     <state key="normal" title="注销登录" backgroundImage="redbutton">
                                                         <color key="titleColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                                                     </state>
+                                                    <userDefinedRuntimeAttributes>
+                                                        <userDefinedRuntimeAttribute type="number" keyPath="keyPath">
+                                                            <integer key="value" value="10"/>
+                                                        </userDefinedRuntimeAttribute>
+                                                    </userDefinedRuntimeAttributes>
                                                     <connections>
-                                                        <action selector="loginOut:" destination="Fca-zl-Yxj" eventType="touchUpInside" id="3iG-SN-f1a"/>
-                                                        <segue destination="WgI-dm-LF5" kind="presentation" id="JYE-tC-VZD"/>
+                                                        <action selector="updatePassword:" destination="Fca-zl-Yxj" eventType="touchUpInside" id="dhj-ui-XKE"/>
                                                     </connections>
                                                 </button>
                                             </subviews>
@@ -1463,5 +1467,6 @@
         <segue reference="IP3-As-ZAr"/>
         <segue reference="jmf-yg-v0b"/>
         <segue reference="Zkw-Uz-Sb5"/>
+        <segue reference="PQd-WW-1SH"/>
     </inferredMetricsTieBreakers>
 </document>
