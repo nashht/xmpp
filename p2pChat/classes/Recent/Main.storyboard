@@ -1093,7 +1093,7 @@
                         </constraints>
                     </view>
                     <navigationItem key="navigationItem" id="5G1-zt-gtu">
-                        <barButtonItem key="rightBarButtonItem" title="save" id="OYn-pe-PMn">
+                        <barButtonItem key="rightBarButtonItem" title="确定" id="OYn-pe-PMn">
                             <connections>
                                 <action selector="save:" destination="Zxd-O6-HJc" id="ZF6-sv-Nwh"/>
                             </connections>

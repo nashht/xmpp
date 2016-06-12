@@ -43,7 +43,7 @@
             break;
         case MyXmppUpdateTypeTitle:
             _infoTextField.text = _myvCard.title;
-            self.navigationItem.title = @"请输入新部门";
+            self.navigationItem.title = @"请输入新职务";
             break;
     }
     [_infoTextField becomeFirstResponder];
