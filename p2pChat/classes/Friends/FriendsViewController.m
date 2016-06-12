@@ -29,6 +29,9 @@
     [super viewDidLoad];
     
     self.navigationItem.title = @"联系人";
+    self.navigationController.navigationBar.barTintColor = [UIColor colorWithRed:28.0/155 green:162.0/255 blue:230.0/255 alpha:1.0];
+    [self.navigationController.navigationBar setTitleTextAttributes:@{NSForegroundColorAttributeName:[UIColor whiteColor]}];
+    
     
     [self.tableView registerNib:[UINib nibWithNibName:@"FriendCell" bundle:nil] forCellReuseIdentifier:@"friendCell"];
     

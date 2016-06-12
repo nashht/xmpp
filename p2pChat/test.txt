@@ -1,6 +1,0 @@
-// 加载文件数据
-          NSString *file = [[NSBundle mainBundle] pathForResource:@"test.txt" ofType:nil];
-          NSData *data = [NSData dataWithContentsOfFile:file];
-          
-          // 拼接文件参数
-          [formData appendPartWithFileData:data name:@"file" fileName:@"123.txt" mimeType:@"text/plain"];

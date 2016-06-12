@@ -42,6 +42,9 @@
     [super viewDidLoad];
     
     self.navigationItem.title = @"消息";
+    self.navigationController.navigationBar.barTintColor = [UIColor colorWithRed:28.0/155 green:162.0/255 blue:230.0/255 alpha:1.0];
+    [self.navigationController.navigationBar setTitleTextAttributes:@{NSForegroundColorAttributeName:[UIColor whiteColor]}];
+    
     UIBarButtonItem *back = [[UIBarButtonItem alloc]initWithTitle:@"返回" style:UIBarButtonItemStylePlain target:nil action:nil];
     self.navigationItem.backBarButtonItem = back;
     

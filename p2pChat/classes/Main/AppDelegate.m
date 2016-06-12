@@ -48,6 +48,8 @@
                                                                              categories:nil];
     [[UIApplication sharedApplication] registerUserNotificationSettings:settings];
     
+    [NSThread sleepForTimeInterval:2.0];
+    
     return YES;
 }
 
