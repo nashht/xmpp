@@ -16,9 +16,8 @@
 #import "GroupDocumentsTableViewController.h"
 #import "MyXMPP+Group.h"
 
-@interface MoreView () {
-    int imagePiecesNum;
-}
+@interface MoreView ()
+
 @property (strong, nonatomic) PhotoLibraryCenter *photoCenter;
 
 @property (strong, nonatomic) UIImagePickerController *imagePickerVC;

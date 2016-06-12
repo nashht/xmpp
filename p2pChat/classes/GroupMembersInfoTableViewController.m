@@ -12,7 +12,8 @@
 #import "XMPPvCardTemp.h"
 #import "MyXMPP+Group.h"
 #import "CreateGroupsViewController.h"
-
+#import "DataManager.h"
+#import "HistoryMessageViewController.h"
 
 static double InitialPositionX = 15;
 static double InitialPositionY = 12;
@@ -62,9 +63,15 @@ static double LabelHigh = 20;
         NSString *str = [NSString stringWithFormat:@"(%ld)",(unsigned long)count];
         [self.groupMembersCount setText:str];
     }];
-    
-    
+}
+- (IBAction)clearHistory:(id)sender {
+    [[DataManager shareManager]clearMessageByUsername:_groupName];
+}
 
+- (IBAction)quitGroup:(id)sender {
+    [[DataManager shareManager]clearMessageByUsername:_groupName];
+#warning 这里的逻辑感觉不对
+    [[MyXMPP shareInstance]leaveChatRoom];
 }
 
 - (void)addwithmembers:(NSArray *)members count:(int)i{
@@ -110,15 +117,20 @@ static double LabelHigh = 20;
     [self.navigationController pushViewController:creatgroup animated:YES];
 }
 
-#pragma mark - Table view data source
+- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
+    if ([segue.identifier isEqualToString:@"showHistory"]) {
+        HistoryMessageViewController *destinationVC = segue.destinationViewController;
+        destinationVC.isP2P = NO;
+        destinationVC.chatObjName = _groupName;
+    }
+}
 
+#pragma mark - Table view data source
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
-#warning Incomplete implementation, return the number of sections
     return 4;
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
-#warning Incomplete implementation, return the number of rows
 //    return 1;
     if(section == 2 || section == 3) return 1;
     else if(section ==0) return 2;
@@ -126,5 +138,9 @@ static double LabelHigh = 20;
         
 }
 
+#pragma mark - TableView Delegate
+- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
+    [tableView deselectRowAtIndexPath:indexPath animated:NO];
+}
 
 @end

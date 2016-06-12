@@ -147,7 +147,7 @@ static NSString *defaultGroupName = @"11111111";
     if (vCard.photo) {
         cell.imageView.image = [UIImage imageWithData:vCard.photo];
     } else {
-        cell.imageView.image = [UIImage imageNamed:@"0"];
+        cell.imageView.image = [UIImage imageNamed:@"1"];
     }
     cell.textLabel.text = obj.jid.user;
     cell.selected = [_didSelectedUsers containsObject:obj.jid.user];

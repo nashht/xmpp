@@ -11,8 +11,6 @@
 
 int main(int argc, char * argv[]) {
     @autoreleasepool {
-        NSLog(@"我不执行不执行。。。");
-        printf("我还是不执行不执行。。。");
         return UIApplicationMain(argc, argv, nil, NSStringFromClass([AppDelegate class]));
     }
 }

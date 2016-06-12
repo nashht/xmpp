@@ -80,7 +80,7 @@
     if (vCard.photo != nil) {
         _photoImage.image = [UIImage imageWithData:vCard.photo];
     } else {
-        _photoImage.image = [UIImage imageNamed:@"0"];
+        _photoImage.image = [UIImage imageNamed:@"1"];
     }
     
     _photoImage.frame = fileFrame.photoFrame;

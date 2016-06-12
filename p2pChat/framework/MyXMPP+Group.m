@@ -114,6 +114,18 @@ static NSString *pictureType = @"[图片]";
     [self.dataManager addRecentUsername:groupname time:[NSNumber numberWithInt:ltime] body:voiceType isOut:YES isP2P:NO];
 }
 
+- (void)sendPictureIdentifier:(NSString *)identifier data:(NSData *)imageData thumbnailName:(NSString *)thumbnailName filename:(NSString *)filename ToGroup:(NSString *)groupname {
+    NSString *picString = [imageData base64EncodedStringWithOptions:0];
+    
+    NSDate *date = [NSDate date];
+    NSTimeInterval t = [date timeIntervalSince1970];
+    int time = (int)t;
+    
+    [self sendMessageWithSubtype:@"picture" time:time body:picString more:filename toGroup:groupname];
+    [self.dataManager savePhotoWithUsername:groupname time:[NSNumber numberWithInt:time] filename:identifier thumbnail:thumbnailName isOut:YES];
+    [self.dataManager addRecentUsername:groupname time:[NSNumber numberWithInt:time] body:pictureType isOut:YES isP2P:NO];
+}
+
 - (void)destroyChatRoom{
     [self.chatroom destroyRoom];
 }

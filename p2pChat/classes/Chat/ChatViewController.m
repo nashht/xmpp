@@ -7,14 +7,6 @@
 //
 
 #import "ChatViewController.h"
-#import "MessageFrameModel.h"
-#import "RecordFrameModel.h"
-#import "RecordViewCell.h"
-#import "PicFrameModel.h"
-#import "FileFrameModel.h"
-#import "FileCell.h"
-#import "PicViewCell.h"
-#import "MessageViewCell.h"
 #import "DataManager.h"
 #import "Message.h"
 #import "GroupMessage.h"
@@ -29,16 +21,12 @@
 #import "GroupMembersInfoTableViewController.h"
 #import "FaceView.h"
 #import "FunctionView.h"
+#import "UITableView+GenerateMyXMPPCell.h"
 
 #define MOREHEIGHT 150
 #define ScreenSize  [UIScreen mainScreen].bounds.size
 #define BOTTOMHEIGHT 40
 #define FACEVIEWHEIGHT (ScreenSize.height * 0.353)
-
-static NSString *textReuseIdentifier = @"textMessageCell";
-static NSString *audioReuseIdentifier = @"audioMessageCell";
-static NSString *pictureReuseIdentifier = @"pictureMessageCell";
-static NSString *fileReuseIdentifier = @"fileMessageCell";
 
 @interface ChatViewController () <UITableViewDataSource, UITableViewDelegate, UITextFieldDelegate, BottomViewDelegate> {
     NSString *_photoPath;
@@ -100,15 +88,6 @@ static NSString *fileReuseIdentifier = @"fileMessageCell";
     _bottomView.delegate = self;
     _tableBottomHeight.constant = BOTTOMHEIGHT - _tabBarHeight;
     [self.view addSubview:_bottomView];
-    
-    // init more view
-    _showMoreView = NO;
-    _moreView = [[NSBundle mainBundle]loadNibNamed:@"MoreView" owner:self options:nil].lastObject;
-    _moreView.frame = CGRectMake(0, _screenSize.height, _screenSize.width, MOREHEIGHT);
-    _moreView.chatObjectString = _chatObjectString;
-//    _moreView.p2pChat = [self isP2PChat];
-    _moreView.p2pChat = YES;
-    [self.view addSubview:_moreView];
 
     // 添加手势，使得触控tableView时候收回键盘
     UITapGestureRecognizer *tableViewGesture = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(commentTableViewTouchInSide)];
@@ -116,18 +95,30 @@ static NSString *fileReuseIdentifier = @"fileMessageCell";
     tableViewGesture.cancelsTouchesInView = NO;
     [_historyTableView addGestureRecognizer:tableViewGesture];
     
-    // init face view
-    self.functionView = [[FunctionView alloc] initWithFrame:CGRectMake(0,_screenSize.height, [UIScreen mainScreen].bounds.size.width, FACEVIEWHEIGHT)];
-    self.functionView.backgroundColor = [UIColor whiteColor];
-    [self.view addSubview:_functionView];
-    _showFaceView = NO;
-    //获取图片并显示
-    __weak typeof (self) weakSelf = self;
-    [self.functionView setFunctionBlock:^(UIImage *image, NSString *imageName)
-     {
-         NSString *str = [NSString stringWithFormat:@"%@", imageName];
-         [weakSelf.bottomView inputFaceView:str];
-     }];
+    dispatch_async(dispatch_get_main_queue(), ^{
+        // init more view
+        _showMoreView = NO;
+        _moreView = [[NSBundle mainBundle]loadNibNamed:@"MoreView" owner:self options:nil].lastObject;
+        _moreView.frame = CGRectMake(0, _screenSize.height, _screenSize.width, MOREHEIGHT);
+        _moreView.chatObjectString = _chatObjectString;
+        //    _moreView.p2pChat = [self isP2PChat];
+        _moreView.p2pChat = YES;
+        [self.view addSubview:_moreView];
+        
+        // init face view
+        self.functionView = [[FunctionView alloc] initWithFrame:CGRectMake(0,_screenSize.height, [UIScreen mainScreen].bounds.size.width, FACEVIEWHEIGHT)];
+        self.functionView.backgroundColor = [UIColor whiteColor];
+        [self.view addSubview:_functionView];
+        _showFaceView = NO;
+        //获取图片并显示
+        __weak typeof (self) weakSelf = self;
+        [self.functionView setFunctionBlock:^(UIImage *image, NSString *imageName)
+         {
+             NSString *str = [NSString stringWithFormat:@"%@", imageName];
+             [weakSelf.bottomView inputFaceView:str];
+         }];
+    });
+    
     
     [self tableViewScrollToBottom];
 }
@@ -140,7 +131,6 @@ static NSString *fileReuseIdentifier = @"fileMessageCell";
 
 - (void)viewWillAppear:(BOOL)animated {
     self.tabBarController.tabBar.hidden = YES;
-    [[UIApplication sharedApplication].windows[0] addSubview:_bottomView];//bottom放在window上
     [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(keyboardWillShow:) name:UIKeyboardWillShowNotification object:nil];
     [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(keyboardWillHidden:) name:UIKeyboardWillHideNotification object:nil];
     [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(applicationEnteredBackground) name:UIApplicationDidEnterBackgroundNotification object:nil];
@@ -148,8 +138,6 @@ static NSString *fileReuseIdentifier = @"fileMessageCell";
 
 - (void)viewWillDisappear:(BOOL)animated {
     [[NSNotificationCenter defaultCenter]removeObserver:self name:nil object:nil];
-    [_bottomView resignFirstResponder];
-    [_bottomView removeFromSuperview];
     [[DataManager shareManager]updateUsername:_chatObjectString];
 }
 
@@ -187,6 +175,18 @@ static NSString *fileReuseIdentifier = @"fileMessageCell";
     }
 }
 
+- (MessageBean *)messageFromManagedObject:(NSManagedObject *)messageObj {
+    MessageBean *message = nil;
+    if (self.isP2PChat) {
+        Message *p2pMessage = (Message *)messageObj;
+        message = [[MessageBean alloc]initWithUsername:p2pMessage.username type:p2pMessage.type body:p2pMessage.body more:p2pMessage.more time:p2pMessage.time isOut:p2pMessage.isOut isP2P:YES];
+    } else {
+        GroupMessage *groupMessage = (GroupMessage *)messageObj;
+        message = [[MessageBean alloc]initWithUsername:groupMessage.username type:groupMessage.type body:groupMessage.body more:groupMessage.more time:groupMessage.time isOut:nil isP2P:NO];
+    }
+    return message;
+}
+
 #pragma mark -table view data source
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
     id<NSFetchedResultsSectionInfo> sectionInfo = _historyController.sections[section];
@@ -195,113 +195,17 @@ static NSString *fileReuseIdentifier = @"fileMessageCell";
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     NSManagedObject *messageObj = [_historyController objectAtIndexPath:indexPath];
-    MessageBean *message = nil;
-    if (self.isP2PChat) {
-        Message *p2pMessage = (Message *)messageObj;
-        message = [[MessageBean alloc]initWithUsername:p2pMessage.username type:p2pMessage.type body:p2pMessage.body more:p2pMessage.more time:p2pMessage.time isOut:p2pMessage.isOut isP2P:YES];
-    } else {
-        GroupMessage *groupMessage = (GroupMessage *)messageObj;
-        message = [[MessageBean alloc]initWithUsername:groupMessage.username type:groupMessage.type body:groupMessage.body more:groupMessage.more time:groupMessage.time isOut:nil isP2P:NO];
-    }
+    MessageBean *message = [self messageFromManagedObject:messageObj];
     
-    MessageType type = message.type.charValue;
-    switch (type) {
-        case MessageTypeMessage:{
-            MessageViewCell *cell = [_historyTableView dequeueReusableCellWithIdentifier:textReuseIdentifier];
-            
-            if (cell == nil) {
-                cell = [[MessageViewCell alloc] initWithStyle:UITableViewCellStyleSubtitle reuseIdentifier:textReuseIdentifier];
-            }
-            MessageFrameModel *messageFrameModel = [[MessageFrameModel alloc] init];
-            messageFrameModel.message = message;
-            cell.messageFrame = messageFrameModel;
-            return cell;
-        }
-            
-        case MessageTypeRecord:{
-            RecordViewCell *cell = [_historyTableView dequeueReusableCellWithIdentifier:audioReuseIdentifier];
-            
-            if (cell == nil) {
-                cell = [[RecordViewCell alloc] initWithStyle:UITableViewCellStyleSubtitle reuseIdentifier:audioReuseIdentifier];
-            }
-            RecordFrameModel *recordFrameMode = [[RecordFrameModel alloc] init];
-            recordFrameMode.message = message;
-            cell.recordFrame = recordFrameMode;
-            return cell;
-        }
-            
-        case MessageTypePicture:{
-            PicViewCell *cell = [_historyTableView dequeueReusableCellWithIdentifier:pictureReuseIdentifier];
-            
-            if (cell == nil) {
-                cell = [[PicViewCell alloc] initWithStyle:UITableViewCellStyleSubtitle reuseIdentifier:pictureReuseIdentifier];
-            }
-            
-            PicFrameModel *messageFrameModel = [[PicFrameModel alloc] init];
-            messageFrameModel.message = message;
-            cell.picFrame = messageFrameModel;
-            return cell;
-        }
-        case MessageTypeFile:{
-            FileCell *cell = [_historyTableView dequeueReusableCellWithIdentifier:fileReuseIdentifier];
-            
-            if (cell == nil) {
-                cell = [[FileCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:fileReuseIdentifier];
-            }
-            
-            FileFrameModel *fileFrameMode = [[FileFrameModel alloc] init];
-            fileFrameMode.message = message;
-            cell.fileFrame = fileFrameMode;
-            return cell;
-        }
-        
-        default:
-            break;
-    }
-    
-    return nil;
+    return [tableView dequeueMyXMPPCellFromMessage:message];
 }
 
 #pragma mark - table view delegate
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
     NSManagedObject *messageObj = [_historyController objectAtIndexPath:indexPath];
-    MessageBean *message = nil;
-    if (self.isP2PChat) {
-        Message *p2pMessage = (Message *)messageObj;
-        message = [[MessageBean alloc]initWithUsername:p2pMessage.username type:p2pMessage.type body:p2pMessage.body more:p2pMessage.more time:p2pMessage.time isOut:p2pMessage.isOut isP2P:YES];
-    } else {
-        GroupMessage *groupMessage = (GroupMessage *)messageObj;
-        message = [[MessageBean alloc]initWithUsername:groupMessage.username type:groupMessage.type body:groupMessage.body more:groupMessage.more time:groupMessage.time isOut:nil isP2P:NO];
-    }
-    MessageType type = message.type.charValue;
-    switch (type) {
-        case MessageTypeMessage:{
-            MessageFrameModel *messageFrameModel = [[MessageFrameModel alloc] init];
-            messageFrameModel.message = message;
-            return messageFrameModel.cellHeight + 1;
-        }
-            break;
-        case MessageTypePicture:{
-            PicFrameModel *picFrameModel = [[PicFrameModel alloc] init];
-            picFrameModel.message = message;
-            return picFrameModel.cellHeight + 1;
-        }
-            break;
-        case MessageTypeRecord:{
-            RecordFrameModel *recordFrameMode = [[RecordFrameModel alloc] init];
-            recordFrameMode.message = message;
-            return recordFrameMode.cellHeight + 1;
-        }
-            break;
-        case MessageTypeFile:{
-            FileFrameModel *fileFrameModel = [[FileFrameModel alloc] init];
-            fileFrameModel.message = message;
-            return fileFrameModel.cellHeight + 1;
-        }
-         default:
-            break;
-    }
-    return 0;
+    MessageBean *message = [self messageFromManagedObject:messageObj];
+
+    return [tableView heightOfMessage:message];
 }
 
 /**

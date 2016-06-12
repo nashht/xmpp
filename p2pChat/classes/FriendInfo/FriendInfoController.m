@@ -24,6 +24,7 @@
 @property (weak, nonatomic) IBOutlet UILabel *telephone;
 @property (weak, nonatomic) IBOutlet UILabel *position;
 @property (weak, nonatomic) IBOutlet UILabel *address;
+@property (weak, nonatomic) IBOutlet UIButton *sendButton;
 
 @end
 
@@ -40,7 +41,7 @@
     [_photoImageView.layer setCornerRadius:10];
     _photoImageView.layer.masksToBounds = true;
     if (friendVCard.photo == nil) {//好友头像
-        [_photoImageView setImage:[UIImage imageNamed:@"0"]];
+        [_photoImageView setImage:[UIImage imageNamed:@"1"]];
     } else {
         [_photoImageView setImage:[UIImage imageWithData:friendVCard.photo]];
     }
@@ -53,6 +54,9 @@
     _emailLabel.text = friendVCard.mailer ? : @"未设置";//邮箱
     _phoneLabel.text = friendVCard.uid ? : @"未设置";//座机
     _address.text = friendVCard.url ? : @"未设置";//地址
+    if (!self.canSendMessage) {
+        [_sendButton removeFromSuperview];
+    }
 }
 
 - (void)viewWillAppear:(BOOL)animated {
@@ -64,6 +68,15 @@
     chatVc.p2pChat = YES;
     chatVc.title = _userObj.jid.user;
     chatVc.chatObjectString = _userObj.jid.user;
+}
+
+#pragma mark data source
+- (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
+    return self.canSendMessage ? 3 : 2;
+}
+
+- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
+    [tableView deselectRowAtIndexPath:indexPath animated:NO];
 }
 
 @end

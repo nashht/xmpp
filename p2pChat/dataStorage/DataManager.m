@@ -57,6 +57,29 @@
     [_context save:err];
 }
 
+- (void)deleteFromEntity:(NSString *)entityName withPredicate:(NSPredicate *)predicate {
+    NSFetchRequest *request = [[NSFetchRequest alloc]init];
+    NSEntityDescription *entityDescription = [NSEntityDescription entityForName:entityName inManagedObjectContext:_context];
+    request.entity = entityDescription;
+    request.predicate = predicate;
+    NSError *err = nil;
+    NSArray *messageArray = [_context executeFetchRequest:request error:&err];
+    if (err == nil && messageArray.count > 0) {
+        for (NSManagedObject *messageObj in messageArray) {
+            [_context deleteObject:messageObj];
+        }
+    }
+    if (![_context save:&err]) {
+        NSLog(@"DataManager clear history message failed: %@", err);
+    }
+}
+
+- (void)clearAll {
+    [self deleteFromEntity:@"Message" withPredicate:nil];
+    [self deleteFromEntity:@"LastMessage" withPredicate:nil];
+    [self deleteFromEntity:@"GroupMessage" withPredicate:nil];
+}
+
 #pragma mark - message
 - (NSFetchedResultsController *)getMessageByUsername:(NSString *)username {
     NSPredicate *predicate = [NSPredicate predicateWithFormat:@"username = %@", username];
@@ -70,21 +93,8 @@
 }
 
 - (void)clearMessageByUsername:(NSString *)username {
-    NSFetchRequest *request = [[NSFetchRequest alloc]init];
-    NSEntityDescription *entityDescription = [NSEntityDescription entityForName:@"Message" inManagedObjectContext:_context];
-    request.entity = entityDescription;
     NSPredicate *predicate = [NSPredicate predicateWithFormat:@"username = %@", username];
-    request.predicate = predicate;
-    NSError *err = nil;
-    NSArray *messageArray = [_context executeFetchRequest:request error:&err];
-    if (err == nil && messageArray.count > 0) {
-        for (NSManagedObject *messageObj in messageArray) {
-            [_context deleteObject:messageObj];
-        }
-    }
-    if (![_context save:&err]) {
-        NSLog(@"DataManager clear history message failed: %@", err);
-    }
+    [self deleteFromEntity:@"Message" withPredicate:predicate];
 }
 
 - (void)saveMessageWithUsername:(NSString *)username time:(NSNumber *)time body:(NSString *)body isOut:(BOOL)isOut{
@@ -209,21 +219,8 @@
 }
 
 - (void)clearMessageByGroupname:(NSString *)groupname {
-    NSFetchRequest *request = [[NSFetchRequest alloc]init];
-    NSEntityDescription *entityDescription = [NSEntityDescription entityForName:@"GroupMessage" inManagedObjectContext:_context];
-    request.entity = entityDescription;
     NSPredicate *predicate = [NSPredicate predicateWithFormat:@"groupname = %@", groupname];
-    request.predicate = predicate;
-    NSError *err = nil;
-    NSArray *messageArray = [_context executeFetchRequest:request error:&err];
-    if (err == nil && messageArray.count > 0) {
-        for (NSManagedObject *messageObj in messageArray) {
-            [_context deleteObject:messageObj];
-        }
-    }
-    if (![_context save:&err]) {
-        NSLog(@"DataManager clear group history message failed: %@", err);
-    }
+    [self deleteFromEntity:@"GroupMessage" withPredicate:predicate];
 }
 
 - (NSFetchedResultsController *)getMessageByGroupname:(NSString *)groupname {

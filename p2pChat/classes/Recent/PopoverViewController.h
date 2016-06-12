@@ -8,6 +8,8 @@
 
 #import <UIKit/UIKit.h>
 
+typedef void (^ popViewBlock)();
+
 @interface PopoverViewController : UIViewController
 
 - (void)setCreateGroupBlock:(void (^)(void))createGroup showMyGroupBlock:(void (^)(void))showMyGroups showAllGroupBlock:(void (^)(void))showAllGroups;
