@@ -33,7 +33,6 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    
     [self setNavigationBar];
 
     self.tableView.delegate = self;
@@ -116,7 +115,7 @@
     
 }
 
-- (IBAction)loginOut:(id)sender {
+- (IBAction)logOut:(id)sender {
     [[MyXMPP shareInstance] loginout];
 }
 

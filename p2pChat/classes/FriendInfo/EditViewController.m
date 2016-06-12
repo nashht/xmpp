@@ -21,8 +21,6 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     
-//    self.navigationItem.rightBarButtonItem.title = @"确定";
-//    self.navigationItem.backBarButtonItem.title = @"返回";
     _myvCard = [MyXMPP shareInstance].myVCardTemp;
     _infoTextField.delegate = self;
     
