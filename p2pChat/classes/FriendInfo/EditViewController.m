@@ -21,29 +21,31 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     
+//    self.navigationItem.rightBarButtonItem.title = @"确定";
+//    self.navigationItem.backBarButtonItem.title = @"返回";
     _myvCard = [MyXMPP shareInstance].myVCardTemp;
     _infoTextField.delegate = self;
     
     switch (_type) {
         case MyXmppUpdateTypeMobilePhone:
             _infoTextField.text = _myvCard.note;
-            self.navigationItem.title = @"请输入新手机号";
+            self.navigationItem.title = @"电话设置";
             break;
         case MyXmppUpdateTypeAddress:
             _infoTextField.text = _myvCard.url;
-            self.navigationItem.title = @"请输入新地址";
+            self.navigationItem.title = @"地址设置";
             break;
         case MyXmppUpdateTypeEmail:
             _infoTextField.text = _myvCard.mailer;
-            self.navigationItem.title = @"请输入新邮箱";
+            self.navigationItem.title = @"邮箱设置";
             break;
         case MyXmppUpdateTypePhone:
             _infoTextField.text = _myvCard.uid;
-            self.navigationItem.title = @"请输入新电话";
+            self.navigationItem.title = @"座机设置";
             break;
         case MyXmppUpdateTypeTitle:
             _infoTextField.text = _myvCard.title;
-            self.navigationItem.title = @"请输入新部门";
+            self.navigationItem.title = @"部门设置";
             break;
     }
     [_infoTextField becomeFirstResponder];
