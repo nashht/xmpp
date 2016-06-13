@@ -2797,7 +2797,7 @@
 				);
 				ONLY_ACTIVE_ARCH = NO;
 				OTHER_LDFLAGS = "";
-				PRODUCT_BUNDLE_IDENTIFIER = zxk.xmppChat;
+				PRODUCT_BUNDLE_IDENTIFIER = zxk1.xmppChat;
 				PRODUCT_NAME = XMPP;
 				PROVISIONING_PROFILE = "";
 				SDKROOT = iphoneos;
@@ -2827,7 +2827,7 @@
 				);
 				ONLY_ACTIVE_ARCH = NO;
 				OTHER_LDFLAGS = "";
-				PRODUCT_BUNDLE_IDENTIFIER = zxk.xmppChat;
+				PRODUCT_BUNDLE_IDENTIFIER = zxk1.xmppChat;
 				PRODUCT_NAME = XMPP;
 				PROVISIONING_PROFILE = "";
 				SDKROOT = iphoneos;
