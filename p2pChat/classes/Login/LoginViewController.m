@@ -71,5 +71,10 @@
     [self presentViewController:alertController animated:YES completion:nil];
 }
 
+- (void)touchesBegan:(NSSet<UITouch *> *)touches withEvent:(UIEvent *)event{
+    [_nameTF resignFirstResponder];
+    [_passwordTF resignFirstResponder];
+}
+
 
 @end
