@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="10116" systemVersion="15F34" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="10117" systemVersion="15F34" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
     <dependencies>
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="10085"/>
@@ -34,16 +34,9 @@
                         <action selector="showMyGroups:" destination="-1" eventType="touchUpInside" id="Kk8-k8-KQy"/>
                     </connections>
                 </button>
-                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Ab6-wp-cgF">
-                    <rect key="frame" x="36" y="115" width="60" height="30"/>
-                    <state key="normal" title="查找群组"/>
-                    <connections>
-                        <action selector="showAllGroups:" destination="-1" eventType="touchUpInside" id="Xqo-HB-Mpl"/>
-                    </connections>
-                </button>
                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="RP2-sJ-uYw">
-                    <rect key="frame" x="5" y="55" width="121" height="1"/>
-                    <color key="backgroundColor" red="0.56206597219999999" green="0.56206597219999999" blue="0.56206597219999999" alpha="1" colorSpace="calibratedRGB"/>
+                    <rect key="frame" x="5" y="55" width="132" height="1"/>
+                    <color key="backgroundColor" red="0.80715356691919193" green="0.80715356691919193" blue="0.80715356691919193" alpha="1" colorSpace="calibratedRGB"/>
                     <constraints>
                         <constraint firstAttribute="height" constant="1" id="VIc-Cz-Kzj"/>
                     </constraints>
@@ -52,8 +45,8 @@
                     <nil key="highlightedColor"/>
                 </label>
                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="syY-R9-sfd">
-                    <rect key="frame" x="5" y="105" width="121" height="1"/>
-                    <color key="backgroundColor" red="0.56206597219999999" green="0.56206597219999999" blue="0.56206597219999999" alpha="1" colorSpace="calibratedRGB"/>
+                    <rect key="frame" x="5" y="105" width="132" height="1"/>
+                    <color key="backgroundColor" red="0.82863794191919193" green="0.82863794191919193" blue="0.82863794191919193" alpha="1" colorSpace="calibratedRGB"/>
                     <constraints>
                         <constraint firstAttribute="height" constant="1" id="PY6-JG-utn"/>
                     </constraints>
@@ -61,6 +54,13 @@
                     <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                     <nil key="highlightedColor"/>
                 </label>
+                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Ab6-wp-cgF">
+                    <rect key="frame" x="41" y="114" width="60" height="30"/>
+                    <state key="normal" title="查找群组"/>
+                    <connections>
+                        <action selector="showAllGroups:" destination="-1" eventType="touchUpInside" id="Xqo-HB-Mpl"/>
+                    </connections>
+                </button>
             </subviews>
             <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
             <constraints>
@@ -71,10 +71,12 @@
                 <constraint firstItem="Rja-nz-qiY" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" id="AXU-dT-XyW"/>
                 <constraint firstItem="syY-R9-sfd" firstAttribute="top" secondItem="RP2-sJ-uYw" secondAttribute="bottom" constant="49" id="EOx-lq-aZD"/>
                 <constraint firstAttribute="trailing" secondItem="Rja-nz-qiY" secondAttribute="trailing" id="G4J-KB-I3m"/>
+                <constraint firstItem="RP2-sJ-uYw" firstAttribute="width" secondItem="i5M-Pr-FkT" secondAttribute="width" id="Ib7-1X-dI1"/>
                 <constraint firstItem="Yg7-1N-jZu" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" constant="-32" id="Lbb-KR-ZRa"/>
                 <constraint firstItem="Yg7-1N-jZu" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" constant="-32" id="OFF-9L-K0i"/>
                 <constraint firstItem="Rja-nz-qiY" firstAttribute="leading" secondItem="Yg7-1N-jZu" secondAttribute="leading" id="TfE-5D-sfW"/>
-                <constraint firstItem="Ab6-wp-cgF" firstAttribute="top" secondItem="syY-R9-sfd" secondAttribute="bottom" constant="9" id="Tfr-WT-NHe"/>
+                <constraint firstItem="Ab6-wp-cgF" firstAttribute="top" secondItem="syY-R9-sfd" secondAttribute="bottom" constant="8" id="Tfr-WT-NHe"/>
+                <constraint firstItem="syY-R9-sfd" firstAttribute="width" secondItem="RP2-sJ-uYw" secondAttribute="width" id="chK-PF-1MA"/>
                 <constraint firstItem="RP2-sJ-uYw" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" constant="5" id="eUY-zs-CRo"/>
                 <constraint firstItem="RP2-sJ-uYw" firstAttribute="trailing" secondItem="syY-R9-sfd" secondAttribute="trailing" id="fMc-WM-EIE"/>
                 <constraint firstAttribute="trailing" secondItem="Yg7-1N-jZu" secondAttribute="trailing" constant="-35" id="fV4-aQ-YM2"/>
@@ -85,7 +87,7 @@
                 <constraint firstAttribute="trailing" secondItem="Yg7-1N-jZu" secondAttribute="trailing" id="oTi-Yc-vQL"/>
                 <constraint firstItem="Yg7-1N-jZu" firstAttribute="top" secondItem="i5M-Pr-FkT" secondAttribute="top" constant="53" id="pE3-LR-iXW"/>
                 <constraint firstItem="Yg7-1N-jZu" firstAttribute="trailing" secondItem="Rja-nz-qiY" secondAttribute="trailing" id="q8K-06-ujZ"/>
-                <constraint firstAttribute="trailing" secondItem="RP2-sJ-uYw" secondAttribute="trailing" constant="16" id="sfM-BI-RtS"/>
+                <constraint firstAttribute="trailing" secondItem="RP2-sJ-uYw" secondAttribute="trailing" constant="5" id="sfM-BI-RtS"/>
                 <constraint firstItem="Rja-nz-qiY" firstAttribute="trailing" secondItem="Yg7-1N-jZu" secondAttribute="trailing" id="vm6-tC-v48"/>
             </constraints>
             <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
@@ -99,6 +101,7 @@
                     <exclude reference="gZU-Xv-gk4"/>
                     <exclude reference="mpr-hn-5D9"/>
                     <exclude reference="q8K-06-ujZ"/>
+                    <exclude reference="Ib7-1X-dI1"/>
                 </mask>
             </variation>
             <point key="canvasLocation" x="290" y="42"/>

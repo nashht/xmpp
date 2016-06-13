@@ -45,6 +45,7 @@
 		907911131D066EE300FE212D /* CheckMyGroupViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 907911121D066EE300FE212D /* CheckMyGroupViewController.m */; };
 		907911161D0674AA00FE212D /* CheckAllGroupViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 907911151D0674AA00FE212D /* CheckAllGroupViewController.m */; };
 		9091468A1D0D60C8001DAF5E /* MyNavigationController.m in Sources */ = {isa = PBXBuildFile; fileRef = 909146891D0D60C8001DAF5E /* MyNavigationController.m */; };
+		9098AE321D0EAA5500036BA4 /* UIViewController+BackButtonHandler.m in Sources */ = {isa = PBXBuildFile; fileRef = 9098AE311D0EAA5500036BA4 /* UIViewController+BackButtonHandler.m */; };
 		90DC39431CEC1C7E002CECCF /* AFHTTPSessionManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 90DC39371CEC1C7E002CECCF /* AFHTTPSessionManager.m */; };
 		90DC39441CEC1C7E002CECCF /* AFNetworkReachabilityManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 90DC393A1CEC1C7E002CECCF /* AFNetworkReachabilityManager.m */; };
 		90DC39451CEC1C7E002CECCF /* AFSecurityPolicy.m in Sources */ = {isa = PBXBuildFile; fileRef = 90DC393C1CEC1C7E002CECCF /* AFSecurityPolicy.m */; };
@@ -360,6 +361,8 @@
 		907911151D0674AA00FE212D /* CheckAllGroupViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CheckAllGroupViewController.m; sourceTree = "<group>"; };
 		909146881D0D60C8001DAF5E /* MyNavigationController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MyNavigationController.h; sourceTree = "<group>"; };
 		909146891D0D60C8001DAF5E /* MyNavigationController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MyNavigationController.m; sourceTree = "<group>"; };
+		9098AE301D0EAA5500036BA4 /* UIViewController+BackButtonHandler.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIViewController+BackButtonHandler.h"; sourceTree = "<group>"; };
+		9098AE311D0EAA5500036BA4 /* UIViewController+BackButtonHandler.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIViewController+BackButtonHandler.m"; sourceTree = "<group>"; };
 		90DC39361CEC1C7E002CECCF /* AFHTTPSessionManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AFHTTPSessionManager.h; sourceTree = "<group>"; };
 		90DC39371CEC1C7E002CECCF /* AFHTTPSessionManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AFHTTPSessionManager.m; sourceTree = "<group>"; };
 		90DC39381CEC1C7E002CECCF /* AFNetworking.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AFNetworking.h; sourceTree = "<group>"; };
@@ -1108,6 +1111,8 @@
 		DA6406391D0C2347006DBC9E /* MessageCell */ = {
 			isa = PBXGroup;
 			children = (
+				9098AE301D0EAA5500036BA4 /* UIViewController+BackButtonHandler.h */,
+				9098AE311D0EAA5500036BA4 /* UIViewController+BackButtonHandler.m */,
 				DA64063E1D0C28CB006DBC9E /* UITableView+GenerateMyXMPPCell.h */,
 				DA64063F1D0C28CB006DBC9E /* UITableView+GenerateMyXMPPCell.m */,
 				9001224B1CA91EE2005D5BFA /* MessageViewCell.h */,
@@ -2495,6 +2500,7 @@
 				DA90B1DF1C8989930080E037 /* XMPPCapabilities.xcdatamodel in Sources */,
 				DA90B1AF1C8989930080E037 /* XMPPSystemInputActivityMonitor.m in Sources */,
 				907911131D066EE300FE212D /* CheckMyGroupViewController.m in Sources */,
+				9098AE321D0EAA5500036BA4 /* UIViewController+BackButtonHandler.m in Sources */,
 				90DC39991CF4735F002CECCF /* AFAutoPurgingImageCache.m in Sources */,
 				DA6406401D0C28CB006DBC9E /* UITableView+GenerateMyXMPPCell.m in Sources */,
 				DACDC79B1CC879F9005F5FA2 /* MyXMPP+VCard.m in Sources */,
