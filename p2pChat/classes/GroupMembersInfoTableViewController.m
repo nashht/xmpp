@@ -89,6 +89,10 @@ static double LabelHigh = 15;
         id theSegue = segue.destinationViewController;
         [theSegue setValue:_groupName forKey:@"laterGroupName"];
         [theSegue setValue:_membercountstr forKey:@"count"];
+    } else if([segue.identifier isEqualToString:@"createGroup"]) {
+        UINavigationController *navigationController = segue.destinationViewController;
+        CreateGroupsViewController *destinationVC = navigationController.viewControllers[0];
+        destinationVC.didSelectedUsers = _memberarray;
     }
 }
 
@@ -147,10 +151,11 @@ static double LabelHigh = 15;
 }
 
 -(void)insertMemberAction{
-    CreateGroupsViewController *creatgroup =[[CreateGroupsViewController alloc]init];
-    creatgroup.modalTransitionStyle = UIModalTransitionStyleCrossDissolve;
-    UINavigationController *nvi = [[UINavigationController alloc]init];
-    [self.navigationController pushViewController:creatgroup animated:YES];
+//    CreateGroupsViewController *creatgroup =[[CreateGroupsViewController alloc]init];
+//    creatgroup.modalTransitionStyle = UIModalTransitionStyleCrossDissolve;
+//    UINavigationController *nvi = [[UINavigationController alloc]init];
+//    [self.navigationController pushViewController:creatgroup animated:YES];
+    [self performSegueWithIdentifier:@"createGroup" sender:nil];
 }
 
 -(void)addBlankLabel{

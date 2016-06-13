@@ -130,7 +130,7 @@
             cell.userimage.image = [UIImage imageNamed:@"1"];
         }
     } else {
-        cell.userimage.image = [UIImage imageNamed:@"group_default"];
+        cell.userimage.image = [UIImage imageNamed:@"group"];
     }
 
     cell.lastmessagetime.text = [Tool stringFromDate:[NSDate dateWithTimeIntervalSince1970:lastMessage.time.doubleValue]];

@@ -30,7 +30,18 @@
     CGFloat radius = CGRectGetHeight([_nameTF bounds])/8;
     [_login.layer setCornerRadius:radius];
     _login.layer.masksToBounds = true;
+    
+    UITapGestureRecognizer *tapGestureRecognizer = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(keyboardHide:)];
+    //设置成NO表示当前控件响应后会传播到其他控件上，默认为YES。
+    tapGestureRecognizer.cancelsTouchesInView = NO;
+    //将触摸事件添加到当前view
+    [self.view addGestureRecognizer:tapGestureRecognizer];
  
+}
+
+-(void)keyboardHide:(UITapGestureRecognizer*)tap{
+    [_passwordTF resignFirstResponder];
+    [_nameTF resignFirstResponder];
 }
 
 - (IBAction)login:(id)sender {
