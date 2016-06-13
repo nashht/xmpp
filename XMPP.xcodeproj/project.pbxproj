@@ -2355,7 +2355,7 @@
 				TargetAttributes = {
 					DA95D5911C3A16E6001ED1A6 = {
 						CreatedOnToolsVersion = 7.2;
-						DevelopmentTeam = 62MA2C9T39;
+						DevelopmentTeam = H9BMMLH46C;
 					};
 					DA95D5AD1C3A16E6001ED1A6 = {
 						CreatedOnToolsVersion = 7.2;
@@ -2797,7 +2797,7 @@
 				);
 				ONLY_ACTIVE_ARCH = NO;
 				OTHER_LDFLAGS = "";
-				PRODUCT_BUNDLE_IDENTIFIER = zxk.xmppChat;
+				PRODUCT_BUNDLE_IDENTIFIER = zxk1.xmppChat;
 				PRODUCT_NAME = XMPP;
 				PROVISIONING_PROFILE = "";
 				SDKROOT = iphoneos;
@@ -2827,7 +2827,7 @@
 				);
 				ONLY_ACTIVE_ARCH = NO;
 				OTHER_LDFLAGS = "";
-				PRODUCT_BUNDLE_IDENTIFIER = zxk.xmppChat;
+				PRODUCT_BUNDLE_IDENTIFIER = zxk1.xmppChat;
 				PRODUCT_NAME = XMPP;
 				PROVISIONING_PROFILE = "";
 				SDKROOT = iphoneos;

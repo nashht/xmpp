@@ -27,6 +27,8 @@
     _dataManager = [[DataManager alloc]init];
     _dataManager.context = _managedObjectContext;
     _myXMPP = [MyXMPP shareInstance];
+
+    [application setStatusBarStyle:UIStatusBarStyleLightContent];
     
 //    [_myXMPP loginWithName:@"赵晓昆" Password:@"123"];
     if ([[NSUserDefaults standardUserDefaults]stringForKey:@"name"] != nil) {

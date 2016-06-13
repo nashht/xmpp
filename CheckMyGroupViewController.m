@@ -50,7 +50,7 @@
         cell = [[UITableViewCell alloc] init];
     }
     cell.textLabel.text = _members[indexPath.row];
-    
+    cell.imageView.image = [UIImage imageNamed:@"group_default"];
     return cell;
 }
 

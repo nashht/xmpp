@@ -21,8 +21,8 @@
 
 @property (weak, nonatomic) IBOutlet UILabel *nameLabel;
 @property (weak, nonatomic) IBOutlet UILabel *groupLabel;
-
 @property (weak, nonatomic) IBOutlet UILabel *phoneLabel;
+
 @property (weak, nonatomic) IBOutlet UILabel *emailLabel;
 @property (weak, nonatomic) IBOutlet UILabel *titleLabel;
 @property (weak, nonatomic) IBOutlet UILabel *addressLabel;
@@ -60,7 +60,7 @@
     _photoView.layer.masksToBounds = true;
     NSString *myName = [[NSUserDefaults standardUserDefaults]stringForKey:@"name"];
     _nameLabel.text = myName;
-    XMPPUserCoreDataStorageObject *user = [[MyXMPP shareInstance]fetchUserWithUsername:myName];
+//    XMPPUserCoreDataStorageObject *user = [[MyXMPP shareInstance]fetchUserWithUsername:myName];
     
     _xmpp = [MyXMPP shareInstance];
     _status = [_xmpp myStatus];
@@ -122,6 +122,7 @@
 - (void)viewDidAppear:(BOOL)animated {
     self.tabBarController.tabBar.hidden = NO;
 }
+
 
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
     if ([segue.identifier isEqualToString:@"editInfo"]) {

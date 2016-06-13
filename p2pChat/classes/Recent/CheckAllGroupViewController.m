@@ -57,6 +57,7 @@
         cell = [[UITableViewCell alloc] init];
     }
     cell.textLabel.text = _members[indexPath.row];
+    cell.imageView.image = [UIImage imageNamed:@"group_default"];
     
     return cell;
 }
@@ -73,7 +74,7 @@
     ChatViewController *viewController = [storyboard instantiateViewControllerWithIdentifier:@"chat"];
     viewController.chatObjectString = name;
     viewController.p2pChat = NO;
-    [self.navigationController pushViewController:viewController animated:YES];
+//    [self.navigationController pushViewController:viewController animated:YES];
    
 //    [self.navigationController ]
 //    [self.navigationController showViewController:viewController sender:options];
