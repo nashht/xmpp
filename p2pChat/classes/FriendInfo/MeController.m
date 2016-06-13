@@ -13,6 +13,7 @@
 #import "PhotoLibraryCenter.h"
 #import "EditViewController.h"
 #import "MyXMPP.h"
+#import "ChangePswViewController.h"
 
 @interface MeController ()<UIImagePickerControllerDelegate,UITableViewDataSource,UITableViewDelegate,UINavigationControllerDelegate>
 
@@ -130,11 +131,12 @@
 //        NSIndexPath *indexPath = sender;
         editVC.type = ((NSIndexPath *)sender).row;
     }
+    if ([segue.identifier isEqualToString:@"changepassword"]) {
+        ChangePswViewController *changePswVC = segue.destinationViewController;
+    }
 }
 
-- (IBAction)updatePassword:(id)sender {
-    
-}
+
 
 - (IBAction)logOut:(id)sender {
     [[MyXMPP shareInstance] loginout];

@@ -13,6 +13,7 @@
 		844988031CC8BE21009AE90E /* GroupMessage+CoreDataProperties.m in Sources */ = {isa = PBXBuildFile; fileRef = 844988001CC8BE21009AE90E /* GroupMessage+CoreDataProperties.m */; };
 		844988041CC8BE21009AE90E /* GroupMessage.m in Sources */ = {isa = PBXBuildFile; fileRef = 844988021CC8BE21009AE90E /* GroupMessage.m */; };
 		844988071CC8C794009AE90E /* XMPPMessage+MyExtends.m in Sources */ = {isa = PBXBuildFile; fileRef = 844988061CC8C794009AE90E /* XMPPMessage+MyExtends.m */; };
+		847B24201D0EAD670029F642 /* ChangePswViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 847B241F1D0EAD670029F642 /* ChangePswViewController.m */; };
 		848D25FA1CE9B76300F50727 /* GroupDocumentsTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 848D25F91CE9B76300F50727 /* GroupDocumentsTableViewController.m */; };
 		84F893671D039E8C00BCED69 /* GroupMembersListTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 84F893661D039E8C00BCED69 /* GroupMembersListTableViewController.m */; };
 		900122631CA91EE3005D5BFA /* ChatViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 900122461CA91EE2005D5BFA /* ChatViewController.m */; };
@@ -298,6 +299,8 @@
 		844988021CC8BE21009AE90E /* GroupMessage.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = GroupMessage.m; path = dataStorage/GroupMessage.m; sourceTree = "<group>"; };
 		844988051CC8C794009AE90E /* XMPPMessage+MyExtends.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "XMPPMessage+MyExtends.h"; path = "framework/XMPPMessage+MyExtends.h"; sourceTree = "<group>"; };
 		844988061CC8C794009AE90E /* XMPPMessage+MyExtends.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "XMPPMessage+MyExtends.m"; path = "framework/XMPPMessage+MyExtends.m"; sourceTree = "<group>"; };
+		847B241E1D0EAD670029F642 /* ChangePswViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ChangePswViewController.h; sourceTree = "<group>"; };
+		847B241F1D0EAD670029F642 /* ChangePswViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ChangePswViewController.m; sourceTree = "<group>"; };
 		848D25F81CE9B76300F50727 /* GroupDocumentsTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GroupDocumentsTableViewController.h; sourceTree = "<group>"; };
 		848D25F91CE9B76300F50727 /* GroupDocumentsTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GroupDocumentsTableViewController.m; sourceTree = "<group>"; };
 		84F893651D039E8C00BCED69 /* GroupMembersListTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GroupMembersListTableViewController.h; sourceTree = "<group>"; };
@@ -1086,6 +1089,8 @@
 				DAAF2C121CCCA87700C51494 /* EditViewController.m */,
 				909146881D0D60C8001DAF5E /* MyNavigationController.h */,
 				909146891D0D60C8001DAF5E /* MyNavigationController.m */,
+				847B241E1D0EAD670029F642 /* ChangePswViewController.h */,
+				847B241F1D0EAD670029F642 /* ChangePswViewController.m */,
 			);
 			name = Me;
 			path = FriendInfo;
@@ -2450,6 +2455,7 @@
 				DA90B1DD1C8989930080E037 /* XMPPTransports.m in Sources */,
 				DA90B18B1C8989930080E037 /* XMPPDeprecatedDigestAuthentication.m in Sources */,
 				DA90B1AA1C8989930080E037 /* XMPPUserCoreDataStorageObject.m in Sources */,
+				847B24201D0EAD670029F642 /* ChangePswViewController.m in Sources */,
 				9001226A1CA91EE3005D5BFA /* RecordFrameModel.m in Sources */,
 				90DC39451CEC1C7E002CECCF /* AFSecurityPolicy.m in Sources */,
 				DA90B1981C8989930080E037 /* XMPPJID.m in Sources */,
