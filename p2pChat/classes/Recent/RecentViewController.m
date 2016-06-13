@@ -43,7 +43,7 @@
     
     self.navigationItem.title = @"消息";
     
-    UIBarButtonItem *back = [[UIBarButtonItem alloc]initWithTitle:@"返回" style:UIBarButtonItemStylePlain target:nil action:nil];
+    UIBarButtonItem *back = [[UIBarButtonItem alloc]initWithTitle:@"消息" style:UIBarButtonItemStylePlain target:nil action:nil];
     self.navigationItem.backBarButtonItem = back;
     
     if ([[NSUserDefaults standardUserDefaults]stringForKey:@"name"] == nil) {

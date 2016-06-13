@@ -102,11 +102,10 @@
 }
 
 - (void)changeImage{
-    NSLog(@"changeimage");
-    
     UIImagePickerController *imagePicker = [[UIImagePickerController alloc] init];
     imagePicker.delegate = self;
     imagePicker.allowsEditing = YES;
+    imagePicker.navigationBar.barTintColor = [UIColor colorWithRed:28.0/155 green:162.0/255 blue:230.0/255 alpha:1.0];
     
     [self presentViewController:imagePicker animated:YES completion:^{
         
@@ -149,6 +148,8 @@
 
 #pragma mark - UIImagePickerDelegate
 - (void)imagePickerController:(UIImagePickerController *)picker didFinishPickingMediaWithInfo:(NSDictionary<NSString *,id> *)info{
+    
+    self.navigationController.navigationBar.barTintColor = [UIColor colorWithRed:28.0/155 green:162.0/255 blue:230.0/255 alpha:1.0];
     UIImage *image = info[UIImagePickerControllerEditedImage];
     _photoView.image = image;
 

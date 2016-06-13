@@ -6,6 +6,7 @@
 //  Copyright © 2016年 xiaokun. All rights reserved.
 //
 
+#import "UIViewController+BackButtonHandler.h"
 #import "ChatViewController.h"
 #import "DataManager.h"
 #import "Message.h"
@@ -28,7 +29,7 @@
 #define BOTTOMHEIGHT 40
 #define FACEVIEWHEIGHT (ScreenSize.height * 0.353)
 
-@interface ChatViewController () <UITableViewDataSource, UITableViewDelegate, UITextFieldDelegate, BottomViewDelegate> {
+@interface ChatViewController () <UITableViewDataSource, UITableViewDelegate, UITextFieldDelegate, BackButtonHandlerProtocol,BottomViewDelegate> {
     NSString *_photoPath;
     BOOL _showMoreView;
     BOOL _showFaceView;
@@ -119,7 +120,8 @@
          }];
     });
     
-    
+//    UIBarButtonItem *back = [[UIBarButtonItem alloc] initWithTitle:@"消息" style:UIBarButtonItemStylePlain target:self action:@selector(backToRecent)];
+
     [self tableViewScrollToBottom];
 }
 
@@ -163,6 +165,11 @@
                                      atScrollPosition:UITableViewScrollPositionBottom animated:NO];
         }
     }
+}
+
+- (void)backToRecent{
+    self.tabBarController.selectedIndex = 0;
+    [self.navigationController popToRootViewControllerAnimated:NO];
 }
 
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
@@ -304,4 +311,8 @@
     }
 }
 
+- (BOOL)navigationShouldPopOnBackButton{
+    [self backToRecent];
+    return YES;
+}
 @end

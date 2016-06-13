@@ -81,7 +81,7 @@
 }
 
 - (void)nameViewClick{
-    NSLog(@"nameViewClick");
+//    NSLog(@"nameViewClick");
     self.group.opened = !self.group.isOpened;
     
     if ([self.delegate respondsToSelector:@selector(headerViewDidClickedNameView:)]) {
