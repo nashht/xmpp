@@ -358,8 +358,8 @@
 		907911151D0674AA00FE212D /* CheckAllGroupViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CheckAllGroupViewController.m; sourceTree = "<group>"; };
 		909146881D0D60C8001DAF5E /* MyNavigationController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MyNavigationController.h; sourceTree = "<group>"; };
 		909146891D0D60C8001DAF5E /* MyNavigationController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MyNavigationController.m; sourceTree = "<group>"; };
-		9098AE301D0EAA5500036BA4 /* UIViewController+BackButtonHandler.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIViewController+BackButtonHandler.h"; sourceTree = "<group>"; };
-		9098AE311D0EAA5500036BA4 /* UIViewController+BackButtonHandler.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIViewController+BackButtonHandler.m"; sourceTree = "<group>"; };
+		9098AE301D0EAA5500036BA4 /* UIViewController+BackButtonHandler.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "UIViewController+BackButtonHandler.h"; path = "classes/Chat/UIViewController+BackButtonHandler.h"; sourceTree = "<group>"; };
+		9098AE311D0EAA5500036BA4 /* UIViewController+BackButtonHandler.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "UIViewController+BackButtonHandler.m"; path = "classes/Chat/UIViewController+BackButtonHandler.m"; sourceTree = "<group>"; };
 		90DC39361CEC1C7E002CECCF /* AFHTTPSessionManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AFHTTPSessionManager.h; sourceTree = "<group>"; };
 		90DC39371CEC1C7E002CECCF /* AFHTTPSessionManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AFHTTPSessionManager.m; sourceTree = "<group>"; };
 		90DC39381CEC1C7E002CECCF /* AFNetworking.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AFNetworking.h; sourceTree = "<group>"; };
@@ -1106,8 +1106,6 @@
 		DA6406391D0C2347006DBC9E /* MessageCell */ = {
 			isa = PBXGroup;
 			children = (
-				9098AE301D0EAA5500036BA4 /* UIViewController+BackButtonHandler.h */,
-				9098AE311D0EAA5500036BA4 /* UIViewController+BackButtonHandler.m */,
 				DA64063E1D0C28CB006DBC9E /* UITableView+GenerateMyXMPPCell.h */,
 				DA64063F1D0C28CB006DBC9E /* UITableView+GenerateMyXMPPCell.m */,
 				9001224B1CA91EE2005D5BFA /* MessageViewCell.h */,
@@ -1140,6 +1138,8 @@
 		DA9046B91C3A51A8009E75B7 /* Tools */ = {
 			isa = PBXGroup;
 			children = (
+				9098AE301D0EAA5500036BA4 /* UIViewController+BackButtonHandler.h */,
+				9098AE311D0EAA5500036BA4 /* UIViewController+BackButtonHandler.m */,
 				DAAC6D791C4CD2B9009C0859 /* Network */,
 				DAAC6D7A1C4CD2C8009C0859 /* Media */,
 				DA9046B11C3A51A1009E75B7 /* MyFetchedResultsControllerDelegate.h */,

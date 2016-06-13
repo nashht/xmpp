@@ -119,8 +119,6 @@
              [weakSelf.bottomView inputFaceView:str];
          }];
     });
-    
-//    UIBarButtonItem *back = [[UIBarButtonItem alloc] initWithTitle:@"消息" style:UIBarButtonItemStylePlain target:self action:@selector(backToRecent)];
 
     [self tableViewScrollToBottom];
 }
