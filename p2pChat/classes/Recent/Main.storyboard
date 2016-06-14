@@ -130,7 +130,7 @@
                                     <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="FjX-Oa-ggU">
                                         <rect key="frame" x="0.0" y="15" width="181" height="100"/>
                                     </imageView>
-                                    <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" image="ic_launcher2" translatesAutoresizingMaskIntoConstraints="NO" id="Bdq-r7-Hpc">
+                                    <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="ic_launcher2" translatesAutoresizingMaskIntoConstraints="NO" id="Bdq-r7-Hpc">
                                         <rect key="frame" x="181" y="0.0" width="182" height="130"/>
                                     </imageView>
                                     <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="DnH-zX-SBf">
@@ -646,7 +646,7 @@
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="OIM-MJ-grG">
-                                                    <rect key="frame" x="0.0" y="-35.5" width="600" height="121"/>
+                                                    <rect key="frame" x="0.0" y="-36" width="600" height="122"/>
                                                     <state key="normal" title="发送消息" backgroundImage="bluebutton">
                                                         <color key="titleColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                                                     </state>
@@ -1252,7 +1252,15 @@
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                     </view>
-                    <navigationItem key="navigationItem" id="Q8L-o0-6gJ"/>
+                    <toolbarItems/>
+                    <navigationItem key="navigationItem" id="Q8L-o0-6gJ">
+                        <barButtonItem key="rightBarButtonItem" title="确定" id="AiJ-p7-Bhw">
+                            <connections>
+                                <action selector="save:" destination="Zxd-O6-HJc" id="Shi-F4-sv4"/>
+                            </connections>
+                        </barButtonItem>
+                    </navigationItem>
+                    <simulatedToolbarMetrics key="simulatedBottomBarMetrics"/>
                     <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
                     <size key="freeformSize" width="600" height="600"/>
                     <connections>

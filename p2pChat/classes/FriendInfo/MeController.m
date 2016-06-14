@@ -146,6 +146,9 @@
     if (indexPath.section == 1) {
         [self performSegueWithIdentifier:@"editInfo" sender:indexPath];
     }
+    if(indexPath.section == 2 && indexPath.row == 0){
+        [self performSegueWithIdentifier:@"changepassword" sender:indexPath];
+    }
 }
 
 #pragma mark - UIImagePickerDelegate
